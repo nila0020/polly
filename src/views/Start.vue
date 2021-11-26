@@ -15,8 +15,8 @@
   <!-- <img src="https://rymdcenter.se/wp-content/uploads/2020/01/m82-hst-karusell.jpg" alt="alt text"/> -->
 <!-- Knappar för startsidan -->
 <div class = "container">
-      <v-btn outline block class="start_buttons"><span class="text">User</span></v-btn>
-      <v-btn outline block class="start_buttons"><span class="text">Creator</span></v-btn>
+      <v-btn outline block class="start_buttons"><span class="text"><router-link to="user">User</router-link></span></v-btn>
+      <v-btn outline block class="start_buttons"><span class="text"><router-link to="creator">Creator</router-link></span></v-btn>
     
 </div>
 
