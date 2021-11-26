@@ -1,5 +1,5 @@
 <template>
-  <div id="nav">
+  <!-- <div id="nav">
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
     <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
     <label>
@@ -7,7 +7,20 @@
       <input type="text" v-model="id">
     </label>
     <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
-  </div>
+  </div> -->
+
+<section id = "page">
+  <h1>Welcome to Geoquiz</h1>
+  <h3>Choose User to enter a game or Creator if you want to create a game</h3>
+  <!-- <img src="https://rymdcenter.se/wp-content/uploads/2020/01/m82-hst-karusell.jpg" alt="alt text"/> -->
+<!-- Knappar för startsidan -->
+<div class = "container">
+      <v-btn outline block class="start_buttons"><span class="text">User</span></v-btn>
+      <v-btn outline block class="start_buttons"><span class="text">Creator</span></v-btn>
+    
+</div>
+
+</section>
 </template>
 
 <script>
@@ -39,3 +52,75 @@ export default {
   }
 }
 </script>
+<style>
+
+#page img {
+  
+}
+.page h1 {
+  position: absolute;
+  margin-top: -300px;
+  padding-left: 300px;
+  font-size: 60pt;
+  text-align: center;
+  color:black;
+}
+.container {
+  
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  justify-content: space-around;
+  /* align-content: space-between; */
+}
+
+.start_buttons {
+  align-items: center;
+  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-family: Phantomsans, sans-serif;
+  font-size: 20px;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 100%;
+  min-width: 140px;
+  padding: 3px;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.start_buttons:active,
+.start_buttons:hover {
+  outline: 0;
+}
+
+.start_buttons span {
+  background-color: rgb(5, 6, 45);
+  padding: 16px 24px;
+  border-radius: 6px;
+  width: 100%;
+  height: 45%;
+  transition: 300ms;
+}
+
+.start_buttons:hover span {
+  background: none;
+}
+
+@media (min-width: 768px) {
+  .start_buttons {
+    font-size: 24px;
+    min-width: 196px;
+  }
+}</style>

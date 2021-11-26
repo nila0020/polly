@@ -1,4 +1,5 @@
 <template>
+hejhej
   <div>
     {{pollId}}
     <Question v-bind:question="question"
