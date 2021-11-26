@@ -1,9 +1,9 @@
 <template>
   <div>
-    Poll link: 
-    <input type="text" v-model="pollId">
-    <button v-on:click="createPoll">
-      Create poll
+    Poll Name: 
+    <input type="text" v-model="pollName">
+    <button v-on:click="namePoll">
+      Name poll
     </button>
     <div>
       {{uiLabels.question}}:
@@ -27,6 +27,11 @@
     </button>
     {{data}}
     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
+    <br>
+    <input type="text" v-model="pollId">
+    <button v-on:click="createPoll">
+      Create poll
+    </button>
   </div>
 </template>
 

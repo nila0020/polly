@@ -4,6 +4,7 @@
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
+  
 </template>
 
 <script>
@@ -11,6 +12,7 @@
 import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
 const socket = io();
+
 
 export default {
   name: 'Poll',
