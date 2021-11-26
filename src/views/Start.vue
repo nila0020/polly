@@ -26,7 +26,6 @@
 <script>
 import io from 'socket.io-client';
 const socket = io();
-console.log("Hello World")
 
 export default {
   name: 'Start',
