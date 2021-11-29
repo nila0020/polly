@@ -16,7 +16,7 @@
 <!-- Knappar för startsidan -->
 <div class = "container">
       <router-link to="user"><v-btn outline block class="start_buttons"><span class="text">User</span></v-btn></router-link>
-      <router-link to="creator"><v-btn outline block class="start_buttons"><span class="text">Creator</span></v-btn></router-link>
+      <router-link to="/create/lang"><v-btn outline block class="start_buttons"><span class="text">Creator</span></v-btn></router-link>
     
 </div>
 
