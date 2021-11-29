@@ -1,12 +1,20 @@
 <template>
+  <div class="fullFrame">
   <div>
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
   <div class="wrapper">
    <div class="box a"> {{pollId}}</div>
-   <div class="box b" id="map"></div>
    
+   <div class="box b" >
+   <div class="wrapmap">
+      <div id="map">
+      </div>
+      </div>
+   </div>
+   
+ </div>
  </div>
 </template>
 
@@ -47,13 +55,18 @@ export default {
 }
 </script>
 <style>
-
+.fullFrame{
+  display:flex;
+  flex-direction:row;
+  overflow:hidden;
+  border:0px;
+  border-radius:8px;}
 .wrapper {
     
      display: grid;
      width: 100vw;
      height:100vh;
-      grid-template-rows: 8% 88%; 
+      grid-template-rows: 8% 88%;
       grid-gap: 2%;
       background-color: #fff;
       color: #444;
@@ -74,12 +87,20 @@ export default {
  .b {
       grid-column: 1 ;
       grid-row: 2;
-      overflow:scroll;
-      position: relative;
+      width:100vw;
  }    
-    
+.wrapmap{
+  width:100%;
+  height:100%;
+  overflow:scroll;
+  position: relative;
+}
 #map {
+        width:100%;
+        height:100%;
         background: url("/img/polacks.jpg");
+        border:0px;
+        border-radius:8px;
   }
 
  </style>
