@@ -88,7 +88,7 @@ export default {
   font-family: Phantomsans, sans-serif;
   font-size: 20px;
   justify-content: center;
-  line-height: 1em;
+  line-height: 2em;
   max-width: 100%;
   min-width: 140px;
   padding: 3px;
