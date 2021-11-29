@@ -1,26 +1,28 @@
 <template>
     <section class = "container">
-      <div class="box titleBox">
-        <h1>titleBox</h1>
+      <div class="box titleBox" >
+        <h3 style="float:left">titleBox</h3>
+        <input type="text" v-model="question" >
       </div>
-
-      <div class="box Overlook">
+      <div class="box Overlook" >
           <h1>Overlook</h1>
       </div>
-      <div class="box info">
-        <h1>info</h1>
-      </div>
-      <div class="box questionBox">
-        <h1>questionBox</h1>
+      <div class="box centerBox">
+          <div class="box info" v-on:click="expand">
+            <h1>info</h1>
+          </div>
+          <div class="box questionBox">
+            <h1>questionBox</h1>
+          </div>
+          <div class="box map">
+            <h1>map</h1>
+          </div>
       </div>
       <div class="box toolBox">
       <h1>toolBox</h1>
-      </div>
-      <div class="box map">
-        <h1>map</h1>
-      </div>
+    </div>
     </section>
-    
+
 <div >
     <h3>Your destinations</h3>
 </div>
@@ -28,6 +30,23 @@
 </template>
 
 <script>
+export default {
+  methods:{
+    expand: function() {
+      console.log("INFO")
+      this.addClass('expand')
+    }
+  }
+}
+
+/*$(document).ready(function () {
+  $("#wrapper div").click(function () {
+    if ($(this).siblings().hasClass('expanded')) {
+      $(this).siblings().removeClass('expanded');
+    }
+    $(this).addClass('expanded');
+  });
+});*/
 </script>
 
 <style>
@@ -38,8 +57,8 @@
 
 .container {
   display: grid;
-  grid-template-columns: 15% 35% 35% 15%;
-  grid-template-rows: 200px 400px 400px;
+  grid-template-columns: 20% 60% 20%;
+  grid-template-rows: 140px 400px 400px;
 
 }
 .box  {
@@ -58,20 +77,29 @@
   grid-column: 1;
   grid-row: 2/ span 2;
 }
-.info {
+.centerBox {
   grid-column: 2;
-  grid-row: 2;
+  grid-row: 2/ span 2;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  background-color: lightslategray;
 }
-.questionBox {
-  grid-column: 3;
-  grid-row: 2;
-}
+
 .toolBox {
-  grid-column: 4;
+  grid-column: 3;
   grid-row: 2/ span 2;
 }
+.info {
+  grid-column: 1;
+  grid-row: 1;
+}
+.questionBox {
+  grid-column: 2;
+  grid-row: 1;
+}
 .map {
-  grid-column: 2 /span 2;
-  grid-row: 3;
+  grid-column: 1 /span 2;
+  grid-row: 2;
 }
 </style>
