@@ -1,40 +1,75 @@
 <template>
     <section class = "container">
+      <!--Title box-->
       <div class="box titleBox" >
-        <h3 style="float:left">titleBox</h3>
-        <input type="text" v-model="question" >
+        <h3>titleBox</h3>
       </div>
+
+      <!--Overlook box-->
       <div class="box Overlook" >
           <h1>Overlook</h1>
+
+        <!--Add new questions and list them-->
+        <div id="overlookList">
+          <ul class="list-unstyled">
+            <li v-bind:key="question" v-for="question in questions">
+              <label>
+                {{question.text}}
+              </label>
+            </li>
+          </ul>
+          <p>
+            <input type="text" v-model="questionText" placeholder="add new question here" />
+            <button v-on:click="addQuestion()" class="btn btn-primary btn-sm">Add question</button>
+          </p>
+        </div>
       </div>
+
+      <!--Center box-->
       <div class="box centerBox">
+
+        <!--Info box-->
           <div class="box info" v-on:click="expand">
             <h1>info</h1>
           </div>
+
+        <!--Question box-->
           <div class="box questionBox">
             <h1>questionBox</h1>
           </div>
+
+        <!--Map box-->
           <div class="box map">
             <h1>map</h1>
           </div>
       </div>
+
+      <!--Tool box-->
       <div class="box toolBox">
       <h1>toolBox</h1>
     </div>
     </section>
-
-<div >
-    <h3>Your destinations</h3>
-</div>
-
 </template>
 
 <script>
 export default {
+  data: function () {
+    return {
+      questionText: '',
+      questions: [],
+    }
+  },
   methods:{
     expand: function() {
       console.log("INFO")
-      this.addClass('expand')
+    },
+    addQuestion: function() {
+      var newTodo = this.questionText.trim();
+      if (!newTodo) {return;}
+      this.questions.push(
+          {text: newTodo, done: false}
+      );
+      this.questionText = '';
     }
   }
 }
@@ -85,7 +120,6 @@ export default {
   grid-template-rows: 50% 50%;
   background-color: lightslategray;
 }
-
 .toolBox {
   grid-column: 3;
   grid-row: 2/ span 2;
