@@ -5,7 +5,7 @@
               v-on:answer="submitAnswer"/>
   </div>
   <div class="wrapper">
-   <div class="box a"> {{pollId}}</div>
+   <div class="box a start_buttons"> {{pollId}}</div>
    
    <div class="box b" >
    <div class="wrapmap">
@@ -61,6 +61,7 @@ export default {
   overflow:hidden;
   border:0px;
   border-radius:8px;}
+
 .wrapper {
     
      display: grid;
@@ -68,13 +69,13 @@ export default {
      height:100vh;
       grid-template-rows: 8% 88%;
       grid-gap: 2%;
-      background-color: #fff;
-      color: #444;
+      background-color: white;
+      color: black;
  }
 
  .box {
-     background-color: #444;
-     color: #fff;
+     background-color: white;
+     color: black;
      border-radius: 5px;
      padding: 0px;
      font-size: 150%;
@@ -83,6 +84,9 @@ export default {
  .a {
      grid-column: 1 ;
      grid-row:1;
+     color:white;
+     width:96%;
+     background-color:purple;
  }
  .b {
       grid-column: 1 ;
@@ -90,14 +94,16 @@ export default {
       width:100vw;
  }    
 .wrapmap{
-  width:100%;
+  width:96%;
   height:100%;
   overflow:scroll;
   position: relative;
+  border:0px;
+  border-radius:12px;
 }
 #map {
-        width:100%;
-        height:100%;
+        width:1920px;
+        height:1080px;
         background: url("/img/polacks.jpg");
         border:0px;
         border-radius:8px;
