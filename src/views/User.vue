@@ -4,6 +4,7 @@
 <label for="GameId">GameID</label><br>
 <input type="text" id="gameId" v-model="gameId" required="required" placeholder="Write your GameId here">
 </div>
+<br><br><br><br>
 <div>
 <label for="">Username</label><br>
 <input type="text" id="userName" v-model="userName" required="required" placeholder="Write your username here">
@@ -18,11 +19,12 @@
 .entryID {
   
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
   justify-content: space-evenly;
+
   /* align-content: space-between; */
 }
 </style>

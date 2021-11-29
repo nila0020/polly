@@ -35,6 +35,14 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/User.vue')
+  },
+  {
+    path: '/Creator_overlook/',
+    name: 'Creator_overlook',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Creator_overlook.vue')
   }
 ]
 
