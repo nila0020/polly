@@ -3,6 +3,7 @@
       <!--Title box-->
       <div class="box titleBox" >
         <h3>titleBox</h3>
+        <input type="text" v-model="pollName">
       </div>
 
       <!--Overlook box-->
@@ -31,6 +32,7 @@
         <!--Info box-->
           <div class="box info" v-on:click="expand">
             <h1>info</h1>
+            <input type="text" v-model="info" placeholder="information about the question">
           </div>
 
         <!--Question box-->
@@ -53,28 +55,60 @@
 </template>
 
 <script>
+import io from 'socket.io-client';
+const socket = io();
+
 export default {
   data: function () {
     return {
       questionText: '',
       questions: [],
+      info: "",
+      lang: "",
+      pollId: "",
+      question: "",
+      answers: ["", ""],
+      questionNumber: 0,
+      data: {},
+      uiLabels: {}
     }
+  },
+  created: function () {
+    this.lang = this.$route.params.lang;
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      this.uiLabels = labels
+    })
+    socket.on("dataUpdate", (data) =>
+        this.data = data
+    )
+    socket.on("pollCreated", (data) =>
+        this.data = data)
   },
   methods:{
     expand: function() {
       console.log("INFO")
     },
+    createPoll: function () {
+      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+    },
     addQuestion: function() {
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
       var newTodo = this.questionText.trim();
       if (!newTodo) {return;}
       this.questions.push(
           {text: newTodo, done: false}
       );
       this.questionText = '';
+    },
+    addAnswer: function () {
+      this.answers.push("");
+    },
+    runQuestion: function () {
+      socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
     }
   }
 }
-
 /*$(document).ready(function () {
   $("#wrapper div").click(function () {
     if ($(this).siblings().hasClass('expanded')) {
