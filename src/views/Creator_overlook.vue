@@ -38,16 +38,7 @@
         <!--Question box-->
           <div class="box questionBox">
             <h1>questionBox</h1>
-            <input type="text" v-model="question" placeholder="Write question here">
-            <div>
-              Answers:
-              <input v-for="(_, i) in answers"
-                     v-model="answers[i]"
-                     v-bind:key="'answer'+i">
-              <button v-on:click="addAnswer">
-                Add answer alternative
-              </button>
-            </div>
+           
           </div>
 
         <!--Map box-->
