@@ -83,8 +83,8 @@ export default {
     }
   },
   created: function () {
-    this.lang = this.$route.params.lang;
-    socket.emit("pageLoaded", this.lang);
+    //this.lang = this.$route.params.lang;
+    //socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
