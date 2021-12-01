@@ -36,6 +36,7 @@
         <!--Question box-->
           <div class="box questionBox">
             <h1>questionBox</h1>
+           
           </div>
 
         <!--Map box-->
