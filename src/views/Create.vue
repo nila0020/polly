@@ -65,9 +65,9 @@ export default {
       this.data = data)
   },
   methods: {
-    createPoll: function () {
+ /*   createPoll: function () {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
-    },
+    },*/
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
     },

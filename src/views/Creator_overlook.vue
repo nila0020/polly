@@ -4,6 +4,10 @@
       <div class="box titleBox" >
         <h3>titleBox</h3>
         <input type="text" v-model="pollName">
+        <input type="text" v-model="pollId">
+        <button v-on:click="createPoll">
+          Create poll
+        </button>
       </div>
 
       <!--Overlook box-->

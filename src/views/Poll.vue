@@ -6,7 +6,7 @@
               v-on:answer="submitAnswer"/>
   </div>
   <div class="wrapper">
-   <div class="box a start_buttons"> {{pollId}}</div>
+   <div class="box a start_buttons1"> {{pollId}}</div>
    
    <div class="box b" >
    <div class="wrapmap">
@@ -47,7 +47,6 @@ Question:{
 import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
 const socket = io();
-
 
 
 export default {
