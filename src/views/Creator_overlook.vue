@@ -1,7 +1,6 @@
 <template>
-    <section class = "container">
+    <section class="box titleBox" >
       <!--Title box-->
-      <div class="box titleBox" >
 
         <h3>Game Title and GameID</h3>
 
@@ -14,8 +13,9 @@
           Create Game
         </button>
         </div>
-      </div>
+    </section>
 
+    <section class = "container" v-if="showAll">
       <!--Overlook box-->
       <div class="box Overlook" >
           <h1>Overlook</h1>
@@ -89,7 +89,8 @@ export default {
       answers: ["", ""],
       questionNumber: 0,
       data: {},
-      uiLabels: {}
+      uiLabels: {},
+      showAll: false
     }
   },
   created: function () {
@@ -105,6 +106,9 @@ export default {
         this.data = data)
   },
   methods:{
+    createPoll: function() {
+      this.showAll = true
+    },
     expand: function() {
       console.log("INFO")
     },
@@ -147,7 +151,7 @@ export default {
 .container {
   display: grid;
   grid-template-columns: 20% 60% 20%;
-  grid-template-rows: 140px 400px 400px;
+  grid-template-rows: 400px 400px;
 
 }
 .box  {
@@ -166,17 +170,16 @@ export default {
   float: left;
 }
 .titleBox {
-  grid-column: 1/ span 4;
-  grid-row: 1;
+  height: 140px;
   
 }
 .Overlook {
   grid-column: 1;
-  grid-row: 2/ span 2;
+  grid-row: 1/ span 2;
 }
 .centerBox {
   grid-column: 2;
-  grid-row: 2/ span 2;
+  grid-row: 1/ span 2;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: 50% 50%;
@@ -184,7 +187,7 @@ export default {
 }
 .toolBox {
   grid-column: 3;
-  grid-row: 2/ span 2;
+  grid-row: 1/ span 2;
 }
 .info h1 {
   font-size: 25px;
