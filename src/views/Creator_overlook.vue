@@ -3,10 +3,10 @@
       <!--Title box-->
       <div class="box titleBox" >
         <h3>titleBox</h3>
-        <input type="text" v-model="pollName" placeholder="Game name">
+        <input type="text" v-model="GameName" placeholder="Game name">
         <input type="text" v-model="pollId" placeholder="Game ID">
-        <button v-on:click="createPoll">
-          Create poll
+        <button v-on:click="createGame">
+          Create game
         </button>
       </div>
 
@@ -42,7 +42,7 @@
         <!--Question box-->
           <div class="box questionBox">
             <h1>questionBox</h1>
-            <input type="text" v-model="question">
+            <input type="text" v-model="question" placeholder="Question">
             <div>
               Answers:
               <input v-for="(_, i) in answers"
@@ -102,7 +102,7 @@ export default {
     expand: function() {
       console.log("INFO")
     },
-    createPoll: function () {
+    createGame: function () {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
     },
     addQuestion: function() {
