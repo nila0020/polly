@@ -2,7 +2,7 @@
     <section class = "container">
       <!--Title box-->
       <div class="box titleBox" >
-        <h3>titleBox</h3>
+        <h3>Game Title and GameID</h3>
         <input type="text" v-model="pollName" placeholder="Game name">
         <input type="text" v-model="pollId" placeholder="Game ID">
         <button v-on:click="createPoll">
