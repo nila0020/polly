@@ -2,8 +2,13 @@
     <section class = "container">
       <!--Title box-->
       <div class="box titleBox" >
+<<<<<<< HEAD
         <h3>titleBox</h3>
         <input type="text" v-model="GameName" placeholder="Game name">
+=======
+        <h3>Game Title and GameID</h3>
+        <input type="text" v-model="pollName" placeholder="Game name">
+>>>>>>> 8332910894f9a1ce8836ebf27a6b8ede4e32cb44
         <input type="text" v-model="pollId" placeholder="Game ID">
         <button v-on:click="createGame">
           Create game
