@@ -6,7 +6,7 @@
               v-on:answer="submitAnswer"/>
   </div>
   <div class="wrapper">
-   <div class="box a start_buttons"> {{pollId}}</div>
+   <div class="box a start_buttons1"> {{pollId}}</div>
    
    <div class="box b" >
    <div class="wrapmap">
