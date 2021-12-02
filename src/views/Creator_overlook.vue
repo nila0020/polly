@@ -3,9 +3,6 @@
       <!--Title box-->
       <div class="box titleBox" >
 
-        <h3>titleBox</h3>
-        <input type="text" v-model="GameName" placeholder="Game name">
-
         <h3>Game Title and GameID</h3>
 
         <div class="insertTitle">
@@ -15,13 +12,6 @@
         <input type="text" id = "gameID" v-model="pollId" placeholder="Enter Game ID"><br><br>
         <button class = "createButton" v-on:click="createPoll">
           Create Game
-
-        <input type="text" v-model="pollName" placeholder="Game name">
-
-        <input type="text" v-model="pollId" placeholder="Game ID">
-        <button v-on:click="createGame">
-          Create game
-
         </button>
         </div>
       </div>
