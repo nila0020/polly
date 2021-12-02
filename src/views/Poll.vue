@@ -47,7 +47,7 @@ Question:{
 import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
 const socket = io();
-ä
+
 
 
 export default {
