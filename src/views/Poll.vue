@@ -1,5 +1,6 @@
 <template>
   <div class="fullFrame">
+  <section class="overview">
   <div>
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
@@ -15,6 +16,29 @@
    </div>
    
  </div>
+ </section>
+  <section class="activeQuestion">
+    <!--först ta reda på vilken frågetyp det är
+        ha metoder för att rita upp varje frågetyp
+        ex
+        on:click -> display:true ->,
+        showquestion(q): if q.type==slide-> slidequestion(q), if q.type==multiplechoice->multiplechoice(q)
+        
+Hur frågeobjektet bör se ut ungefär: 
+Question:{
+  this.type=multiplechoice,               (fleralternativfråga, slide osv?, indikator för css)
+  this.pos={longitude latitude},
+  this.order=11,
+  this.q= frågan
+  this.a=alternativ a
+  this.b=alternativ b
+  this.antalAlternativ=5;
+  ...
+  this.pic=url
+  this.correctAnswer=1300               (alternativ eller värde beroende på frågetyp)
+  }}
+-->
+  </section>
  </div>
 </template>
 
@@ -23,7 +47,7 @@
 import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
 const socket = io();
-
+ä
 
 
 export default {
