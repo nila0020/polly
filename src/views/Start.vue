@@ -16,7 +16,7 @@
 <!-- Knappar för startsidan -->
 <div class = "container">
       <!-- Knapp till Usersidan -->
-      <router-link to="user"><v-btn outline block class="start_buttons"><span class="text">User</span></v-btn></router-link>
+      <router-link to="poll"><v-btn outline block class="start_buttons"><span class="text">User</span></v-btn></router-link>
       <!-- Knapp till creators överblick -->
       <router-link to="Creator_overlook"><v-btn outline block class="start_buttons"><span class="text">Creator</span></v-btn></router-link>
     

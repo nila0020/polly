@@ -1,7 +1,23 @@
 <template>
-  <div class="fullFrame">
+<div v-show="!confirmedUser" class="entryID">
+  <h1>Lets GO!</h1>
+  <div class="boxA">    
+  <label for="pollId" class="start_buttons1">Poll-ID</label><br>
+  <input type="text" style="font-size:1.4em" id="pollId" v-model="pollId" required="required" placeholder="Input the poll-Id">
+  </div>
+  <br><br><br><br>
+  <div class="boxB">
+  <label for="" class="start_buttons1">Username</label><br>
+  <input type="text" style="font-size:1.4em" id="userName" v-model="userName" required="required" placeholder="Input your username">
+  </div>
+  <div class="boxC">
+  <v-btn class="start_buttons1" v-on:click="confirmUser">Join GeoQuiz!</v-btn>
+</div>
+</div>
+  <div v-show="confirmedUser" class="fullFrame">
+     {{question}}
   <section class="overview">
-  <div>
+  <div class="questions">
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
@@ -60,12 +76,12 @@ export default {
         q: "",
         a: []
       },
-      pollId: "inactive poll"
+      pollId: "inactive poll",
+      confirmedUser: false,
     }
   },
   created: function () {
     this.pollId = this.$route.params.id
-    socket.emit('joinPoll', this.pollId)
     socket.on("newQuestion", q =>
       this.question = q
     )
@@ -73,6 +89,10 @@ export default {
   methods: {
     submitAnswer: function (answer) {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
+    },
+    confirmUser: function () {
+      this.confirmedUser = true;
+      socket.emit('joinPoll', this.pollId)
     }
   }
 }
@@ -131,5 +151,7 @@ export default {
         border:0px;
         border-radius:8px;
   }
-
+ .questions {
+   position:absolute;
+ }
  </style>
