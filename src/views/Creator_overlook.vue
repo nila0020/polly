@@ -8,8 +8,8 @@
         <div class="insertTitle">
         <label for = "gameName">Game name: </label>
         <input type="text" id = "gameName" v-model="pollName" placeholder="Enter Game name"><br>
-        <label for = "gameID">GameID: </label>
-        <input type="text" id = "gameID" v-model="pollId" placeholder="Enter Game ID"><br><br>
+        <label for = "gameID">Game ID: </label>
+        <input type="text" id = "gameID" v-model="pollId" placeholder="Enter Game ID"><br>
         <button class = "createButton" v-on:click="createPoll">
           Create Game
         </button>
@@ -41,19 +41,19 @@
 
         <!--Info box-->
           <div class="box info" v-on:click="expand">
-            <h1>info</h1>
-            <input type="text" v-model="info" placeholder="information about the question">
+            <h1>Info</h1>
+            <input class = "infoArea" type="text" v-model="info" placeholder="Question discription">
           </div>
 
         <!--Question box-->
           <div class="box questionBox">
-            <h1>questionBox</h1>
-            <input type="text" v-model="question" placeholder="Question">
+            <h1>Create your question here</h1>
+            <input type="text" v-model="question" placeholder="Add question">
             <div>
-              Answers:
+              <h1>Answers:</h1>
               <input v-for="(_, i) in answers"
                      v-model="answers[i]"
-                     v-bind:key="'answer'+i">
+                     v-bind:key="'answer'+i" placeholder="Add answer">
               <button v-on:click="addAnswer">
                 Add answer alternative
               </button>
@@ -160,6 +160,7 @@ export default {
 }
 .insertTitle {
   float: right;
+  
 }
 .titleBox h3 {
   float: left;
@@ -185,11 +186,30 @@ export default {
   grid-column: 3;
   grid-row: 2/ span 2;
 }
+.info h1 {
+  font-size: 25px;
+}
 .info {
   grid-column: 1;
   grid-row: 1;
 }
+.infoArea {
+  width: 100%;
+  height: 255px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #444;
+  resize: none;
+  color: white;
+}
 .questionBox {
+  grid-column: 2;
+  grid-row: 1;
+}
+.questionBox h1 {
+  font-size: 15px;
   grid-column: 2;
   grid-row: 1;
 }
