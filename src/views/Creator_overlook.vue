@@ -3,8 +3,8 @@
       <!--Title box-->
       <div class="box titleBox" >
         <h3>titleBox</h3>
-        <input type="text" v-model="pollName">
-        <input type="text" v-model="pollId">
+        <input type="text" v-model="pollName" placeholder="Game name">
+        <input type="text" v-model="pollId" placeholder="Game ID">
         <button v-on:click="createPoll">
           Create poll
         </button>
