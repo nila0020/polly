@@ -2,12 +2,12 @@
     <section class = "container">
       <!--Title box-->
       <div class="box titleBox" >
-<<<<<<< HEAD
+
         <h3>titleBox</h3>
         <input type="text" v-model="GameName" placeholder="Game name">
-=======
+
         <h3>Game Title and GameID</h3>
-<<<<<<< HEAD
+
         <div class="insertTitle">
         <label for = "gameName">Game name: </label>
         <input type="text" id = "gameName" v-model="pollName" placeholder="Enter Game name"><br>
@@ -15,13 +15,13 @@
         <input type="text" id = "gameID" v-model="pollId" placeholder="Enter Game ID"><br><br>
         <button class = "createButton" v-on:click="createPoll">
           Create Game
-=======
+
         <input type="text" v-model="pollName" placeholder="Game name">
->>>>>>> 8332910894f9a1ce8836ebf27a6b8ede4e32cb44
+
         <input type="text" v-model="pollId" placeholder="Game ID">
         <button v-on:click="createGame">
           Create game
->>>>>>> 6d992c5bb25fbce2e4efa9ad19bcea563f57f0e0
+
         </button>
         </div>
       </div>
