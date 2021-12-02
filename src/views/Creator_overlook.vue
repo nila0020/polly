@@ -2,12 +2,18 @@
     <section class = "container">
       <!--Title box-->
       <div class="box titleBox" >
-        <h3>titleBox</h3>
-        <input type="text" v-model="pollName" placeholder="Game name">
-        <input type="text" v-model="pollId" placeholder="Game ID">
-        <button v-on:click="createPoll">
-          Create poll
+
+        <h3>Game Title and GameID</h3>
+
+        <div class="insertTitle">
+        <label for = "gameName">Game name: </label>
+        <input type="text" id = "gameName" v-model="pollName" placeholder="Enter Game name"><br>
+        <label for = "gameID">Game ID: </label>
+        <input type="text" id = "gameID" v-model="pollId" placeholder="Enter Game ID"><br>
+        <button class = "createButton" v-on:click="createPoll">
+          Create Game
         </button>
+        </div>
       </div>
 
       <!--Overlook box-->
@@ -35,19 +41,19 @@
 
         <!--Info box-->
           <div class="box info" v-on:click="expand">
-            <h1>info</h1>
-            <input type="text" v-model="info" placeholder="information about the question">
+            <h1>Info</h1>
+            <input class = "infoArea" type="text" v-model="info" placeholder="Question discription">
           </div>
 
         <!--Question box-->
           <div class="box questionBox">
-            <h1>questionBox</h1>
-            <input type="text" v-model="question">
+            <h1>Create your question here</h1>
+            <input type="text" v-model="question" placeholder="Add question">
             <div>
-              Answers:
+              <h1>Answers:</h1>
               <input v-for="(_, i) in answers"
                      v-model="answers[i]"
-                     v-bind:key="'answer'+i">
+                     v-bind:key="'answer'+i" placeholder="Add answer">
               <button v-on:click="addAnswer">
                 Add answer alternative
               </button>
@@ -102,7 +108,7 @@ export default {
     expand: function() {
       console.log("INFO")
     },
-    createPoll: function () {
+    createGame: function () {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
     },
     addQuestion: function() {
@@ -152,9 +158,17 @@ export default {
   padding: 20px;
   font-size: 150%;
 }
+.insertTitle {
+  float: right;
+  
+}
+.titleBox h3 {
+  float: left;
+}
 .titleBox {
   grid-column: 1/ span 4;
   grid-row: 1;
+  
 }
 .Overlook {
   grid-column: 1;
@@ -172,16 +186,84 @@ export default {
   grid-column: 3;
   grid-row: 2/ span 2;
 }
+.info h1 {
+  font-size: 25px;
+}
 .info {
   grid-column: 1;
   grid-row: 1;
 }
+.infoArea {
+  width: 100%;
+  height: 255px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #444;
+  resize: none;
+  color: white;
+}
 .questionBox {
+  grid-column: 2;
+  grid-row: 1;
+}
+.questionBox h1 {
+  font-size: 15px;
   grid-column: 2;
   grid-row: 1;
 }
 .map {
   grid-column: 1 /span 2;
   grid-row: 2;
+}
+.createButton {
+  float:right;
+  align-items: center;
+  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-family: Phantomsans, sans-serif;
+  font-size: 20px;
+  justify-content: center;
+  line-height: 2em;
+  max-width: 100%;
+  min-width: 140px;
+  padding: 3px;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.createButton:active,
+.createButton:hover {
+  outline: 0;
+}
+
+.createButton span {
+  background-color: rgb(5, 6, 45);
+  padding: 16px 24px;
+  border-radius: 6px;
+  width: 100%;
+  height: 45%;
+  transition: 300ms;
+}
+
+.createButton:hover span {
+  background: none;
+}
+
+@media (min-width: 768px) {
+  .createButton {
+    font-size: 10px;
+    min-width: 90px;
+  }
 }
 </style>
