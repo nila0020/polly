@@ -31,7 +31,7 @@
           </ul>
           <p>
             <input type="text" v-model="questionText" placeholder="add new question here" />
-            <button v-on:click="addQuestion()" class="btn btn-primary btn-sm">Add question</button>
+            <button class="btn btn-primary btn-sm">Add question</button>
           </p>
         </div>
       </div>
@@ -56,7 +56,14 @@
                      v-bind:key="'answer'+i" placeholder="Add answer">
               <button v-on:click="addAnswer">
                 Add answer alternative
-              </button>
+              </button><br>
+              <button v-on:click="addQuestion()">
+              Add question
+            </button>
+            <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
+            <button v-on:click="runQuestion">
+              Run question
+            </button> -->
             </div>
           </div>
 
@@ -80,7 +87,7 @@ const socket = io();
 export default {
   data: function () {
     return {
-      questionText: '',
+     // questionText: '', // detta är textrutan i overlook - Den funktionen ska vara i questionbox
       questions: [],
       info: "",
       lang: "",
@@ -90,7 +97,8 @@ export default {
       questionNumber: 0,
       data: {},
       uiLabels: {},
-      showAll: false
+      showAll: false,
+      
     }
   },
   created: function () {
@@ -113,10 +121,11 @@ export default {
       console.log("INFO")
     },
     createGame: function () {
-      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang, })
     },
+  
     addQuestion: function() {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, info: this.info } )
       var newTodo = this.questionText.trim();
       if (!newTodo) {return;}
       this.questions.push(
@@ -206,13 +215,14 @@ export default {
   background-color: #444;
   resize: none;
   color: white;
+
 }
 .questionBox {
   grid-column: 2;
   grid-row: 1;
 }
 .questionBox h1 {
-  font-size: 15px;
+  font-size: 5px;
   grid-column: 2;
   grid-row: 1;
 }
