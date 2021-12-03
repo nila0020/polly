@@ -74,7 +74,8 @@ export default {
     return {
       question: {
         q: "",
-        a: []
+        a: [],
+        info: ""
       },
       pollId: "inactive poll",
       confirmedUser: false,

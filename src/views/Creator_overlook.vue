@@ -26,12 +26,14 @@
             <li v-bind:key="question" v-for="question in questions">
               <label>
                 {{question.text}}
+               
               </label>
             </li>
           </ul>
           <p>
-            <input type="text" v-model="questionText" placeholder="add new question here" />
-            <button class="btn btn-primary btn-sm">Add question</button>
+            <!-- <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
+            <button class="overlookBtn">Add question</button>
+            <button class="overlookBtn">Delete question</button>
           </p>
         </div>
       </div>
@@ -49,7 +51,9 @@
           <div class="box questionBox">
             <h1>Create your question here</h1>
             <input type="text" v-model="question" placeholder="Add question">
+            
             <div>
+                 
               <h1>Answers:</h1>
               <input v-for="(_, i) in answers"
                      v-model="answers[i]"
@@ -57,7 +61,8 @@
               <button v-on:click="addAnswer">
                 Add answer alternative
               </button><br>
-              <button v-on:click="addQuestion()">
+              
+              <button v-on:click="[addQuestion(),addOverlook(),allQuestions()]">
               Add question
             </button>
             <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
@@ -87,7 +92,7 @@ const socket = io();
 export default {
   data: function () {
     return {
-     // questionText: '', // detta är textrutan i overlook - Den funktionen ska vara i questionbox
+      questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
       questions: [],
       info: "",
       lang: "",
@@ -123,15 +128,24 @@ export default {
     createGame: function () {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang, })
     },
+    allQuestions: function() {
+      var allQuestions = [this.question, this.answers, this.info]
+      console.log(allQuestions)
+    },
   
     addQuestion: function() {
+       //Ska inte skickas förrän alla frågor lagts till
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, info: this.info } )
-      var newTodo = this.questionText.trim();
-      if (!newTodo) {return;}
+      
+    },
+    addOverlook: function() {
+      // <router-link to="Creator_overlook"><v-btn outline block class="start_buttons"><span class="text">
+      var newQuestion = this.question.trim();
+      if (!newQuestion) {return;}
       this.questions.push(
-          {text: newTodo, done: false}
+          {text: newQuestion, done: false}
       );
-      this.questionText = '';
+      this.question = '';
     },
     addAnswer: function () {
       this.answers.push("");
@@ -185,6 +199,10 @@ export default {
 .Overlook {
   grid-column: 1;
   grid-row: 1/ span 2;
+}
+.overlookBtn {
+
+
 }
 .centerBox {
   grid-column: 2;
