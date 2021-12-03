@@ -10,17 +10,18 @@
   </div> -->
 
 <section id = "page">
-  <h1>Welcome to Geoquiz</h1>
-  <h3>Choose User to enter a game or Creator if you want to create a game</h3>
+  <h1>{{uiLabels.welcomeText}}</h1>
+  <h3>{{uiLabels.Choose}}</h3>
   <!-- <img src="https://rymdcenter.se/wp-content/uploads/2020/01/m82-hst-karusell.jpg" alt="alt text"/> -->
 <!-- Knappar för startsidan -->
 <div class = "container">
       <!-- Knapp till Usersidan -->
-      <router-link to="poll"><v-btn outline block class="start_buttons"><span class="text">User</span></v-btn></router-link>
+      <router-link to="poll"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.User}}</span></v-btn></router-link>
       <!-- Knapp till creators överblick -->
-      <router-link to="Creator_overlook"><v-btn outline block class="start_buttons"><span class="text">Creator</span></v-btn></router-link>
-    
+      <router-link to="Creator_overlook"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.Creator}}</span></v-btn></router-link>
 </div>
+  <br>
+  <button v-on:click="switchLanguage" id="langButton"><img src="/public/img/Flag_of_Sweden_ml.png" alt=""></button>
 
 </section>
 </template>
@@ -35,7 +36,7 @@ export default {
     return {
       uiLabels: {},
       id: "",
-      lang: "en"
+      lang: "en",
     }
   },
   created: function () {
@@ -50,6 +51,7 @@ export default {
       else
         this.lang = "en"
       socket.emit("switchLanguage", this.lang)
+      console.log(this.uiLabels)
     }
   }
 }
@@ -116,6 +118,10 @@ export default {
 
 .start_buttons:hover span {
   background: none;
+}
+
+#langButton {
+  align-items: center;
 }
 
 @media (min-width: 768px) {
