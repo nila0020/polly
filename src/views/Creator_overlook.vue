@@ -116,6 +116,7 @@ export default {
   methods:{
     createPoll: function() {
       this.showAll = true
+      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
     },
     expand: function() {
       console.log("INFO")
