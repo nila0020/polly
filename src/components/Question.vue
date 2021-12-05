@@ -14,7 +14,8 @@
         v-for="a in question.a"
         v-on:click="answer(a)"
         v-bind:key="a"
-        class="answerButtons"
+        class="start_buttons"
+        id="answerButtons"
       >
         {{ a }}
       </v-btn>
@@ -49,6 +50,7 @@ export default {
   background-color: purple;
   border: 0px;
   border-radius: 1em;
+  text-align: center;
 }
 .answerGrid {
   display: grid;
@@ -59,9 +61,9 @@ export default {
   background-color: white;
   color: black;
   overflow: hide;
+  text-align: center;
 }
-.answerButtons {
-  background-color: red;
+#answerButtons {
   border: 0px;
   border-radius: 1em;
 }

@@ -1,11 +1,10 @@
 <template>
-  <div v-show="!confirmedUser" class="entryID">
+  <div v-show="!confirmedUser" class="entryId">
     <h1>Lets GO!</h1>
     <div class="boxA">
       <label for="pollId" class="start_buttons1">Poll-ID</label><br />
       <input
         type="text"
-        style="font-size: 1.4em"
         id="pollId"
         v-model="pollId"
         required="required"
@@ -25,7 +24,7 @@
       />
     </div>
     <div class="boxC">
-      <v-btn class="start_buttons1" v-on:click="confirmUser"
+      <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
         >Join GeoQuiz!</v-btn
       >
     </div>
@@ -39,9 +38,7 @@
         <div class="box a">{{ pollId }}</div>
 
         <div class="box b">
-          <div class="wrapmap">
-            <div id="map"></div>
-          </div>
+          <div id="map"></div>
         </div>
       </div>
     </div>
@@ -113,12 +110,10 @@ export default {
 };
 </script>
 <style>
-.fullFrame {
-}
 .wrapper {
   display: grid;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 96vh;
   grid-template-rows: 1fr 9fr;
   grid-gap: 2%;
   background-color: white;
@@ -126,27 +121,20 @@ export default {
 }
 
 .box {
-  background-color: white;
-  color: black;
   border-radius: 12px;
-  padding: 0px;
-  font-size: 150%;
 }
 
 .a {
   grid-column: 1;
   grid-row: 1;
   color: white;
-  width: 96%;
+  width: 100%;
   background-color: purple;
 }
 .b {
   grid-column: 1;
   grid-row: 2;
-  width: 100vw;
-}
-.wrapmap {
-  width: 96%;
+  width: 100%;
   height: 100%;
   overflow: scroll;
   position: relative;
@@ -161,6 +149,23 @@ export default {
   border-radius: 8px;
 }
 .questionDisplayed {
+}
+.entryId {
+  display: grid;
   width: 100%;
+  height: 100%;
+  grid-gap: 5vh;
+  background-color: white;
+  justify-content: center;
+}
+input {
+  border-radius: 2em;
+  width: 75vw;
+  border-width: 3px;
+  font-size: 1.4em;
+  border-color: blueviolet;
+}
+#joinknapp {
+  max-width: 79vw;
 }
 </style> 
