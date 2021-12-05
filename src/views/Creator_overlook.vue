@@ -23,7 +23,8 @@
     </div>
   </section>
 
-  <section class="container" v-if="showAll">
+  <section class="container">
+
     <!--Overlook box-->
     <div class="box Overlook">
       <h1>Overlook</h1>
@@ -93,6 +94,10 @@
     <div class="box toolBox">
       <h1>toolBox</h1>
     </div>
+
+    <div class="blocker" v-if="showAll">
+      <!-- blocks part of the screen -->
+    </div>
   </section>
 </template>
 
@@ -113,7 +118,7 @@ export default {
       questionNumber: 0,
       data: {},
       uiLabels: {},
-      showAll: false,
+      showAll: true,
     };
   },
   created: function () {
@@ -127,7 +132,7 @@ export default {
   },
   methods: {
     createPoll: function () {
-      this.showAll = true;
+      this.showAll = false;
       socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
     },
     expand: function () {
@@ -184,11 +189,17 @@ export default {
 #header h1 {
   font-family: "Times New Roman", Times, serif;
 }
-
 .container {
   display: grid;
   grid-template-columns: 20% 60% 20%;
   grid-template-rows: 50% 50%;
+}
+.blocker {
+  grid-column: 1/ span 3;
+  grid-row: 1/ span 2;
+  overflow: hidden;
+  background-color: black;
+  opacity: 80%;
 }
 .box {
   background-color: #444;
