@@ -1,24 +1,30 @@
 <template>
-    <section class="box titleBox" >
-      <!--Title box-->
+<section>
+  <section class="box titleBox">
+    <!--Title box-->
 
-        <h3>Game Title and GameID</h3>
+    <h3>Game Title and GameID</h3>
 
-        <div class="insertTitle">
-        <label for = "gameName">Game name: </label>
-        <input type="text" id = "gameName" v-model="pollName" placeholder="Enter Game name"><br>
-        <label for = "gameID">Game ID: </label>
-        <input type="text" id = "gameID" v-model="pollId" placeholder="Enter Game ID"><br>
-        <button class = "createButton" v-on:click="createPoll">
-          Create Game
-        </button>
-        </div>
-    </section>
+    <div class="insertTitle">
+      <label for="gameName">Game name: </label>
+      <input
+        type="text"
+        id="gameName"
+        v-model="pollName"
+        placeholder="Enter Game name"
+      /><br />
+      <label for="gameID">Game ID: </label>
+      <input
+        type="text"
+        id="gameID"
+        v-model="pollId"
+        placeholder="Enter Game ID"
+      /><br />
+      <button class="createButton" v-on:click="createPoll">Create Game</button>
+    </div>
+  </section>
 
-    <section class = "container" v-if="showAll">
-      <!--Overlook box-->
-      <div class="box Overlook" >
-          <h1>Overlook</h1>
+  <section class="container">
 
         <!--Add new questions and list them-->
         <div id="overlookList">
@@ -41,14 +47,20 @@
           </button>
       </div>
 
-      <!--Center box-->
-      <div class="box centerBox">
+      <!--Question box-->
+      <div class="box questionBox">
+        <h1>Create your question here</h1>
+        <input type="text" v-model="question" placeholder="Add question" />
 
-        <!--Info box-->
-          <div class="box info" v-on:click="expand">
-            <h1>Info</h1>
-            <input class = "infoArea" type="text" v-model="info" placeholder="Question discription">
-          </div>
+        <div>
+          <h1>Answers:</h1>
+          <input
+            v-for="(_, i) in answers"
+            v-model="answers[i]"
+            v-bind:key="'answer' + i"
+            placeholder="Add answer"
+          />
+          <button v-on:click="addAnswer">Add answer alternative</button><br />
 
         <!--Question box-->
           <div class="box questionBox">
@@ -72,24 +84,29 @@
             <button v-on:click="runQuestion">
               Run question
             </button> -->
-            </div>
-          </div>
-
-        <!--Map box-->
-          <div class="box map">
-            <h1>map</h1>
-          </div>
+        </div>
       </div>
 
-      <!--Tool box-->
-      <div class="box toolBox">
+      <!--Map box-->
+      <div class="box map">
+        <h1>map</h1>
+      </div>
+    </div>
+
+    <!--Tool box-->
+    <div class="box toolBox">
       <h1>toolBox</h1>
     </div>
-    </section>
+
+    <div class="blocker" v-if="showAll">
+      <!-- blocks part of the screen -->
+    </div>
+  </section>
+  </section>
 </template>
 
 <script>
-import io from 'socket.io-client';
+import io from "socket.io-client";
 const socket = io();
 
 export default {
@@ -105,13 +122,12 @@ export default {
       questionNumber: 0,
       data: {},
       uiLabels: {},
-      showAll: false,
-      
-    }
+      showAll: true,
+    };
   },
   created: function () {
-    //this.lang = this.$route.params.lang;
-    //socket.emit("pageLoaded", this.lang);
+    this.lang = this.$route.params.lang;
+    socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
@@ -121,16 +137,16 @@ export default {
     socket.on("pollCreated", (data) =>
         this.data = data)
   },
-  methods:{
-    createPoll: function() {
-      this.showAll = true
-      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+  methods: {
+    createPoll: function () {
+      this.showAll = false;
+      socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
     },
-    expand: function() {
-      console.log("INFO")
+    expand: function () {
+      console.log("INFO");
     },
     createGame: function () {
-      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang, })
+      socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
     },
    
   
@@ -139,7 +155,7 @@ export default {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.questions, a: this.answers, info: this.info } )
       
     },
-    addOverlook: function() {
+    addOverlook: function () {
       // <router-link to="Creator_overlook"><v-btn outline block class="start_buttons"><span class="text">
       var newQuestion = this.question.trim();
       if (!newQuestion) {return;}
@@ -155,10 +171,13 @@ export default {
       this.answers.push("");
     },
     runQuestion: function () {
-      socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
-    }
-  }
-}
+      socket.emit("runQuestion", {
+        pollId: this.pollId,
+        questionNumber: this.questionNumber,
+      });
+    },
+  },
+};
 /*$(document).ready(function () {
   $("#wrapper div").click(function () {
     if ($(this).siblings().hasClass('expanded')) {
@@ -171,17 +190,21 @@ export default {
 
 <style>
 #header h1 {
-    font-family: 'Times New Roman', Times, serif;
-
+  font-family: "Times New Roman", Times, serif;
 }
-
 .container {
   display: grid;
   grid-template-columns: 20% 60% 20%;
-  grid-template-rows: 400px 400px;
-
+  grid-template-rows: 50% 50%;
 }
-.box  {
+.blocker {
+  grid-column: 1/ span 3;
+  grid-row: 1/ span 2;
+  overflow: hidden;
+  background-color: black;
+  opacity: 80%;
+}
+.box {
   background-color: #444;
   color: #fff;
   border-radius: 5px;
@@ -191,22 +214,20 @@ export default {
 }
 .insertTitle {
   float: right;
-  
 }
 .titleBox h3 {
   float: left;
 }
 .titleBox {
   height: 140px;
-  
 }
 .Overlook {
   grid-column: 1;
-  grid-row: 1/ span 2;
+  grid-row: 1 / span 2;
 }
 .centerBox {
   grid-column: 2;
-  grid-row: 1/ span 2;
+  grid-row: 1 / span 2;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: 50% 50%;
@@ -214,7 +235,7 @@ export default {
 }
 .toolBox {
   grid-column: 3;
-  grid-row: 1/ span 2;
+  grid-row: 1 / span 2;
 }
 .info h1 {
   font-size: 25px;
@@ -233,7 +254,6 @@ export default {
   background-color: #444;
   resize: none;
   color: white;
-
 }
 .questionBox {
   grid-column: 2;
@@ -245,18 +265,18 @@ export default {
   grid-row: 1;
 }
 .map {
-  grid-column: 1 /span 2;
+  grid-column: 1 / span 2;
   grid-row: 2;
 }
 .createButton {
-  float:right;
+  float: right;
   align-items: center;
-  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
   border: 0;
   border-radius: 8px;
   box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
   box-sizing: border-box;
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
   font-family: Phantomsans, sans-serif;
   font-size: 20px;
