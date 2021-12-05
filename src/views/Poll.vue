@@ -15,12 +15,17 @@
 </div>
 </div>
   <div v-show="confirmedUser" class="fullFrame">
-     {{question}}
+     <!-- {{question}} -->
+     
   <section class="overview">
-  <div class="questions">
-    <Question v-bind:question="question"
-              v-on:answer="submitAnswer"/>
-  </div>
+
+   
+      <div class="questions">
+        <Question v-bind:question="question"
+                  v-on:answer="submitAnswer"/>
+      </div>
+  
+
   <div class="wrapper">
    <div class="box a start_buttons1"> {{pollId}}</div>
    
@@ -32,6 +37,8 @@
    </div>
    
  </div>
+{{question}}
+
  </section>
   <section class="activeQuestion">
     <!--först ta reda på vilken frågetyp det är
@@ -99,6 +106,9 @@ export default {
 }
 </script>
 <style>
+
+
+
 .fullFrame{
   display:flex;
   flex-direction:row;
@@ -138,8 +148,8 @@ export default {
       width:100vw;
  }    
 .wrapmap{
-  width:96%;
-  height:100%;
+  width:80%;
+  height:80%;
   overflow:scroll;
   position: relative;
   border:0px;

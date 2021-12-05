@@ -25,7 +25,7 @@
           <ul class="list-unstyled">
             <li v-bind:key="question" v-for="question in questions">
               <label>
-                {{question.text}}
+                {{question.text}}{{question.answers}}
                
               </label>
             </li>
@@ -36,6 +36,9 @@
             <button class="overlookBtn">Delete question</button>
           </p>
         </div>
+        <button class = "createButton" v-on:click="addQuestion">
+          Start Game
+          </button>
       </div>
 
       <!--Center box-->
@@ -62,7 +65,7 @@
                 Add answer alternative
               </button><br>
               
-              <button v-on:click="[addQuestion(),addOverlook(),allQuestions()]">
+              <button v-on:click="[addOverlook()]">
               Add question
             </button>
             <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
@@ -129,14 +132,11 @@ export default {
     createGame: function () {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang, })
     },
-    allQuestions: function() {
-      var allQuestions = [this.question, this.answers, this.info]
-      console.log(allQuestions)
-    },
+   
   
     addQuestion: function() {
        //Ska inte skickas förrän alla frågor lagts till
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, info: this.info } )
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.questions, a: this.answers, info: this.info } )
       
     },
     addOverlook: function() {
@@ -144,9 +144,12 @@ export default {
       var newQuestion = this.question.trim();
       if (!newQuestion) {return;}
       this.questions.push(
-          {text: newQuestion, done: false}
+          {text: newQuestion, done: false, answers: this.answers}
       );
       this.question = '';
+      this.answers = ["", ""];
+      
+      
     },
     addAnswer: function () {
       this.answers.push("");
@@ -201,10 +204,6 @@ export default {
   grid-column: 1;
   grid-row: 1/ span 2;
 }
-.overlookBtn {
-
-
-}
 .centerBox {
   grid-column: 2;
   grid-row: 1/ span 2;
@@ -241,7 +240,7 @@ export default {
   grid-row: 1;
 }
 .questionBox h1 {
-  font-size: 5px;
+  font-size: 15px;
   grid-column: 2;
   grid-row: 1;
 }
