@@ -122,13 +122,16 @@ export default {
     };
   },
   created: function () {
-    //this.lang = this.$route.params.lang;
-    //socket.emit("pageLoaded", this.lang);
+    this.lang = this.$route.params.lang;
+    socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
-      this.uiLabels = labels;
-    });
-    socket.on("dataUpdate", (data) => (this.data = data));
-    socket.on("pollCreated", (data) => (this.data = data));
+      this.uiLabels = labels
+    })
+    socket.on("dataUpdate", (data) =>
+        this.data = data
+    )
+    socket.on("pollCreated", (data) =>
+        this.data = data)
   },
   methods: {
     createPoll: function () {

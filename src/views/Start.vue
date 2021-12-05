@@ -16,9 +16,9 @@
 <!-- Knappar för startsidan -->
 <div class = "container">
       <!-- Knapp till Usersidan -->
-      <router-link to="poll"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.User}}</span></v-btn></router-link>
+      <router-link v-bind:to="'/poll/'"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.User}}</span></v-btn></router-link>
       <!-- Knapp till creators överblick -->
-      <router-link to="Creator_overlook"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.Creator}}</span></v-btn></router-link>
+      <router-link v-bind:to="'/Creator_overlook/'+lang"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.Creator}}</span></v-btn></router-link>
 </div>
   <br>
   <button id="langButton" v-on:click="switchLanguage" ><img v-bind:src="uiLabels.imgLanguage" height="70" width="140" alt=""></button>
