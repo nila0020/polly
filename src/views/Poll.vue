@@ -109,13 +109,12 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .fullFrame {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
-
   justify-content: center;
 }
 .wrapper {

@@ -10,7 +10,7 @@
       {{ question.q }}
     </div>
     <div class="answerGrid">
-      <v-btn
+      <button
         v-for="a in question.a"
         v-on:click="answer(a)"
         v-bind:key="a"
@@ -18,7 +18,7 @@
         id="answerButtons"
       >
         {{ a }}
-      </v-btn>
+      </button>
     </div>
   </div>
 </template>
