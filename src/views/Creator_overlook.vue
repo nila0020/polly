@@ -157,10 +157,11 @@ export default {
       var newQuestion = this.question.trim();
       if (!newQuestion) {return;}
       this.questions.push(
-          {text: newQuestion, done: false, answers: this.answers, questionNumber: this.questionNumber}
+          {text: newQuestion, done: false, answers: this.answers, questionNumber: this.questionNumber, info: this.info}
       );
       this.question = '';
       this.answers = ["", ""];
+      this.info = "";
       
       
     },
