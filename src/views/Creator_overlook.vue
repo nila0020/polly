@@ -72,8 +72,9 @@
               <button v-on:click="addAnswer">
                 Add answer alternative
               </button><br>
-              
-              <button v-on:click="[addOverlook()]">
+              <input type="text" placeholder="Choose a question nr">
+              <button @click ="[runQuestion()]"> Add </button><br>
+              <button v-on:click="[addOverlook(), runQuestion()]">
               Add question
             </button>
             <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
@@ -148,7 +149,7 @@ export default {
   
     addQuestion: function() {
        //Ska inte skickas förrän alla frågor lagts till
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.questions, a: this.answers, info: this.info } )
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.questions, a: this.answers, info: this.info, qNr: this.questionNumber } )
       
     },
     addOverlook: function () {
@@ -239,6 +240,7 @@ export default {
 .info {
   grid-column: 1;
   grid-row: 1;
+  overflow:scroll;
 }
 .infoArea {
   width: 100%;
@@ -254,6 +256,7 @@ export default {
 .questionBox {
   grid-column: 2;
   grid-row: 1;
+  overflow:scroll;
 }
 .questionBox h1 {
   font-size: 15px;
