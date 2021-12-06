@@ -1,4 +1,5 @@
 <template>
+<section>
   <section class="box titleBox">
     <!--Title box-->
 
@@ -97,6 +98,7 @@
       <!-- blocks part of the screen -->
     </div>
   </section>
+</section>
 </template>
 
 <script>
