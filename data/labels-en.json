@@ -9,5 +9,6 @@
 	"User": "User",
 	"Creator": "Creator",
 	"Choose" : "Choose User to enter a game or Creator if you want to create a game",
-	"welcomeText": "Welcome to Geoquiz"
+	"welcomeText": "Welcome to Geoquiz",
+	"gameName": "Game name"
 }

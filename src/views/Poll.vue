@@ -30,8 +30,8 @@
     </div>
   </div>
   <div v-show="confirmedUser" class="fullFrame">
-<<<<<<< HEAD
      <!-- {{question}} -->
+  </div>
      
   <section class="overview">
 
@@ -58,26 +58,6 @@
  </section>
   <section class="activeQuestion">
     <!--först ta reda på vilken frågetyp det är
-=======
-    <div v-show="!activeQuestion" class="overview">
-      <v-btn class="showquestion box b" v-on:click="activateQuestion"
-        >question!</v-btn
-      >
-      <div class="wrapper">
-        <div class="box a">{{ pollId }}</div>
-
-        <div class="box b">
-          <div id="map"></div>
-        </div>
-      </div>
-    </div>
-    <div v-show="activeQuestion" class="questionDisplayed">
-      <Question v-bind:question="question" v-on:answer="submitAnswer" />
-    </div>
-  </div>
-
-  <!--först ta reda på vilken frågetyp det är
->>>>>>> 2166c907b53b2f6ed12631577f026bfe213d23a5
         ha metoder för att rita upp varje frågetyp
         ex
         on:click -> display:true ->,
@@ -96,7 +76,8 @@ Question:{
   this.pic=url
   this.correctAnswer=1300               (alternativ eller värde beroende på frågetyp)
   }}
---></template>
+--></section>
+</template>
 
 <script>
 // @ is an alias to /src
@@ -139,7 +120,7 @@ export default {
   },
 };
 </script>
-<<<<<<< HEAD
+<!--/* <<<<<<< HEAD */-->
 <style>
 
 
@@ -151,7 +132,7 @@ export default {
   border:0px;
   border-radius:8px;}
 
-=======
+/*=======
 <style scoped>
 .fullFrame {
   width: 100%;
@@ -160,7 +141,7 @@ export default {
   flex-direction: row;
   justify-content: center;
 }
->>>>>>> 2166c907b53b2f6ed12631577f026bfe213d23a5
+>>>>>>> 2166c907b53b2f6ed12631577f026bfe213d23a5*/
 .wrapper {
   display: grid;
   width: 100vw;
@@ -175,7 +156,7 @@ export default {
   border-radius: 12px;
 }
 
-<<<<<<< HEAD
+/*<<<<<<< HEAD*/
  .a {
      grid-column: 1 ;
      grid-row:1;
@@ -192,7 +173,7 @@ export default {
   width:80%;
   height:80%;
   overflow:scroll;
-=======
+/*=======
 .a {
   grid-column: 1;
   grid-row: 1;
@@ -206,7 +187,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow: scroll;
->>>>>>> 2166c907b53b2f6ed12631577f026bfe213d23a5
+>>>>>>> 2166c907b53b2f6ed12631577f026bfe213d23a5*/
   position: relative;
   border: 0px;
   border-radius: 12px;
@@ -217,8 +198,6 @@ export default {
   background: url("/img/polacks.jpg");
   border: 0px;
   border-radius: 8px;
-}
-.questionDisplayed {
 }
 .entryId {
   display: grid;

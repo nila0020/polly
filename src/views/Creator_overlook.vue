@@ -1,12 +1,11 @@
 <template>
-<section>
   <section class="box titleBox">
     <!--Title box-->
 
     <h3>Game Title and GameID</h3>
 
     <div class="insertTitle">
-      <label for="gameName">Game name: </label>
+      <label for="gameName">{{uiLabels.gameName}}: </label>
       <input
         type="text"
         id="gameName"
@@ -45,22 +44,6 @@
         <button class = "createButton" v-on:click="addQuestion">
           Start Game
           </button>
-      </div>
-
-      <!--Question box-->
-      <div class="box questionBox">
-        <h1>Create your question here</h1>
-        <input type="text" v-model="question" placeholder="Add question" />
-
-        <div>
-          <h1>Answers:</h1>
-          <input
-            v-for="(_, i) in answers"
-            v-model="answers[i]"
-            v-bind:key="'answer' + i"
-            placeholder="Add answer"
-          />
-          <button v-on:click="addAnswer">Add answer alternative</button><br />
 
         <!--Question box-->
           <div class="box questionBox">
@@ -91,7 +74,6 @@
       <div class="box map">
         <h1>map</h1>
       </div>
-    </div>
 
     <!--Tool box-->
     <div class="box toolBox">
@@ -101,7 +83,6 @@
     <div class="blocker" v-if="showAll">
       <!-- blocks part of the screen -->
     </div>
-  </section>
   </section>
 </template>
 
