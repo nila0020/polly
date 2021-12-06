@@ -24,6 +24,9 @@
   </section>
 
   <section class="container">
+    <!--Overlook box-->
+    <div class="box Overlook" >
+      <h1>Overlook</h1>
 
         <!--Add new questions and list them-->
         <div id="overlookList">
@@ -44,6 +47,15 @@
         <button class = "createButton" v-on:click="addQuestion">
           Start Game
           </button>
+    </div>
+    <!--Center box-->
+    <div class="box centerBox">
+
+      <!--Info box-->
+      <div class="box info" v-on:click="expand">
+        <h1>Info</h1>
+        <input class = "infoArea" type="text" v-model="info" placeholder="Question discription">
+      </div>
 
         <!--Question box-->
           <div class="box questionBox">
@@ -74,6 +86,7 @@
       <div class="box map">
         <h1>map</h1>
       </div>
+    </div>
 
     <!--Tool box-->
     <div class="box toolBox">
