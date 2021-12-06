@@ -121,7 +121,7 @@ export default {
 };
 </script>
 <!--/* <<<<<<< HEAD */-->
-<style>
+<!--<style>
 
 
 
@@ -130,9 +130,9 @@ export default {
   flex-direction:row;
   overflow:hidden;
   border:0px;
-  border-radius:8px;}
+  border-radius:8px;}-->
 
-/*=======
+=======
 <style scoped>
 .fullFrame {
   width: 100%;
@@ -141,7 +141,7 @@ export default {
   flex-direction: row;
   justify-content: center;
 }
->>>>>>> 2166c907b53b2f6ed12631577f026bfe213d23a5*/
+/*>>>>>>> 2166c907b53b2f6ed12631577f026bfe213d23a5*/
 .wrapper {
   display: grid;
   width: 100vw;
