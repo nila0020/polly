@@ -72,8 +72,8 @@
               <button v-on:click="addAnswer">
                 Add answer alternative
               </button><br>
-              <input type="text" placeholder="Choose a question nr">
-              <button @click ="[runQuestion()]"> Add </button><br>
+              <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">
+              
               <button v-on:click="[addOverlook(), runQuestion()]">
               Add question
             </button>
@@ -149,7 +149,7 @@ export default {
   
     addQuestion: function() {
        //Ska inte skickas förrän alla frågor lagts till
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.questions, a: this.answers, info: this.info, qNr: this.questionNumber } )
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.questions, a: this.answers, info: this.info, questionNumber: this.questionNumber } )
       
     },
     addOverlook: function () {
@@ -157,7 +157,7 @@ export default {
       var newQuestion = this.question.trim();
       if (!newQuestion) {return;}
       this.questions.push(
-          {text: newQuestion, done: false, answers: this.answers}
+          {text: newQuestion, done: false, answers: this.answers, questionNumber: this.questionNumber}
       );
       this.question = '';
       this.answers = ["", ""];
