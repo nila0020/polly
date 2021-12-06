@@ -30,34 +30,24 @@
     </div>
   </div>
   <div v-show="confirmedUser" class="fullFrame">
-     <!-- {{question}} -->
+    <div v-show="!activeQuestion" class="overview">
+      <v-btn class="showquestion box b" v-on:click="activateQuestion"
+        >question!</v-btn
+      >
+      <div class="wrapper">
+        <div class="box a">{{ pollId }}</div>
+
+        <div class="box b">
+          <div id="map"></div>
+        </div>
+      </div>
+    </div>
+    <div v-show="activeQuestion" class="questionDisplayed">
+      <Question v-bind:question="question" v-on:answer="submitAnswer" />
+    </div>
   </div>
-     
-  <section class="overview">
 
-   
-      <div class="questions">
-        <Question v-bind:question="question"
-                  v-on:answer="submitAnswer"/>
-      </div>
-  
-
-  <div class="wrapper">
-   <div class="box a start_buttons1"> {{pollId}}</div>
-   
-   <div class="box b" >
-   <div class="wrapmap">
-      <div id="map">
-      </div>
-      </div>
-   </div>
-   
- </div>
-{{question}}
-
- </section>
-  <section class="activeQuestion">
-    <!--först ta reda på vilken frågetyp det är
+  <!--först ta reda på vilken frågetyp det är
         ha metoder för att rita upp varje frågetyp
         ex
         on:click -> display:true ->,
@@ -76,15 +66,13 @@ Question:{
   this.pic=url
   this.correctAnswer=1300               (alternativ eller värde beroende på frågetyp)
   }}
---></section>
-</template>
+--></template>
 
 <script>
 // @ is an alias to /src
 import Question from "@/components/Question.vue";
 import io from "socket.io-client";
 const socket = io();
-
 export default {
   name: "Poll",
   components: {
@@ -120,19 +108,6 @@ export default {
   },
 };
 </script>
-<!--/* <<<<<<< HEAD */-->
-<!--<style>
-
-
-
-.fullFrame{
-  display:flex;
-  flex-direction:row;
-  overflow:hidden;
-  border:0px;
-  border-radius:8px;}-->
-
-=======
 <style scoped>
 .fullFrame {
   width: 100%;
@@ -141,7 +116,6 @@ export default {
   flex-direction: row;
   justify-content: center;
 }
-/*>>>>>>> 2166c907b53b2f6ed12631577f026bfe213d23a5*/
 .wrapper {
   display: grid;
   width: 100vw;
@@ -151,29 +125,9 @@ export default {
   background-color: white;
   color: black;
 }
-
 .box {
   border-radius: 12px;
 }
-
-/*<<<<<<< HEAD*/
- .a {
-     grid-column: 1 ;
-     grid-row:1;
-     color:white;
-     width:96%;
-     background-color:purple;
- }
- .b {
-      grid-column: 1 ;
-      grid-row: 2;
-      width:100vw;
- }    
-.wrapmap{
-  width:80%;
-  height:80%;
-  overflow:scroll;
-/*=======
 .a {
   grid-column: 1;
   grid-row: 1;
@@ -187,7 +141,6 @@ export default {
   width: 100%;
   height: 100%;
   overflow: scroll;
->>>>>>> 2166c907b53b2f6ed12631577f026bfe213d23a5*/
   position: relative;
   border: 0px;
   border-radius: 12px;
@@ -198,6 +151,8 @@ export default {
   background: url("/img/polacks.jpg");
   border: 0px;
   border-radius: 8px;
+}
+.questionDisplayed {
 }
 .entryId {
   display: grid;
