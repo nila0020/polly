@@ -31,10 +31,11 @@
 
         <!--Add new questions and list them-->
         <div id="overlookList">
-          <ul class="list-unstyled">
+          <ul>
             <li v-bind:key="question" v-for="question in questions">
+          
               <label>
-                {{question.text}}{{question.answers}}
+                <button>{{question.questionNumber}}.{{question.text}}</button>
                
               </label>
             </li>
@@ -287,6 +288,7 @@ export default {
   grid-column: 1;
   grid-row: 1 / span 2;
 }
+
 .centerBox {
   grid-column: 2;
   grid-row: 1 / span 2;
