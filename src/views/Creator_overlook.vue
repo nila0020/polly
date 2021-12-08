@@ -74,7 +74,8 @@
             </button> <br>
            </div>
           <div v-else-if="checked === 'slider'">
-            Här ska en slider visas <br>
+         y
+
           </div>
 
           <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">
@@ -126,10 +127,14 @@
 </template>
 
 <script>
+import Slider from '@vueform/slider'
 import io from "socket.io-client";
 const socket = io();
 
 export default {
+  components: {
+    Slider,
+  },
   data: function () {
     return {
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
@@ -150,7 +155,8 @@ export default {
       infoSmall: false,
       questionSmall: false,
       mapSmall: false,
-      questionSmallCond: false
+      questionSmallCond: false,
+      value: 20
     };
   },
   created: function () {
@@ -248,6 +254,8 @@ export default {
   });
 });*/
 </script>
+
+<style src="@vueform/slider/themes/default.css"></style>
 
 <style>
 #header h1 {
@@ -416,5 +424,15 @@ export default {
   grid-column: 3 /span 2;
   grid-row: 4;
   overflow: scroll;
+}
+.output {
+  background: #000000;
+  color: #ffffff;
+  padding: 20px;
+  margin-bottom: 50px;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 13px;
 }
 </style>
