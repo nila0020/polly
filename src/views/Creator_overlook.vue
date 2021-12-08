@@ -172,7 +172,6 @@ export default {
       socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
     },
     infoExpand: function () {
-      console.log(this.checked)
       this.infoBig = true;
       this.questionBig = false;
       this.mapBig = false;
@@ -421,14 +420,7 @@ export default {
   grid-row: 4;
   overflow: scroll;
 }
-.output {
-  background: #000000;
-  color: #ffffff;
-  padding: 20px;
-  margin-bottom: 50px;
-  display: inline-block;
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 13px;
+::-webkit-scrollbar {
+  width: 0px;
 }
 </style>
