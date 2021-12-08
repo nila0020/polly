@@ -57,15 +57,12 @@ Hur frågeobjektet bör se ut ungefär:
 Question:{
   this.type=multiplechoice,               (fleralternativfråga, slide osv?, indikator för css)
   this.pos={longitude latitude},
-  this.order=11,
+  this.info
   this.q= frågan
-  this.a=alternativ a
-  this.b=alternativ b
-  this.antalAlternativ=5;
-  ...
+  this.a=[{answer:bool/value},{answer:bool/value},{answer:bool/value}] (bool eller value beroende på fråga)
   this.pic=url
-  this.correctAnswer=1300               (alternativ eller värde beroende på frågetyp)
   }}
+frågebunten bör se ut såhär:Questions{ {1:object}, {2:object}, {3:object} }
 --></template>
 
 <script>
@@ -73,6 +70,7 @@ Question:{
 import Question from "@/components/Question.vue";
 import io from "socket.io-client";
 const socket = io();
+
 export default {
   name: "Poll",
   components: {
@@ -83,7 +81,6 @@ export default {
       question: {
         q: "",
         a: [],
-        info: "",
       },
       pollId: "inactive poll",
       confirmedUser: false,
@@ -91,8 +88,10 @@ export default {
     };
   },
   created: function () {
+    console.log("created has been triggered in poll");
     this.pollId = this.$route.params.id;
     socket.on("newQuestion", (q) => (this.question = q));
+    console.log(this.question);
   },
   methods: {
     submitAnswer: function (answer) {
@@ -103,6 +102,7 @@ export default {
       socket.emit("joinPoll", this.pollId);
     },
     activateQuestion: function () {
+      console.log("detta är objektet= " + this.question);
       this.activeQuestion = true;
     },
   },
