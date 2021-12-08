@@ -10,5 +10,7 @@
 	"Creator": "Skapare",
 	"Choose" : "Välj Användare för att starta ett spel eller Skapare om du vill skapa ett spel",
 	"welcomeText": "Välkommen till Geoquiz",
-	"gameName": "Spelnamn"
+	"gameName": "Spelnamn",
+	"MCQ": "Flervalsfråga",
+	"slider": "Slider"
 }

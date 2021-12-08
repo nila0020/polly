@@ -64,14 +64,19 @@
             <input type="text" v-model="question" placeholder="Add question">
             
             <div>
-                 
-              <h1>Answers:</h1>
-              <input v-for="(_, i) in answers"
-                     v-model="answers[i]"
-                     v-bind:key="'answer'+i" placeholder="Add answer">
-              <button v-on:click="addAnswer">
-                Add answer alternative
-              </button><br>
+               <div v-if="checked === 'MCQ'">
+                <h1>Answers:</h1>
+                <input v-for="(_, i) in answers"
+                       v-model="answers[i]"
+                       v-bind:key="'answer'+i" placeholder="Add answer">
+                <button v-on:click="addAnswer">
+                  Add answer alternative
+                </button> <br>
+               </div>
+              <div v-else-if="checked === 'slider'">
+                Här ska en slider visas <br>
+              </div>
+
               <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">
               
               <button v-on:click="[addOverlook(), runQuestion()]">
@@ -93,6 +98,24 @@
     <!--Tool box-->
     <div class="box toolBox">
       <h1>toolBox</h1>
+      <div id="app">
+        <input type="radio" id="MCQ" value='MCQ' v-model="checked">
+        <label for="MCQ">{{ uiLabels.MCQ }}</label>
+
+        <br>
+
+        <input type="radio" id="slider" value="slider" v-model="checked">
+        <label for="slider">{{ uiLabels.slider }}</label>
+
+        <br>
+
+        <span>Checked: {{ checked }}</span>
+
+        <br>
+
+        <span v-if="checked === 'MCQ'">{{ uiLabels.MCQ }} is checked!</span>
+        <span v-else-if="checked === 'slider'">{{ uiLabels.slider }} is checked!</span>
+      </div>
     </div>
 
     <div class="blocker" v-if="showAll">
@@ -120,6 +143,7 @@ export default {
       data: {},
       uiLabels: {},
       showAll: true,
+      checked: null
     };
   },
   created: function () {
