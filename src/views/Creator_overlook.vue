@@ -53,44 +53,44 @@
     <div class="box centerBox">
 
       <!--Info box-->
-      <div class="box info" v-on:click="expand">
+      <div class="box info" v-on:click="infoExpand" v-bind:class="{ 'infoBig': infoBig, 'infoSmall': infoSmall }">
         <h1>Info</h1>
         <input class = "infoArea" type="text" v-model="info" placeholder="Question discription">
       </div>
 
-        <!--Question box-->
-          <div class="box questionBox">
-            <h1>Create your question here</h1>
-            <input type="text" v-model="question" placeholder="Add question">
-            
-            <div>
-               <div v-if="checked === 'MCQ'">
-                <h1>Answers:</h1>
-                <input v-for="(_, i) in answers"
-                       v-model="answers[i]"
-                       v-bind:key="'answer'+i" placeholder="Add answer">
-                <button v-on:click="addAnswer">
-                  Add answer alternative
-                </button> <br>
-               </div>
-              <div v-else-if="checked === 'slider'">
-                Här ska en slider visas <br>
-              </div>
+      <!--Question box-->
+      <div class="box questionBox" v-on:click="questionExpand" v-bind:class="{ 'questionBig': questionBig, 'questionSmall': questionSmall, 'questionSmallCond': questionSmallCond}">
+        <h1>Create your question here</h1>
+        <input type="text" v-model="question" placeholder="Add question">
 
-              <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">
-              
-              <button v-on:click="[addOverlook(), runQuestion()]">
-              Add question
-            </button>
-            <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
-            <button v-on:click="runQuestion">
-              Run question
-            </button> -->
+        <div>
+           <div v-if="checked === 'MCQ'">
+            <h1>Answers:</h1>
+            <input v-for="(_, i) in answers"
+                   v-model="answers[i]"
+                   v-bind:key="'answer'+i" placeholder="Add answer">
+            <button v-on:click="addAnswer">
+              Add answer alternative
+            </button> <br>
+           </div>
+          <div v-else-if="checked === 'slider'">
+            Här ska en slider visas <br>
+          </div>
+
+          <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">
+
+          <button v-on:click="[addOverlook(), runQuestion()]">
+          Add question
+          </button>
+        <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
+        <button v-on:click="runQuestion">
+          Run question
+        </button> -->
         </div>
       </div>
 
       <!--Map box-->
-      <div class="box map">
+      <div class="box map" v-on:click="mapExpand" v-bind:class="{ 'mapBig' : mapBig, 'mapSmall': mapSmall }">
         <h1>map</h1>
       </div>
     </div>
@@ -143,7 +143,14 @@ export default {
       data: {},
       uiLabels: {},
       showAll: true,
-      checked: null
+      checked: null,
+      infoBig: false,
+      questionBig:false,
+      mapBig:false,
+      infoSmall: false,
+      questionSmall: false,
+      mapSmall: false,
+      questionSmallCond: false
     };
   },
   created: function () {
@@ -163,9 +170,41 @@ export default {
       this.showAll = false;
       socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
     },
-    expand: function () {
-      console.log("INFO");
+    infoExpand: function () {
+      this.infoBig = true;
+      this.questionBig = false;
+      this.mapBig = false;
+
+      this.infoSmall = false;
+      this.questionSmall = true;
+      this.mapSmall = true;
+
+      this.questionSmallCond = false;
+
     },
+    questionExpand: function () {
+      this.infoBig = false;
+      this.questionBig = true;
+      this.mapBig = false;
+
+      this.infoSmall = true;
+      this.questionSmall = false;
+      this.mapSmall = true;
+
+      this.questionSmallCond = false;
+    },
+    mapExpand: function () {
+      this.infoBig = false;
+      this.questionBig = false;
+      this.mapBig = true;
+
+      this.infoSmall = true;
+      this.questionSmall = false;
+      this.mapSmall = false;
+
+      this.questionSmallCond = true;
+    },
+
     createGame: function () {
       socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
     },
@@ -251,8 +290,8 @@ export default {
   grid-column: 2;
   grid-row: 1 / span 2;
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 50% 50%;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 25% 25% 25% 25%;
   background-color: lightslategray;
 }
 .toolBox {
@@ -263,8 +302,8 @@ export default {
   font-size: 25px;
 }
 .info {
-  grid-column: 1;
-  grid-row: 1;
+  grid-column: 1 /span 2;
+  grid-row: 1 / span 2;
   overflow:scroll;
 }
 .infoArea {
@@ -279,8 +318,8 @@ export default {
   color: white;
 }
 .questionBox {
-  grid-column: 2;
-  grid-row: 1;
+  grid-column: 3 /span 2;
+  grid-row: 1/ span 2;
   overflow:scroll;
 }
 .questionBox h1 {
@@ -289,8 +328,8 @@ export default {
   grid-row: 1;
 }
 .map {
-  grid-column: 1 / span 2;
-  grid-row: 2;
+  grid-column: 1 / span 4;
+  grid-row: 3 / span 2;
 }
 .createButton {
   float: right;
@@ -340,5 +379,42 @@ export default {
     font-size: 10px;
     min-width: 90px;
   }
+}
+
+/* conditionl statments */
+.infoBig {
+  grid-column: 1 /span 4;
+  grid-row: 1 / span 3;
+  overflow:scroll;
+}
+.questionBig {
+  grid-column: 1 /span 4;
+  grid-row: 1 / span 3;
+  overflow:scroll;
+}
+.mapBig {
+  grid-column: 1 /span 4;
+  grid-row: 1 / span 3;
+  overflow:scroll;
+}
+.infoSmall {
+  grid-column: 1 /span 2;
+  grid-row: 4;
+  overflow:scroll;
+}
+.questionSmall {
+  grid-column: 1 /span 2;
+  grid-row: 4;
+  overflow:scroll;
+}
+.mapSmall {
+  grid-column: 3 /span 2;
+  grid-row: 4;
+  overflow:scroll;
+}
+.questionSmallCond {
+  grid-column: 3 /span 2;
+  grid-row: 4;
+  overflow: scroll;
 }
 </style>
