@@ -74,8 +74,7 @@
             </button> <br>
            </div>
           <div v-else-if="checked === 'slider'">
-            <div class="output">Data: {{ value }}</div>
-            <Slider v-model="value" />
+            Här ska en slider vara
           </div>
 
           <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">
@@ -127,14 +126,10 @@
 </template>
 
 <script>
-import Slider from '@vueform/slider'
 import io from "socket.io-client";
 const socket = io();
 
 export default {
-  components: {
-    Slider,
-  },
   data: function () {
     return {
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
