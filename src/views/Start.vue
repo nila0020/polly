@@ -9,8 +9,15 @@
     <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
   </div> -->
 
-<section id = "page">
-  <h1>{{uiLabels.welcomeText}}</h1>
+
+
+<section id = "page" >
+  <header id="header" style="margin-bottom:100px; padding-right:150px; ">
+    <img src="img\PngItem_2939510.png" alt="" style="width:150px; margin-left:10px; float:left;">
+    <h1>{{uiLabels.welcomeText}}</h1>
+
+  </header>
+
   <h3>{{uiLabels.Choose}}</h3>
   <!-- <img src="https://rymdcenter.se/wp-content/uploads/2020/01/m82-hst-karusell.jpg" alt="alt text"/> -->
 <!-- Knappar för startsidan -->
@@ -21,7 +28,7 @@
       <router-link v-bind:to="'/Creator_overlook/'+lang"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.Creator}}</span></v-btn></router-link>
 </div>
   <br>
-  <button id="langButton" v-on:click="switchLanguage" ><img v-bind:src="uiLabels.imgLanguage" height="70" width="140" alt=""></button>
+  <button id="langButton" class ="langButton" v-on:click="switchLanguage" ><img v-bind:src="uiLabels.imgLanguage" height="70" width="140" alt=""></button>
 
 </section>
 </template>
@@ -58,15 +65,29 @@ export default {
 </script>
 <style>
 
+#page {
+  background-color: #accaea;
+  margin-top:50px;
+  font-size: 16pt;
+  font-family: 'Archivo Black', sans-serif;
+  padding-bottom:100px;
+  padding-top:50px;
+}
 
-.page h1 {
-  position: absolute;
-  margin-top: -300px;
-  padding-left: 300px;
-  font-size: 60pt;
+
+#header{
+  background-color: #accaea;
+  font-size: 40pt;
+  text-align:center;
+  padding-left: 30px;
+  font-size: 40pt;
   text-align: center;
   color:black;
 }
+
+
+
+
 .container {
   
   display: flex;
@@ -123,8 +144,13 @@ export default {
 #langButton {
   align-items: center;
   padding: 0;
-  border: 0;
+  cursor: pointer;
+
 }
+.langButton:hover {
+  filter: brightness(130%);
+}
+
 
 @media (min-width: 768px) {
   .start_buttons {
