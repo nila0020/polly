@@ -35,7 +35,7 @@
             <li v-bind:key="question" v-for="question in questions">
           
               <label>
-                <button>{{question.questionNumber}}.{{question.text}}</button>
+                <button @click= "currentData" key="">{{question.questionNumber}}.{{question.text}}</button>
                
               </label>
             </li>
@@ -65,7 +65,7 @@
         <input type="text" v-model="question" placeholder="Add question">
 
         <div>
-           <div v-if="checked === 'MCQ'||checked === null">
+           <div v-if="checked === 'MCQ'">
             <h1>Answers:</h1>
             <input v-for="(_, i) in answers"
                    v-model="answers[i]"
@@ -100,7 +100,7 @@
     <div class="box toolBox">
       <h1>toolBox</h1>
       <div id="app">
-        <input type="radio" id="MCQ" value='MCQ' v-model="checked" checked>
+        <input type="radio" id="MCQ" value='MCQ' v-model="checked">
         <label for="MCQ">{{ uiLabels.MCQ }}</label>
 
         <br>
@@ -172,7 +172,6 @@ export default {
       socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
     },
     infoExpand: function () {
-      console.log(this.checked)
       this.infoBig = true;
       this.questionBig = false;
       this.mapBig = false;
@@ -229,6 +228,9 @@ export default {
       this.info = "";
       
       
+    },
+    currentData: function() {
+    
     },
     addAnswer: function () {
       this.answers.push("");
