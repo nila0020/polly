@@ -74,8 +74,8 @@
             </button> <br>
            </div>
           <div v-else-if="checked === 'slider'">
-         y
-
+            <div class="output">Data: {{ value }}</div>
+            <Slider v-model="value" />
           </div>
 
           <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">
