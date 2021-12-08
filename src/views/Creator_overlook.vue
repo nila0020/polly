@@ -151,7 +151,6 @@ export default {
       questionSmall: false,
       mapSmall: false,
       questionSmallCond: false,
-      value: 20
     };
   },
   created: function () {
@@ -250,7 +249,6 @@ export default {
 });*/
 </script>
 
-<style src="@vueform/slider/themes/default.css"></style>
 
 <style>
 #header h1 {
