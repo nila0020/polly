@@ -4,7 +4,7 @@ const languages = ["en", "se"];
 
 // Store data in an object to keep the global namespace clean
 function Data() {
-  this.polls = {};
+  this.games = {};
 }
 
 /***********************************************
@@ -18,48 +18,49 @@ Data.prototype.getUILabels = function (lang = "en") {
   return ui;
 }
 
-Data.prototype.createPoll = function(pollId, lang="en") {
-  if (typeof this.polls[pollId] === "undefined") {
-    let poll = {};
-    poll.lang = lang;  
-    poll.questions = [];
-    poll.answers = [];
-    poll.currentQuestion = 0;              
-    this.polls[pollId] = poll;
-    console.log("poll created", pollId, poll);
+Data.prototype.createGame = function(gameId, lang="en", gameName) {
+  if (typeof this.games[gameId] === "undefined") {
+    let game = {};
+    game.lang = lang;
+    game.name = gameName;
+    game.questions = [];
+    game.answers = [];
+    game.currentQuestion = 0;
+    this.games[gameId] = game;
+    console.log("game created", gameId, game);
   }
-  return this.polls[pollId];
+  return this.games[gameId];
 }
 
-Data.prototype.addQuestion = function(pollId, q) {
-  const poll = this.polls[pollId];
-  console.log("question added to", pollId, q);
-  if (typeof poll !== 'undefined') {
-    poll.questions.push(q);
+Data.prototype.addQuestion = function(gameId, q) {
+  const game = this.games[gameId];
+  console.log("question added to", gameId, q);
+  if (typeof game !== 'undefined') {
+    game.questions.push(q);
   }
 }
 
-Data.prototype.getQuestion = function(pollId, qId=null) {
-  const poll = this.polls[pollId];
-  console.log("question requested for ", pollId, qId);
-  if (typeof poll !== 'undefined') {
+Data.prototype.getQuestion = function(gameId, qId=null) {
+  const game = this.games[gameId];
+  console.log("question requested for ", gameId, qId);
+  if (typeof game !== 'undefined') {
     if (qId !== null) {
-      poll.currentQuestion = qId;
+      game.currentQuestion = qId;
     }
-    return poll.questions[poll.currentQuestion];
+    return game.questions[game.currentQuestion];
   }
   return []
 }
 
-Data.prototype.submitAnswer = function(pollId, answer) {
-  const poll = this.polls[pollId];
-  console.log("answer submitted for ", pollId, answer);
-  if (typeof poll !== 'undefined') {
-    let answers = poll.answers[poll.currentQuestion];
+Data.prototype.submitAnswer = function(gameId, answer) {
+  const game = this.games[gameId];
+  console.log("answer submitted for ", gameId, answer);
+  if (typeof game !== 'undefined') {
+    let answers = game.answers[game.currentQuestion];
     if (typeof answers !== 'object') {
       answers = {};
       answers[answer] = 1;
-      poll.answers.push(answers);
+      game.answers.push(answers);
     }
     else if (typeof answers[answer] === 'undefined')
       answers[answer] = 1;
@@ -69,12 +70,12 @@ Data.prototype.submitAnswer = function(pollId, answer) {
   }
 }
 
-Data.prototype.getAnswers = function(pollId) {
-  const poll = this.polls[pollId];
-  if (typeof poll !== 'undefined') {
-    const answers = poll.answers[poll.currentQuestion];
-    if (typeof poll.questions[poll.currentQuestion] !== 'undefined') {
-      return {q: poll.questions[poll.currentQuestion].q, a: answers};
+Data.prototype.getAnswers = function(gameId) {
+  const game = this.games[gameId];
+  if (typeof game !== 'undefined') {
+    const answers = game.answers[game.currentQuestion];
+    if (typeof game.questions[game.currentQuestion] !== 'undefined') {
+      return {q: game.questions[game.currentQuestion].q, a: answers};
     }
   }
   return {}

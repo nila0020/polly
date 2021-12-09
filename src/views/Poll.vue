@@ -2,13 +2,13 @@
   <div v-show="!confirmedUser" class="entryId">
     <h1>Lets GO!</h1>
     <div class="boxA">
-      <label for="pollId" class="start_buttons1">Poll-ID</label><br />
+      <label for="gameId" class="start_buttons1">Poll-ID</label><br />
       <input
           type="text"
-          id="pollId"
-          v-model="pollId"
+          id="gameId"
+          v-model="gameId"
           required="required"
-          placeholder="Input the poll-Id"
+          placeholder="Input the game-Id"
       />
     </div>
     <br /><br /><br /><br />
@@ -35,7 +35,7 @@
       >question!</v-btn
       >
       <div class="wrapper">
-        <div class="box a">{{ pollId }}</div>
+        <div class="box a">{{ gameId }}</div>
 
         <div class="box b">
           <div id="map"></div>
@@ -71,7 +71,7 @@ import Question from "@/components/Question.vue";
 import io from "socket.io-client";
 const socket = io();
 export default {
-  name: "Poll",
+  name: "Game",
   components: {
     Question,
   },
@@ -81,25 +81,25 @@ export default {
         q: "",
         a: [],
       },
-      pollId: "inactive poll",
+      gameId: "inactive game",
       confirmedUser: false,
       activeQuestion: false,
-      qId: 1
+      qId: 0
     };
   },
   created: function () {
     console.log("created has been triggered in poll");
-    this.pollId = this.$route.params.id;
+    this.gameId = this.$route.params.id;
     socket.on("newQuestion", (q) => (this.question = q));
     console.log(this.question);
   },
   methods: {
     submitAnswer: function (answer) {
-      socket.emit("submitAnswer", { pollId: this.pollId, answer: answer });
+      socket.emit("submitAnswer", { gameId: this.gameId, answer: answer });
     },
     confirmUser: function () {
       this.confirmedUser = true;
-      socket.emit("joinPoll", this.pollId, this.qId);
+      socket.emit("joinGame", this.gameId, this.qId);
     },
     activateQuestion: function () {
       console.log("detta är objektet= " + this.question);

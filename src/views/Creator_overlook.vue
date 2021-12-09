@@ -10,17 +10,17 @@
         <input
             type="text"
             id="gameName"
-            v-model="pollName"
+            v-model="gameName"
             placeholder="Enter Game name"
         /><br />
         <label for="gameID">Game ID: </label>
         <input
             type="text"
             id="gameID"
-            v-model="pollId"
+            v-model="gameId"
             placeholder="Enter Game ID"
         /><br />
-        <button class="createButton" v-on:click="createPoll">Create Game</button>
+        <button class="createButton" v-on:click="createGame">Create Game</button>
       </div>
     </section>
 
@@ -136,10 +136,11 @@ export default {
       questions: [],
       info: "",
       lang: "",
-      pollId: "",
+      gameId: "",
       question: "",
       answers: ["", ""],
       questionNumber: 0,
+      gameName: "",
       data: {},
       uiLabels: {},
       showAll: true,
@@ -162,14 +163,47 @@ export default {
     socket.on("dataUpdate", (data) =>
         this.data = data
     )
-    socket.on("pollCreated", (data) =>
+    socket.on("gameCreated", (data) =>
         this.data = data)
   },
   methods: {
-    createPoll: function () {
+    createGame: function () {
       this.showAll = false;
-      socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
+      socket.emit("createGame", { gameId: this.gameId, lang: this.lang, gameName: this.gameName });
     },
+
+    addQuestion: function() {
+      //Ska inte skickas förrän alla frågor lagts till
+      var newQuestion = this.question.trim();
+      if (!newQuestion) {return;}
+      socket.emit("addQuestion",
+          {gameId: this.gameId,
+            type: this.type,
+            pos: this.pos,
+            info: this.info,
+            q: newQuestion,
+            a: this.answers,
+            questionNumber: this.questionNumber,
+            pic: this.pic
+          } )
+      this.questions.push(
+          {gameId: this.gameId,
+            q: this.questions,
+            a: this.answers,
+            info: this.info,
+            questionNumber: this.questionNumber}
+      );
+      this.question = '';
+      this.answers = ["", ""];
+      this.info = "";
+    },
+
+    currentData: function() {
+    },
+    addAnswer: function () {
+      this.answers.push("");
+    },
+
     infoExpand: function () {
       this.infoBig = true;
       this.questionBig = false;
@@ -197,65 +231,14 @@ export default {
       this.mapSmall = false;
       this.questionSmallCond = true;
     },
-    createGame: function () {
-      socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
-    },
-
-    /*Question:{
-      this.type=multiplechoice,               (fleralternativfråga, slide osv?, indikator för css)
-      this.pos={longitude latitude},
-      this.info
-      this.q= frågan
-      this.a=[{answer:bool/value},{answer:bool/value},{answer:bool/value}] (bool eller value beroende på fråga)
-      this.pic=url
-}}*/
-    addQuestion: function() {
-      //Ska inte skickas förrän alla frågor lagts till
-      var newQuestion = this.question.trim();
-      if (!newQuestion) {return;}
-      socket.emit("addQuestion",
-          {pollId: this.pollId,
-            type: this.type,
-            pos: this.pos,
-            info: this.info,
-            q: newQuestion,
-            a: this.answers,
-            questionNumber: this.questionNumber,
-            pic: this.pic
-            } )
-      this.questions.push(
-          {pollId: this.pollId, q: this.questions, a: this.answers, info: this.info, questionNumber: this.questionNumber}
-      );
-      this.question = '';
-      this.answers = ["", ""];
-      this.info = "";
-    },
-
-    /*addOverlook: function () {
-      // <router-link to="Creator_overlook"><v-btn outline block class="start_buttons"><span class="text">
-      var newQuestion = this.question.trim();
-      if (!newQuestion) {return;}
-      this.questions.push(
-          {text: newQuestion, done: false, answers: this.answers, questionNumber: this.questionNumber, info: this.info}
-      );
-      this.question = '';
-      this.answers = ["", ""];
-      this.info = "";
 
 
-    },*/
-    currentData: function() {
-
-    },
-    addAnswer: function () {
-      this.answers.push("");
-    },
-    runQuestion: function () {
+    /*runQuestion: function () {
       socket.emit("runQuestion", {
-        pollId: this.pollId,
+        gameId: this.gameId,
         questionNumber: this.questionNumber,
       });
-    },
+    },*/
   },
 };
 /*$(document).ready(function () {
