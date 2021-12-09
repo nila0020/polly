@@ -9,7 +9,9 @@
     <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
   </div> -->
 
-
+<header>
+ <img src="img\test.png" alt="" style="width:100%; height: 200px;margin-left:10px; float:left;">
+</header>
 
 <section id = "page" >
   <header id="header" style="margin-bottom:100px; padding-right:150px; ">
@@ -28,7 +30,7 @@
       <router-link v-bind:to="'/Creator_overlook/'+lang"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.Creator}}</span></v-btn></router-link>
 </div>
   <br>
-  <button id="langButton" class ="langButton" v-on:click="switchLanguage" ><img v-bind:src="uiLabels.imgLanguage" height="70" width="140" alt=""></button>
+  <button id="langButton" class ="langButton" v-on:click="switchLanguage" > <div>{{uiLabels.changeLanguage}} </div> <img v-bind:src="uiLabels.imgLanguage"  height="70" width="140" alt=""></button>
 
 </section>
 </template>
@@ -66,7 +68,7 @@ export default {
 <style>
 
 #page {
-  background-color: #accaea;
+  background-color: white;
   margin-top:50px;
   font-size: 16pt;
   font-family: 'Archivo Black', sans-serif;
@@ -76,7 +78,7 @@ export default {
 
 
 #header{
-  background-color: #accaea;
+  background-color: white;
   font-size: 40pt;
   text-align:center;
   padding-left: 30px;
@@ -84,8 +86,6 @@ export default {
   text-align: center;
   color:black;
 }
-
-
 
 
 .container {
