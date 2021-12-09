@@ -201,12 +201,28 @@ export default {
       socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
     },
 
-
+    /*Question:{
+      this.type=multiplechoice,               (fleralternativfråga, slide osv?, indikator för css)
+      this.pos={longitude latitude},
+      this.info
+      this.q= frågan
+      this.a=[{answer:bool/value},{answer:bool/value},{answer:bool/value}] (bool eller value beroende på fråga)
+      this.pic=url
+}}*/
     addQuestion: function() {
       //Ska inte skickas förrän alla frågor lagts till
       var newQuestion = this.question.trim();
       if (!newQuestion) {return;}
-      socket.emit("addQuestion", {pollId: this.pollId, q: newQuestion, a: this.answers, info: this.info, questionNumber: this.questionNumber } )
+      socket.emit("addQuestion",
+          {pollId: this.pollId,
+            type: this.type,
+            pos: this.pos,
+            info: this.info,
+            q: newQuestion,
+            a: this.answers,
+            questionNumber: this.questionNumber,
+            pic: this.pic
+            } )
       this.questions.push(
           {pollId: this.pollId, q: this.questions, a: this.answers, info: this.info, questionNumber: this.questionNumber}
       );
