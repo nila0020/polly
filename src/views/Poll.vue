@@ -4,35 +4,35 @@
     <div class="boxA">
       <label for="pollId" class="start_buttons1">Poll-ID</label><br />
       <input
-        type="text"
-        id="pollId"
-        v-model="pollId"
-        required="required"
-        placeholder="Input the poll-Id"
+          type="text"
+          id="pollId"
+          v-model="pollId"
+          required="required"
+          placeholder="Input the poll-Id"
       />
     </div>
     <br /><br /><br /><br />
     <div class="boxB">
       <label for="" class="start_buttons1">Username</label><br />
       <input
-        type="text"
-        style="font-size: 1.4em"
-        id="userName"
-        v-model="userName"
-        required="required"
-        placeholder="Input your username"
+          type="text"
+          style="font-size: 1.4em"
+          id="userName"
+          v-model="userName"
+          required="required"
+          placeholder="Input your username"
       />
     </div>
     <div class="boxC">
       <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
-        >Join GeoQuiz!</v-btn
+      >Join GeoQuiz!</v-btn
       >
     </div>
   </div>
   <div v-show="confirmedUser" class="fullFrame">
     <div v-show="!activeQuestion" class="overview">
       <v-btn class="showquestion box b" v-on:click="activateQuestion"
-        >question!</v-btn
+      >question!</v-btn
       >
       <div class="wrapper">
         <div class="box a">{{ pollId }}</div>
@@ -70,7 +70,6 @@ frågebunten bör se ut såhär:Questions{ {1:object}, {2:object}, {3:object} }
 import Question from "@/components/Question.vue";
 import io from "socket.io-client";
 const socket = io();
-
 export default {
   name: "Poll",
   components: {
@@ -85,6 +84,7 @@ export default {
       pollId: "inactive poll",
       confirmedUser: false,
       activeQuestion: false,
+      qId: 1
     };
   },
   created: function () {
@@ -99,7 +99,7 @@ export default {
     },
     confirmUser: function () {
       this.confirmedUser = true;
-      socket.emit("joinPoll", this.pollId);
+      socket.emit("joinPoll", this.pollId, this.qId);
     },
     activateQuestion: function () {
       console.log("detta är objektet= " + this.question);
