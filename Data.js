@@ -34,9 +34,19 @@ Data.prototype.createGame = function(gameId, lang="en", gameName) {
 
 Data.prototype.addQuestion = function(gameId, q) {
   const game = this.games[gameId];
-  console.log("question added to", gameId, q);
+  //console.log("question added to", gameId, q);
   if (typeof game !== 'undefined') {
-    game.questions.push(q);
+
+
+    console.log(game.questions.findIndex(obj => obj.qId == q.qId))
+    if(game.questions.findIndex(obj => obj.qId == q.qId) == -1 ){
+      game.questions.push(q);
+    }
+    else {
+      game.questions[game.questions.findIndex(obj => obj.qId == q.qId)] = q;
+    }
+    console.log(game.questions)
+
   }
 }
 

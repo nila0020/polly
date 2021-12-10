@@ -28,33 +28,33 @@
       <!--Overlook box-->
       <div class="box Overlook" >
         <h1>Overlook</h1>
-
         <!--Add new questions and list them-->
         <div id="overlookList">
           <ul>
             <li v-bind:key="question" v-for="question in questions">
 
               <label>
-                <button @click= "currentData" key="">{{question.questionNumber}}.{{question.text}}</button>
+                <button @click= "currentData" key="">{{question.questionNumber}}.{{question.questionText}}</button>
 
               </label>
             </li>
           </ul>
           <p>
-            <!-- <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
-            <button class="overlookBtn">Add question</button>
+<!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
+            <button class="overlookBtn" v-on:click="addNewQuestion">Add question</button>
             <button class="overlookBtn">Delete question</button>
           </p>
         </div>
-        <button class = "createButton" v-on:click="addQuestion">
+<!--        <button class = "createButton" v-on:click="addQuestion">
           Start Game
-        </button>
+        </button>-->
       </div>
       <!--Center box-->
       <div class="box centerBox">
 
         <!--Info box-->
         <div class="box info" v-on:click="infoExpand" v-bind:class="{ 'infoBig': infoBig, 'infoSmall': infoSmall }">
+          <a class="closeExpand"  v-on:click="closeExpand">X</a>
           <h1>Info</h1>
           <input class = "infoArea" type="text" v-model="info" placeholder="Question discription">
         </div>
@@ -62,7 +62,7 @@
         <!--Question box-->
         <div class="box questionBox" v-on:click="questionExpand" v-bind:class="{ 'questionBig': questionBig, 'questionSmall': questionSmall, 'questionSmallCond': questionSmallCond}">
           <h1>Create your question here</h1>
-          <input type="text" v-model="question" placeholder="Add question">
+          <input type="text" v-model="questionText" placeholder="Add question">
 
           <div>
             <div v-if="checked === 'MCQ'||checked === null">
@@ -78,9 +78,9 @@
               Här ska en slider vara
             </div>
 
-            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">
+<!--            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">-->
 
-            <button v-on:click="addQuestion()">
+            <button v-on:click="[ saveQuestion()]">
               Add question
             </button>
             <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
@@ -137,7 +137,8 @@ export default {
       info: "",
       lang: "",
       gameId: "",
-      question: "",
+      type: "MCQ",
+      //question: "",
       answers: ["", ""],
       questionNumber: 0,
       gameName: "",
@@ -172,9 +173,60 @@ export default {
       socket.emit("createGame", { gameId: this.gameId, lang: this.lang, gameName: this.gameName });
     },
 
-    addQuestion: function() {
+    addNewQuestion: function() {
+      this.questionNumber ++
+      this.questionText = '';
+      this.answers = ["", ""];
+      this.info = "";
+      socket.emit("addQuestion",
+          {gameId: this.gameId,
+            type: this.type,
+            pos: this.pos,
+            info: this.info,
+            q: this.questionText,
+            a: this.answers,
+            questionNumber: this.questionNumber,
+            pic: this.pic
+          })
+      this.questions.push(
+          {gameId: this.gameId,
+            type: this.type,
+            pos: this.pos,
+            info: this.info,
+            q: this.questionText,
+            a: this.answers,
+            questionNumber: this.questionNumber,
+            pic: this.pic}
+      );
+    },
+
+    saveQuestion: function(){
+      this.questions.find(obj => obj.questionNumber == this.questionNumber).type = this.type;
+      this.questions.find(obj => obj.questionNumber == this.questionNumber).pos = this.pos;
+      this.questions.find(obj => obj.questionNumber == this.questionNumber).info = this.info;
+      this.questions.find(obj => obj.questionNumber == this.questionNumber).q = this.questionText;
+      this.questions.find(obj => obj.questionNumber == this.questionNumber).a = this.answer;
+      this.questions.find(obj => obj.questionNumber == this.questionNumber).pic = this.pic;
+
+      socket.emit("addQuestion",
+          {gameId: this.gameId,
+            type: this.type,
+            pos: this.pos,
+            info: this.info,
+            q: this.questionText,
+            a: this.answers,
+            questionNumber: this.questionNumber,
+            pic: this.pic
+          })
+
+
+      //var currentQuestion = this.questions.find(obj => obj.questionNumber == this.questionNumber);
+      //console.log(currentQuestion);
+    },
+
+ /*   addQuestion: function() {
       //Ska inte skickas förrän alla frågor lagts till
-      var newQuestion = this.question.trim();
+      var newQuestion = this.questionText.trim();
       if (!newQuestion) {return;}
       socket.emit("addQuestion",
           {gameId: this.gameId,
@@ -196,7 +248,7 @@ export default {
       this.question = '';
       this.answers = ["", ""];
       this.info = "";
-    },
+    },*/
 
     currentData: function() {
     },
@@ -231,6 +283,15 @@ export default {
       this.mapSmall = false;
       this.questionSmallCond = true;
     },
+    closeExpand: function () {
+      this.infoBig = false;
+      this.questionBig = false;
+      this.mapBig = false;
+      this.infoSmall = false;
+      this.questionSmall = false;
+      this.mapSmall = false;
+      this.questionSmallCond = false;
+    }
 
 
     /*runQuestion: function () {
@@ -418,4 +479,17 @@ export default {
 ::-webkit-scrollbar {
   width: 0px;
 }
+
+.closeExpand {
+  position: relative;
+  right: 25vw;
+  top: 1vh;
+  width: 5vw;
+  height: 5vh;
+  opacity: 0.3;
+}
+.closeExpand:hover {
+  opacity: 1;
+}
+
 </style>
