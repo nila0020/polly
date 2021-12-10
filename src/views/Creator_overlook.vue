@@ -1,4 +1,36 @@
 <template>
+<<<<<<< HEAD
+<section>
+  <section class="box titleBox">
+    <!--Title box-->
+
+    <h3>Game Title and GameID</h3>
+
+    <div class="insertTitle">
+      <label for="gameName">{{uiLabels.gameName}}: </label>
+      <input
+        type="text"
+        id="gameName"
+        v-model="pollName"
+        placeholder="Enter Game name"
+      /><br />
+      <label for="gameID">Game ID: </label>
+      <input
+        type="text"
+        id="gameID"
+        v-model="pollId"
+        placeholder="Enter Game ID"
+      /><br />
+      <button class="createButton" v-on:click="createPoll">Create Game</button>
+    </div>
+  </section>
+
+  <section class="container">
+    <!--Overlook box-->
+    <div class="box Overlook" >
+      <h1>Overlook</h1>
+
+=======
   <section>
     <section class="box titleBox">
       <!--Title box-->
@@ -28,30 +60,71 @@
       <!--Overlook box-->
       <div class="box Overlook" >
         <h1>Overlook</h1>
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
         <!--Add new questions and list them-->
         <div id="overlookList">
           <ul>
             <li v-bind:key="question" v-for="question in questions">
-
+          
               <label>
+<<<<<<< HEAD
+                <button></button>
+               
+=======
                 <button @click= "currentData" key="">{{question.questionNumber}}.{{question.questionText}}</button>
 
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
               </label>
             </li>
           </ul>
           <p>
+<<<<<<< HEAD
+            <!-- <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
+          
+            <button class="overlookBtn" @click="removeQuestionBtn">Delete question</button>
+=======
 <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
             <button class="overlookBtn" v-on:click="addNewQuestion">Add question</button>
             <button class="overlookBtn">Delete question</button>
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
           </p>
         </div>
 <!--        <button class = "createButton" v-on:click="addQuestion">
           Start Game
-        </button>-->
-      </div>
-      <!--Center box-->
-      <div class="box centerBox">
+<<<<<<< HEAD
+          </button>
+    </div>
+    <!--Center box-->
+    <div class="box centerBox">
 
+      <!--Info box-->
+      <div class="box info" v-on:click="infoExpand" v-bind:class="{ 'infoBig': infoBig, 'infoSmall': infoSmall }">
+        <h1>Info</h1>
+        <input class = "infoArea" type="text" v-model="info" placeholder="Question discription">
+=======
+        </button>-->
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
+      </div>
+
+<<<<<<< HEAD
+      <!--Question box-->
+      <div class="box questionBox" v-on:click="questionExpand" v-bind:class="{ 'questionBig': questionBig, 'questionSmall': questionSmall, 'questionSmallCond': questionSmallCond}">
+        <h1>Create your question here</h1>
+        <input type="text" v-model="question" placeholder="Add question">
+
+        <div>
+           <div v-if="checked === 'MCQ'">
+            <h1>Answers:</h1>
+            <input v-for="(_, i) in answers"
+                   v-model="answers[i]"
+                   v-bind:key="'answer'+i" placeholder="Add answer">
+            <button v-on:click="addAnswer">
+              Add answer alternative
+            </button> <br>
+           </div>
+          <div v-else-if="checked === 'slider'">
+            Här ska en slider vara
+=======
         <!--Info box-->
         <div class="box info" v-on:click="infoExpand" v-bind:class="{ 'infoBig': infoBig, 'infoSmall': infoSmall }">
           <a class="closeExpand"  v-on:click="closeExpand">X</a>
@@ -87,48 +160,61 @@
             <button v-on:click="runQuestion">
               Run question
             </button> -->
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
           </div>
-        </div>
 
-        <!--Map box-->
-        <div class="box map" v-on:click="mapExpand" v-bind:class="{ 'mapBig' : mapBig, 'mapSmall': mapSmall }">
-          <h1>map</h1>
-        </div>
-      </div>
+          <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">
 
-      <!--Tool box-->
-      <div class="box toolBox">
-        <h1>toolBox</h1>
-        <div id="app">
-          <input type="radio" id="MCQ" value='MCQ' v-model="checked" checked>
-          <label for="MCQ">{{ uiLabels.MCQ }}</label>
-
-          <br>
-
-          <input type="radio" id="slider" value="slider" v-model="checked">
-          <label for="slider">{{ uiLabels.slider }}</label>
-
-          <br>
-
-          <span>Checked: {{ checked }}</span>
-
-          <br>
-
-          <span v-if="checked === 'MCQ'">{{ uiLabels.MCQ }} is checked!</span>
-          <span v-else-if="checked === 'slider'">{{ uiLabels.slider }} is checked!</span>
+          <button v-on:click="[addOverlook(), runQuestion()]">
+          Add question
+          </button>
+        <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
+        <button v-on:click="runQuestion">
+          Run question
+        </button> -->
         </div>
       </div>
 
-      <div class="blocker" v-if="showAll">
-        <!-- blocks part of the screen -->
+      <!--Map box-->
+      <div class="box map" v-on:click="mapExpand" v-bind:class="{ 'mapBig' : mapBig, 'mapSmall': mapSmall }">
+        <h1>map</h1>
       </div>
-    </section>
+    </div>
+
+    <!--Tool box-->
+    <div class="box toolBox">
+      <h1>toolBox</h1>
+      <div id="app">
+        <input type="radio" id="MCQ" value='MCQ' v-model="checked">
+        <label for="MCQ">{{ uiLabels.MCQ }}</label>
+
+        <br>
+
+        <input type="radio" id="slider" value="slider" v-model="checked">
+        <label for="slider">{{ uiLabels.slider }}</label>
+
+        <br>
+
+        <span>Checked: {{ checked }}</span>
+
+        <br>
+
+        <span v-if="checked === 'MCQ'">{{ uiLabels.MCQ }} is checked!</span>
+        <span v-else-if="checked === 'slider'">{{ uiLabels.slider }} is checked!</span>
+      </div>
+    </div>
+
+    <div class="blocker" v-if="showAll">
+      <!-- blocks part of the screen -->
+    </div>
   </section>
+</section>
 </template>
 
 <script>
 import io from "socket.io-client";
 const socket = io();
+
 export default {
   data: function () {
     return {
@@ -153,6 +239,7 @@ export default {
       questionSmall: false,
       mapSmall: false,
       questionSmallCond: false,
+      
     };
   },
   created: function () {
@@ -260,29 +347,75 @@ export default {
       this.infoBig = true;
       this.questionBig = false;
       this.mapBig = false;
+
       this.infoSmall = false;
       this.questionSmall = true;
       this.mapSmall = true;
+
       this.questionSmallCond = false;
+
     },
     questionExpand: function () {
       this.infoBig = false;
       this.questionBig = true;
       this.mapBig = false;
+
       this.infoSmall = true;
       this.questionSmall = false;
       this.mapSmall = true;
+
       this.questionSmallCond = false;
     },
     mapExpand: function () {
       this.infoBig = false;
       this.questionBig = false;
       this.mapBig = true;
+
       this.infoSmall = true;
       this.questionSmall = false;
       this.mapSmall = false;
+
       this.questionSmallCond = true;
     },
+<<<<<<< HEAD
+
+    createGame: function () {
+      socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
+    },
+   
+  
+    addQuestion: function() {
+       
+      socket.emit("addQuestion", {
+
+      pollId: this.pollId, 
+      q: this.questions, 
+      a: this.answers, 
+      info: this.info, 
+      questionNumber: this.questionNumber } )
+    
+    },
+    addOverlook: function () {
+      
+      var newQuestion = this.question.trim();
+      if (!newQuestion) {return;}
+      this.questions.push(
+          {text: newQuestion, done: false, answers: this.answers, questionNumber: this.questionNumber, info: this.info}
+      );
+    },
+    removeQuestionBtn: function () {
+     
+      
+  },
+      
+    currentData: function() {
+    
+    },
+    addAnswer: function () {
+      this.answers.push("");
+    },
+    runQuestion: function () {
+=======
     closeExpand: function () {
       this.infoBig = false;
       this.questionBig = false;
@@ -295,6 +428,7 @@ export default {
 
 
     /*runQuestion: function () {
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
       socket.emit("runQuestion", {
         gameId: this.gameId,
         questionNumber: this.questionNumber,
@@ -419,10 +553,12 @@ export default {
   white-space: nowrap;
   cursor: pointer;
 }
+
 .createButton:active,
 .createButton:hover {
   outline: 0;
 }
+
 .createButton span {
   background-color: rgb(5, 6, 45);
   padding: 16px 24px;
@@ -431,16 +567,20 @@ export default {
   height: 45%;
   transition: 300ms;
 }
+
 .createButton:hover span {
   background: none;
 }
+
 @media (min-width: 768px) {
   .createButton {
     font-size: 10px;
     min-width: 90px;
   }
 }
+
 /* conditionl statments */
+
 .infoBig {
   grid-column: 1 /span 4;
   grid-row: 1 / span 3;
@@ -479,6 +619,9 @@ export default {
 ::-webkit-scrollbar {
   width: 0px;
 }
+<<<<<<< HEAD
+</style>
+=======
 
 .closeExpand {
   position: relative;
@@ -493,3 +636,4 @@ export default {
 }
 
 </style>
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
