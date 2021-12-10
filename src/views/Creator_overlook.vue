@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
 <section>
   <section class="box titleBox">
     <!--Title box-->
@@ -29,25 +30,68 @@
     <div class="box Overlook" >
       <h1>Overlook</h1>
 
+=======
+  <section>
+    <section class="box titleBox">
+      <!--Title box-->
+
+      <h3>Game Title and GameID</h3>
+
+      <div class="insertTitle">
+        <label for="gameName">{{uiLabels.gameName}}: </label>
+        <input
+            type="text"
+            id="gameName"
+            v-model="gameName"
+            placeholder="Enter Game name"
+        /><br />
+        <label for="gameID">Game ID: </label>
+        <input
+            type="text"
+            id="gameID"
+            v-model="gameId"
+            placeholder="Enter Game ID"
+        /><br />
+        <button class="createButton" v-on:click="createGame">Create Game</button>
+      </div>
+    </section>
+
+    <section class="container">
+      <!--Overlook box-->
+      <div class="box Overlook" >
+        <h1>Overlook</h1>
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
         <!--Add new questions and list them-->
         <div id="overlookList">
           <ul>
             <li v-bind:key="question" v-for="question in questions">
           
               <label>
+<<<<<<< HEAD
                 <button></button>
                
+=======
+                <button @click= "currentData" key="">{{question.questionNumber}}.{{question.questionText}}</button>
+
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
               </label>
             </li>
           </ul>
           <p>
+<<<<<<< HEAD
             <!-- <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
           
             <button class="overlookBtn" @click="removeQuestionBtn">Delete question</button>
+=======
+<!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
+            <button class="overlookBtn" v-on:click="addNewQuestion">Add question</button>
+            <button class="overlookBtn">Delete question</button>
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
           </p>
         </div>
-        <button class = "createButton" v-on:click="addQuestion">
+<!--        <button class = "createButton" v-on:click="addQuestion">
           Start Game
+<<<<<<< HEAD
           </button>
     </div>
     <!--Center box-->
@@ -57,8 +101,12 @@
       <div class="box info" v-on:click="infoExpand" v-bind:class="{ 'infoBig': infoBig, 'infoSmall': infoSmall }">
         <h1>Info</h1>
         <input class = "infoArea" type="text" v-model="info" placeholder="Question discription">
+=======
+        </button>-->
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
       </div>
 
+<<<<<<< HEAD
       <!--Question box-->
       <div class="box questionBox" v-on:click="questionExpand" v-bind:class="{ 'questionBig': questionBig, 'questionSmall': questionSmall, 'questionSmallCond': questionSmallCond}">
         <h1>Create your question here</h1>
@@ -76,6 +124,43 @@
            </div>
           <div v-else-if="checked === 'slider'">
             Här ska en slider vara
+=======
+        <!--Info box-->
+        <div class="box info" v-on:click="infoExpand" v-bind:class="{ 'infoBig': infoBig, 'infoSmall': infoSmall }">
+          <a class="closeExpand"  v-on:click="closeExpand">X</a>
+          <h1>Info</h1>
+          <input class = "infoArea" type="text" v-model="info" placeholder="Question discription">
+        </div>
+
+        <!--Question box-->
+        <div class="box questionBox" v-on:click="questionExpand" v-bind:class="{ 'questionBig': questionBig, 'questionSmall': questionSmall, 'questionSmallCond': questionSmallCond}">
+          <h1>Create your question here</h1>
+          <input type="text" v-model="questionText" placeholder="Add question">
+
+          <div>
+            <div v-if="checked === 'MCQ'||checked === null">
+              <h1>Answers:</h1>
+              <input v-for="(_, i) in answers"
+                     v-model="answers[i]"
+                     v-bind:key="'answer'+i" placeholder="Add answer">
+              <button v-on:click="addAnswer">
+                Add answer alternative
+              </button> <br>
+            </div>
+            <div v-else-if="checked === 'slider'">
+              Här ska en slider vara
+            </div>
+
+<!--            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">-->
+
+            <button v-on:click="[ saveQuestion()]">
+              Add question
+            </button>
+            <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
+            <button v-on:click="runQuestion">
+              Run question
+            </button> -->
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
           </div>
 
           <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">
@@ -137,10 +222,12 @@ export default {
       questions: [],
       info: "",
       lang: "",
-      pollId: "",
-      question: "",
+      gameId: "",
+      type: "MCQ",
+      //question: "",
       answers: ["", ""],
       questionNumber: 0,
+      gameName: "",
       data: {},
       uiLabels: {},
       showAll: true,
@@ -164,14 +251,98 @@ export default {
     socket.on("dataUpdate", (data) =>
         this.data = data
     )
-    socket.on("pollCreated", (data) =>
+    socket.on("gameCreated", (data) =>
         this.data = data)
   },
   methods: {
-    createPoll: function () {
+    createGame: function () {
       this.showAll = false;
-      socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
+      socket.emit("createGame", { gameId: this.gameId, lang: this.lang, gameName: this.gameName });
     },
+
+    addNewQuestion: function() {
+      this.questionNumber ++
+      this.questionText = '';
+      this.answers = ["", ""];
+      this.info = "";
+      socket.emit("addQuestion",
+          {gameId: this.gameId,
+            type: this.type,
+            pos: this.pos,
+            info: this.info,
+            q: this.questionText,
+            a: this.answers,
+            questionNumber: this.questionNumber,
+            pic: this.pic
+          })
+      this.questions.push(
+          {gameId: this.gameId,
+            type: this.type,
+            pos: this.pos,
+            info: this.info,
+            q: this.questionText,
+            a: this.answers,
+            questionNumber: this.questionNumber,
+            pic: this.pic}
+      );
+    },
+
+    saveQuestion: function(){
+      this.questions.find(obj => obj.questionNumber == this.questionNumber).type = this.type;
+      this.questions.find(obj => obj.questionNumber == this.questionNumber).pos = this.pos;
+      this.questions.find(obj => obj.questionNumber == this.questionNumber).info = this.info;
+      this.questions.find(obj => obj.questionNumber == this.questionNumber).q = this.questionText;
+      this.questions.find(obj => obj.questionNumber == this.questionNumber).a = this.answer;
+      this.questions.find(obj => obj.questionNumber == this.questionNumber).pic = this.pic;
+
+      socket.emit("addQuestion",
+          {gameId: this.gameId,
+            type: this.type,
+            pos: this.pos,
+            info: this.info,
+            q: this.questionText,
+            a: this.answers,
+            questionNumber: this.questionNumber,
+            pic: this.pic
+          })
+
+
+      //var currentQuestion = this.questions.find(obj => obj.questionNumber == this.questionNumber);
+      //console.log(currentQuestion);
+    },
+
+ /*   addQuestion: function() {
+      //Ska inte skickas förrän alla frågor lagts till
+      var newQuestion = this.questionText.trim();
+      if (!newQuestion) {return;}
+      socket.emit("addQuestion",
+          {gameId: this.gameId,
+            type: this.type,
+            pos: this.pos,
+            info: this.info,
+            q: newQuestion,
+            a: this.answers,
+            questionNumber: this.questionNumber,
+            pic: this.pic
+          } )
+      this.questions.push(
+          {gameId: this.gameId,
+            q: this.questions,
+            a: this.answers,
+            info: this.info,
+            questionNumber: this.questionNumber}
+      );
+      this.question = '';
+      this.answers = ["", ""];
+      this.info = "";
+    },*/
+
+    currentData: function() {
+    },
+    addAnswer: function () {
+      this.answers.push("");
+    },
+
     infoExpand: function () {
       this.infoBig = true;
       this.questionBig = false;
@@ -206,6 +377,7 @@ export default {
 
       this.questionSmallCond = true;
     },
+<<<<<<< HEAD
 
     createGame: function () {
       socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
@@ -243,11 +415,25 @@ export default {
       this.answers.push("");
     },
     runQuestion: function () {
+=======
+    closeExpand: function () {
+      this.infoBig = false;
+      this.questionBig = false;
+      this.mapBig = false;
+      this.infoSmall = false;
+      this.questionSmall = false;
+      this.mapSmall = false;
+      this.questionSmallCond = false;
+    }
+
+
+    /*runQuestion: function () {
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
       socket.emit("runQuestion", {
-        pollId: this.pollId,
+        gameId: this.gameId,
         questionNumber: this.questionNumber,
       });
-    },
+    },*/
   },
 };
 /*$(document).ready(function () {
@@ -433,4 +619,21 @@ export default {
 ::-webkit-scrollbar {
   width: 0px;
 }
+<<<<<<< HEAD
 </style>
+=======
+
+.closeExpand {
+  position: relative;
+  right: 25vw;
+  top: 1vh;
+  width: 5vw;
+  height: 5vh;
+  opacity: 0.3;
+}
+.closeExpand:hover {
+  opacity: 1;
+}
+
+</style>
+>>>>>>> 8bffb57add1a1f732a4afd234b19312c7b9e3fbe
