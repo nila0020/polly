@@ -4,11 +4,19 @@
     <div class="boxA">
       <label for="gameId" class="start_buttons1">Poll-ID</label><br />
       <input
+<<<<<<< HEAD
+          type="text"
+          id="gameId"
+          v-model="gameId"
+          required="required"
+          placeholder="Input the game-Id"
+=======
         type="text"
-        id="gameId"
-        v-model="gameId"
+        id="pollId"
+        v-model="pollId"
         required="required"
-        placeholder="Input the game-Id"
+        placeholder="Input the poll-Id"
+>>>>>>> Felixbranch
       />
     </div>
     <br /><br /><br /><br />
@@ -85,29 +93,46 @@ export default {
         info: "",
         pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg",
       },
+<<<<<<< HEAD
       gameId: "inactive game",
+=======
+      pollId: "inactive poll",
+
+      qId: 0,
+>>>>>>> Felixbranch
       confirmedUser: false,
       userId: this.userName,
       activeQuestion: false,
-      qId: 0,
+<<<<<<< HEAD
+      qId: 0
     };
   },
   created: function () {
     console.log("created has been triggered in poll");
     this.gameId = this.$route.params.id;
+=======
+    };
+  },
+  created: function () {
+    this.pollId = this.$route.params.id;
+>>>>>>> Felixbranch
     socket.on("newQuestion", (q) => (this.question = q));
   },
   methods: {
     submitAnswer: function (answer) {
-      console.log("submitanswer: " + answer);
+<<<<<<< HEAD
       socket.emit("submitAnswer", { gameId: this.gameId, answer: answer });
+=======
+      console.log("submitanswer: " + answer);
+      socket.emit("submitAnswer", { pollId: this.pollId, answer: answer });
       this.qId += 1;
       this.activeQuestion = false;
       /*nedan uppdaterar vi frågeobjektet via sockets via data*/
       socket.emit("runQuestion", {
-        gameId: this.gameId,
+        pollId: this.pollId,
         questionNumber: this.qId,
       });
+>>>>>>> Felixbranch
     },
     confirmUser: function () {
       this.confirmedUser = true;
