@@ -4,35 +4,35 @@
     <div class="boxA">
       <label for="pollId" class="start_buttons1">Poll-ID</label><br />
       <input
-          type="text"
-          id="pollId"
-          v-model="pollId"
-          required="required"
-          placeholder="Input the poll-Id"
+        type="text"
+        id="pollId"
+        v-model="pollId"
+        required="required"
+        placeholder="Input the poll-Id"
       />
     </div>
     <br /><br /><br /><br />
     <div class="boxB">
       <label for="" class="start_buttons1">Username</label><br />
       <input
-          type="text"
-          style="font-size: 1.4em"
-          id="userName"
-          v-model="userName"
-          required="required"
-          placeholder="Input your username"
+        type="text"
+        style="font-size: 1.4em"
+        id="userName"
+        v-model="userName"
+        required="required"
+        placeholder="Input your username"
       />
     </div>
     <div class="boxC">
       <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
-      >Join GeoQuiz!</v-btn
+        >Join GeoQuiz!</v-btn
       >
     </div>
   </div>
   <div v-show="confirmedUser" class="fullFrame">
     <div v-show="!activeQuestion" class="overview">
       <v-btn class="showquestion box b" v-on:click="activateQuestion"
-      >question!</v-btn
+        >question!</v-btn
       >
       <div class="wrapper">
         <div class="box a">{{ pollId }}</div>
@@ -78,24 +78,36 @@ export default {
   data: function () {
     return {
       question: {
+        type: "",
+        pos: "",
         q: "",
         a: [],
+        info: "",
+        pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg",
       },
       pollId: "inactive poll",
+
+      qId: 0,
       confirmedUser: false,
+      userId: this.userName,
       activeQuestion: false,
-      qId: 1
     };
   },
   created: function () {
-    console.log("created has been triggered in poll");
     this.pollId = this.$route.params.id;
     socket.on("newQuestion", (q) => (this.question = q));
-    console.log(this.question);
   },
   methods: {
     submitAnswer: function (answer) {
+      console.log("submitanswer: " + answer);
       socket.emit("submitAnswer", { pollId: this.pollId, answer: answer });
+      this.qId += 1;
+      this.activeQuestion = false;
+      /*nedan uppdaterar vi frågeobjektet via sockets via data*/
+      socket.emit("runQuestion", {
+        pollId: this.pollId,
+        questionNumber: this.qId,
+      });
     },
     confirmUser: function () {
       this.confirmedUser = true;
@@ -158,7 +170,6 @@ export default {
   display: grid;
   width: 100%;
   height: 100%;
-  grid-gap: 5vh;
   background-color: white;
   justify-content: center;
 }
