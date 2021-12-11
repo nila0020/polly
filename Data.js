@@ -18,7 +18,7 @@ Data.prototype.getUILabels = function (lang = "en") {
   return ui;
 }
 
-Data.prototype.createGame = function(gameId, lang="en", gameName) {
+Data.prototype.createGame = function (gameId, lang = "en", gameName) {
   if (typeof this.games[gameId] === "undefined") {
     let game = {};
     game.lang = lang;
@@ -32,14 +32,14 @@ Data.prototype.createGame = function(gameId, lang="en", gameName) {
   return this.games[gameId];
 }
 
-Data.prototype.addQuestion = function(gameId, q) {
+Data.prototype.addQuestion = function (gameId, q) {
   const game = this.games[gameId];
   //console.log("question added to", gameId, q);
   if (typeof game !== 'undefined') {
 
 
     console.log(game.questions.findIndex(obj => obj.qId == q.qId))
-    if(game.questions.findIndex(obj => obj.qId == q.qId) == -1 ){
+    if (game.questions.findIndex(obj => obj.qId == q.qId) == -1) {
       game.questions.push(q);
     }
     else {
@@ -50,7 +50,7 @@ Data.prototype.addQuestion = function(gameId, q) {
   }
 }
 
-Data.prototype.getQuestion = function(gameId, qId=null) {
+Data.prototype.getQuestion = function (gameId, qId = null) {
   const game = this.games[gameId];
   console.log("question requested for ", gameId, qId);
   if (typeof game !== 'undefined') {
@@ -62,7 +62,7 @@ Data.prototype.getQuestion = function(gameId, qId=null) {
   return []
 }
 
-Data.prototype.submitAnswer = function(gameId, answer) {
+Data.prototype.submitAnswer = function (gameId, answer) {
   const game = this.games[gameId];
   console.log("answer submitted for ", gameId, answer);
   if (typeof game !== 'undefined') {
@@ -80,12 +80,12 @@ Data.prototype.submitAnswer = function(gameId, answer) {
   }
 }
 
-Data.prototype.getAnswers = function(gameId) {
+Data.prototype.getAnswers = function (gameId) {
   const game = this.games[gameId];
   if (typeof game !== 'undefined') {
     const answers = game.answers[game.currentQuestion];
     if (typeof game.questions[game.currentQuestion] !== 'undefined') {
-      return {q: game.questions[game.currentQuestion].q, a: answers};
+      return { q: game.questions[game.currentQuestion].q, a: answers };
     }
   }
   return {}
@@ -93,4 +93,4 @@ Data.prototype.getAnswers = function(gameId) {
 module.exports = Data;
 
 
-
+np
