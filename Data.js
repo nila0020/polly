@@ -92,5 +92,3 @@ Data.prototype.getAnswers = function (gameId) {
 }
 module.exports = Data;
 
-
-np
