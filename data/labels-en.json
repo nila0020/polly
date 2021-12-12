@@ -12,5 +12,12 @@
 	"welcomeText": "Welcome to Geoquiz",
 	"gameName": "Game name",
 	"MCQ": "Multiple choice question",
-	"slider": "Slider"
+	"slider": "Slider",
+	"gameID": "Game ID",
+	"CreateGame" : "Create Game",
+	"Addquestion": "Add question",
+	"Deletequestion": "Delete question",
+	"Questiondiscription": "Question description",
+	"Savequestion": "Save question",
+	"AddAnswerAlternative": "Add answer alternative"
 }
