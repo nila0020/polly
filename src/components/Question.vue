@@ -1,8 +1,15 @@
 <template>
-  <div class="infoBox" v-on:click="hideInfo" v-show="infoHidden">
+  <div
+    class="infoBox"
+    v-if="question.info"
+    v-on:click="hideInfo"
+    v-show="!infoHidden"
+  >
+    Information:
+    <br />
     {{ question.info }}
   </div>
-  <div class="outerGrid" v-show="!infoHidden">
+  <div class="outerGrid" v-show="infoHidden">
     <div class="picture">
       <img
         v-bind:src="'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg'"
@@ -31,15 +38,16 @@
 export default {
   name: "Bars",
   data: function () {
-    return { infoHidden: true };
+    return { infoHidden: false };
   },
   props: {
     question: Object,
   },
   methods: {
     hideInfo: function () {
-      this.infoHidden = false;
+      this.infoHidden = true;
     },
+
     answer: function (answer) {
       console.log("i questions emit: " + answer);
       this.$emit("answer", answer);
