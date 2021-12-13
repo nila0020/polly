@@ -18,8 +18,9 @@ function sockets(io, socket, data) {
     socket.emit('dataUpdate', data.getAnswers(d.gameId));
   });
 
-  socket.on('joinGame', function(gameId, qId) {
+  socket.on('joinGame', function(gameId, qId, userName) {
     socket.join(gameId);
+    data.joinQuiz(gameId, userName)
     socket.emit('newQuestion', data.getQuestion(gameId, qId))
     socket.emit('dataUpdate', data.getAnswers(gameId));
   });
@@ -30,7 +31,7 @@ function sockets(io, socket, data) {
   });
 
   socket.on('submitAnswer', function(d) {
-    data.submitAnswer(d.gameId, d.answer);
+    data.submitAnswer(d.gameId, d.answer, d.userName);
     io.to(d.gameId).emit('dataUpdate', data.getAnswers(d.gameId));
   });
 

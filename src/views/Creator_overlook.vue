@@ -35,7 +35,7 @@
           <ul>
             <li v-bind:key="question" v-for="question in questions">
               <label>
-                <button @click="currentData" key="">
+                <button v-on:click="currentData" key="">
                   {{ question.questionNumber }}.{{ question.q }}
                 </button>
               </label>
@@ -282,7 +282,9 @@ export default {
       this.info = "";
     },*/
 
-    currentData: function () {},
+    currentData: function () {
+      console.log(this.questions.questionNumber)
+    },
     addAnswer: function () {
       this.answers.push("");
     },

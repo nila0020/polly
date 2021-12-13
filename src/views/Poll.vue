@@ -71,7 +71,7 @@ export default {
       },
       gameId: "inactive game",
       confirmedUser: false,
-      userId: this.userName,
+      userName: "",
       activeQuestion: false,
       qId: 0,
     };
@@ -84,7 +84,7 @@ export default {
   methods: {
     submitAnswer: function (answer) {
       console.log("submitanswer: " + answer);
-      socket.emit("submitAnswer", { gameId: this.gameId, answer: answer });
+      socket.emit("submitAnswer", { gameId: this.gameId, answer: answer, userName: this.userName });
       this.qId += 1;
       this.activeQuestion = false;
       /*nedan uppdaterar vi frågeobjektet via sockets via data*/
@@ -95,7 +95,7 @@ export default {
     },
     confirmUser: function () {
       this.confirmedUser = true;
-      socket.emit("joinGame", this.gameId, this.qId);
+      socket.emit("joinGame", this.gameId, this.qId, this.userName);
     },
     activateQuestion: function () {
       console.log("detta är objektet= " + this.question);
