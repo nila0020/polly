@@ -12,5 +12,12 @@
 	"welcomeText": "Välkommen till Geoquiz",
 	"gameName": "Spelnamn",
 	"MCQ": "Flervalsfråga",
-	"slider": "Slider"
+	"slider": "Slider",
+	"gameID": "Spel ID",
+	"CreateGame" : "Skapa spel",
+	"Addquestion": "Lägg till fråga",
+	"Deletequestion": "Radera fråga",
+	"Questiondiscription": "Informations beskrivning",
+	"Savequestion": "Spara fråga",
+	"AddAnswerAlternative": "Lägg till svarsalternativ"
 }

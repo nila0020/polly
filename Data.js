@@ -38,14 +38,14 @@ Data.prototype.addQuestion = function (gameId, q) {
   if (typeof game !== 'undefined') {
 
 
-    console.log(game.questions.findIndex(obj => obj.qId == q.qId))
+    //console.log(game.questions.findIndex(obj => obj.qId == q.qId))
     if (game.questions.findIndex(obj => obj.qId == q.qId) == -1) {
       game.questions.push(q);
     }
     else {
       game.questions[game.questions.findIndex(obj => obj.qId == q.qId)] = q;
     }
-    console.log(game.questions)
+    //console.log(game.questions)
 
   }
 }

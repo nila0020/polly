@@ -13,7 +13,7 @@
           v-model="gameName"
           placeholder="Enter Game name"
         /><br />
-        <label for="gameID">Game ID: </label>
+        <label for="gameID">{{uiLabels.gameID}}: </label>
         <input
           type="text"
           id="gameID"
@@ -21,7 +21,7 @@
           placeholder="Enter Game ID"
         /><br />
         <button class="createButton" v-on:click="createGame">
-          Create Game
+          {{ uiLabels.CreateGame }}
         </button>
       </div>
     </section>
@@ -36,7 +36,7 @@
             <li v-bind:key="question" v-for="question in questions">
               <label>
                 <button @click="currentData" key="">
-                  {{ question.questionNumber }}.{{ question.questionText }}
+                  {{ question.questionNumber }}.{{ question.q }}
                 </button>
               </label>
             </li>
@@ -44,9 +44,9 @@
           <p>
             <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
             <button class="overlookBtn" v-on:click="addNewQuestion">
-              Add question
+              {{ uiLabels.Addquestion }}
             </button>
-            <button class="overlookBtn">Delete question</button>
+            <button class="overlookBtn">{{ uiLabels.Deletequestion }}</button>
           </p>
         </div>
         <!--        <button class = "createButton" v-on:click="addQuestion">
@@ -67,7 +67,7 @@
             class="infoArea"
             type="text"
             v-model="info"
-            placeholder="Question discription"
+            placeholder= {{uiLabels.Questiondiscription}}
           />
         </div>
 
@@ -97,14 +97,14 @@
                 v-bind:key="'answer' + i"
                 placeholder="Add answer"
               />
-              <button v-on:click="addAnswer">Add answer alternative</button>
+              <button v-on:click="addAnswer">{{ uiLabels.AddAnswerAlternative }}</button>
               <br />
             </div>
             <div v-else-if="checked === 'slider'">Här ska en slider vara</div>
 
             <!--            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">-->
 
-            <button v-on:click="[saveQuestion()]">Add question</button>
+            <button v-on:click="[saveQuestion()]">{{ uiLabels.Savequestion }}</button>
             <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
             <button v-on:click="runQuestion">
               Run question
@@ -134,16 +134,6 @@
           <input type="radio" id="slider" value="slider" v-model="checked" />
           <label for="slider">{{ uiLabels.slider }}</label>
 
-          <br />
-
-          <span>Checked: {{ checked }}</span>
-
-          <br />
-
-          <span v-if="checked === 'MCQ'">{{ uiLabels.MCQ }} is checked!</span>
-          <span v-else-if="checked === 'slider'"
-            >{{ uiLabels.slider }} is checked!</span
-          >
         </div>
       </div>
 
@@ -227,6 +217,7 @@ export default {
         questionNumber: this.questionNumber,
         pic: this.pic,
       });
+      console.log(this.questions)
     },
 
     saveQuestion: function () {
@@ -259,6 +250,7 @@ export default {
         questionNumber: this.questionNumber,
         pic: this.pic,
       });
+      console.log(this.questions)
 
       //var currentQuestion = this.questions.find(obj => obj.questionNumber == this.questionNumber);
       //console.log(currentQuestion);
