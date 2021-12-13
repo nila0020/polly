@@ -1,4 +1,5 @@
 <template>
+  {{ question }}
   <div v-show="!confirmedUser" class="entryId">
     <h1>Lets GO!</h1>
     <div class="boxA">
@@ -46,24 +47,7 @@
       <Question v-bind:question="question" v-on:answer="submitAnswer" />
     </div>
   </div>
-
-  <!--först ta reda på vilken frågetyp det är
-        ha metoder för att rita upp varje frågetyp
-        ex
-        on:click -> display:true ->,
-        showquestion(q): if q.type==slide-> slidequestion(q), if q.type==multiplechoice->multiplechoice(q)
-        
-Hur frågeobjektet bör se ut ungefär: 
-Question:{
-  this.type=multiplechoice,               (fleralternativfråga, slide osv?, indikator för css)
-  this.pos={longitude latitude},
-  this.info
-  this.q= frågan
-  this.a=[{answer:bool/value},{answer:bool/value},{answer:bool/value}] (bool eller value beroende på fråga)
-  this.pic=url
-  }}
-frågebunten bör se ut såhär:Questions{ {1:object}, {2:object}, {3:object} }
---></template>
+</template>
 
 <script>
 // @ is an alias to /src

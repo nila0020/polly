@@ -166,7 +166,7 @@ export default {
       lang: "",
       gameId: "",
       type: "MCQ",
-      //question: "",
+      question: "",
       answers: ["", ""],
       questionNumber: 0,
       gameName: "",
