@@ -51,11 +51,15 @@ Data.prototype.addQuestion = function (gameId, q) {
 
 Data.prototype.joinQuiz = function(gameId, userName) {
   const game = this.games[gameId];
+  let user = {}
   if (typeof game !== 'undefined') {
     //console.log(game.questions.findIndex(obj => obj.qId == q.qId))
-    game.participants.push(userName);
+    user.userName = userName
+    user.answers = []
+    game.participants.push(user);
   }
-  console.log(game.participants)
+  //console.log(game.participants)
+
 }
 
 Data.prototype.getQuestion = function (gameId, qId = null) {
@@ -70,8 +74,15 @@ Data.prototype.getQuestion = function (gameId, qId = null) {
   return []
 }
 
-
 Data.prototype.submitAnswer = function (gameId, answer, userName) {
+  const game = this.games[gameId];
+  if (typeof game !== 'undefined') {
+    game.participants.find(obj => obj.userName === userName).answers.push(answer)
+    console.log(game.participants)
+  }
+}
+
+/*Data.prototype.submitAnswer = function (gameId, answer, userName) {
   const game = this.games[gameId];
   console.log("answer submitted for ", gameId, answer, userName);
   if (typeof game !== 'undefined') {
@@ -87,7 +98,7 @@ Data.prototype.submitAnswer = function (gameId, answer, userName) {
       answers[answer] += 1
     console.log("answers looks like ", game.answers, typeof game.answers);
   }
-}
+}*/
 
 Data.prototype.getAnswers = function (gameId) {
   const game = this.games[gameId];
