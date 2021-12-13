@@ -1,5 +1,8 @@
 <template>
-  <div class="outerGrid">
+  <div class="infoBox" v-on:click="hideInfo" v-show="infoHidden">
+    {{ question.info }}
+  </div>
+  <div class="outerGrid" v-show="!infoHidden">
     <div class="picture">
       <img
         v-bind:src="'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg'"
@@ -27,10 +30,16 @@
 <script>
 export default {
   name: "Bars",
+  data: function () {
+    return { infoHidden: true };
+  },
   props: {
     question: Object,
   },
   methods: {
+    hideInfo: function () {
+      this.infoHidden = false;
+    },
     answer: function (answer) {
       console.log("i questions emit: " + answer);
       this.$emit("answer", answer);
@@ -39,6 +48,17 @@ export default {
 };
 </script>
 <style scoped>
+.infoBox {
+  color: white;
+  background-image: linear-gradient(144deg, rgb(0, 24, 4), #116d37, #95ffca);
+  border: 0px;
+  border-radius: 0.5em;
+  width: 55vh;
+  height: 98vh;
+  justify-content: center;
+  align-items: center;
+  font-size: 3.5vh;
+}
 .outerGrid {
   display: grid;
   height: 98vh;
@@ -50,8 +70,9 @@ export default {
 .questionBar {
   display: flex;
   color: white;
-  background-image: linear-gradient(60deg, #ff68f2, #ffa9f8, #ffd1fb);
-  border: 0px;
+  background-color: Black;
+  border-width: 10px;
+  border-image: linear-gradient(144deg, rgb(0, 102, 17), #e6fff0);
   border-radius: 0.5em;
   justify-content: center;
   align-items: center;
@@ -68,7 +89,7 @@ export default {
   overflow: hide;
 }
 #answerButtons {
-  background-image: linear-gradient(144deg, #ff68f2, #8e16ff, #26baff);
+  background-image: linear-gradient(144deg, rgb(1, 65, 12), #116d37, #95ffca);
   border: 0px;
   font-size: 4vh;
   border-radius: 0.5em;

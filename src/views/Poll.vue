@@ -1,5 +1,4 @@
 <template>
-  {{ question }}
   <div v-show="!confirmedUser" class="entryId">
     <h1>Lets GO!</h1>
     <div class="boxA">
@@ -84,7 +83,11 @@ export default {
   methods: {
     submitAnswer: function (answer) {
       console.log("submitanswer: " + answer);
-      socket.emit("submitAnswer", { gameId: this.gameId, answer: answer, userName: this.userName });
+      socket.emit("submitAnswer", {
+        gameId: this.gameId,
+        answer: answer,
+        userName: this.userName,
+      });
       this.qId += 1;
       this.activeQuestion = false;
       /*nedan uppdaterar vi frågeobjektet via sockets via data*/
