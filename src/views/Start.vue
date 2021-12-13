@@ -9,16 +9,16 @@
     <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
   </div> -->
 
-<header>
- <img src="img\test.png" alt="" style="width:100%; height: 200px;margin-left:10px; float:left;">
-</header>
+  <header id=header>
+    <img src="img\nyast.PNG" alt="" style="width:auto; height:300px;margin-left:10px;">
+  </header>
+
 
 <section id = "page" >
-  <header id="header" style="margin-bottom:100px; padding-right:150px; ">
-    <img src="img\PngItem_2939510.png" alt="" style="width:150px; margin-left:10px; float:left;">
+
     <h1>{{uiLabels.welcomeText}}</h1>
 
-  </header>
+<br>
 
   <h3>{{uiLabels.Choose}}</h3>
   <!-- <img src="https://rymdcenter.se/wp-content/uploads/2020/01/m82-hst-karusell.jpg" alt="alt text"/> -->
@@ -68,23 +68,19 @@ export default {
 <style>
 
 #page {
-  background-color: white;
-  margin-top:50px;
+  background-color: #1d7658;
+  text-align:center;
   font-size: 16pt;
-  font-family: 'Archivo Black', sans-serif;
+  font-family: 'Alice', serif;
+  color: white;
   padding-bottom:100px;
   padding-top:50px;
+
 }
 
 
 #header{
-  background-color: white;
-  font-size: 40pt;
-  text-align:center;
-  padding-left: 30px;
-  font-size: 40pt;
-  text-align: center;
-  color:black;
+  background-color: #b6d7a8ff;
 }
 
 
@@ -101,10 +97,9 @@ export default {
 
 .start_buttons {
   align-items: center;
-  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+  background-image: linear-gradient(144deg,#FFFFFF, #000000 50%,#FFFFFF);
   border: 0;
   border-radius: 8px;
-  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
   box-sizing: border-box;
   color: #FFFFFF;
   display: flex;
@@ -129,7 +124,7 @@ export default {
 }
 
 .start_buttons span {
-  background-color: rgb(5, 6, 45);
+  background-color:  #000000;
   padding: 16px 24px;
   border-radius: 6px;
   width: 100%;
