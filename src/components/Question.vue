@@ -58,7 +58,7 @@ export default {
 <style scoped>
 .infoBox {
   color: white;
-  background-image: linear-gradient(144deg, rgb(0, 24, 4), #116d37, #95ffca);
+  background-color: #95ffca;
   border: 0px;
   border-radius: 0.5em;
   width: 55vh;
