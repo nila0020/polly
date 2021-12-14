@@ -11,7 +11,7 @@ export default {
       minVal: 10,
       maxVal: 20,
       value: 0,
-      unit: "",
+      unit: "kg",
     };
   },
   components: {

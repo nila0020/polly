@@ -13,7 +13,7 @@
           v-model="gameName"
           placeholder="Enter Game name"
         /><br />
-        <label for="gameID">{{uiLabels.gameID}}: </label>
+        <label for="gameID">{{ uiLabels.gameID }}: </label>
         <input
           type="text"
           id="gameID"
@@ -35,7 +35,12 @@
           <ul>
             <li v-bind:key="question" v-for="question in questions">
               <label>
-                <button v-on:click="[currentData(question.questionNumber), closeExpand()]" key="">
+                <button
+                  v-on:click="
+                    [currentData(question.questionNumber), closeExpand()]
+                  "
+                  key=""
+                >
                   {{ question.questionNumber }}.{{ question.q }}
                 </button>
               </label>
@@ -43,7 +48,10 @@
           </ul>
           <p>
             <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
-            <button class="overlookBtn" v-on:click="[addNewQuestion(), closeExpand()]">
+            <button
+              class="overlookBtn"
+              v-on:click="[addNewQuestion(), closeExpand()]"
+            >
               {{ uiLabels.Addquestion }}
             </button>
             <button class="overlookBtn">{{ uiLabels.Deletequestion }}</button>
@@ -61,13 +69,13 @@
           v-on:click="infoExpand"
           v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"
         >
-          <a  v-on:click="closeExpand" class="closeExpand">X</a>
+          <a v-on:click="closeExpand" class="closeExpand">X</a>
           <h1>Info</h1>
           <input
             class="infoArea"
             type="text"
             v-model="info"
-            placeholder= {{uiLabels.Questiondiscription}}
+            placeholder="{{uiLabels.Questiondiscription}}"
           />
         </div>
 
@@ -81,7 +89,7 @@
             questionSmallCond: questionSmallCond,
           }"
         >
-          <input type="file" @change="onFileSelected">
+          <input type="file" @change="onFileSelected" />
           <h1>Create your question here</h1>
           <input
             type="text"
@@ -98,14 +106,18 @@
                 v-bind:key="'answer' + i"
                 placeholder="Add answer"
               />
-              <button v-on:click="addAnswer">{{ uiLabels.AddAnswerAlternative }}</button>
+              <button v-on:click="addAnswer">
+                {{ uiLabels.AddAnswerAlternative }}
+              </button>
               <br />
             </div>
             <div v-else-if="checked === 'slider'">Här ska en slider vara</div>
 
             <!--            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">-->
 
-            <button v-on:click="[saveQuestion()]">{{ uiLabels.Savequestion }}</button>
+            <button v-on:click="[saveQuestion()]">
+              {{ uiLabels.Savequestion }}
+            </button>
             <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
             <button v-on:click="runQuestion">
               Run question
@@ -134,7 +146,6 @@
 
           <input type="radio" id="slider" value="slider" v-model="checked" />
           <label for="slider">{{ uiLabels.slider }}</label>
-
         </div>
       </div>
 
@@ -187,7 +198,7 @@ export default {
   },
   methods: {
     onFileSelected(event) {
-      console.log(event.target.files[0])
+      console.log(event.target.files[0]);
       //this.selectedFile
     },
 
@@ -226,7 +237,7 @@ export default {
         questionNumber: this.questionNumber,
         pic: this.pic,
       });
-      console.log(this.questions)
+      console.log(this.questions);
     },
 
     saveQuestion: function () {
@@ -239,12 +250,10 @@ export default {
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
       ).info = this.info;
-      this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
-      ).q = this.questionText;
-      this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
-      ).a = this.answer;
+      this.questions.find((obj) => obj.questionNumber == this.editingNumber).q =
+        this.questionText;
+      this.questions.find((obj) => obj.questionNumber == this.editingNumber).a =
+        this.answer;
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
       ).pic = this.pic;
@@ -259,7 +268,7 @@ export default {
         questionNumber: this.editingNumber,
         pic: this.pic,
       });
-      console.log(this.questions)
+      console.log(this.questions);
 
       //var currentQuestion = this.questions.find(obj => obj.questionNumber == this.questionNumber);
       //console.log(currentQuestion);
@@ -292,27 +301,26 @@ export default {
     },*/
 
     currentData: function (questionNumber) {
-
-      this.editingNumber = questionNumber
-      console.log(this.editingNumber)
+      this.editingNumber = questionNumber;
+      console.log(this.editingNumber);
       this.type = this.questions.find(
-          (obj) => obj.questionNumber == questionNumber
+        (obj) => obj.questionNumber == questionNumber
       ).type;
       this.pos = this.questions.find(
-          (obj) => obj.questionNumber == questionNumber
+        (obj) => obj.questionNumber == questionNumber
       ).pos;
       this.info = this.questions.find(
-          (obj) => obj.questionNumber == questionNumber
+        (obj) => obj.questionNumber == questionNumber
       ).info;
       this.questionText = this.questions.find(
-          (obj) => obj.questionNumber == questionNumber
+        (obj) => obj.questionNumber == questionNumber
       ).q;
       this.answer = this.questions.find(
-          (obj) => obj.questionNumber == questionNumber
+        (obj) => obj.questionNumber == questionNumber
       ).a;
       this.pic = this.questions.find(
-          (obj) => obj.questionNumber == questionNumber
-      ).pic
+        (obj) => obj.questionNumber == questionNumber
+      ).pic;
     },
     addAnswer: function () {
       this.answers.push("");

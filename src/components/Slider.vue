@@ -1,11 +1,20 @@
+<!-- Man passar in parametrarna min, max och unit via bindning i objektaggen
+på template i filen som skall använda componenten, t.ex. 
+  <Slider :min="minVal" :max="maxVal" :unit="unit" />
+och gör importen: 
+import Slider from "@/components/Slider.vue"; 
+i scriptet på filen som använder komponenten -->
 <template>
   <div>
-    <Slider
-      v-model="value"
-      :min="this.min"
-      :max="this.max"
-      v-on:click="showValue"
-    />
+    <div>
+      <Slider
+        v-model="value"
+        :min="this.min"
+        :max="this.max"
+        v-on:click="showValue"
+      />
+    </div>
+    <div class="output">{{ this.value }} {{ this.unit }}</div>
   </div>
 </template>
 
@@ -19,7 +28,7 @@ export default {
   props: {
     min: Number,
     max: Number,
-    unit: "",
+    unit: String,
   },
   data() {
     return {
@@ -27,13 +36,9 @@ export default {
     };
   },
   methods: {
-    showValue: function () {
-      console.log(this.value);
-      console.log(this.min);
-      console.log(this.max);
-    },
+    showValue: function () {},
   },
 };
 </script>
-
-<style src="@vueform/slider/themes/default.css"></style>
+<style src="@vueform/slider/themes/default.css">
+</style>
