@@ -10,7 +10,7 @@
   </div> -->
 
   <header id=header>
-    <img src="img\nyast.PNG" alt="" style="width:auto; height:300px;margin-left:10px;">
+    <img src="img\nyast.PNG" alt="" style="width:auto; height:200px;margin-left:10px;">
   </header>
 
 
@@ -18,7 +18,7 @@
 
     <h1>{{uiLabels.welcomeText}}</h1>
 
-<br>
+
 
   <h3>{{uiLabels.Choose}}</h3>
   <!-- <img src="https://rymdcenter.se/wp-content/uploads/2020/01/m82-hst-karusell.jpg" alt="alt text"/> -->
@@ -31,6 +31,7 @@
 </div>
   <br>
   <button id="langButton" class ="langButton" v-on:click="switchLanguage" > <div>{{uiLabels.changeLanguage}} </div> <img v-bind:src="uiLabels.imgLanguage"  height="70" width="140" alt=""></button>
+
 
 </section>
 </template>
@@ -66,12 +67,13 @@ export default {
 }
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@800&family=Lilita+One&display=swap');
 
 #page {
   background-color: #1d7658;
   text-align:center;
-  font-size: 16pt;
-  font-family: 'Alice', serif;
+  font-size: 20pt;
+  font-family: 'Baloo Bhaijaan 2', cursive;
   color: white;
   padding-bottom:100px;
   padding-top:50px;
@@ -97,7 +99,7 @@ export default {
 
 .start_buttons {
   align-items: center;
-  background-image: linear-gradient(144deg,#FFFFFF, #000000 50%,#FFFFFF);
+  background-image: linear-gradient(144deg, #c4bdbd, #000000 50%, #9a9797);
   border: 0;
   border-radius: 8px;
   box-sizing: border-box;
