@@ -35,7 +35,7 @@
           <ul>
             <li v-bind:key="question" v-for="question in questions">
               <label>
-                <button v-on:click="currentData" key="">
+                <button v-on:click="[currentData(question.questionNumber), closeExpand()]" key="">
                   {{ question.questionNumber }}.{{ question.q }}
                 </button>
               </label>
@@ -43,7 +43,7 @@
           </ul>
           <p>
             <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
-            <button class="overlookBtn" v-on:click="addNewQuestion">
+            <button class="overlookBtn" v-on:click="[addNewQuestion(), closeExpand()]">
               {{ uiLabels.Addquestion }}
             </button>
             <button class="overlookBtn">{{ uiLabels.Deletequestion }}</button>
@@ -61,7 +61,7 @@
           v-on:click="infoExpand"
           v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"
         >
-          <a class="closeExpand" v-on:click="closeExpand">X</a>
+          <a  v-on:click="closeExpand" class="closeExpand">X</a>
           <h1>Info</h1>
           <input
             class="infoArea"
@@ -159,6 +159,7 @@ export default {
       question: "",
       answers: ["", ""],
       questionNumber: 0,
+      editingNumber: 0,
       gameName: "",
       data: {},
       uiLabels: {},
@@ -197,6 +198,7 @@ export default {
       this.questionText = "";
       this.answers = ["", ""];
       this.info = "";
+      this.editingNumber = this.questionNumber;
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.type,
@@ -222,22 +224,22 @@ export default {
 
     saveQuestion: function () {
       this.questions.find(
-        (obj) => obj.questionNumber == this.questionNumber
+        (obj) => obj.questionNumber == this.editingNumber
       ).type = this.type;
       this.questions.find(
-        (obj) => obj.questionNumber == this.questionNumber
+        (obj) => obj.questionNumber == this.editingNumber
       ).pos = this.pos;
       this.questions.find(
-        (obj) => obj.questionNumber == this.questionNumber
+        (obj) => obj.questionNumber == this.editingNumber
       ).info = this.info;
       this.questions.find(
-        (obj) => obj.questionNumber == this.questionNumber
+        (obj) => obj.questionNumber == this.editingNumber
       ).q = this.questionText;
       this.questions.find(
-        (obj) => obj.questionNumber == this.questionNumber
+        (obj) => obj.questionNumber == this.editingNumber
       ).a = this.answer;
       this.questions.find(
-        (obj) => obj.questionNumber == this.questionNumber
+        (obj) => obj.questionNumber == this.editingNumber
       ).pic = this.pic;
 
       socket.emit("addQuestion", {
@@ -247,7 +249,7 @@ export default {
         info: this.info,
         q: this.questionText,
         a: this.answers,
-        questionNumber: this.questionNumber,
+        questionNumber: this.editingNumber,
         pic: this.pic,
       });
       console.log(this.questions)
@@ -282,8 +284,28 @@ export default {
       this.info = "";
     },*/
 
-    currentData: function () {
-      console.log(this.questions.questionNumber)
+    currentData: function (questionNumber) {
+
+      this.editingNumber = questionNumber
+      console.log(this.editingNumber)
+      this.type = this.questions.find(
+          (obj) => obj.questionNumber == questionNumber
+      ).type;
+      this.pos = this.questions.find(
+          (obj) => obj.questionNumber == questionNumber
+      ).pos;
+      this.info = this.questions.find(
+          (obj) => obj.questionNumber == questionNumber
+      ).info;
+      this.questionText = this.questions.find(
+          (obj) => obj.questionNumber == questionNumber
+      ).q;
+      this.answer = this.questions.find(
+          (obj) => obj.questionNumber == questionNumber
+      ).a;
+      this.pic = this.questions.find(
+          (obj) => obj.questionNumber == questionNumber
+      ).pic
     },
     addAnswer: function () {
       this.answers.push("");
@@ -509,7 +531,7 @@ export default {
   overflow: scroll;
 }
 ::-webkit-scrollbar {
-  width: 0px;
+  width: 0;
 }
 
 .closeExpand {
