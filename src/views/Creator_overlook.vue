@@ -81,6 +81,7 @@
             questionSmallCond: questionSmallCond,
           }"
         >
+          <input type="file" @change="onFileSelected">
           <h1>Create your question here</h1>
           <input
             type="text"
@@ -160,6 +161,7 @@ export default {
       answers: ["", ""],
       questionNumber: 0,
       editingNumber: 0,
+      selectedFile: null,
       gameName: "",
       data: {},
       uiLabels: {},
@@ -184,6 +186,11 @@ export default {
     socket.on("gameCreated", (data) => (this.data = data));
   },
   methods: {
+    onFileSelected(event) {
+      console.log(event.target.files[0])
+      //this.selectedFile
+    },
+
     createGame: function () {
       this.showAll = false;
       socket.emit("createGame", {
