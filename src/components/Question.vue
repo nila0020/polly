@@ -19,7 +19,7 @@
     <div class="questionBar">
       {{ question.q }}
     </div>
-    <div class="answerGrid">
+    <div class="MCQ_answerGrid" v-if="this.question.type == 'MCQ'">
       <button
         v-for="a in question.a"
         v-on:click="answer(a)"
@@ -32,6 +32,7 @@
         </p>
       </button>
     </div>
+    <div class="slider_answerGrid" v-if="this.question.type == 'MCQ'"></div>
   </div>
 </template>
 <script>
@@ -86,7 +87,13 @@ export default {
   align-items: center;
   font-size: 4vh;
 }
-.answerGrid {
+.slider_answerGrid {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5em;
+}
+.MCQ_answerGrid {
   display: grid;
   width: 100%;
   height: 100%;

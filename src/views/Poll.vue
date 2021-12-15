@@ -101,7 +101,6 @@ export default {
       socket.emit("joinGame", this.gameId, this.qId, this.userName);
     },
     activateQuestion: function () {
-      console.log("detta är objektet= " + this.question);
       this.activeQuestion = true;
     },
   },
