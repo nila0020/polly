@@ -32,7 +32,7 @@
         </p>
       </button>
     </div>
-    <div class="slider_answerGrid" v-if="this.question.type == 'MCQ'"></div>
+    <div class="slider_answerGrid" v-if="this.question.type == 'Slider'"></div>
   </div>
 </template>
 <script>
@@ -46,6 +46,7 @@ export default {
   },
   methods: {
     hideInfo: function () {
+      console.log(this.question.pic);
       this.infoHidden = true;
     },
 
