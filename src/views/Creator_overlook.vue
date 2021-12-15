@@ -89,7 +89,9 @@
             questionSmallCond: questionSmallCond,
           }"
         >
-          <input type="file" @change="onFileSelected" />
+          <input type="file" @change="Preview_image"/>
+          <img :src="pic" v-if="pic !== null" style="width: 10vw; height: 12vh; object-fit: cover"/>
+          <button v-on:click="removeImage" >Remove image</button>
           <h1>Create your question here</h1>
           <input
             type="text"
@@ -172,7 +174,7 @@ export default {
       answers: ["", ""],
       questionNumber: 0,
       editingNumber: 0,
-      selectedFile: null,
+      pic: null,
       gameName: "",
       data: {},
       uiLabels: {},
@@ -197,9 +199,27 @@ export default {
     socket.on("gameCreated", (data) => (this.data = data));
   },
   methods: {
-    onFileSelected(event) {
-      console.log(event.target.files[0]);
-      //this.selectedFile
+    Preview_image(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length)
+        return;
+      this.createImage(files[0]);
+      //console.log(e.target.files[0]);
+    },
+    createImage(file) {
+      //var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = (e) => {
+        vm.pic = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+    },
+    removeImage: function () {
+      this.pic = null;
+
     },
 
     createGame: function () {
@@ -216,6 +236,7 @@ export default {
       this.questionText = "";
       this.answers = ["", ""];
       this.info = "";
+      this.pic = null;
       this.editingNumber = this.questionNumber;
       socket.emit("addQuestion", {
         gameId: this.gameId,
