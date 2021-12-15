@@ -9,10 +9,10 @@
     <br />
     {{ question.info }}
   </div>
-  <div class="outerGrid" v-show="infoHidden">
+  <div class="outerGrid">
     <div class="picture">
       <img
-        v-bind:src="'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg'"
+        :src="question.pic"
         style="width: 100%; height: 100%; object-fit: cover"
       />
     </div>
