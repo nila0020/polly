@@ -90,6 +90,7 @@ export default {
       });
       this.qId += 1;
       this.activeQuestion = false;
+
       /*nedan uppdaterar vi frågeobjektet via sockets via data*/
       socket.emit("runQuestion", {
         gameId: this.gameId,
@@ -113,6 +114,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  justify-items: center;
+  align-items: center;
 }
 .wrapper {
   display: grid;
@@ -151,6 +154,7 @@ export default {
   border-radius: 8px;
 }
 .questionDisplayed {
+  justify-content: center;
 }
 .entryId {
   display: grid;

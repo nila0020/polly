@@ -9,7 +9,7 @@
     <br />
     {{ question.info }}
   </div>
-  <div class="outerGrid">
+  <div class="outerGrid" v-if="!questionHidden">
     <div class="picture">
       <img
         :src="question.pic"
@@ -32,14 +32,28 @@
         </p>
       </button>
     </div>
-    <div class="slider_answerGrid" v-if="this.question.type == 'Slider'"></div>
+    <div class="slider_answerGrid" v-if="this.question.type == 'Slider'">
+      <Slider v-model="value" :min="minVal" :max="maxVal" :unit="unit" />
+    </div>
   </div>
 </template>
 <script>
+import Slider from "@/components/Slider.vue";
+
 export default {
   name: "Bars",
   data: function () {
-    return { infoHidden: false };
+    return {
+      infoHidden: false,
+      questionHidden: true,
+      minVal: this.question.minVal,
+      maxVal: this.question.maxVal,
+      value: this.question.value,
+      unit: this.question.unit,
+    };
+  },
+  components: {
+    Slider,
   },
   props: {
     question: Object,
@@ -48,9 +62,12 @@ export default {
     hideInfo: function () {
       console.log(this.question.pic);
       this.infoHidden = true;
+      this.questionHidden = false;
     },
 
     answer: function (answer) {
+      this.infoHidden = false;
+      this.questionHidden = true;
       console.log("i questions emit: " + answer);
       this.$emit("answer", answer);
     },
@@ -71,6 +88,7 @@ export default {
 }
 .outerGrid {
   display: grid;
+  width: 55vh;
   height: 98vh;
   grid-template-rows: 40% auto auto;
   grid-gap: 1vh;
