@@ -15,6 +15,9 @@ i scriptet på filen som använder komponenten -->
       />
     </div>
     <div class="output">{{ this.value }} {{ this.unit }}</div>
+    <div class="output">The lowest acceptable answer is: {{ this.value[0] }} {{ this.unit }}</div>
+    <div class="output">The actual answer is: {{ this.value[1] }} {{ this.unit }}</div>
+    <div class="output">The highest acceptable answer is: {{ this.value[2] }} {{ this.unit }}</div>
   </div>
 </template>
 
@@ -32,7 +35,7 @@ export default {
   },
   data() {
     return {
-      value: 0,
+      value: [0,10,20]
     };
   },
   methods: {

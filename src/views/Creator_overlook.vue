@@ -89,9 +89,19 @@
             questionSmallCond: questionSmallCond,
           }"
         >
-          <input type="file" @change="Preview_image"/>
-          <img :src="pic" v-if="pic !== null" style="width: 10vw; height: 12vh; object-fit: cover"/>
+          <img :src="pic"
+              v-if="pic !== null"
+              style="width: 20vw; height: 24vh; object-fit: cover" ref=""
+          />
+          <br>
+          <input type="file"
+                 @change="Preview_image"
+                 style="display: none"
+                 ref="fileInput"
+          />
+          <button v-on:click="$refs.fileInput.click()">Choose image</button>
           <button v-on:click="removeImage" >Remove image</button>
+
           <h1>Create your question here</h1>
           <input
             type="text"
@@ -113,7 +123,12 @@
               </button>
               <br />
             </div>
-            <div v-else-if="checked === 'slider'">Här ska en slider vara</div>
+            <div v-else-if="checked === 'slider'">
+              <input type="number" v-model="sliderMinVal">
+              <input type="number" v-model="sliderMaxVal">
+              <input type="text" v-model="sliderUnit" placeholder="unit">
+              <Slider :min="sliderMinVal" :max="sliderMaxVal" :unit="sliderUnit" />
+            </div>
 
             <!--            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">-->
 
@@ -160,8 +175,12 @@
 
 <script>
 import io from "socket.io-client";
+import Slider from "@/components/Slider.vue";
 const socket = io();
 export default {
+  components: {
+    Slider
+  },
   data: function () {
     return {
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
@@ -169,17 +188,23 @@ export default {
       info: "",
       lang: "",
       gameId: "",
-      type: "MCQ",
       question: "",
       answers: ["", ""],
       questionNumber: 0,
       editingNumber: 0,
+      sliderMinVal: 10,
+      sliderMaxVal: 20,
+      sliderUnit: "",
+      sliderAnswer:[this.sliderUnit,
+                    this.sliderMinVal,
+                    this.sliderMaxVal,
+                    this.sliderValue],
       pic: null,
       gameName: "",
       data: {},
       uiLabels: {},
       showAll: true,
-      checked: null,
+      checked: "MCQ",
       infoBig: false,
       questionBig: false,
       mapBig: false,
@@ -240,7 +265,7 @@ export default {
       this.editingNumber = this.questionNumber;
       socket.emit("addQuestion", {
         gameId: this.gameId,
-        type: this.type,
+        type: this.checked,
         pos: this.pos,
         info: this.info,
         q: this.questionText,
@@ -250,7 +275,7 @@ export default {
       });
       this.questions.push({
         gameId: this.gameId,
-        type: this.type,
+        type: this.checked,
         pos: this.pos,
         info: this.info,
         q: this.questionText,
@@ -264,7 +289,7 @@ export default {
     saveQuestion: function () {
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
-      ).type = this.type;
+      ).type = this.checked;
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
       ).pos = this.pos;
@@ -281,7 +306,7 @@ export default {
 
       socket.emit("addQuestion", {
         gameId: this.gameId,
-        type: this.type,
+        type: this.checked,
         pos: this.pos,
         info: this.info,
         q: this.questionText,
@@ -290,10 +315,9 @@ export default {
         pic: this.pic,
       });
       console.log(this.questions);
-
-      //var currentQuestion = this.questions.find(obj => obj.questionNumber == this.questionNumber);
-      //console.log(currentQuestion);
+      console.log(this.sliderValue)
     },
+
 
     /*   addQuestion: function() {
       //Ska inte skickas förrän alla frågor lagts till
@@ -324,7 +348,7 @@ export default {
     currentData: function (questionNumber) {
       this.editingNumber = questionNumber;
       console.log(this.editingNumber);
-      this.type = this.questions.find(
+      this.checked = this.questions.find(
         (obj) => obj.questionNumber == questionNumber
       ).type;
       this.pos = this.questions.find(
@@ -392,16 +416,7 @@ export default {
     },*/
   },
 };
-/*$(document).ready(function () {
-  $("#wrapper div").click(function () {
-    if ($(this).siblings().hasClass('expanded')) {
-      $(this).siblings().removeClass('expanded');
-    }
-    $(this).addClass('expanded');
-  });
-});*/
 </script>
-
 
 <style>
 #header h1 {
