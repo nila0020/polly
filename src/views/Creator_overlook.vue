@@ -155,9 +155,11 @@
         >
           
           
-          <div >
+          <div>
+            
             
             <h4>Your Position</h4>
+             
               Latitude: {{ currPos.lat.toFixed(2) }}, Longitude:
               {{ currPos.lng.toFixed(2) }}
           </div>
@@ -217,6 +219,7 @@ const socket = io();
 export default {
   components: {
     Slider
+    
   },
   setup() {
     const {coords} = useGeolocation()
@@ -230,34 +233,64 @@ export default {
     let clickListener = null
     const loader = new Loader({apiKey: GOOGLE_MAPS_API_KEY})
     const mapDiv = ref(null)
-    
 
     onMounted(async () => {
       await loader.load()
       map.value = new google.maps.Map(mapDiv.value, {
         center: currPos.value,
-        zoom: 12
+        zoom: 17
 
       });
       let markerOptions = {
-        position: new google.maps.LatLng(currPos.value),
-        map: map.value
-      }
-      let marker = new google.maps.Marker(markerOptions);
+              map: map.value
+              
+            }
+      let myPos = new google.maps.Marker(markerOptions);
+            myPos.setPosition(currPos.value)
       clickListener = map.value.addListener(
           'click',
-          ({latLng: {lat, lng}}) =>
-              (otherPos.value = {lat: lat(), lng: lng()})
-      )
+          ({latLng}) => { 
+            let markerOptions = {
+              map: map.value
+            }
+            let newMarker = new google.maps.Marker(markerOptions);
+            newMarker.setPosition(latLng)
+            newMarker.addListener(
+              'dblclick',
+              () => {
+                newMarker.setMap(null)
+              }
+            )
+            newMarker.addListener(
+              'click',
+              () => {
+                  const infowindow = new google.maps.InfoWindow({
+                    content: 123,
+                  });
+                infowindow.open({
+                  anchor: newMarker,
+                  map,
+                  shouldFocus: false,
+                });
+
+              }
+            )
+          }
+      ).bind(this)
+      /*
       clickListener = marker.addListener(
           'click',
           ({latLng: {lat, lng}}) =>
               (currPos.value = {lat: lat(), lng: lng()})
-      )
+      )*/
+      
     })
     onUnmounted(async () => {
       if (clickListener) clickListener.remove()
     })
+     
+    
+    
     return {currPos, mapDiv, otherPos}
   }
 
@@ -313,6 +346,15 @@ export default {
   ,
 
     methods: {
+      
+      
+      initMap: function() {
+      
+      map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: -34.397, lng: 150.644 },
+      zoom: 8,
+  });
+},
       
 
       getSliderValue(sliderValue)
