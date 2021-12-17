@@ -202,7 +202,7 @@
 <script>
 /* eslint-disable no-undef */
 import io from "socket.io-client";
-<<<<<<< HEAD
+import Slider from "@/components/Slider.vue";
 import { computed, ref, onMounted, onUnmounted} from 'vue'
 import { useGeolocation } from '@/components/useGeolocation.js'
 import { Loader } from '@googlemaps/js-api-loader'
@@ -210,18 +210,20 @@ const GOOGLE_MAPS_API_KEY = 'AIzaSyAkteq83ilUzPoHXC5bwzwIaWkzdZhBeeY'
 
 const socket = io();
 export default {
-  
+  components: {
+    Slider
+  },
   setup() {
-    const { coords } = useGeolocation()
+    const {coords} = useGeolocation()
     const currPos = computed(() => ({
       lat: coords.value.latitude,
       lng: coords.value.longitude
     }))
-     
+
     const otherPos = ref(null)
     let map = ref(null)
     let clickListener = null
-    const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY})
+    const loader = new Loader({apiKey: GOOGLE_MAPS_API_KEY})
     const mapDiv = ref(null)
 
     onMounted(async () => {
@@ -230,7 +232,7 @@ export default {
       map.value = new google.maps.Map(mapDiv.value, {
         center: currPos.value,
         zoom: 7
-       
+
       });
       let markerOptions = {
         position: new google.maps.LatLng(59.859799, 17.602908),
@@ -238,172 +240,179 @@ export default {
       }
       new google.maps.Marker(markerOptions);
       clickListener = map.value.addListener(
-        'click',
-        ({latLng: {lat, lng }}) =>
-        (otherPos.value = { lat: lat(), lng: lng() })
+          'click',
+          ({latLng: {lat, lng}}) =>
+              (otherPos.value = {lat: lat(), lng: lng()})
       )
     })
     onUnmounted(async () => {
       if (clickListener) clickListener.remove()
     })
-    return { currPos, mapDiv}
-=======
-import Slider from "@/components/Slider.vue";
-const socket = io();
-export default {
-  components: {
-    Slider
->>>>>>> 1cf0c7f9841085344286932d5d6f5d5c0001ef07
-  },
-  data: function () {
-    return {
-      questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
-      questions: [],
-      info: "",
-      lang: "",
-      gameId: "",
-      question: "",
-      answers: ["", ""],
-      questionNumber: 0,
-      editingNumber: 0,
-      sliderMinVal: 10,
-      sliderMaxVal: 20,
-      sliderUnit: "",
-      sliderValue: [],
-      sliderAnswer:[this.sliderUnit,
-                    this.sliderMinVal,
-                    this.sliderMaxVal,
-                    this.sliderValue],
-      pic: null,
-      gameName: "",
-      data: {},
-      uiLabels: {},
-      showAll: true,
-      checked: "MCQ",
-      infoBig: false,
-      questionBig: false,
-      mapBig: false,
-      infoSmall: false,
-      questionSmall: false,
-      mapSmall: false,
-      questionSmallCond: false,
-    };
-  },
-  
-  
-  created: function () {
-    this.lang = this.$route.params.lang;
-    socket.emit("pageLoaded", this.lang);
-    socket.on("init", (labels) => {
-      this.uiLabels = labels;
-    });
-    socket.on("dataUpdate", (data) => (this.data = data));
-    socket.on("gameCreated", (data) => (this.data = data));
-  },
-  
-  methods: {
-    getSliderValue(sliderValue)  {
-      this.sliderValue = sliderValue
-      console.log(this.sliderValue)
-    },
+    return {currPos, mapDiv}
+  }
 
-    Preview_image(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length)
-        return;
-      this.createImage(files[0]);
-      //console.log(e.target.files[0]);
-    },
-    createImage(file) {
-      //var image = new Image();
-      var reader = new FileReader();
-      var vm = this;
-
-      reader.onload = (e) => {
-        vm.pic = e.target.result;
+  ,
+    data: function () {
+      return {
+        questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
+        questions: [],
+        info: "",
+        lang: "",
+        gameId: "",
+        question: "",
+        answers: ["", ""],
+        questionNumber: 0,
+        editingNumber: 0,
+        sliderMinVal: 10,
+        sliderMaxVal: 20,
+        sliderUnit: "",
+        sliderValue: [],
+        sliderAnswer: [this.sliderUnit,
+          this.sliderMinVal,
+          this.sliderMaxVal,
+          this.sliderValue],
+        pic: null,
+        gameName: "",
+        data: {},
+        uiLabels: {},
+        showAll: true,
+        checked: "MCQ",
+        infoBig: false,
+        questionBig: false,
+        mapBig: false,
+        infoSmall: false,
+        questionSmall: false,
+        mapSmall: false,
+        questionSmallCond: false,
       };
-      reader.readAsDataURL(file);
+    }
+  ,
 
-    },
-    removeImage: function () {
-      this.pic = null;
 
-    },
-
-    createGame: function () {
-      this.showAll = false;
-      socket.emit("createGame", {
-        gameId: this.gameId,
-        lang: this.lang,
-        gameName: this.gameName,
+    created: function () {
+      this.lang = this.$route.params.lang;
+      socket.emit("pageLoaded", this.lang);
+      socket.on("init", (labels) => {
+        this.uiLabels = labels;
       });
-    },
+      socket.on("dataUpdate", (data) => (this.data = data));
+      socket.on("gameCreated", (data) => (this.data = data));
+    }
+  ,
 
-    addNewQuestion: function () {
-      this.questionNumber++;
-      this.questionText = "";
-      this.answers = ["", ""];
-      this.info = "";
-      this.pic = null;
-      this.editingNumber = this.questionNumber;
-      socket.emit("addQuestion", {
-        gameId: this.gameId,
-        type: this.checked,
-        pos: this.pos,
-        info: this.info,
-        q: this.questionText,
-        a: this.answers,
-        questionNumber: this.questionNumber,
-        pic: this.pic,
-      });
-      this.questions.push({
-        gameId: this.gameId,
-        type: this.checked,
-        pos: this.pos,
-        info: this.info,
-        q: this.questionText,
-        a: this.answers,
-        questionNumber: this.questionNumber,
-        pic: this.pic,
-      });
-      console.log(this.questions);
-    },
+    methods: {
+      getSliderValue(sliderValue)
+      {
+        this.sliderValue = sliderValue
+        console.log(this.sliderValue)
+      }
+    ,
 
-    saveQuestion: function () {
-      this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
-      ).type = this.checked;
-      this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
-      ).pos = this.pos;
-      this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
-      ).info = this.info;
-      this.questions.find((obj) => obj.questionNumber == this.editingNumber).q =
-        this.questionText;
-      this.questions.find((obj) => obj.questionNumber == this.editingNumber).a =
-        this.answer;
-      this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
-      ).pic = this.pic;
+      Preview_image(e)
+      {
+        var files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+          return;
+        this.createImage(files[0]);
+        //console.log(e.target.files[0]);
+      }
+    ,
+      createImage(file)
+      {
+        //var image = new Image();
+        var reader = new FileReader();
+        var vm = this;
 
-      socket.emit("addQuestion", {
-        gameId: this.gameId,
-        type: this.checked,
-        pos: this.pos,
-        info: this.info,
-        q: this.questionText,
-        a: this.answers,
-        questionNumber: this.editingNumber,
-        pic: this.pic,
-      });
-      console.log(this.questions);
-      console.log(this.sliderValue)
-      //$("#myElem").show().delay(5000).fadeOut();
-    },
+        reader.onload = (e) => {
+          vm.pic = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+      }
+    ,
+      removeImage: function () {
+        this.pic = null;
+
+      }
+    ,
+
+      createGame: function () {
+        this.showAll = false;
+        socket.emit("createGame", {
+          gameId: this.gameId,
+          lang: this.lang,
+          gameName: this.gameName,
+        });
+      }
+    ,
+
+      addNewQuestion: function () {
+        this.questionNumber++;
+        this.questionText = "";
+        this.answers = ["", ""];
+        this.info = "";
+        this.pic = null;
+        this.editingNumber = this.questionNumber;
+        socket.emit("addQuestion", {
+          gameId: this.gameId,
+          type: this.checked,
+          pos: this.pos,
+          info: this.info,
+          q: this.questionText,
+          a: this.answers,
+          questionNumber: this.questionNumber,
+          pic: this.pic,
+        });
+        this.questions.push({
+          gameId: this.gameId,
+          type: this.checked,
+          pos: this.pos,
+          info: this.info,
+          q: this.questionText,
+          a: this.answers,
+          questionNumber: this.questionNumber,
+          pic: this.pic,
+        });
+        console.log(this.questions);
+      }
+    ,
+
+      saveQuestion: function () {
+        this.questions.find(
+            (obj) => obj.questionNumber == this.editingNumber
+        ).type = this.checked;
+        this.questions.find(
+            (obj) => obj.questionNumber == this.editingNumber
+        ).pos = this.pos;
+        this.questions.find(
+            (obj) => obj.questionNumber == this.editingNumber
+        ).info = this.info;
+        this.questions.find((obj) => obj.questionNumber == this.editingNumber).q =
+            this.questionText;
+        this.questions.find((obj) => obj.questionNumber == this.editingNumber).a =
+            this.answer;
+        this.questions.find(
+            (obj) => obj.questionNumber == this.editingNumber
+        ).pic = this.pic;
+
+        socket.emit("addQuestion", {
+          gameId: this.gameId,
+          type: this.checked,
+          pos: this.pos,
+          info: this.info,
+          q: this.questionText,
+          a: this.answers,
+          questionNumber: this.editingNumber,
+          pic: this.pic,
+        });
+        console.log(this.questions);
+        console.log(this.sliderValue)
+        //$("#myElem").show().delay(5000).fadeOut();
+      }
+    ,
 
 
-    /*   addQuestion: function() {
+      /*   addQuestion: function() {
       //Ska inte skickas förrän alla frågor lagts till
       var newQuestion = this.questionText.trim();
       if (!newQuestion) {return;}
@@ -429,77 +438,85 @@ export default {
       this.info = "";
     },*/
 
-    currentData: function (questionNumber) {
-      this.editingNumber = questionNumber;
-      console.log(this.editingNumber);
-      this.checked = this.questions.find(
-        (obj) => obj.questionNumber == questionNumber
-      ).type;
-      this.pos = this.questions.find(
-        (obj) => obj.questionNumber == questionNumber
-      ).pos;
-      this.info = this.questions.find(
-        (obj) => obj.questionNumber == questionNumber
-      ).info;
-      this.questionText = this.questions.find(
-        (obj) => obj.questionNumber == questionNumber
-      ).q;
-      this.answer = this.questions.find(
-        (obj) => obj.questionNumber == questionNumber
-      ).a;
-      this.pic = this.questions.find(
-        (obj) => obj.questionNumber == questionNumber
-      ).pic;
-    },
-    addAnswer: function () {
-      this.answers.push("");
-    },
+      currentData: function (questionNumber) {
+        this.editingNumber = questionNumber;
+        console.log(this.editingNumber);
+        this.checked = this.questions.find(
+            (obj) => obj.questionNumber == questionNumber
+        ).type;
+        this.pos = this.questions.find(
+            (obj) => obj.questionNumber == questionNumber
+        ).pos;
+        this.info = this.questions.find(
+            (obj) => obj.questionNumber == questionNumber
+        ).info;
+        this.questionText = this.questions.find(
+            (obj) => obj.questionNumber == questionNumber
+        ).q;
+        this.answer = this.questions.find(
+            (obj) => obj.questionNumber == questionNumber
+        ).a;
+        this.pic = this.questions.find(
+            (obj) => obj.questionNumber == questionNumber
+        ).pic;
+      }
+    ,
+      addAnswer: function () {
+        this.answers.push("");
+      }
+    ,
 
-    infoExpand: function () {
-      this.infoBig = true;
-      this.questionBig = false;
-      this.mapBig = false;
-      this.infoSmall = false;
-      this.questionSmall = true;
-      this.mapSmall = true;
-      this.questionSmallCond = false;
-    },
-    questionExpand: function () {
-      this.infoBig = false;
-      this.questionBig = true;
-      this.mapBig = false;
-      this.infoSmall = true;
-      this.questionSmall = false;
-      this.mapSmall = true;
-      this.questionSmallCond = false;
-    },
-    mapExpand: function () {
-      this.infoBig = false;
-      this.questionBig = false;
-      this.mapBig = true;
-      this.infoSmall = true;
-      this.questionSmall = false;
-      this.mapSmall = false;
-      this.questionSmallCond = true;
-    },
-    closeExpand: function () {
-      this.infoBig = false;
-      this.questionBig = false;
-      this.mapBig = false;
-      this.infoSmall = false;
-      this.questionSmall = false;
-      this.mapSmall = false;
-      this.questionSmallCond = false;
-    },
+      infoExpand: function () {
+        this.infoBig = true;
+        this.questionBig = false;
+        this.mapBig = false;
+        this.infoSmall = false;
+        this.questionSmall = true;
+        this.mapSmall = true;
+        this.questionSmallCond = false;
+      }
+    ,
+      questionExpand: function () {
+        this.infoBig = false;
+        this.questionBig = true;
+        this.mapBig = false;
+        this.infoSmall = true;
+        this.questionSmall = false;
+        this.mapSmall = true;
+        this.questionSmallCond = false;
+      }
+    ,
+      mapExpand: function () {
+        this.infoBig = false;
+        this.questionBig = false;
+        this.mapBig = true;
+        this.infoSmall = true;
+        this.questionSmall = false;
+        this.mapSmall = false;
+        this.questionSmallCond = true;
+      }
+    ,
+      closeExpand: function () {
+        this.infoBig = false;
+        this.questionBig = false;
+        this.mapBig = false;
+        this.infoSmall = false;
+        this.questionSmall = false;
+        this.mapSmall = false;
+        this.questionSmallCond = false;
+      }
+    ,
 
-    /*runQuestion: function () {
+      /*runQuestion: function () {
       socket.emit("runQuestion", {
         gameId: this.gameId,
         questionNumber: this.questionNumber,
       });
     },*/
-  },
-};
+    }
+  ,
+  };
+
 </script>
 
 <style>
