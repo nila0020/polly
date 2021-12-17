@@ -23,6 +23,7 @@
         placeholder="Input your username"
       />
     </div>
+    <br /><br /><br /><br />
     <div class="boxC">
       <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
         >Join GeoQuiz!</v-btn
@@ -134,7 +135,7 @@ export default {
   grid-row: 1;
   color: white;
   width: 100%;
-  background-color: purple;
+  background-color: rgb(0, 128, 17);
 }
 .b {
   grid-column: 1;
@@ -160,15 +161,17 @@ export default {
   display: grid;
   width: 100%;
   height: 100%;
-  background-color: white;
+  background-color: #1d7658;
   justify-content: center;
+  padding-bottom:10vw;
+  padding-top:5vw;
 }
 input {
   border-radius: 2em;
   width: 75vw;
   border-width: 3px;
   font-size: 1.4em;
-  border-color: blueviolet;
+  border-color: green;
 }
 #joinknapp {
   max-width: 79vw;

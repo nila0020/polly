@@ -9,14 +9,18 @@
     <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
   </div> -->
 
+
+
+
+<section class = "page" >
   <header id=header>
-    <img src="img\nyast.PNG" alt="" style="width:auto; height:200px;margin-left:10px;">
+
+    <h1>GeoQuiz      <img src="/img/mappe.png" style="width:10vw"> </h1>
+
   </header>
 
 
-<section id = "page" >
-
-    <h1>{{uiLabels.welcomeText}}</h1>
+  <h1>{{uiLabels.welcomeText}}</h1>
 
 
 
@@ -68,21 +72,27 @@ export default {
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@800&family=Lilita+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
-#page {
+.page {
   background-color: #1d7658;
   text-align:center;
   font-size: 20pt;
   font-family: 'Baloo Bhaijaan 2', cursive;
   color: white;
-  padding-bottom:100px;
-  padding-top:50px;
+  padding-bottom:50px;
+
 
 }
 
 
 #header{
   background-color: #b6d7a8ff;
+  color:#1d7658;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 4vw;
+  justify-content:center;
+  text-shadow: 5px 5px #000000
 }
 
 

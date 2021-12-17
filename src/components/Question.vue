@@ -33,12 +33,18 @@
       </button>
     </div>
     <div class="slider_answerGrid" v-if="this.question.type == 'Slider'">
-      <Slider v-model="value" :min="minVal" :max="maxVal" :unit="unit" />
+      <SliderPoll
+        v-model="value"
+        :min="minVal"
+        :max="maxVal"
+        :unit="unit"
+        v-on:sliderValue="getSliderValue"
+      />
     </div>
   </div>
 </template>
 <script>
-import Slider from "@/components/Slider.vue";
+import SliderPoll from "@/components/SliderPoll.vue";
 
 export default {
   name: "Bars",
@@ -48,12 +54,12 @@ export default {
       questionHidden: true,
       minVal: this.question.minVal,
       maxVal: this.question.maxVal,
-      value: this.question.value,
+      sliderValue: this.question.sliderValue,
       unit: this.question.unit,
     };
   },
   components: {
-    Slider,
+    SliderPoll,
   },
   props: {
     question: Object,
@@ -70,6 +76,9 @@ export default {
       this.questionHidden = true;
       console.log("i questions emit: " + answer);
       this.$emit("answer", answer);
+    },
+    getSliderValue(sliderValue) {
+      this.sliderValue = sliderValue;
     },
   },
 };
