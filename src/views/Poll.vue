@@ -134,7 +134,7 @@ export default {
   grid-row: 1;
   color: white;
   width: 100%;
-  background-color: purple;
+  background-color: rgb(0, 128, 17);
 }
 .b {
   grid-column: 1;
@@ -168,7 +168,7 @@ input {
   width: 75vw;
   border-width: 3px;
   font-size: 1.4em;
-  border-color: blueviolet;
+  border-color: green;
 }
 #joinknapp {
   max-width: 79vw;
