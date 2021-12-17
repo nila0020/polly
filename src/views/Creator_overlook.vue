@@ -131,10 +131,12 @@
               <input type="number" v-model="sliderMaxVal">
               <input type="text" v-model="sliderUnit" placeholder="unit">
               <Slider :min="sliderMinVal" :max="sliderMaxVal" :unit="sliderUnit" v-on:sliderValue="getSliderValue"/>
+
+              <div class="output">The lowest acceptable answer is: {{ this.sliderValue[0] }} {{ this.sliderUnit }}</div>
+              <div class="output">The actual answer is: {{ this.sliderValue[1] }} {{ this.sliderUnit }}</div>
+              <div class="output">The highest acceptable answer is: {{ this.sliderValue[2] }} {{ this.sliderUnit }}</div>
             </div>
-            <div class="output">The lowest acceptable answer is: {{ this.sliderValue[0] }} {{ this.sliderUnit }}</div>
-            <div class="output">The actual answer is: {{ this.sliderValue[1] }} {{ this.sliderUnit }}</div>
-            <div class="output">The highest acceptable answer is: {{ this.sliderValue[2] }} {{ this.sliderUnit }}</div>
+
 
             <!--            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">-->
                       <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
@@ -192,8 +194,11 @@
         </button>
       </div>
 
-      <div class="blocker" v-if="showAll">
-        <!-- blocks part of the screen -->
+      <div class="blockerAll" v-if="hideAll">
+        <!-- blocks overlook, center and tool-->
+      </div>
+      <div class="blocker2" v-if="hideCenterandTool">
+        <!-- blocks center and tool-->
       </div>
     </section>
   </section>
@@ -281,7 +286,8 @@ export default {
         gameName: "",
         data: {},
         uiLabels: {},
-        showAll: true,
+        hideAll: true,
+        hideCenterAndTool: false,
         checked: "MCQ",
         infoBig: false,
         questionBig: false,
@@ -311,7 +317,11 @@ export default {
 
       getSliderValue(sliderValue)
       {
-        this.sliderValue = sliderValue
+        this.sliderValue = sliderValue;
+        this.sliderAnswer = [this.sliderUnit,
+          this.sliderMinVal,
+          this.sliderMaxVal,
+          this.sliderValue];
         console.log(this.sliderValue)
       }
     ,
@@ -345,7 +355,7 @@ export default {
     ,
 
       createGame: function () {
-        this.showAll = false;
+        this.hideAll = false;
         socket.emit("createGame", {
           gameId: this.gameId,
           lang: this.lang,
@@ -368,6 +378,7 @@ export default {
           info: this.info,
           q: this.questionText,
           a: this.answers,
+          aS: this.sliderAnswer,
           questionNumber: this.questionNumber,
           pic: this.pic,
         });
@@ -378,6 +389,7 @@ export default {
           info: this.info,
           q: this.questionText,
           a: this.answers,
+          aS: this.sliderAnswer,
           questionNumber: this.questionNumber,
           pic: this.pic,
         });
@@ -399,6 +411,8 @@ export default {
             this.questionText;
         this.questions.find((obj) => obj.questionNumber == this.editingNumber).a =
             this.answer;
+        this.questions.find((obj) => obj.questionNumber == this.editingNumber).aS =
+            this.sliderAnswer;
         this.questions.find(
             (obj) => obj.questionNumber == this.editingNumber
         ).pic = this.pic;
@@ -410,11 +424,12 @@ export default {
           info: this.info,
           q: this.questionText,
           a: this.answers,
+          aS: this.sliderAnswer,
           questionNumber: this.editingNumber,
           pic: this.pic,
         });
         console.log(this.questions);
-        console.log(this.sliderValue)
+        console.log(this.sliderAnswer)
         //$("#myElem").show().delay(5000).fadeOut();
       }
     ,
@@ -536,13 +551,21 @@ export default {
   grid-template-columns: 20% 60% 20%;
   grid-template-rows: 50% 50%;
 }
-.blocker {
+.blockerAll {
   grid-column: 1 / span 3;
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
   opacity: 80%;
 }
+.blocker2 {
+  grid-column: 2 / span 2;
+  grid-row: 1 / span 2;
+  overflow: hidden;
+  background-color: black;
+  opacity: 80%;
+}
+
 .box {
   background-color: #444;
   color: #fff;

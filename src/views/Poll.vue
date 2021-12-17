@@ -1,4 +1,5 @@
 <template>
+  {{question}}
   <div v-show="!confirmedUser" class="entryId">
     <h1>Lets GO!</h1>
     <div class="boxA">
