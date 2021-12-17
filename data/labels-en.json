@@ -19,5 +19,13 @@
 	"Deletequestion": "Delete question",
 	"Questiondiscription": "Question description",
 	"Savequestion": "Save question",
-	"AddAnswerAlternative": "Add answer alternative"
+	"AddAnswerAlternative": "Add answer alternative",
+	"enterGameName": "Enter Game name",
+	"enterGameID": "Enter Game ID",
+	"addanswer": "Add answer",
+	"questionInfo": "Write your question here",
+	"chooseImage": "Choose image",
+	"removeimage": "Remove image",
+	"createQuestion": "Create your question here"
+
 }

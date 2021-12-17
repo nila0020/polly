@@ -19,5 +19,13 @@
 	"Deletequestion": "Radera fråga",
 	"Questiondiscription": "Informations beskrivning",
 	"Savequestion": "Spara fråga",
-	"AddAnswerAlternative": "Lägg till svarsalternativ"
+	"AddAnswerAlternative": "Lägg till svarsalternativ",
+	"enterGameName": "Skriv in Spelets namn",
+	"enterGameID": "Skriv in Spelets ID",
+	"addanswer": "Svarsalternativ",
+	"questionInfo": "Skriv din fråga här",
+	"chooseImage": "Välj bild",
+	"removeimage": "Ta bort bild",
+	"createQuestion": "Skapa din fråga här"
+
 }
