@@ -11,13 +11,13 @@ i scriptet på filen som använder komponenten -->
         v-model="value"
         :min="this.min"
         :max="this.max"
-        v-on:click="showValue"
+        @change="sendValue"
       />
     </div>
-    <div class="output">{{ this.value }} {{ this.unit }}</div>
-    <div class="output">The lowest acceptable answer is: {{ this.value[0] }} {{ this.unit }}</div>
+    <div class="output">{{ this.value[1] }} {{ this.unit }}</div>
+<!--    <div class="output">The lowest acceptable answer is: {{ this.value[0] }} {{ this.unit }}</div>
     <div class="output">The actual answer is: {{ this.value[1] }} {{ this.unit }}</div>
-    <div class="output">The highest acceptable answer is: {{ this.value[2] }} {{ this.unit }}</div>
+    <div class="output">The highest acceptable answer is: {{ this.value[2] }} {{ this.unit }}</div>-->
   </div>
 </template>
 
@@ -40,6 +40,11 @@ export default {
   },
   methods: {
     showValue: function () {},
+
+    sendValue: function (value) {
+      console.log("i questions emit: " + value);
+      this.$emit("sliderValue", value);
+    },
   },
 };
 </script>

@@ -130,8 +130,11 @@
               <input type="number" v-model="sliderMinVal">
               <input type="number" v-model="sliderMaxVal">
               <input type="text" v-model="sliderUnit" placeholder="unit">
-              <Slider :min="sliderMinVal" :max="sliderMaxVal" :unit="sliderUnit" />
+              <Slider :min="sliderMinVal" :max="sliderMaxVal" :unit="sliderUnit" v-on:sliderValue="getSliderValue"/>
             </div>
+            <div class="output">The lowest acceptable answer is: {{ this.sliderValue[0] }} {{ this.sliderUnit }}</div>
+            <div class="output">The actual answer is: {{ this.sliderValue[1] }} {{ this.sliderUnit }}</div>
+            <div class="output">The highest acceptable answer is: {{ this.sliderValue[2] }} {{ this.sliderUnit }}</div>
 
             <!--            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">-->
                       <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
@@ -200,6 +203,7 @@ export default {
       sliderMinVal: 10,
       sliderMaxVal: 20,
       sliderUnit: "",
+      sliderValue: [],
       sliderAnswer:[this.sliderUnit,
                     this.sliderMinVal,
                     this.sliderMaxVal,
@@ -229,6 +233,11 @@ export default {
     socket.on("gameCreated", (data) => (this.data = data));
   },
   methods: {
+    getSliderValue(sliderValue)  {
+      this.sliderValue = sliderValue
+      console.log(this.sliderValue)
+    },
+
     Preview_image(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length)
