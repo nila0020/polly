@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   {{ question }}
+=======
+  {{question}}
+>>>>>>> 587e31ce8ac0be73d66b952f0d517d0cb22507f8
   <div v-show="!confirmedUser" class="entryId">
     <h1>Lets GO!</h1>
     <div class="boxA">
@@ -24,6 +28,7 @@
         placeholder="Input your username"
       />
     </div>
+    <br /><br /><br /><br />
     <div class="boxC">
       <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
         >Join GeoQuiz!</v-btn
@@ -161,8 +166,10 @@ export default {
   display: grid;
   width: 100%;
   height: 100%;
-  background-color: white;
+  background-color: #1d7658;
   justify-content: center;
+  padding-bottom:10vw;
+  padding-top:5vw;
 }
 input {
   border-radius: 2em;

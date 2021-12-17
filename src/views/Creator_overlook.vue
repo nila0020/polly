@@ -131,10 +131,12 @@
               <input type="number" v-model="sliderMaxVal">
               <input type="text" v-model="sliderUnit" placeholder="unit">
               <Slider :min="sliderMinVal" :max="sliderMaxVal" :unit="sliderUnit" v-on:sliderValue="getSliderValue"/>
+
+              <div class="output">The lowest acceptable answer is: {{ this.sliderValue[0] }} {{ this.sliderUnit }}</div>
+              <div class="output">The actual answer is: {{ this.sliderValue[1] }} {{ this.sliderUnit }}</div>
+              <div class="output">The highest acceptable answer is: {{ this.sliderValue[2] }} {{ this.sliderUnit }}</div>
             </div>
-            <div class="output">The lowest acceptable answer is: {{ this.sliderValue[0] }} {{ this.sliderUnit }}</div>
-            <div class="output">The actual answer is: {{ this.sliderValue[1] }} {{ this.sliderUnit }}</div>
-            <div class="output">The highest acceptable answer is: {{ this.sliderValue[2] }} {{ this.sliderUnit }}</div>
+
 
             <!--            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">-->
                       <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
@@ -153,9 +155,11 @@
         >
           
           
-          <div >
+          <div>
+            
             
             <h4>Your Position</h4>
+             
               Latitude: {{ currPos.lat.toFixed(2) }}, Longitude:
               {{ currPos.lng.toFixed(2) }}
           </div>
@@ -192,8 +196,11 @@
         </button>
       </div>
 
-      <div class="blocker" v-if="showAll">
-        <!-- blocks part of the screen -->
+      <div class="blockerAll" v-if="hideAll">
+        <!-- blocks overlook, center and tool-->
+      </div>
+      <div class="blocker2" v-if="hideCenterandTool">
+        <!-- blocks center and tool-->
       </div>
     </section>
   </section>
@@ -212,6 +219,7 @@ const socket = io();
 export default {
   components: {
     Slider
+    
   },
   setup() {
     const {coords} = useGeolocation()
@@ -225,34 +233,64 @@ export default {
     let clickListener = null
     const loader = new Loader({apiKey: GOOGLE_MAPS_API_KEY})
     const mapDiv = ref(null)
-    
 
     onMounted(async () => {
       await loader.load()
       map.value = new google.maps.Map(mapDiv.value, {
         center: currPos.value,
-        zoom: 12
+        zoom: 17
 
       });
       let markerOptions = {
-        position: new google.maps.LatLng(currPos.value),
-        map: map.value
-      }
-      let marker = new google.maps.Marker(markerOptions);
+              map: map.value
+              
+            }
+      let myPos = new google.maps.Marker(markerOptions);
+            myPos.setPosition(currPos.value)
       clickListener = map.value.addListener(
           'click',
-          ({latLng: {lat, lng}}) =>
-              (otherPos.value = {lat: lat(), lng: lng()})
-      )
+          ({latLng}) => { 
+            let markerOptions = {
+              map: map.value
+            }
+            let newMarker = new google.maps.Marker(markerOptions);
+            newMarker.setPosition(latLng)
+            newMarker.addListener(
+              'dblclick',
+              () => {
+                newMarker.setMap(null)
+              }
+            )
+            newMarker.addListener(
+              'click',
+              () => {
+                  const infowindow = new google.maps.InfoWindow({
+                    content: 123,
+                  });
+                infowindow.open({
+                  anchor: newMarker,
+                  map,
+                  shouldFocus: false,
+                });
+
+              }
+            )
+          }
+      ).bind(this)
+      /*
       clickListener = marker.addListener(
           'click',
           ({latLng: {lat, lng}}) =>
               (currPos.value = {lat: lat(), lng: lng()})
-      )
+      )*/
+      
     })
     onUnmounted(async () => {
       if (clickListener) clickListener.remove()
     })
+     
+    
+    
     return {currPos, mapDiv, otherPos}
   }
 
@@ -281,7 +319,8 @@ export default {
         gameName: "",
         data: {},
         uiLabels: {},
-        showAll: true,
+        hideAll: true,
+        hideCenterAndTool: false,
         checked: "MCQ",
         infoBig: false,
         questionBig: false,
@@ -308,10 +347,23 @@ export default {
 
     methods: {
       
+      
+      initMap: function() {
+      
+      map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: -34.397, lng: 150.644 },
+      zoom: 8,
+  });
+},
+      
 
       getSliderValue(sliderValue)
       {
-        this.sliderValue = sliderValue
+        this.sliderValue = sliderValue;
+        this.sliderAnswer = [this.sliderUnit,
+          this.sliderMinVal,
+          this.sliderMaxVal,
+          this.sliderValue];
         console.log(this.sliderValue)
       }
     ,
@@ -345,7 +397,7 @@ export default {
     ,
 
       createGame: function () {
-        this.showAll = false;
+        this.hideAll = false;
         socket.emit("createGame", {
           gameId: this.gameId,
           lang: this.lang,
@@ -368,6 +420,7 @@ export default {
           info: this.info,
           q: this.questionText,
           a: this.answers,
+          aS: this.sliderAnswer,
           questionNumber: this.questionNumber,
           pic: this.pic,
         });
@@ -378,6 +431,7 @@ export default {
           info: this.info,
           q: this.questionText,
           a: this.answers,
+          aS: this.sliderAnswer,
           questionNumber: this.questionNumber,
           pic: this.pic,
         });
@@ -399,6 +453,8 @@ export default {
             this.questionText;
         this.questions.find((obj) => obj.questionNumber == this.editingNumber).a =
             this.answer;
+        this.questions.find((obj) => obj.questionNumber == this.editingNumber).aS =
+            this.sliderAnswer;
         this.questions.find(
             (obj) => obj.questionNumber == this.editingNumber
         ).pic = this.pic;
@@ -410,11 +466,12 @@ export default {
           info: this.info,
           q: this.questionText,
           a: this.answers,
+          aS: this.sliderAnswer,
           questionNumber: this.editingNumber,
           pic: this.pic,
         });
         console.log(this.questions);
-        console.log(this.sliderValue)
+        console.log(this.sliderAnswer)
         //$("#myElem").show().delay(5000).fadeOut();
       }
     ,
@@ -536,13 +593,21 @@ export default {
   grid-template-columns: 20% 60% 20%;
   grid-template-rows: 50% 50%;
 }
-.blocker {
+.blockerAll {
   grid-column: 1 / span 3;
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
   opacity: 80%;
 }
+.blocker2 {
+  grid-column: 2 / span 2;
+  grid-row: 1 / span 2;
+  overflow: hidden;
+  background-color: black;
+  opacity: 80%;
+}
+
 .box {
   background-color: #444;
   color: #fff;
