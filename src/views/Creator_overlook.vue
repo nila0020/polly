@@ -225,31 +225,37 @@ export default {
     let clickListener = null
     const loader = new Loader({apiKey: GOOGLE_MAPS_API_KEY})
     const mapDiv = ref(null)
+    
 
     onMounted(async () => {
       await loader.load()
-      console.log("mapDiv=", mapDiv)
       map.value = new google.maps.Map(mapDiv.value, {
         center: currPos.value,
-        zoom: 7
+        zoom: 12
 
       });
       let markerOptions = {
-        position: new google.maps.LatLng(59.859799, 17.602908),
-        map: map
+        position: new google.maps.LatLng(currPos.value),
+        map: map.value
       }
-      new google.maps.Marker(markerOptions);
+      let marker = new google.maps.Marker(markerOptions);
       clickListener = map.value.addListener(
           'click',
           ({latLng: {lat, lng}}) =>
               (otherPos.value = {lat: lat(), lng: lng()})
       )
+      clickListener = marker.addListener(
+          'click',
+          ({latLng: {lat, lng}}) =>
+              (currPos.value = {lat: lat(), lng: lng()})
+      )
     })
     onUnmounted(async () => {
       if (clickListener) clickListener.remove()
     })
-    return {currPos, mapDiv}
+    return {currPos, mapDiv, otherPos}
   }
+
 
   ,
     data: function () {
@@ -301,6 +307,8 @@ export default {
   ,
 
     methods: {
+      
+
       getSliderValue(sliderValue)
       {
         this.sliderValue = sliderValue
