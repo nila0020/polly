@@ -127,12 +127,30 @@
 
         <!--Map box-->
         <div
+          ref="mapDiv"
           class="box map"
           v-on:click="mapExpand"
           v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"
         >
-          <h1>map</h1>
+          
+          
+          <div >
+            
+            <h4>Your Position</h4>
+              Latitude: {{ currPos.lat.toFixed(2) }}, Longitude:
+              {{ currPos.lng.toFixed(2) }}
+          </div>
+          <div>
+            <h4>Clicked position</h4>
+            
+            <span v-if="otherPos">
+              Latitude: {{otherPos.lat.toFixed(2) }}, Longitude:
+              {{ otherPos.lng.toFixed(2) }}
+            </span>
+            <span v-else>Click the map to select a position</span>
+        
         </div>
+      </div>
       </div>
 
       <!--Tool box-->
@@ -157,9 +175,53 @@
 </template>
 
 <script>
+/* eslint-disable no-undef */
 import io from "socket.io-client";
+import { computed, ref, onMounted, onUnmounted} from 'vue'
+import { useGeolocation } from '@/components/useGeolocation.js'
+import { Loader } from '@googlemaps/js-api-loader'
+const GOOGLE_MAPS_API_KEY = 'AIzaSyAkteq83ilUzPoHXC5bwzwIaWkzdZhBeeY'
+
 const socket = io();
 export default {
+  
+  setup() {
+    const { coords } = useGeolocation()
+    const currPos = computed(() => ({
+      lat: coords.value.latitude,
+      lng: coords.value.longitude
+    }))
+     
+    const otherPos = ref(null)
+    let map = ref(null)
+    let clickListener = null
+    const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY})
+    const mapDiv = ref(null)
+
+    onMounted(async () => {
+      await loader.load()
+      console.log("mapDiv=", mapDiv)
+      map.value = new google.maps.Map(mapDiv.value, {
+        center: currPos.value,
+        zoom: 7
+       
+      });
+      let markerOptions = {
+        position: new google.maps.LatLng(59.859799, 17.602908),
+        map: map
+      }
+      new google.maps.Marker(markerOptions);
+      clickListener = map.value.addListener(
+        'click',
+        ({latLng: {lat, lng }}) =>
+        (otherPos.value = { lat: lat(), lng: lng() })
+      )
+    })
+    onUnmounted(async () => {
+      if (clickListener) clickListener.remove()
+    })
+    return { currPos, mapDiv}
+  },
   data: function () {
     return {
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
@@ -187,6 +249,8 @@ export default {
       questionSmallCond: false,
     };
   },
+  
+  
   created: function () {
     this.lang = this.$route.params.lang;
     socket.emit("pageLoaded", this.lang);
@@ -196,6 +260,7 @@ export default {
     socket.on("dataUpdate", (data) => (this.data = data));
     socket.on("gameCreated", (data) => (this.data = data));
   },
+  
   methods: {
     onFileSelected(event) {
       console.log(event.target.files[0]);
