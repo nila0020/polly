@@ -11,14 +11,14 @@
           type="text"
           id="gameName"
           v-model="gameName"
-          placeholder="Enter Game name"
+          v-bind:placeholder="this.uiLabels.enterGameName"
         /><br />
         <label for="gameID">{{ uiLabels.gameID }}: </label>
         <input
           type="text"
           id="gameID"
           v-model="gameId"
-          placeholder="Enter Game ID"
+          v-bind:placeholder="this.uiLabels.enterGameID"
         /><br />
         <button class="createButton" v-on:click="createGame">
           {{ uiLabels.CreateGame }}
@@ -67,15 +67,15 @@
         <div
           class="box info"
           v-on:click="infoExpand"
-          v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"
+          v-bind:class="{ infoBig: infoBig,
+                          infoSmall: infoSmall }"
         >
-          <a v-on:click="closeExpand" class="closeExpand">X</a>
+          <a v-if="{ infoBig: infoBig}" class="closeExpand" v-on:click="closeExpand" >X</a>
           <h1>Info</h1>
-          <input
+          <textarea
             class="infoArea"
-            type="text"
             v-model="info"
-            placeholder="{{uiLabels.Questiondiscription}}"
+            v-bind:placeholder="this.uiLabels.Questiondiscription"
           />
         </div>
 
@@ -83,45 +83,64 @@
         <div
           class="box questionBox"
           v-on:click="questionExpand"
-          v-bind:class="{
-            questionBig: questionBig,
-            questionSmall: questionSmall,
-            questionSmallCond: questionSmallCond,
+          v-bind:class="{ questionBig: questionBig,
+                          questionSmall: questionSmall,
+                          questionSmallCond: questionSmallCond,
           }"
         >
-          <input type="file" @change="onFileSelected" />
-          <h1>Create your question here</h1>
-          <input
-            type="text"
-            v-model="questionText"
-            placeholder="Add question"
-          />
+          <h1>{{ this.uiLabels.createQuestion }}</h1>
+          <div id="picBox" >
+            <img :src="pic"
+                v-if="pic !== null"
+                style="width: 90%; height: 75%; object-fit: cover" ref=""
+            />
+            <br>
+            <input type="file"
+                   @change="Preview_image"
+                   style="display: none"
+                   ref="fileInput"
+            />
+            <button v-on:click="$refs.fileInput.click()">{{ this.uiLabels.chooseImage }}</button>
+            <button v-on:click="removeImage" >{{ this.uiLabels.removeimage }}</button>
+          </div>
 
-          <div>
+          <div id="qBox">
+            <textarea
+                class="questionArea"
+                v-model="questionText"
+                v-bind:placeholder= "this.uiLabels.questionInfo"
+            />
+          </div>
+
+          <div id="aBox">
             <div v-if="checked === 'MCQ' || checked === null">
               <h1>Answers:</h1>
               <input
                 v-for="(_, i) in answers"
                 v-model="answers[i]"
                 v-bind:key="'answer' + i"
-                placeholder="Add answer"
+                v-bind:placeholder=this.uiLabels.addanswer
               />
               <button v-on:click="addAnswer">
                 {{ uiLabels.AddAnswerAlternative }}
               </button>
               <br />
             </div>
-            <div v-else-if="checked === 'slider'">Här ska en slider vara</div>
+            <div v-else-if="checked === 'slider'">
+              <input type="number" v-model="sliderMinVal">
+              <input type="number" v-model="sliderMaxVal">
+              <input type="text" v-model="sliderUnit" placeholder="unit">
+              <Slider :min="sliderMinVal" :max="sliderMaxVal" :unit="sliderUnit" v-on:sliderValue="getSliderValue"/>
+            </div>
+            <div class="output">The lowest acceptable answer is: {{ this.sliderValue[0] }} {{ this.sliderUnit }}</div>
+            <div class="output">The actual answer is: {{ this.sliderValue[1] }} {{ this.sliderUnit }}</div>
+            <div class="output">The highest acceptable answer is: {{ this.sliderValue[2] }} {{ this.sliderUnit }}</div>
 
             <!--            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">-->
-
-            <button v-on:click="[saveQuestion()]">
-              {{ uiLabels.Savequestion }}
-            </button>
-            <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
-            <button v-on:click="runQuestion">
-              Run question
-            </button> -->
+                      <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
+                      <button v-on:click="runQuestion">
+                        Run question
+                      </button> -->
           </div>
         </div>
 
@@ -165,6 +184,12 @@
           <input type="radio" id="slider" value="slider" v-model="checked" />
           <label for="slider">{{ uiLabels.slider }}</label>
         </div>
+        <br>
+        <br>
+        <br>
+        <button v-on:click="[saveQuestion()]">
+          {{ uiLabels.Savequestion }}
+        </button>
       </div>
 
       <div class="blocker" v-if="showAll">
@@ -177,6 +202,7 @@
 <script>
 /* eslint-disable no-undef */
 import io from "socket.io-client";
+<<<<<<< HEAD
 import { computed, ref, onMounted, onUnmounted} from 'vue'
 import { useGeolocation } from '@/components/useGeolocation.js'
 import { Loader } from '@googlemaps/js-api-loader'
@@ -221,6 +247,13 @@ export default {
       if (clickListener) clickListener.remove()
     })
     return { currPos, mapDiv}
+=======
+import Slider from "@/components/Slider.vue";
+const socket = io();
+export default {
+  components: {
+    Slider
+>>>>>>> 1cf0c7f9841085344286932d5d6f5d5c0001ef07
   },
   data: function () {
     return {
@@ -229,17 +262,24 @@ export default {
       info: "",
       lang: "",
       gameId: "",
-      type: "MCQ",
       question: "",
       answers: ["", ""],
       questionNumber: 0,
       editingNumber: 0,
-      selectedFile: null,
+      sliderMinVal: 10,
+      sliderMaxVal: 20,
+      sliderUnit: "",
+      sliderValue: [],
+      sliderAnswer:[this.sliderUnit,
+                    this.sliderMinVal,
+                    this.sliderMaxVal,
+                    this.sliderValue],
+      pic: null,
       gameName: "",
       data: {},
       uiLabels: {},
       showAll: true,
-      checked: null,
+      checked: "MCQ",
       infoBig: false,
       questionBig: false,
       mapBig: false,
@@ -262,9 +302,32 @@ export default {
   },
   
   methods: {
-    onFileSelected(event) {
-      console.log(event.target.files[0]);
-      //this.selectedFile
+    getSliderValue(sliderValue)  {
+      this.sliderValue = sliderValue
+      console.log(this.sliderValue)
+    },
+
+    Preview_image(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length)
+        return;
+      this.createImage(files[0]);
+      //console.log(e.target.files[0]);
+    },
+    createImage(file) {
+      //var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = (e) => {
+        vm.pic = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+    },
+    removeImage: function () {
+      this.pic = null;
+
     },
 
     createGame: function () {
@@ -281,10 +344,11 @@ export default {
       this.questionText = "";
       this.answers = ["", ""];
       this.info = "";
+      this.pic = null;
       this.editingNumber = this.questionNumber;
       socket.emit("addQuestion", {
         gameId: this.gameId,
-        type: this.type,
+        type: this.checked,
         pos: this.pos,
         info: this.info,
         q: this.questionText,
@@ -294,7 +358,7 @@ export default {
       });
       this.questions.push({
         gameId: this.gameId,
-        type: this.type,
+        type: this.checked,
         pos: this.pos,
         info: this.info,
         q: this.questionText,
@@ -308,7 +372,7 @@ export default {
     saveQuestion: function () {
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
-      ).type = this.type;
+      ).type = this.checked;
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
       ).pos = this.pos;
@@ -325,7 +389,7 @@ export default {
 
       socket.emit("addQuestion", {
         gameId: this.gameId,
-        type: this.type,
+        type: this.checked,
         pos: this.pos,
         info: this.info,
         q: this.questionText,
@@ -334,10 +398,10 @@ export default {
         pic: this.pic,
       });
       console.log(this.questions);
-
-      //var currentQuestion = this.questions.find(obj => obj.questionNumber == this.questionNumber);
-      //console.log(currentQuestion);
+      console.log(this.sliderValue)
+      //$("#myElem").show().delay(5000).fadeOut();
     },
+
 
     /*   addQuestion: function() {
       //Ska inte skickas förrän alla frågor lagts till
@@ -368,7 +432,7 @@ export default {
     currentData: function (questionNumber) {
       this.editingNumber = questionNumber;
       console.log(this.editingNumber);
-      this.type = this.questions.find(
+      this.checked = this.questions.find(
         (obj) => obj.questionNumber == questionNumber
       ).type;
       this.pos = this.questions.find(
@@ -436,16 +500,7 @@ export default {
     },*/
   },
 };
-/*$(document).ready(function () {
-  $("#wrapper div").click(function () {
-    if ($(this).siblings().hasClass('expanded')) {
-      $(this).siblings().removeClass('expanded');
-    }
-    $(this).addClass('expanded');
-  });
-});*/
 </script>
-
 
 <style>
 #header h1 {
@@ -497,9 +552,11 @@ export default {
   grid-row: 1 / span 2;
 }
 .info h1 {
+  margin-top: 0;
   font-size: 25px;
 }
 .info {
+  padding-top: 0;
   grid-column: 1 / span 2;
   grid-row: 1 / span 2;
   overflow: scroll;
@@ -515,15 +572,44 @@ export default {
   resize: none;
   color: white;
 }
+.questionArea{
+  width: 100%;
+  height: 70%;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #444;
+  resize: none;
+  color: white;
+}
 .questionBox {
   grid-column: 3 / span 2;
   grid-row: 1 / span 2;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 5vh 20vh 20vh;
   overflow: scroll;
 }
 .questionBox h1 {
   font-size: 15px;
-  grid-column: 2;
+  grid-column: 1/span 2;
   grid-row: 1;
+}
+#picBox {
+  grid-column: 1;
+  grid-row: 2;
+  padding-top: 8vh;
+  margin-right: 1vw;
+}
+#qBox {
+  padding-top: 2vh;
+  grid-column: 2;
+  grid-row: 2;
+}
+#aBox {
+   grid-column: 1/span 2;
+   grid-row: 3;
 }
 .map {
   grid-column: 1 / span 4;
@@ -581,6 +667,8 @@ export default {
   overflow: scroll;
 }
 .questionBig {
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 10% 45% 45%;
   grid-column: 1 / span 4;
   grid-row: 1 / span 3;
   overflow: scroll;

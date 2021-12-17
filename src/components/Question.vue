@@ -9,17 +9,17 @@
     <br />
     {{ question.info }}
   </div>
-  <div class="outerGrid" v-show="infoHidden">
+  <div class="outerGrid" v-if="!questionHidden">
     <div class="picture">
       <img
-        v-bind:src="'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg'"
+        :src="question.pic"
         style="width: 100%; height: 100%; object-fit: cover"
       />
     </div>
     <div class="questionBar">
       {{ question.q }}
     </div>
-    <div class="answerGrid">
+    <div class="MCQ_answerGrid" v-if="this.question.type == 'MCQ'">
       <button
         v-for="a in question.a"
         v-on:click="answer(a)"
@@ -32,23 +32,42 @@
         </p>
       </button>
     </div>
+    <div class="slider_answerGrid" v-if="this.question.type == 'Slider'">
+      <Slider v-model="value" :min="minVal" :max="maxVal" :unit="unit" />
+    </div>
   </div>
 </template>
 <script>
+import Slider from "@/components/Slider.vue";
+
 export default {
   name: "Bars",
   data: function () {
-    return { infoHidden: false };
+    return {
+      infoHidden: false,
+      questionHidden: true,
+      minVal: this.question.minVal,
+      maxVal: this.question.maxVal,
+      value: this.question.value,
+      unit: this.question.unit,
+    };
+  },
+  components: {
+    Slider,
   },
   props: {
     question: Object,
   },
   methods: {
     hideInfo: function () {
+      console.log(this.question.pic);
       this.infoHidden = true;
+      this.questionHidden = false;
     },
 
     answer: function (answer) {
+      this.infoHidden = false;
+      this.questionHidden = true;
       console.log("i questions emit: " + answer);
       this.$emit("answer", answer);
     },
@@ -69,6 +88,7 @@ export default {
 }
 .outerGrid {
   display: grid;
+  width: 55vh;
   height: 98vh;
   grid-template-rows: 40% auto auto;
   grid-gap: 1vh;
@@ -86,7 +106,13 @@ export default {
   align-items: center;
   font-size: 4vh;
 }
-.answerGrid {
+.slider_answerGrid {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5em;
+}
+.MCQ_answerGrid {
   display: grid;
   width: 100%;
   height: 100%;

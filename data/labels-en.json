@@ -8,7 +8,7 @@
 	"imgLanguage": "img/Flag_of_Sweden_ml.png",
 	"User": "Join game",
 	"Creator": "Create game",
-	"Choose" : "Choose Join game to enter a game or Create game if you want to create a game",
+	"Choose" : "Choose if you want to enter a game or if you want to create a game",
 	"welcomeText": "Welcome to Geoquiz",
 	"gameName": "Game name",
 	"MCQ": "Multiple choice question",
@@ -19,5 +19,13 @@
 	"Deletequestion": "Delete question",
 	"Questiondiscription": "Question description",
 	"Savequestion": "Save question",
-	"AddAnswerAlternative": "Add answer alternative"
+	"AddAnswerAlternative": "Add answer alternative",
+	"enterGameName": "Enter Game name",
+	"enterGameID": "Enter Game ID",
+	"addanswer": "Add answer",
+	"questionInfo": "Write your question here",
+	"chooseImage": "Choose image",
+	"removeimage": "Remove image",
+	"createQuestion": "Create your question here"
+
 }

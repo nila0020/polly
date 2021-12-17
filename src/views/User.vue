@@ -1,5 +1,5 @@
 <template>
-  <Slider :min="minVal" :max="maxVal" :unit="unit" />
+  <Slider v-model="value" :min="minVal" :max="maxVal" :unit="unit" />
 </template>
 
 <script>
@@ -8,7 +8,7 @@ export default {
   name: "User",
   data: function () {
     return {
-      minVal: 10,
+      minVal: 0,
       maxVal: 20,
       value: 0,
       unit: "kg",
