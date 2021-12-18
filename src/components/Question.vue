@@ -32,19 +32,20 @@
         </p>
       </button>
     </div>
-    <div class="slider_answerGrid" v-if="this.question.type == 'Slider'">
-      <SliderPoll
+    <div class="slider_answerGrid" v-if="this.question.type == 'slider'">
+      <Slider
         v-model="value"
-        :min="minVal"
-        :max="maxVal"
-        :unit="unit"
+        :poll="true"
+        :min="this.question.aS[1]"
+        :max="this.question.aS[2]"
+        :unit="this.question.aS[0]"
         v-on:sliderValue="getSliderValue"
       />
     </div>
   </div>
 </template>
 <script>
-import SliderPoll from "@/components/SliderPoll.vue";
+import Slider from "@/components/Slider.vue";
 
 export default {
   name: "Bars",
@@ -52,14 +53,10 @@ export default {
     return {
       infoHidden: false,
       questionHidden: true,
-      minVal: this.question.minVal,
-      maxVal: this.question.maxVal,
-      sliderValue: this.question.sliderValue,
-      unit: this.question.unit,
     };
   },
   components: {
-    SliderPoll,
+    Slider,
   },
   props: {
     question: Object,

@@ -1,5 +1,11 @@
 <template>
-  <Slider v-model="value" :min="minVal" :max="maxVal" :unit="unit" />
+  <Slider
+    :poll="true"
+    v-model="aS[3][1]"
+    :min="aS[3][0]"
+    :max="aS[2]"
+    :unit="aS[0]"
+  />
 </template>
 
 <script>
@@ -8,10 +14,7 @@ export default {
   name: "User",
   data: function () {
     return {
-      minVal: 0,
-      maxVal: 20,
-      value: 0,
-      unit: "kg",
+      aS: ["cm", 10, 20, [-5, 16, 20]],
     };
   },
   components: {

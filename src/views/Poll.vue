@@ -1,9 +1,5 @@
 <template>
-<<<<<<< HEAD
   {{ question }}
-=======
-  {{question}}
->>>>>>> 587e31ce8ac0be73d66b952f0d517d0cb22507f8
   <div v-show="!confirmedUser" class="entryId">
     <h1>Lets GO!</h1>
     <div class="boxA">
@@ -73,6 +69,7 @@ export default {
         a: [],
         info: "",
         pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg",
+        aS: [],
       },
       gameId: "inactive game",
       confirmedUser: false,
@@ -168,8 +165,8 @@ export default {
   height: 100%;
   background-color: #1d7658;
   justify-content: center;
-  padding-bottom:10vw;
-  padding-top:5vw;
+  padding-bottom: 10vw;
+  padding-top: 5vw;
 }
 input {
   border-radius: 2em;

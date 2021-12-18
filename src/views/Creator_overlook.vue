@@ -67,10 +67,14 @@
         <div
           class="box info"
           v-on:click="infoExpand"
-          v-bind:class="{ infoBig: infoBig,
-                          infoSmall: infoSmall }"
+          v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"
         >
-          <a v-if="{ infoBig: infoBig}" class="closeExpand" v-on:click="closeExpand" >X</a>
+          <a
+            v-if="{ infoBig: infoBig }"
+            class="closeExpand"
+            v-on:click="closeExpand"
+            >X</a
+          >
           <h1>Info</h1>
           <textarea
             class="infoArea"
@@ -83,32 +87,40 @@
         <div
           class="box questionBox"
           v-on:click="questionExpand"
-          v-bind:class="{ questionBig: questionBig,
-                          questionSmall: questionSmall,
-                          questionSmallCond: questionSmallCond,
+          v-bind:class="{
+            questionBig: questionBig,
+            questionSmall: questionSmall,
+            questionSmallCond: questionSmallCond,
           }"
         >
           <h1>{{ this.uiLabels.createQuestion }}</h1>
-          <div id="picBox" >
-            <img :src="pic"
-                v-if="pic !== null"
-                style="width: 90%; height: 75%; object-fit: cover" ref=""
+          <div id="picBox">
+            <img
+              :src="pic"
+              v-if="pic !== null"
+              style="width: 90%; height: 75%; object-fit: cover"
+              ref=""
             />
-            <br>
-            <input type="file"
-                   @change="Preview_image"
-                   style="display: none"
-                   ref="fileInput"
+            <br />
+            <input
+              type="file"
+              @change="Preview_image"
+              style="display: none"
+              ref="fileInput"
             />
-            <button v-on:click="$refs.fileInput.click()">{{ this.uiLabels.chooseImage }}</button>
-            <button v-on:click="removeImage" >{{ this.uiLabels.removeimage }}</button>
+            <button v-on:click="$refs.fileInput.click()">
+              {{ this.uiLabels.chooseImage }}
+            </button>
+            <button v-on:click="removeImage">
+              {{ this.uiLabels.removeimage }}
+            </button>
           </div>
 
           <div id="qBox">
             <textarea
-                class="questionArea"
-                v-model="questionText"
-                v-bind:placeholder= "this.uiLabels.questionInfo"
+              class="questionArea"
+              v-model="questionText"
+              v-bind:placeholder="this.uiLabels.questionInfo"
             />
           </div>
 
@@ -119,7 +131,7 @@
                 v-for="(_, i) in answers"
                 v-model="answers[i]"
                 v-bind:key="'answer' + i"
-                v-bind:placeholder=this.uiLabels.addanswer
+                v-bind:placeholder="this.uiLabels.addanswer"
               />
               <button v-on:click="addAnswer">
                 {{ uiLabels.AddAnswerAlternative }}
@@ -127,19 +139,33 @@
               <br />
             </div>
             <div v-else-if="checked === 'slider'">
-              <input type="number" v-model="sliderMinVal">
-              <input type="number" v-model="sliderMaxVal">
-              <input type="text" v-model="sliderUnit" placeholder="unit">
-              <Slider :min="sliderMinVal" :max="sliderMaxVal" :unit="sliderUnit" v-on:sliderValue="getSliderValue"/>
+              <input type="number" v-model="sliderMinVal" />
+              <input type="number" v-model="sliderMaxVal" />
+              <input type="text" v-model="sliderUnit" placeholder="unit" />
+              <Slider
+                :poll="false"
+                :min="sliderMinVal"
+                :max="sliderMaxVal"
+                :unit="sliderUnit"
+                v-on:sliderValue="getSliderValue"
+              />
 
-              <div class="output">The lowest acceptable answer is: {{ this.sliderValue[0] }} {{ this.sliderUnit }}</div>
-              <div class="output">The actual answer is: {{ this.sliderValue[1] }} {{ this.sliderUnit }}</div>
-              <div class="output">The highest acceptable answer is: {{ this.sliderValue[2] }} {{ this.sliderUnit }}</div>
+              <div class="output">
+                The lowest acceptable answer is: {{ this.sliderValue[0] }}
+                {{ this.sliderUnit }}
+              </div>
+              <div class="output">
+                The actual answer is: {{ this.sliderValue[1] }}
+                {{ this.sliderUnit }}
+              </div>
+              <div class="output">
+                The highest acceptable answer is: {{ this.sliderValue[2] }}
+                {{ this.sliderUnit }}
+              </div>
             </div>
 
-
             <!--            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">-->
-                      <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
+            <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
                       <button v-on:click="runQuestion">
                         Run question
                       </button> -->
@@ -153,27 +179,22 @@
           v-on:click="mapExpand"
           v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"
         >
-          
-          
           <div>
-            
-            
             <h4>Your Position</h4>
-             
-              Latitude: {{ currPos.lat.toFixed(2) }}, Longitude:
-              {{ currPos.lng.toFixed(2) }}
+
+            Latitude: {{ currPos.lat.toFixed(2) }}, Longitude:
+            {{ currPos.lng.toFixed(2) }}
           </div>
           <div>
             <h4>Clicked position</h4>
-            
+
             <span v-if="otherPos">
-              Latitude: {{otherPos.lat.toFixed(2) }}, Longitude:
+              Latitude: {{ otherPos.lat.toFixed(2) }}, Longitude:
               {{ otherPos.lng.toFixed(2) }}
             </span>
             <span v-else>Click the map to select a position</span>
-        
+          </div>
         </div>
-      </div>
       </div>
 
       <!--Tool box-->
@@ -188,9 +209,9 @@
           <input type="radio" id="slider" value="slider" v-model="checked" />
           <label for="slider">{{ uiLabels.slider }}</label>
         </div>
-        <br>
-        <br>
-        <br>
+        <br />
+        <br />
+        <br />
         <button v-on:click="[saveQuestion()]">
           {{ uiLabels.Savequestion }}
         </button>
@@ -210,274 +231,235 @@
 /* eslint-disable no-undef */
 import io from "socket.io-client";
 import Slider from "@/components/Slider.vue";
-import { computed, ref, onMounted, onUnmounted} from 'vue'
-import { useGeolocation } from '@/components/useGeolocation.js'
-import { Loader } from '@googlemaps/js-api-loader'
-const GOOGLE_MAPS_API_KEY = 'AIzaSyAkteq83ilUzPoHXC5bwzwIaWkzdZhBeeY'
+import { computed, ref, onMounted, onUnmounted } from "vue";
+import { useGeolocation } from "@/components/useGeolocation.js";
+import { Loader } from "@googlemaps/js-api-loader";
+const GOOGLE_MAPS_API_KEY = "AIzaSyAkteq83ilUzPoHXC5bwzwIaWkzdZhBeeY";
 
 const socket = io();
 export default {
   components: {
-    Slider
-    
+    Slider,
   },
   setup() {
-    const {coords} = useGeolocation()
+    const { coords } = useGeolocation();
     const currPos = computed(() => ({
       lat: coords.value.latitude,
-      lng: coords.value.longitude
-    }))
+      lng: coords.value.longitude,
+    }));
 
-    const otherPos = ref(null)
-    let map = ref(null)
-    let clickListener = null
-    const loader = new Loader({apiKey: GOOGLE_MAPS_API_KEY})
-    const mapDiv = ref(null)
+    const otherPos = ref(null);
+    let map = ref(null);
+    let clickListener = null;
+    const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY });
+    const mapDiv = ref(null);
 
     onMounted(async () => {
-      await loader.load()
+      await loader.load();
       map.value = new google.maps.Map(mapDiv.value, {
         center: currPos.value,
-        zoom: 17
-
+        zoom: 17,
       });
       let markerOptions = {
-              map: map.value
-              
-            }
+        map: map.value,
+      };
       let myPos = new google.maps.Marker(markerOptions);
-            myPos.setPosition(currPos.value)
-      clickListener = map.value.addListener(
-          'click',
-          ({latLng}) => { 
-            let markerOptions = {
-              map: map.value
-            }
-            let newMarker = new google.maps.Marker(markerOptions);
-            newMarker.setPosition(latLng)
-            newMarker.addListener(
-              'dblclick',
-              () => {
-                newMarker.setMap(null)
-              }
-            )
-            newMarker.addListener(
-              'click',
-              () => {
-                  const infowindow = new google.maps.InfoWindow({
-                    content: 123,
-                  });
-                infowindow.open({
-                  anchor: newMarker,
-                  map,
-                  shouldFocus: false,
-                });
-
-              }
-            )
-          }
-      ).bind(this)
+      myPos.setPosition(currPos.value);
+      clickListener = map.value
+        .addListener("click", ({ latLng }) => {
+          let markerOptions = {
+            map: map.value,
+          };
+          let newMarker = new google.maps.Marker(markerOptions);
+          newMarker.setPosition(latLng);
+          newMarker.addListener("dblclick", () => {
+            newMarker.setMap(null);
+          });
+          newMarker.addListener("click", () => {
+            const infowindow = new google.maps.InfoWindow({
+              content: 123,
+            });
+            infowindow.open({
+              anchor: newMarker,
+              map,
+              shouldFocus: false,
+            });
+          });
+        })
+        .bind(this);
       /*
       clickListener = marker.addListener(
           'click',
           ({latLng: {lat, lng}}) =>
               (currPos.value = {lat: lat(), lng: lng()})
       )*/
-      
-    })
+    });
     onUnmounted(async () => {
-      if (clickListener) clickListener.remove()
-    })
-     
-    
-    
-    return {currPos, mapDiv, otherPos}
-  }
+      if (clickListener) clickListener.remove();
+    });
 
+    return { currPos, mapDiv, otherPos };
+  },
 
-  ,
-    data: function () {
-      return {
-        questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
-        questions: [],
-        info: "",
-        lang: "",
-        gameId: "",
-        question: "",
-        answers: ["", ""],
-        questionNumber: 0,
-        editingNumber: 0,
-        sliderMinVal: 10,
-        sliderMaxVal: 20,
-        sliderUnit: "",
-        sliderValue: [],
-        sliderAnswer: [this.sliderUnit,
-          this.sliderMinVal,
-          this.sliderMaxVal,
-          this.sliderValue],
-        pic: null,
-        gameName: "",
-        data: {},
-        uiLabels: {},
-        hideAll: true,
-        hideCenterAndTool: false,
-        checked: "MCQ",
-        infoBig: false,
-        questionBig: false,
-        mapBig: false,
-        infoSmall: false,
-        questionSmall: false,
-        mapSmall: false,
-        questionSmallCond: false,
-      };
-    }
-  ,
-
-
-    created: function () {
-      this.lang = this.$route.params.lang;
-      socket.emit("pageLoaded", this.lang);
-      socket.on("init", (labels) => {
-        this.uiLabels = labels;
-      });
-      socket.on("dataUpdate", (data) => (this.data = data));
-      socket.on("gameCreated", (data) => (this.data = data));
-    }
-  ,
-
-    methods: {
-      
-      
-      initMap: function() {
-      
+  data: function () {
+    return {
+      questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
+      questions: [],
+      info: "",
+      lang: "",
+      gameId: "",
+      question: "",
+      answers: ["", ""],
+      questionNumber: 0,
+      editingNumber: 0,
+      sliderMinVal: 10,
+      sliderMaxVal: 20,
+      sliderUnit: "",
+      sliderValue: [],
+      sliderAnswer: [
+        this.sliderUnit,
+        this.sliderMinVal,
+        this.sliderMaxVal,
+        this.sliderValue,
+      ],
+      pic: null,
+      gameName: "",
+      data: {},
+      uiLabels: {},
+      hideAll: true,
+      hideCenterAndTool: false,
+      checked: "MCQ",
+      infoBig: false,
+      questionBig: false,
+      mapBig: false,
+      infoSmall: false,
+      questionSmall: false,
+      mapSmall: false,
+      questionSmallCond: false,
+    };
+  },
+  created: function () {
+    this.lang = this.$route.params.lang;
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      this.uiLabels = labels;
+    });
+    socket.on("dataUpdate", (data) => (this.data = data));
+    socket.on("gameCreated", (data) => (this.data = data));
+  },
+  methods: {
+    initMap: function () {
       map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 8,
-  });
-},
-      
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 8,
+      });
+    },
 
-      getSliderValue(sliderValue)
-      {
-        this.sliderValue = sliderValue;
-        this.sliderAnswer = [this.sliderUnit,
-          this.sliderMinVal,
-          this.sliderMaxVal,
-          this.sliderValue];
-        console.log(this.sliderValue)
-      }
-    ,
+    getSliderValue(sliderValue) {
+      this.sliderValue = sliderValue;
+      this.sliderAnswer = [
+        this.sliderUnit,
+        this.sliderMinVal,
+        this.sliderMaxVal,
+        this.sliderValue,
+      ];
+      console.log(this.sliderValue);
+    },
+    Preview_image(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.createImage(files[0]);
+      //console.log(e.target.files[0]);
+    },
+    createImage(file) {
+      //var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
 
-      Preview_image(e)
-      {
-        var files = e.target.files || e.dataTransfer.files;
-        if (!files.length)
-          return;
-        this.createImage(files[0]);
-        //console.log(e.target.files[0]);
-      }
-    ,
-      createImage(file)
-      {
-        //var image = new Image();
-        var reader = new FileReader();
-        var vm = this;
+      reader.onload = (e) => {
+        vm.pic = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    removeImage: function () {
+      this.pic = null;
+    },
+    createGame: function () {
+      this.hideAll = false;
+      socket.emit("createGame", {
+        gameId: this.gameId,
+        lang: this.lang,
+        gameName: this.gameName,
+      });
+    },
+    addNewQuestion: function () {
+      this.questionNumber++;
+      this.questionText = "";
+      this.answers = ["", ""];
+      this.info = "";
+      this.pic = null;
+      this.editingNumber = this.questionNumber;
+      socket.emit("addQuestion", {
+        gameId: this.gameId,
+        type: this.checked,
+        pos: this.pos,
+        info: this.info,
+        q: this.questionText,
+        a: this.answers,
+        aS: this.sliderAnswer,
+        questionNumber: this.questionNumber,
+        pic: this.pic,
+      });
+      this.questions.push({
+        gameId: this.gameId,
+        type: this.checked,
+        pos: this.pos,
+        info: this.info,
+        q: this.questionText,
+        a: this.answers,
+        aS: this.sliderAnswer,
+        questionNumber: this.questionNumber,
+        pic: this.pic,
+      });
+      console.log(this.questions);
+    },
+    saveQuestion: function () {
+      this.questions.find(
+        (obj) => obj.questionNumber == this.editingNumber
+      ).type = this.checked;
+      this.questions.find(
+        (obj) => obj.questionNumber == this.editingNumber
+      ).pos = this.pos;
+      this.questions.find(
+        (obj) => obj.questionNumber == this.editingNumber
+      ).info = this.info;
+      this.questions.find((obj) => obj.questionNumber == this.editingNumber).q =
+        this.questionText;
+      this.questions.find((obj) => obj.questionNumber == this.editingNumber).a =
+        this.answer;
+      this.questions.find(
+        (obj) => obj.questionNumber == this.editingNumber
+      ).aS = this.sliderAnswer;
+      this.questions.find(
+        (obj) => obj.questionNumber == this.editingNumber
+      ).pic = this.pic;
 
-        reader.onload = (e) => {
-          vm.pic = e.target.result;
-        };
-        reader.readAsDataURL(file);
-
-      }
-    ,
-      removeImage: function () {
-        this.pic = null;
-
-      }
-    ,
-
-      createGame: function () {
-        this.hideAll = false;
-        socket.emit("createGame", {
-          gameId: this.gameId,
-          lang: this.lang,
-          gameName: this.gameName,
-        });
-      }
-    ,
-
-      addNewQuestion: function () {
-        this.questionNumber++;
-        this.questionText = "";
-        this.answers = ["", ""];
-        this.info = "";
-        this.pic = null;
-        this.editingNumber = this.questionNumber;
-        socket.emit("addQuestion", {
-          gameId: this.gameId,
-          type: this.checked,
-          pos: this.pos,
-          info: this.info,
-          q: this.questionText,
-          a: this.answers,
-          aS: this.sliderAnswer,
-          questionNumber: this.questionNumber,
-          pic: this.pic,
-        });
-        this.questions.push({
-          gameId: this.gameId,
-          type: this.checked,
-          pos: this.pos,
-          info: this.info,
-          q: this.questionText,
-          a: this.answers,
-          aS: this.sliderAnswer,
-          questionNumber: this.questionNumber,
-          pic: this.pic,
-        });
-        console.log(this.questions);
-      }
-    ,
-
-      saveQuestion: function () {
-        this.questions.find(
-            (obj) => obj.questionNumber == this.editingNumber
-        ).type = this.checked;
-        this.questions.find(
-            (obj) => obj.questionNumber == this.editingNumber
-        ).pos = this.pos;
-        this.questions.find(
-            (obj) => obj.questionNumber == this.editingNumber
-        ).info = this.info;
-        this.questions.find((obj) => obj.questionNumber == this.editingNumber).q =
-            this.questionText;
-        this.questions.find((obj) => obj.questionNumber == this.editingNumber).a =
-            this.answer;
-        this.questions.find((obj) => obj.questionNumber == this.editingNumber).aS =
-            this.sliderAnswer;
-        this.questions.find(
-            (obj) => obj.questionNumber == this.editingNumber
-        ).pic = this.pic;
-
-        socket.emit("addQuestion", {
-          gameId: this.gameId,
-          type: this.checked,
-          pos: this.pos,
-          info: this.info,
-          q: this.questionText,
-          a: this.answers,
-          aS: this.sliderAnswer,
-          questionNumber: this.editingNumber,
-          pic: this.pic,
-        });
-        console.log(this.questions);
-        console.log(this.sliderAnswer)
-        //$("#myElem").show().delay(5000).fadeOut();
-      }
-    ,
-
-
-      /*   addQuestion: function() {
+      socket.emit("addQuestion", {
+        gameId: this.gameId,
+        type: this.checked,
+        pos: this.pos,
+        info: this.info,
+        q: this.questionText,
+        a: this.answers,
+        aS: this.sliderAnswer,
+        questionNumber: this.editingNumber,
+        pic: this.pic,
+      });
+      console.log(this.questions);
+      console.log(this.sliderAnswer);
+      //$("#myElem").show().delay(5000).fadeOut();
+    },
+    /*   addQuestion: function() {
       //Ska inte skickas förrän alla frågor lagts till
       var newQuestion = this.questionText.trim();
       if (!newQuestion) {return;}
@@ -503,85 +485,76 @@ export default {
       this.info = "";
     },*/
 
-      currentData: function (questionNumber) {
-        this.editingNumber = questionNumber;
-        console.log(this.editingNumber);
-        this.checked = this.questions.find(
-            (obj) => obj.questionNumber == questionNumber
-        ).type;
-        this.pos = this.questions.find(
-            (obj) => obj.questionNumber == questionNumber
-        ).pos;
-        this.info = this.questions.find(
-            (obj) => obj.questionNumber == questionNumber
-        ).info;
-        this.questionText = this.questions.find(
-            (obj) => obj.questionNumber == questionNumber
-        ).q;
-        this.answer = this.questions.find(
-            (obj) => obj.questionNumber == questionNumber
-        ).a;
-        this.pic = this.questions.find(
-            (obj) => obj.questionNumber == questionNumber
-        ).pic;
-      }
-    ,
-      addAnswer: function () {
-        this.answers.push("");
-      }
-    ,
+    currentData: function (questionNumber) {
+      this.editingNumber = questionNumber;
+      console.log(this.editingNumber);
+      this.checked = this.questions.find(
+        (obj) => obj.questionNumber == questionNumber
+      ).type;
+      this.pos = this.questions.find(
+        (obj) => obj.questionNumber == questionNumber
+      ).pos;
+      this.info = this.questions.find(
+        (obj) => obj.questionNumber == questionNumber
+      ).info;
+      this.questionText = this.questions.find(
+        (obj) => obj.questionNumber == questionNumber
+      ).q;
+      this.answer = this.questions.find(
+        (obj) => obj.questionNumber == questionNumber
+      ).a;
+      this.pic = this.questions.find(
+        (obj) => obj.questionNumber == questionNumber
+      ).pic;
+    },
+    addAnswer: function () {
+      this.answers.push("");
+    },
+    infoExpand: function () {
+      this.infoBig = true;
+      this.questionBig = false;
+      this.mapBig = false;
+      this.infoSmall = false;
+      this.questionSmall = true;
+      this.mapSmall = true;
+      this.questionSmallCond = false;
+    },
+    questionExpand: function () {
+      this.infoBig = false;
+      this.questionBig = true;
+      this.mapBig = false;
+      this.infoSmall = true;
+      this.questionSmall = false;
+      this.mapSmall = true;
+      this.questionSmallCond = false;
+    },
+    mapExpand: function () {
+      this.infoBig = false;
+      this.questionBig = false;
+      this.mapBig = true;
+      this.infoSmall = true;
+      this.questionSmall = false;
+      this.mapSmall = false;
+      this.questionSmallCond = true;
+    },
+    closeExpand: function () {
+      this.infoBig = false;
+      this.questionBig = false;
+      this.mapBig = false;
+      this.infoSmall = false;
+      this.questionSmall = false;
+      this.mapSmall = false;
+      this.questionSmallCond = false;
+    },
 
-      infoExpand: function () {
-        this.infoBig = true;
-        this.questionBig = false;
-        this.mapBig = false;
-        this.infoSmall = false;
-        this.questionSmall = true;
-        this.mapSmall = true;
-        this.questionSmallCond = false;
-      }
-    ,
-      questionExpand: function () {
-        this.infoBig = false;
-        this.questionBig = true;
-        this.mapBig = false;
-        this.infoSmall = true;
-        this.questionSmall = false;
-        this.mapSmall = true;
-        this.questionSmallCond = false;
-      }
-    ,
-      mapExpand: function () {
-        this.infoBig = false;
-        this.questionBig = false;
-        this.mapBig = true;
-        this.infoSmall = true;
-        this.questionSmall = false;
-        this.mapSmall = false;
-        this.questionSmallCond = true;
-      }
-    ,
-      closeExpand: function () {
-        this.infoBig = false;
-        this.questionBig = false;
-        this.mapBig = false;
-        this.infoSmall = false;
-        this.questionSmall = false;
-        this.mapSmall = false;
-        this.questionSmallCond = false;
-      }
-    ,
-
-      /*runQuestion: function () {
+    /*runQuestion: function () {
       socket.emit("runQuestion", {
         gameId: this.gameId,
         questionNumber: this.questionNumber,
       });
     },*/
-    }
-  ,
-  };
-
+  },
+};
 </script>
 
 <style>
@@ -662,7 +635,7 @@ export default {
   resize: none;
   color: white;
 }
-.questionArea{
+.questionArea {
   width: 100%;
   height: 70%;
   padding: 12px 20px;
@@ -683,7 +656,7 @@ export default {
 }
 .questionBox h1 {
   font-size: 15px;
-  grid-column: 1/span 2;
+  grid-column: 1 / span 2;
   grid-row: 1;
 }
 #picBox {
@@ -698,8 +671,8 @@ export default {
   grid-row: 2;
 }
 #aBox {
-   grid-column: 1/span 2;
-   grid-row: 3;
+  grid-column: 1 / span 2;
+  grid-row: 3;
 }
 .map {
   grid-column: 1 / span 4;
