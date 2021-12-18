@@ -148,30 +148,15 @@
 
         <!--Map box-->
         <div
-          ref="mapDiv"
           class="box map"
           v-on:click="mapExpand"
           v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"
-        >
-          
-          
-          <div>
-            
-            
-            <h4>Your Position</h4>
-             
-              Latitude: {{ currPos.lat.toFixed(2) }}, Longitude:
-              {{ currPos.lng.toFixed(2) }}
-          </div>
-          <div>
-            <h4>Clicked position</h4>
-            
-            <span v-if="otherPos">
-              Latitude: {{otherPos.lat.toFixed(2) }}, Longitude:
-              {{ otherPos.lng.toFixed(2) }}
-            </span>
-            <span v-else>Click the map to select a position</span>
-        
+          >
+          <div class = 'mapTitle'>
+          <h4>Choose a place on the map for your question to appear at</h4>
+          <!-- Our map  -->
+             <div id="myMap"></div>
+
         </div>
       </div>
       </div>
@@ -207,97 +192,41 @@
 </template>
 
 <script>
-/* eslint-disable no-undef */
 import io from "socket.io-client";
 import Slider from "@/components/Slider.vue";
-import { computed, ref, onMounted, onUnmounted} from 'vue'
-import { useGeolocation } from '@/components/useGeolocation.js'
-import { Loader } from '@googlemaps/js-api-loader'
-const GOOGLE_MAPS_API_KEY = 'AIzaSyAkteq83ilUzPoHXC5bwzwIaWkzdZhBeeY'
-
+import leaflet from 'leaflet';
+import { onMounted} from 'vue';
 const socket = io();
 export default {
   components: {
     Slider
     
   },
-  setup() {
-    const {coords} = useGeolocation()
-    const currPos = computed(() => ({
-      lat: coords.value.latitude,
-      lng: coords.value.longitude
-    }))
+    setup() {
+      let myMap;
+      onMounted(()=>{
+        myMap = leaflet.map('myMap').setView([59.855727, 17.633445], 13);
+        
+        leaflet.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ'
+}).addTo(myMap);
 
-    const otherPos = ref(null)
-    let map = ref(null)
-    let clickListener = null
-    const loader = new Loader({apiKey: GOOGLE_MAPS_API_KEY})
-    const mapDiv = ref(null)
+myMap.on("click", function(e){
+       new leaflet.Marker([e.latlng.lat, e.latlng.lng]).addTo(myMap);
+        
+ });
+})
 
-    onMounted(async () => {
-      await loader.load()
-      map.value = new google.maps.Map(mapDiv.value, {
-        center: currPos.value,
-        zoom: 17
-
-      });
-      let markerOptions = {
-              map: map.value
-              
-            }
-      let myPos = new google.maps.Marker(markerOptions);
-            myPos.setPosition(currPos.value)
-      clickListener = map.value.addListener(
-          'click',
-          ({latLng}) => { 
-            let markerOptions = {
-              map: map.value
-            }
-            let newMarker = new google.maps.Marker(markerOptions);
-            newMarker.setPosition(latLng)
-            newMarker.addListener(
-              'dblclick',
-              () => {
-                newMarker.setMap(null)
-              }
-            )
-            newMarker.addListener(
-              'click',
-              () => {
-                  const infowindow = new google.maps.InfoWindow({
-                    content: 123,
-                  });
-                infowindow.open({
-                  anchor: newMarker,
-                  map,
-                  shouldFocus: false,
-                });
-
-              }
-            )
-          }
-      ).bind(this)
-      /*
-      clickListener = marker.addListener(
-          'click',
-          ({latLng: {lat, lng}}) =>
-              (currPos.value = {lat: lat(), lng: lng()})
-      )*/
       
-    })
-    onUnmounted(async () => {
-      if (clickListener) clickListener.remove()
-    })
-     
-    
-    
-    return {currPos, mapDiv, otherPos}
-  }
-
-
-  ,
+    },
     data: function () {
       return {
+        
         questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
         questions: [],
         info: "",
@@ -347,15 +276,7 @@ export default {
 
     methods: {
       
-      
-      initMap: function() {
-      
-      map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 8,
-  });
-},
-      
+ 
 
       getSliderValue(sliderValue)
       {
@@ -629,6 +550,9 @@ export default {
   grid-column: 1;
   grid-row: 1 / span 2;
 }
+.infoWindow {
+  font: black;
+}
 .centerBox {
   grid-column: 2;
   grid-row: 1 / span 2;
@@ -803,4 +727,9 @@ export default {
 .closeExpand:hover {
   opacity: 1;
 }
+.mapTitle {
+  font-size: 20px;
+}
+#myMap { 
+  height: 320px; }
 </style>
