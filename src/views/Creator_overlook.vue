@@ -174,10 +174,10 @@
 
         <!--Map box-->
         <div
-          ref="mapDiv"
           class="box map"
           v-on:click="mapExpand"
           v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"
+<<<<<<< HEAD
         >
           <div>
             <h4>Your Position</h4>
@@ -194,6 +194,14 @@
             </span>
             <span v-else>Click the map to select a position</span>
           </div>
+=======
+          >
+          <div class = 'mapTitle'>
+          <h4>Choose a place on the map for your question to appear at</h4>
+          <!-- Our map  -->
+             <div id="myMap"></div>
+
+>>>>>>> 860515095ce9385b15ed033eeae8e49ccef2b5af
         </div>
       </div>
 
@@ -228,19 +236,24 @@
 </template>
 
 <script>
-/* eslint-disable no-undef */
 import io from "socket.io-client";
 import Slider from "@/components/Slider.vue";
+<<<<<<< HEAD
 import { computed, ref, onMounted, onUnmounted } from "vue";
 import { useGeolocation } from "@/components/useGeolocation.js";
 import { Loader } from "@googlemaps/js-api-loader";
 const GOOGLE_MAPS_API_KEY = "AIzaSyAkteq83ilUzPoHXC5bwzwIaWkzdZhBeeY";
 
+=======
+import leaflet from 'leaflet';
+import { onMounted} from 'vue';
+>>>>>>> 860515095ce9385b15ed033eeae8e49ccef2b5af
 const socket = io();
 export default {
   components: {
     Slider,
   },
+<<<<<<< HEAD
   setup() {
     const { coords } = useGeolocation();
     const currPos = computed(() => ({
@@ -378,6 +391,64 @@ export default {
 
       reader.onload = (e) => {
         vm.pic = e.target.result;
+=======
+    setup() {
+      let myMap;
+      onMounted(()=>{
+        myMap = leaflet.map('myMap').setView([59.855727, 17.633445], 13);
+        
+        leaflet.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ'
+}).addTo(myMap);
+
+myMap.on("click", function(e){
+       new leaflet.Marker([e.latlng.lat, e.latlng.lng]).addTo(myMap);
+        
+ });
+})
+
+      
+    },
+    data: function () {
+      return {
+        
+        questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
+        questions: [],
+        info: "",
+        lang: "",
+        gameId: "",
+        question: "",
+        answers: ["", ""],
+        questionNumber: 0,
+        editingNumber: 0,
+        sliderMinVal: 10,
+        sliderMaxVal: 20,
+        sliderUnit: "",
+        sliderValue: [],
+        sliderAnswer: [this.sliderUnit,
+          this.sliderMinVal,
+          this.sliderMaxVal,
+          this.sliderValue],
+        pic: null,
+        gameName: "",
+        data: {},
+        uiLabels: {},
+        hideAll: true,
+        hideCenterAndTool: false,
+        checked: "MCQ",
+        infoBig: false,
+        questionBig: false,
+        mapBig: false,
+        infoSmall: false,
+        questionSmall: false,
+        mapSmall: false,
+        questionSmallCond: false,
+>>>>>>> 860515095ce9385b15ed033eeae8e49ccef2b5af
       };
       reader.readAsDataURL(file);
     },
@@ -391,6 +462,7 @@ export default {
         lang: this.lang,
         gameName: this.gameName,
       });
+<<<<<<< HEAD
     },
     addNewQuestion: function () {
       this.questionNumber++;
@@ -460,6 +532,138 @@ export default {
       //$("#myElem").show().delay(5000).fadeOut();
     },
     /*   addQuestion: function() {
+=======
+      socket.on("dataUpdate", (data) => (this.data = data));
+      socket.on("gameCreated", (data) => (this.data = data));
+    }
+  ,
+
+    methods: {
+      
+ 
+
+      getSliderValue(sliderValue)
+      {
+        this.sliderValue = sliderValue;
+        this.sliderAnswer = [this.sliderUnit,
+          this.sliderMinVal,
+          this.sliderMaxVal,
+          this.sliderValue];
+        console.log(this.sliderValue)
+      }
+    ,
+
+      Preview_image(e)
+      {
+        var files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+          return;
+        this.createImage(files[0]);
+        //console.log(e.target.files[0]);
+      }
+    ,
+      createImage(file)
+      {
+        //var image = new Image();
+        var reader = new FileReader();
+        var vm = this;
+
+        reader.onload = (e) => {
+          vm.pic = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+      }
+    ,
+      removeImage: function () {
+        this.pic = null;
+
+      }
+    ,
+
+      createGame: function () {
+        this.hideAll = false;
+        socket.emit("createGame", {
+          gameId: this.gameId,
+          lang: this.lang,
+          gameName: this.gameName,
+        });
+      }
+    ,
+
+      addNewQuestion: function () {
+        this.questionNumber++;
+        this.questionText = "";
+        this.answers = ["", ""];
+        this.info = "";
+        this.pic = null;
+        this.editingNumber = this.questionNumber;
+        socket.emit("addQuestion", {
+          gameId: this.gameId,
+          type: this.checked,
+          pos: this.pos,
+          info: this.info,
+          q: this.questionText,
+          a: this.answers,
+          aS: this.sliderAnswer,
+          questionNumber: this.questionNumber,
+          pic: this.pic,
+        });
+        this.questions.push({
+          gameId: this.gameId,
+          type: this.checked,
+          pos: this.pos,
+          info: this.info,
+          q: this.questionText,
+          a: this.answers,
+          aS: this.sliderAnswer,
+          questionNumber: this.questionNumber,
+          pic: this.pic,
+        });
+        console.log(this.questions);
+      }
+    ,
+
+      saveQuestion: function () {
+        this.questions.find(
+            (obj) => obj.questionNumber == this.editingNumber
+        ).type = this.checked;
+        this.questions.find(
+            (obj) => obj.questionNumber == this.editingNumber
+        ).pos = this.pos;
+        this.questions.find(
+            (obj) => obj.questionNumber == this.editingNumber
+        ).info = this.info;
+        this.questions.find((obj) => obj.questionNumber == this.editingNumber).q =
+            this.questionText;
+        this.questions.find((obj) => obj.questionNumber == this.editingNumber).a =
+            this.answer;
+        this.questions.find((obj) => obj.questionNumber == this.editingNumber).aS =
+            this.sliderAnswer;
+        this.questions.find(
+            (obj) => obj.questionNumber == this.editingNumber
+        ).pic = this.pic;
+
+        socket.emit("addQuestion", {
+          gameId: this.gameId,
+          type: this.checked,
+          pos: this.pos,
+          info: this.info,
+          q: this.questionText,
+          a: this.answers,
+          aS: this.sliderAnswer,
+          questionNumber: this.editingNumber,
+          pic: this.pic,
+        });
+        console.log(this.questions);
+        console.log(this.sliderAnswer)
+        //$("#myElem").show().delay(5000).fadeOut();
+      }
+    ,
+
+
+      /*   addQuestion: function() {
+>>>>>>> 860515095ce9385b15ed033eeae8e49ccef2b5af
       //Ska inte skickas förrän alla frågor lagts till
       var newQuestion = this.questionText.trim();
       if (!newQuestion) {return;}
@@ -601,6 +805,9 @@ export default {
 .Overlook {
   grid-column: 1;
   grid-row: 1 / span 2;
+}
+.infoWindow {
+  font: black;
 }
 .centerBox {
   grid-column: 2;
@@ -776,4 +983,9 @@ export default {
 .closeExpand:hover {
   opacity: 1;
 }
+.mapTitle {
+  font-size: 20px;
+}
+#myMap { 
+  height: 320px; }
 </style>
