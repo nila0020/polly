@@ -12,28 +12,20 @@ i scriptet på filen som använder komponenten -->
         v-model="value"
         :min="this.min"
         :max="this.max"
-        v-on:click="showValue"
+        @change="sendValue"
       />
       <Slider
         v-if="poll"
         v-model="valuePoll"
         :min="this.min"
         :max="this.max"
-        v-on:click="showValue"
+        @change="sendValuepoll"
       />
     </div>
-    <div v-if="!poll" class="output">{{ this.value }} {{ this.unit }}</div>
-    <div v-if="poll" class="output">{{ this.valuePoll }} {{ this.unit }}</div>
-
-    <!-- <div class="output">
-      The lowest acceptable answer is: {{ this.value[0] }} {{ this.unit }}
-    </div>
-    <div class="output">
-      The actual answer is: {{ this.value[1] }} {{ this.unit }}
-    </div>
-    <div class="output">
-      The highest acceptable answer is: {{ this.value[2] }} {{ this.unit }}
-    </div> -->
+    <div class="output">{{ this.valuePoll }} {{ this.unit }}</div>
+    <!--    <div class="output">The lowest acceptable answer is: {{ this.value[0] }} {{ this.unit }}</div>
+    <div class="output">The actual answer is: {{ this.value[1] }} {{ this.unit }}</div>
+    <div class="output">The highest acceptable answer is: {{ this.value[2] }} {{ this.unit }}</div>-->
   </div>
 </template>
 
@@ -52,12 +44,21 @@ export default {
   },
   data() {
     return {
-      valuePoll: [0],
       value: [0, 10, 20],
+      valuePoll: 10,
     };
   },
   methods: {
     showValue: function () {},
+
+    sendValue: function (value) {
+      console.log("i questions emit: " + value);
+      this.$emit("sliderValue", value);
+    },
+    sendValuepoll: function (valuePoll) {
+      console.log("i questions emit: " + valuePoll);
+      this.$emit("sliderValue", valuePoll);
+    },
   },
 };
 </script>

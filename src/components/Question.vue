@@ -34,11 +34,11 @@
     </div>
     <div class="slider_answerGrid" v-if="this.question.type == 'slider'">
       <Slider
-        v-model="value"
+        class="sliderStyle"
         :poll="true"
-        :min="this.question.aS[1]"
-        :max="this.question.aS[2]"
-        :unit="this.question.aS[0]"
+        :min="minVal"
+        :max="maxVal"
+        :unit="unit"
         v-on:sliderValue="getSliderValue"
       />
     </div>
@@ -53,6 +53,10 @@ export default {
     return {
       infoHidden: false,
       questionHidden: true,
+      minVal: this.question.aS[1],
+      maxVal: this.question.aS[2],
+      unit: this.question.aS[0],
+      sliderValue: [],
     };
   },
   components: {
@@ -117,6 +121,13 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 0.5em;
+  align-items: center;
+  justify-content: center;
+  background-color: green;
+}
+.sliderStyle {
+  width: 80%;
+  height: 1%;
 }
 .MCQ_answerGrid {
   display: grid;
@@ -128,6 +139,7 @@ export default {
   color: black;
   overflow: hide;
 }
+
 #answerButtons {
   background-image: linear-gradient(144deg, rgb(1, 65, 12), #116d37, #95ffca);
   border: 0px;

@@ -24,7 +24,6 @@
         placeholder="Input your username"
       />
     </div>
-    <br /><br /><br /><br />
     <div class="boxC">
       <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
         >Join GeoQuiz!</v-btn
@@ -44,7 +43,11 @@
         </div>
       </div>
     </div>
-    <div v-show="activeQuestion" class="questionDisplayed">
+    <div
+      v-if="activeQuestion"
+      v-show="activeQuestion"
+      class="questionDisplayed"
+    >
       <Question v-bind:question="question" v-on:answer="submitAnswer" />
     </div>
   </div>
@@ -69,7 +72,6 @@ export default {
         a: [],
         info: "",
         pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg",
-        aS: [],
       },
       gameId: "inactive game",
       confirmedUser: false,
@@ -106,6 +108,7 @@ export default {
     },
     activateQuestion: function () {
       this.activeQuestion = true;
+      console.log(this.activeQuestion);
     },
   },
 };
@@ -163,10 +166,8 @@ export default {
   display: grid;
   width: 100%;
   height: 100%;
-  background-color: #1d7658;
+  background-color: white;
   justify-content: center;
-  padding-bottom: 10vw;
-  padding-top: 5vw;
 }
 input {
   border-radius: 2em;
