@@ -1,5 +1,4 @@
 <template>
-  {{ question }}
   <div v-show="!confirmedUser" class="entryId">
     <h1>Lets GO!</h1>
     <div class="boxA">
@@ -108,7 +107,6 @@ export default {
     },
     activateQuestion: function () {
       this.activeQuestion = true;
-      console.log(this.activeQuestion);
     },
   },
 };

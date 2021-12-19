@@ -41,6 +41,12 @@
         :unit="unit"
         v-on:sliderValue="getSliderValue"
       />
+      <button
+        v-on:click="answer(sliderValue)"
+        class="sliderButton start_buttons"
+      >
+        {{ sliderValue }} {{ unit }}
+      </button>
     </div>
   </div>
 </template>
@@ -52,11 +58,11 @@ export default {
   data: function () {
     return {
       infoHidden: false,
-      questionHidden: true,
+      questionHidden: false,
       minVal: this.question.aS[1],
       maxVal: this.question.aS[2],
       unit: this.question.aS[0],
-      sliderValue: [],
+      sliderValue: null,
     };
   },
   components: {
@@ -118,16 +124,20 @@ export default {
 }
 .slider_answerGrid {
   display: flex;
-  width: 100%;
-  height: 100%;
+  flex-direction: column;
+  grid-row: 1fr 1fr;
   border-radius: 0.5em;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   background-color: green;
 }
 .sliderStyle {
   width: 80%;
   height: 1%;
+}
+.sliderButton {
+  height: 20%;
+  width: 40%;
 }
 .MCQ_answerGrid {
   display: grid;
