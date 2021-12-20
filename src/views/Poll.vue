@@ -11,7 +11,6 @@
         placeholder="Input the game-Id"
       />
     </div>
-    <br /><br /><br /><br />
     <div class="boxB">
       <label for="" class="start_buttons1">Username</label><br />
       <input
@@ -77,6 +76,7 @@ export default {
       userName: "",
       activeQuestion: false,
       qId: 0,
+      amountOfquestions: Number,
     };
   },
   created: function () {
@@ -163,7 +163,8 @@ export default {
 .entryId {
   display: grid;
   width: 100%;
-  height: 100%;
+  height: 65vh;
+  grid-template-rows: 20% 20% 23%;
   background-color: white;
   justify-content: center;
 }

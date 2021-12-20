@@ -58,7 +58,7 @@ export default {
   data: function () {
     return {
       infoHidden: false,
-      questionHidden: false,
+      questionHidden: true,
       minVal: this.question.aS[1],
       maxVal: this.question.aS[2],
       unit: this.question.aS[0],
