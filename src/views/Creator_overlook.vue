@@ -187,7 +187,7 @@
       </div>
 
       <!--Tool box-->
-      <div class="box toolBox">
+      <div class="box toolBox" v-on:click="hideCenter=false">
         <h1>toolBox</h1>
         <div id="app">
           <input type="radio" id="MCQ" value="MCQ" v-model="checked" checked />
@@ -208,9 +208,17 @@
 
       <div class="blockerAll" v-if="hideAll">
         <!-- blocks overlook, center and tool-->
+        <h1>Start by creating a Game</h1>
       </div>
-      <div class="blocker2" v-if="hideCenterandTool">
+      <div class="blocker2" v-if="hideCenterAndTool">
         <!-- blocks center and tool-->
+        <h1> Now add a question</h1>
+      </div>
+      <div class="blocker3" v-if="hideCenter">
+        <!-- blocks center-->
+        <h1>Choose a type of question and you´re good to go</h1>
+        <br>
+        <h1>Don´t forget to save your question</h1>
       </div>
     </section>
   </section>
@@ -279,6 +287,8 @@ export default {
       uiLabels: {},
       hideAll: true,
       hideCenterAndTool: false,
+      hideCenter: false,
+      hideCond: 0,
       checked: "MCQ",
       infoBig: false,
       questionBig: false,
@@ -330,6 +340,7 @@ export default {
     },
     createGame: function () {
       this.hideAll = false;
+      this.hideCenterAndTool = true;
       socket.emit("createGame", {
         gameId: this.gameId,
         lang: this.lang,
@@ -343,6 +354,12 @@ export default {
       this.info = "";
       this.pic = null;
       this.editingNumber = this.questionNumber;
+      this.hideCenterAndTool = false;
+      if (this.hideCond == 0){
+        this.hideCenter = true;
+      }
+      console.log(this.hideCenter)
+      this.hideCond ++
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.checked,
@@ -511,6 +528,7 @@ export default {
   grid-template-rows: 50% 50%;
 }
 .blockerAll {
+  color: white;
   grid-column: 1 / span 3;
   grid-row: 1 / span 2;
   overflow: hidden;
@@ -518,7 +536,16 @@ export default {
   opacity: 80%;
 }
 .blocker2 {
+  color: white;
   grid-column: 2 / span 2;
+  grid-row: 1 / span 2;
+  overflow: hidden;
+  background-color: black;
+  opacity: 80%;
+}
+blocker3{
+  color: white;
+  grid-column: 2;
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;

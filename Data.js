@@ -69,7 +69,13 @@ Data.prototype.getQuestion = function (gameId, qId = null) {
     if (qId !== null) {
       game.currentQuestion = qId;
     }
-    return game.questions[game.currentQuestion];
+    if (game.questions[game.currentQuestion]==null){
+      console.log("Show last page")
+      return -1
+    }
+    else{
+      return game.questions[game.currentQuestion];
+    }
   }
   return []
 }
