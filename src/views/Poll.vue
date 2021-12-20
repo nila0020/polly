@@ -1,5 +1,5 @@
 <template>
-  {{this.question}}
+  {{this.question[1]}}
   <div v-show="!confirmedUser" class="entryId">
     <h1>Lets GO!</h1>
     <div class="boxA">
@@ -48,7 +48,7 @@
       v-show="activeQuestion"
       class="questionDisplayed"
     >
-      <Question v-bind:question="question" v-on:answer="submitAnswer" />
+      <Question v-bind:question="question[0]" v-on:answer="submitAnswer" />
     </div>
     <div class="blockerAll" v-if="this.question == -1">
       <!-- blocks overlook, center and tool-->
