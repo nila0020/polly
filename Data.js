@@ -74,7 +74,7 @@ Data.prototype.getQuestion = function (gameId, qId = null) {
       return -1
     }
     else{
-      return game.questions[game.currentQuestion];
+      return [game.questions[game.currentQuestion], game.questions.length];
     }
   }
   return []

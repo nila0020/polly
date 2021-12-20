@@ -214,12 +214,12 @@
         <!-- blocks center and tool-->
         <h1> Now add a question</h1>
       </div>
-      <div class="blocker3" v-if="hideCenter">
-        <!-- blocks center-->
+<!--      <div class="blocker3" v-if="hideCenter">
+        &lt;!&ndash; blocks center&ndash;&gt;
         <h1>Choose a type of question and you´re good to go</h1>
         <br>
         <h1>Don´t forget to save your question</h1>
-      </div>
+      </div>-->
     </section>
   </section>
 </template>
@@ -269,6 +269,8 @@ export default {
       gameId: "",
       question: "",
       answers: ["", ""],
+      correctAnswer: 0,
+      answersAlt: [this.answers, this.correctAnswer],
       questionNumber: 0,
       editingNumber: 0,
       sliderMinVal: 10,
@@ -317,13 +319,11 @@ export default {
         this.sliderMaxVal,
         this.sliderValue,
       ];
-      console.log(this.sliderValue);
     },
     Preview_image(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
       this.createImage(files[0]);
-      //console.log(e.target.files[0]);
     },
     createImage(file) {
       //var image = new Image();
@@ -377,7 +377,7 @@ export default {
         pos: this.pos,
         info: this.info,
         q: this.questionText,
-        a: this.answers,
+        a: this.answersAlt,
         aS: this.sliderAnswer,
         questionNumber: this.questionNumber,
         pic: this.pic,
@@ -416,8 +416,8 @@ export default {
         questionNumber: this.editingNumber,
         pic: this.pic,
       });
-      console.log(this.questions);
-      console.log(this.sliderAnswer);
+      console.log(this.answers);
+      //console.log(this.sliderAnswer);
       //$("#myElem").show().delay(5000).fadeOut();
     },
     /*   addQuestion: function() {
