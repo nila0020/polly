@@ -1,8 +1,4 @@
 <template>
-<<<<<<< HEAD
-=======
-  {{this.question[1]}}
->>>>>>> 56b6ed51439dd09bc592a29e7c24883a90c89f40
   <div v-show="!confirmedUser" class="entryId">
     <h1>Lets GO!</h1>
     <div class="boxA">
@@ -33,14 +29,12 @@
     </div>
   </div>
   <div v-show="confirmedUser" class="fullFrame">
-    <div v-show="!activeQuestion && activeGame" class="overview">
-      <button
-        class="showquestion box b"
-        v-show="activeGame"
-        v-on:click="activateQuestion"
-      >
-        question!
-      </button>
+    <div v-show="!activeQuestion" class="overview">
+      <div v-show="activeGame">
+        <button class="showquestion box b" v-on:click="activateQuestion">
+          question!
+        </button>
+      </div>
       <div class="wrapper">
         <div class="box a">{{ gameId }}</div>
 
@@ -87,8 +81,8 @@ export default {
       userName: "",
       activeQuestion: false,
       activeGame: true,
+      amountOfQuestions: 0,
       qId: 0,
-      amountOfquestions: Number,
     };
   },
   created: function () {
@@ -102,19 +96,19 @@ export default {
         answer: answer,
         userName: this.userName,
       });
-      this.qId += 1;
-      this.activeQuestion = false;
+      if (this.qId + 1 < this.question[1]) {
+        console.log("detta är frågeId " + this.qId);
+        this.qId += 1;
+        /*nedan uppdaterar vi frågeobjektet via sockets via data*/
+        socket.emit("runQuestion", {
+          gameId: this.gameId,
+          questionNumber: this.qId,
+        });
+      } else {
+        this.activeGame = false;
+      }
 
-      /*nedan uppdaterar vi frågeobjektet via sockets via data*/
-      socket.emit("runQuestion", {
-        gameId: this.gameId,
-        questionNumber: this.qId,
-      });
-      setTimeout(function () {
-        if (this.question == undefined) {
-          this.activeGame = false;
-        }
-      }, 200);
+      this.activeQuestion = false;
     },
     confirmUser: function () {
       this.confirmedUser = true;

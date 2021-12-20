@@ -9,7 +9,7 @@
     <br />
     {{ question.info }}
   </div>
-  <div class="outerGrid" v-if="!questionHidden">
+  <div class="outerGrid" v-if="!questionHidden || !question.info">
     <div class="picture">
       <img
         v-if="question.pic"
@@ -68,7 +68,7 @@ export default {
       minVal: this.question.aS[1],
       maxVal: this.question.aS[2],
       unit: this.question.aS[0],
-      sliderValue: null,
+      sliderValue: 0,
     };
   },
   components: {
