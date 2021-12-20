@@ -28,7 +28,7 @@
       >
     </div>
   </div>
-  <div v-show="confirmedUser" class="fullFrame">
+  <div v-show="confirmedUser && activeGame" class="fullFrame">
     <div v-show="!activeQuestion" class="overview">
       <div v-show="activeGame">
         <button class="showquestion box b" v-on:click="activateQuestion">
@@ -53,6 +53,9 @@
     <div class="blockerAll" v-if="this.question == -1">
       <!-- blocks overlook, center and tool-->
     </div>
+  </div>
+  <div v-show="!activeGame && confirmedUser" class="scoreBoards">
+    här kommer det dyka upp scoreboards och skoj
   </div>
 </template>
 
