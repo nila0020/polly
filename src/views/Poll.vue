@@ -1,5 +1,4 @@
 <template>
-  {{this.question}}
   <div v-show="!confirmedUser" class="entryId">
     <h1>Lets GO!</h1>
     <div class="boxA">
@@ -30,10 +29,14 @@
     </div>
   </div>
   <div v-show="confirmedUser" class="fullFrame">
-    <div v-show="!activeQuestion" class="overview">
-      <v-btn class="showquestion box b" v-on:click="activateQuestion"
-        >question!</v-btn
+    <div v-show="!activeQuestion && activeGame" class="overview">
+      <button
+        class="showquestion box b"
+        v-show="activeGame"
+        v-on:click="activateQuestion"
       >
+        question!
+      </button>
       <div class="wrapper">
         <div class="box a">{{ gameId }}</div>
 
@@ -79,18 +82,17 @@ export default {
       confirmedUser: false,
       userName: "",
       activeQuestion: false,
+      activeGame: true,
       qId: 0,
       amountOfquestions: Number,
     };
   },
   created: function () {
-    console.log("created has been triggered in poll");
     this.gameId = this.$route.params.id;
     socket.on("newQuestion", (q) => (this.question = q));
   },
   methods: {
     submitAnswer: function (answer) {
-      console.log("submitanswer: " + answer);
       socket.emit("submitAnswer", {
         gameId: this.gameId,
         answer: answer,
@@ -104,6 +106,11 @@ export default {
         gameId: this.gameId,
         questionNumber: this.qId,
       });
+      setTimeout(function () {
+        if (this.question == undefined) {
+          this.activeGame = false;
+        }
+      }, 200);
     },
     confirmUser: function () {
       this.confirmedUser = true;

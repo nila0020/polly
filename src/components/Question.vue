@@ -12,7 +12,13 @@
   <div class="outerGrid" v-if="!questionHidden">
     <div class="picture">
       <img
+        v-if="question.pic"
         :src="question.pic"
+        style="width: 100%; height: 100%; object-fit: cover"
+      />
+      <img
+        v-if="!question.pic"
+        :src="'https://picsum.photos/400/600'"
         style="width: 100%; height: 100%; object-fit: cover"
       />
     </div>
@@ -73,7 +79,6 @@ export default {
   },
   methods: {
     hideInfo: function () {
-      console.log(this.question.pic);
       this.infoHidden = true;
       this.questionHidden = false;
     },
@@ -81,7 +86,6 @@ export default {
     answer: function (answer) {
       this.infoHidden = false;
       this.questionHidden = true;
-      console.log("i questions emit: " + answer);
       this.$emit("answer", answer);
     },
     getSliderValue(sliderValue) {
