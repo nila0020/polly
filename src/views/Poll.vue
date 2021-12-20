@@ -1,4 +1,5 @@
 <template>
+  {{this.question}}
   <div v-show="!confirmedUser" class="entryId">
     <h1>Lets GO!</h1>
     <div class="boxA">
@@ -48,6 +49,9 @@
       class="questionDisplayed"
     >
       <Question v-bind:question="question" v-on:answer="submitAnswer" />
+    </div>
+    <div class="blockerAll" v-if="this.question == -1">
+      <!-- blocks overlook, center and tool-->
     </div>
   </div>
 </template>
@@ -176,5 +180,14 @@ input {
 }
 #joinknapp {
   max-width: 79vw;
+}
+.blockerAll {
+  grid-column: 1;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: black;
+  opacity: 80%;
 }
 </style> 
