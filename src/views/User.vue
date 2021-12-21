@@ -6,10 +6,14 @@
     :max="aS[2]"
     :unit="aS[0]"
   />
+  <div class="center">
+    <Maps />
+  </div>
 </template>
 
 <script>
 import Slider from "@/components/Slider.vue";
+import Maps from "@/components/Maps.vue";
 export default {
   name: "User",
   data: function () {
@@ -19,9 +23,14 @@ export default {
   },
   components: {
     Slider,
+    Maps,
   },
 };
 </script>
 
 <style>
+.center {
+  justify-content: center;
+  align-content: center;
+}
 </style>
