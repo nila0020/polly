@@ -27,7 +27,7 @@
     </div>
     <div class="MCQ_answerGrid" v-if="this.question.type == 'MCQ'">
       <button
-        v-for="a in question.a"
+        v-for="a in question.a[0]"
         v-on:click="answer(a)"
         v-bind:key="a"
         class="start_buttons"

@@ -355,9 +355,11 @@ export default {
       this.pic = null;
       this.editingNumber = this.questionNumber;
       this.hideCenterAndTool = false;
+      this.correctAnswer = 0;
       if (this.hideCond == 0){
         this.hideCenter = true;
       }
+      this.answersAlt = [this.answers, this.correctAnswer]
       console.log(this.hideCenter)
       this.hideCond ++
       socket.emit("addQuestion", {
@@ -366,7 +368,7 @@ export default {
         pos: this.pos,
         info: this.info,
         q: this.questionText,
-        a: this.answers,
+        a: this.answersAlt,
         aS: this.sliderAnswer,
         questionNumber: this.questionNumber,
         pic: this.pic,
@@ -396,8 +398,10 @@ export default {
       ).info = this.info;
       this.questions.find((obj) => obj.questionNumber == this.editingNumber).q =
         this.questionText;
-      this.questions.find((obj) => obj.questionNumber == this.editingNumber).a =
-        this.answer;
+      this.questions.find((obj) => obj.questionNumber == this.editingNumber).a[0] =
+        this.answers;
+      this.questions.find((obj) => obj.questionNumber == this.editingNumber).a[1] =
+          this.correctAnswer;
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
       ).aS = this.sliderAnswer;
@@ -411,7 +415,7 @@ export default {
         pos: this.pos,
         info: this.info,
         q: this.questionText,
-        a: this.answers,
+        a: this.answersAlt,
         aS: this.sliderAnswer,
         questionNumber: this.editingNumber,
         pic: this.pic,
@@ -461,7 +465,7 @@ export default {
       this.questionText = this.questions.find(
         (obj) => obj.questionNumber == questionNumber
       ).q;
-      this.answer = this.questions.find(
+      this.answersAlt = this.questions.find(
         (obj) => obj.questionNumber == questionNumber
       ).a;
       this.pic = this.questions.find(

@@ -1,4 +1,5 @@
 <template>
+  {{this.question[0]}}
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>Lets GO!</h1>
