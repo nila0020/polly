@@ -137,6 +137,13 @@
                 {{ uiLabels.AddAnswerAlternative }}
               </button>
               <br />
+              <ul id="example-1">
+                <li v-for="(_, i) in answers" v-bind:key="'answer' + i">
+                  <input type="radio" id={{i}} v-model="correctAnswer" v-bind:value="i">
+                  <label for={{i}}>{{i+1}}</label>
+                </li>
+              </ul>
+
             </div>
             <div v-else-if="checked === 'slider'">
               <input type="number" v-model="sliderMinVal" />
