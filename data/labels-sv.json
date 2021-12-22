@@ -26,6 +26,8 @@
 	"questionInfo": "Skriv din fråga här",
 	"chooseImage": "Välj bild",
 	"removeimage": "Ta bort bild",
-	"createQuestion": "Skapa din fråga här"
+	"createQuestion": "Skapa din fråga här",
+	"chooseCorrect": "Välj det rätta svarsalternativet",
+	"removeAnswerAlternative": "Ta bort svarsalternativ"
 
 }
