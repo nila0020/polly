@@ -1,5 +1,4 @@
 <template>
-  {{this.question[0]}}
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>Lets GO!</h1>
@@ -100,12 +99,30 @@ export default {
   },
   methods: {
     submitAnswer: function (answer) {
+      if ("MCQ" == this.question[0]["type"]) {
+        if (answer == this.question[0]["a"][0][this.question[0]["a"][1]]) {
+          console.log("sann");
+          answer = true;
+        } else {
+          console.log("faslk");
+          answer = false;
+        }
+      } else {
+        if (
+          answer < this.question[0]["aS"][3][2] &&
+          answer > this.question[0]["aS"][3][0]
+        ) {
+          answer = true;
+        } else {
+          answer = false;
+        }
+      }
       socket.emit("submitAnswer", {
         gameId: this.gameId,
         answer: answer,
         userName: this.userName,
-      });
-      if (this.qId + 1 < this.question[1]) {
+      }); /*avgör om det finns fler frågor eller om quizzet skall avslutas*/
+      if (this.question[0]["qId"] < this.question[1]) {
         console.log("detta är frågeId " + this.qId);
         this.qId += 1;
         /*nedan uppdaterar vi frågeobjektet via sockets via data*/
@@ -114,7 +131,14 @@ export default {
           questionNumber: this.qId,
         });
       } else {
+        console.log("i scoreboard i submitanswerpoll elsesats");
+        socket.emit("scoreBoard", {
+          gameId: this.gameId,
+          userName: this.userName,
+        });
         this.activeGame = false;
+
+        /*drawScoreboard();*/
       }
 
       this.activeQuestion = false;
@@ -141,10 +165,11 @@ export default {
   max-width: 65vh;
   height: 98vh;
   grid-template-rows: 1fr 9fr;
-  grid-gap: 2%;
+  grid-gap: 3px;
   background-color: white;
   color: black;
   overflow: hidden;
+  border-radius: 12px;
 }
 
 .navBar {
@@ -153,10 +178,8 @@ export default {
   color: white;
   width: 100%;
   background-color: rgb(0, 128, 17);
-  border-radius: 12px;
 }
 .mapWrap {
-  border-radius: 12px;
   overflow: hidden;
 }
 .questionDisplayed {

@@ -49,13 +49,14 @@ Data.prototype.addQuestion = function (gameId, q) {
   }
 }
 
-Data.prototype.joinQuiz = function(gameId, userName) {
+Data.prototype.joinQuiz = function (gameId, userName) {
   const game = this.games[gameId];
   let user = {}
   if (typeof game !== 'undefined') {
     //console.log(game.questions.findIndex(obj => obj.qId == q.qId))
     user.userName = userName
     user.answers = []
+    user.score = Number
     game.participants.push(user);
   }
   //console.log(game.participants)
@@ -69,11 +70,11 @@ Data.prototype.getQuestion = function (gameId, qId = null) {
     if (qId !== null) {
       game.currentQuestion = qId;
     }
-    if (game.questions[game.currentQuestion]==null){
+    if (game.questions[game.currentQuestion] == null) {
       console.log("Show last page")
       return -1
     }
-    else{
+    else {
       return [game.questions[game.currentQuestion], game.questions.length];
     }
   }
@@ -84,7 +85,6 @@ Data.prototype.submitAnswer = function (gameId, answer, userName) {
   const game = this.games[gameId];
   if (typeof game !== 'undefined') {
     game.participants.find(obj => obj.userName === userName).answers.push(answer)
-    console.log(game.participants)
   }
 }
 
@@ -105,7 +105,6 @@ Data.prototype.submitAnswer = function (gameId, answer, userName) {
     console.log("answers looks like ", game.answers, typeof game.answers);
   }
 }*/
-
 Data.prototype.getAnswers = function (gameId) {
   const game = this.games[gameId];
   if (typeof game !== 'undefined') {
@@ -115,6 +114,23 @@ Data.prototype.getAnswers = function (gameId) {
     }
   }
   return {}
+}
+
+Data.prototype.scoreBoard = function (gameId, userName) {
+  console.log("i scoreboard datametod")
+  const game = this.games[gameId];
+  if (typeof game !== 'undefined') {
+    var answers = game.participants.find(obj => obj.userName === userName).answers
+    var scored = 0;
+    answers.forEach(function (item, index) {
+      if (item == true) {
+        scored += 1;
+      }
+    });
+    // game.participants.find(obj => obj.userName === userName).score.push(scored)
+    game.participants.find(obj => obj.userName === userName).score = scored
+    console.log(game.participants.find(obj => obj.userName === userName).score)
+  }
 }
 module.exports = Data;
 
