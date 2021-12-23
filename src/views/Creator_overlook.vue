@@ -156,7 +156,7 @@
           <h4>Choose a place on the map for your question to appear at</h4>
           <!-- Our map  -->
              <div id="myMap"></div>
-
+           
         </div>
       </div>
       </div>
@@ -192,38 +192,99 @@
 </template>
 
 <script>
+
 import io from "socket.io-client";
 import Slider from "@/components/Slider.vue";
 import leaflet from 'leaflet';
 import { onMounted} from 'vue';
+// import { useGeolocation } from '@/components/useGeolocation.js'
+
 const socket = io();
 export default {
   components: {
     Slider
     
   },
+ 
     setup() {
+     
+    //   const {coords} = useGeolocation()
+    // const currPos = computed(() => ({
+    //   lat: coords.value.latitude,
+    //   lng: coords.value.longitude
+    // }))
+    
       let myMap;
       onMounted(()=>{
         myMap = leaflet.map('myMap').setView([59.855727, 17.633445], 13);
-        
+       
         leaflet.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
         id: 'mapbox/streets-v11',
         tileSize: 512,
         zoomOffset: -1,
-        accessToken: 'pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ'
+        accessToken: 'pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ',
+        
 }).addTo(myMap);
 
-myMap.on("click", function(e){
-       new leaflet.Marker([e.latlng.lat, e.latlng.lng]).addTo(myMap);
-        
- });
-})
+function checkDistance(a,b) {
+          if ( myMap.distance(a,b) < 30) {
+            alert('Within range')}
+            console.log('avstånd i meter',myMap.distance(a,b))
+    
+}
 
-      
-    },
+
+setInterval(() => {
+  
+  navigator.geolocation.getCurrentPosition(getPosition)
+  
+},5000
+); 
+
+var lat,lng, marker, latLng
+function getPosition(position) {
+   
+  if (marker) {
+    myMap.removeLayer(marker)
+  }
+  // if (circle) {
+  //   myMap.removeLayer(circle)
+  //   }
+  
+   
+  lat = position.coords.latitude
+  lng = position.coords.longitude
+  latLng = [lat, lng]
+marker = leaflet.marker([lat, lng]).addTo(myMap)
+// circle = leaflet.circle([lat, lng], {radius: accuracy}).addTo(myMap)
+return latLng;
+}
+
+setTimeout(() => console.log(checkDistance(latLng,[59.855727, 17.633445])), 6000);
+
+
+setTimeout(() => console.log('Marker din position utanför',latLng), 6000);
+// console.log('Marker din position utanför',lat, lng)
+
+
+
+
+
+//Att göra - Om myPos är inom 20m från aktuell pin => Generera fråga
+
+
+myMap.on("click", function(e){
+      var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng]).addTo(myMap);  
+ console.log('onClick marker',marker)
+          
+    
+    }
+    );
+//  if ( myMap.distance([getPosition.myLat, getPosition.myLng],[e.latlng.lat, e.latlng.lng] )) {}
+     }) 
+},
     data: function () {
       return {
         
@@ -258,6 +319,8 @@ myMap.on("click", function(e){
         questionSmall: false,
         mapSmall: false,
         questionSmallCond: false,
+        // lat: Number,
+        // lng: Number
       };
     }
   ,
@@ -275,9 +338,9 @@ myMap.on("click", function(e){
   ,
 
     methods: {
-      
- 
 
+
+      
       getSliderValue(sliderValue)
       {
         this.sliderValue = sliderValue;
@@ -731,5 +794,5 @@ myMap.on("click", function(e){
   font-size: 20px;
 }
 #myMap { 
-  height: 320px; }
+  height: 500px; }
 </style>
