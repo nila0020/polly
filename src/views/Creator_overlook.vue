@@ -238,21 +238,12 @@ import io from "socket.io-client";
 import Slider from "@/components/Slider.vue";
 import leaflet from "leaflet";
 import { onMounted } from "vue";
-// import { useGeolocation } from '@/components/useGeolocation.js'
-
 const socket = io();
 export default {
   components: {
     Slider,
   },
-
   setup() {
-    //   const {coords} = useGeolocation()
-    // const currPos = computed(() => ({
-    //   lat: coords.value.latitude,
-    //   lng: coords.value.longitude
-    // }))
-
     let myMap;
     onMounted(() => {
       myMap = leaflet.map("myMap").setView([59.855727, 17.633445], 13);
@@ -273,54 +264,9 @@ export default {
         )
         .addTo(myMap);
 
-      function checkDistance(a, b) {
-        if (myMap.distance(a, b) < 30) {
-          alert("Within range");
-        }
-        console.log("avstånd i meter", myMap.distance(a, b));
-      }
-
-      setInterval(() => {
-        navigator.geolocation.getCurrentPosition(getPosition);
-      }, 5000);
-
-      var lat, lng, marker, latLng;
-      function getPosition(position) {
-        if (marker) {
-          myMap.removeLayer(marker);
-        }
-        // if (circle) {
-        //   myMap.removeLayer(circle)
-        //   }
-
-        lat = position.coords.latitude;
-        lng = position.coords.longitude;
-        latLng = [lat, lng];
-        marker = leaflet.marker([lat, lng]).addTo(myMap);
-        // circle = leaflet.circle([lat, lng], {radius: accuracy}).addTo(myMap)
-        return latLng;
-      }
-
-      setTimeout(
-        () => console.log(checkDistance(latLng, [59.855727, 17.633445])),
-        6000
-      );
-
-      setTimeout(
-        () => console.log("Marker din position utanför", latLng),
-        6000
-      );
-      // console.log('Marker din position utanför',lat, lng)
-
-      //Att göra - Om myPos är inom 20m från aktuell pin => Generera fråga
-
       myMap.on("click", function (e) {
-        var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng]).addTo(
-          myMap
-        );
-        console.log("onClick marker", marker);
+        new leaflet.Marker([e.latlng.lat, e.latlng.lng]).addTo(myMap);
       });
-      //  if ( myMap.distance([getPosition.myLat, getPosition.myLng],[e.latlng.lat, e.latlng.lng] )) {}
     });
   },
   data: function () {
@@ -332,6 +278,8 @@ export default {
       gameId: "",
       question: "",
       answers: ["", ""],
+      correctAnswer: 0,
+      answersAlt: [this.answers, this.correctAnswer],
       questionNumber: 0,
       editingNumber: 0,
       sliderMinVal: 10,
@@ -349,7 +297,8 @@ export default {
       data: {},
       uiLabels: {},
       hideAll: true,
-      hideCenterAndTool: false,
+      hideCenterAndTool: true,
+      hideCenter: true,
       checked: "MCQ",
       infoBig: false,
       questionBig: false,
@@ -358,17 +307,13 @@ export default {
       questionSmall: false,
       mapSmall: false,
       questionSmallCond: false,
-      // lat: Number,
-      // lng: Number
     };
   },
-  createGame: function () {
-    this.hideAll = false;
-    this.hideCenterAndTool = true;
-    socket.emit("createGame", {
-      gameId: this.gameId,
-      lang: this.lang,
-      gameName: this.gameName,
+  created: function () {
+    this.lang = this.$route.params.lang;
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      this.uiLabels = labels;
     });
     socket.on("dataUpdate", (data) => (this.data = data));
     socket.on("gameCreated", (data) => (this.data = data));
@@ -382,13 +327,11 @@ export default {
         this.sliderMaxVal,
         this.sliderValue,
       ];
-      console.log(this.sliderValue);
     },
     Preview_image(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
       this.createImage(files[0]);
-      //console.log(e.target.files[0]);
     },
     createImage(file) {
       //var image = new Image();
@@ -405,6 +348,7 @@ export default {
     },
     createGame: function () {
       this.hideAll = false;
+      this.hideCenterAndTool = true;
       socket.emit("createGame", {
         gameId: this.gameId,
         lang: this.lang,
@@ -418,13 +362,18 @@ export default {
       this.info = "";
       this.pic = null;
       this.editingNumber = this.questionNumber;
+      this.hideCenterAndTool = false;
+      this.correctAnswer = 0;
+      this.answersAlt = [this.answers, this.correctAnswer];
+      console.log(this.hideCenter);
+      this.hideCond++;
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.checked,
         pos: this.pos,
         info: this.info,
         q: this.questionText,
-        a: this.answers,
+        a: this.answersAlt,
         aS: this.sliderAnswer,
         questionNumber: this.questionNumber,
         pic: this.pic,
@@ -435,7 +384,7 @@ export default {
         pos: this.pos,
         info: this.info,
         q: this.questionText,
-        a: this.answers,
+        a: this.answersAlt,
         aS: this.sliderAnswer,
         questionNumber: this.questionNumber,
         pic: this.pic,
@@ -454,8 +403,12 @@ export default {
       ).info = this.info;
       this.questions.find((obj) => obj.questionNumber == this.editingNumber).q =
         this.questionText;
-      this.questions.find((obj) => obj.questionNumber == this.editingNumber).a =
-        this.answer;
+      this.questions.find(
+        (obj) => obj.questionNumber == this.editingNumber
+      ).a[0] = this.answers;
+      this.questions.find(
+        (obj) => obj.questionNumber == this.editingNumber
+      ).a[1] = this.correctAnswer;
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
       ).aS = this.sliderAnswer;
@@ -469,13 +422,13 @@ export default {
         pos: this.pos,
         info: this.info,
         q: this.questionText,
-        a: this.answers,
+        a: this.answersAlt,
         aS: this.sliderAnswer,
         questionNumber: this.editingNumber,
         pic: this.pic,
       });
-      console.log(this.questions);
-      console.log(this.sliderAnswer);
+      console.log(this.answers);
+      //console.log(this.sliderAnswer);
       //$("#myElem").show().delay(5000).fadeOut();
     },
     /*   addQuestion: function() {
@@ -821,6 +774,6 @@ export default {
   font-size: 20px;
 }
 #myMap {
-  height: 500px;
+  height: 320px;
 }
 </style>
