@@ -57,7 +57,11 @@
       </div>
     </div>
     <div v-show="!activeGame && confirmedUser" class="scoreBoards">
-      här kommer det dyka upp scoreboards och skoj
+      <Bars
+        :scoreBoard="scoreBoard"
+        :userName="userName"
+        v-if="!activeGame && this.scoreBoard"
+      />
     </div>
   </div>
 </template>
@@ -66,6 +70,7 @@
 // @ is an alias to /src
 import Question from "@/components/Question.vue";
 import Maps from "@/components/Maps.vue";
+import Bars from "@/components/Bars.vue";
 import io from "socket.io-client";
 const socket = io();
 export default {
@@ -73,6 +78,7 @@ export default {
   components: {
     Question,
     Maps,
+    Bars,
   },
   data: function () {
     return {
@@ -91,6 +97,10 @@ export default {
       activeGame: true,
       amountOfQuestions: 0,
       qId: 0,
+      scoreBoard: {
+        cA: [],
+        scores: {},
+      },
     };
   },
   created: function () {
@@ -123,7 +133,6 @@ export default {
         userName: this.userName,
       }); /*avgör om det finns fler frågor eller om quizzet skall avslutas*/
       if (this.question[0]["qId"] < this.question[1]) {
-        console.log("detta är frågeId " + this.qId);
         this.qId += 1;
         /*nedan uppdaterar vi frågeobjektet via sockets via data*/
         socket.emit("runQuestion", {
@@ -131,14 +140,14 @@ export default {
           questionNumber: this.qId,
         });
       } else {
-        console.log("i scoreboard i submitanswerpoll elsesats");
+        socket.on("newScoreboard", (q) => (this.scoreBoard = q));
+
         socket.emit("scoreBoard", {
           gameId: this.gameId,
           userName: this.userName,
         });
-        this.activeGame = false;
 
-        /*drawScoreboard();*/
+        this.activeGame = false;
       }
 
       this.activeQuestion = false;
@@ -147,6 +156,7 @@ export default {
       this.confirmedUser = true;
       socket.emit("joinGame", this.gameId, this.qId, this.userName);
     },
+
     activateQuestion: function () {
       this.activeQuestion = true;
     },
