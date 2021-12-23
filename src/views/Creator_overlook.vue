@@ -3,27 +3,35 @@
     <section class="box titleBox">
       <!--Title box-->
 
-      <h3>Game Title and GameID</h3>
+<!--      <h3>Game Title and GameID</h3>-->
 
-      <div class="insertTitle">
+<!--      <div class="insertTitle">-->
+      <div id="gameNameBox">
         <label for="gameName">{{ uiLabels.gameName }}: </label>
+        <br>
         <input
           type="text"
           id="gameName"
           v-model="gameName"
-          v-bind:placeholder="this.uiLabels.enterGameName"
-        /><br />
+          v-bind:placeholder="this.uiLabels.enterGameName">
+      </div>
+      <div id="gameIDBox">
         <label for="gameID">{{ uiLabels.gameID }}: </label>
+        <br>
         <input
           type="text"
           id="gameID"
           v-model="gameId"
           v-bind:placeholder="this.uiLabels.enterGameID"
-        /><br />
+        />
+
+      </div>
+      <div id="gameButtonBox">
         <button class="Button" v-on:click="createGame">
           {{ uiLabels.CreateGame }}
         </button>
       </div>
+<!--      </div>-->
     </section>
 
     <section class="container">
@@ -98,20 +106,19 @@
             <img
               :src="pic"
               v-if="pic !== null"
-              style="width: 90%; height: 75%; object-fit: cover"
+              style="width: 90%; height: 75%; object-fit: cover; grid-row: 1; grid-column: 1/span 2"
               ref=""
             />
-            <br />
             <input
               type="file"
               @change="Preview_image"
               style="display: none"
               ref="fileInput"
             />
-            <button v-on:click="$refs.fileInput.click()">
+            <button v-on:click="$refs.fileInput.click()" style="grid-column: 1; grid-row: 2">
               {{ this.uiLabels.chooseImage }}
             </button>
-            <button v-on:click="removeImage">
+            <button v-on:click="removeImage" style="grid-column: 2; grid-row: 2">
               {{ this.uiLabels.removeimage }}
             </button>
           </div>
@@ -127,19 +134,14 @@
           <div id="aBox">
             <div v-if="checked === 'MCQ' || checked === null">
               <h1>Answers:</h1>
-              <input
+<!--              <input
                 v-for="(_, i) in answers"
                 v-model="answers[i]"
                 v-bind:key="'answer' + i"
                 v-bind:placeholder="this.uiLabels.addanswer"
-              />
-              <button class="Button" v-on:click="addAnswer">
-                {{ uiLabels.AddAnswerAlternative }}
-              </button>
-              <button class="Button" v-on:click="removeAnswer">
-                {{ uiLabels.removeAnswerAlternative }}
-              </button>
-              <br />
+              />-->
+
+
               <h1>{{ this.uiLabels.chooseCorrect }}</h1>
               <ul id="example-1">
                 <li v-for="(_, i) in answers" v-bind:key="'answer' + i">
@@ -149,9 +151,20 @@
                     v-model="correctAnswer"
                     v-bind:value="i"
                   />
-                  <label for="{{i}}">{{ i + 1 }}</label>
+                  <input
+                      v-model="answers[i]"
+                      v-bind:key="'answer' + i"
+                      v-bind:placeholder="this.uiLabels.addanswer"
+                  />
+                  <label for="{{i}}"></label>
                 </li>
               </ul>
+              <button class="Button" v-on:click="addAnswer">
+              {{ uiLabels.AddAnswerAlternative }}
+            </button>
+              <button class="Button" v-on:click="removeAnswer">
+                {{ uiLabels.removeAnswerAlternative }}
+              </button>
             </div>
             <div v-else-if="checked === 'slider'">
               <input type="number" v-model="sliderMinVal" />
@@ -575,7 +588,7 @@ export default {
   border-radius: 5px;
   margin: 5px;
   padding: 20px;
-  font-size: 150%;
+  font-size: 100%;
 }
 .insertTitle {
   float: right;
@@ -584,7 +597,10 @@ export default {
   float: left;
 }
 .titleBox {
-  height: 140px;
+  display: grid;
+  height: 15vh;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 100%;
 }
 .Overlook {
   grid-column: 1;
@@ -620,7 +636,7 @@ export default {
 }
 .infoArea {
   width: 100%;
-  height: 255px;
+  height: 20vh;
   padding: 12px 20px;
   box-sizing: border-box;
   border: 2px solid #ccc;
@@ -630,7 +646,7 @@ export default {
   color: white;
 }
 .questionArea {
-  width: 100%;
+  width: 70%;
   height: 70%;
   padding: 12px 20px;
   box-sizing: border-box;
@@ -645,7 +661,7 @@ export default {
   grid-row: 1 / span 2;
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 5vh 20vh 20vh;
+  grid-template-rows: 10% 45% 45%;
   overflow: scroll;
 }
 .questionBox h1 {
@@ -654,12 +670,16 @@ export default {
   grid-row: 1;
 }
 #picBox {
+  display: grid;
+  grid-template-rows: 80% 20%;
+  grid-template-columns: 50% 50%;
+  height: 100%;
   grid-column: 1;
   grid-row: 2;
-  padding-top: 8vh;
   margin-right: 1vw;
 }
 #qBox {
+  height: 100%;
   padding-top: 2vh;
   grid-column: 2;
   grid-row: 2;
@@ -683,7 +703,7 @@ export default {
   color: #ffffff;
   display: flex;
   font-family: Phantomsans, sans-serif;
-  font-size: 20px;
+  font-size: 2vh;
   justify-content: center;
   line-height: 2em;
   max-width: 100%;
@@ -775,5 +795,16 @@ export default {
 }
 #myMap {
   height: 320px;
+}
+
+#gameNameBox {
+  grid-column: 1;
+}
+#gameIDBox {
+  grid-column: 2;
+}
+#gameButtonBox {
+  grid-column: 3;
+  align-items: center;
 }
 </style>

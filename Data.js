@@ -116,20 +116,24 @@ Data.prototype.getAnswers = function (gameId) {
   return {}
 }
 
-Data.prototype.scoreBoard = function (gameId, userName) {
-  console.log("i scoreboard datametod")
+Data.prototype.getScoreboard = function (gameId, userName) {
+
   const game = this.games[gameId];
   if (typeof game !== 'undefined') {
     var answers = game.participants.find(obj => obj.userName === userName).answers
     var scored = 0;
+    var scores = {};
     answers.forEach(function (item, index) {
       if (item == true) {
         scored += 1;
       }
     });
-    // game.participants.find(obj => obj.userName === userName).score.push(scored)
+    console.log(userName + ": " + scored)
     game.participants.find(obj => obj.userName === userName).score = scored
-    console.log(game.participants.find(obj => obj.userName === userName).score)
+    game.participants.forEach(function (item, index) {
+      scores[item.userName] = item.score;
+    });
+    return { cA: answers, scores: scores } //correctedAnswers, score,scores
   }
 }
 module.exports = Data;

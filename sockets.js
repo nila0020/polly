@@ -36,8 +36,8 @@ function sockets(io, socket, data) {
   });
 
   socket.on('scoreBoard', function (d) {
-    console.log("i scoreboard i socket")
-    data.scoreBoard(d.gameId, d.userName);
+    socket.emit("newScoreboard", data.getScoreboard(d.gameId, d.userName))
+    console.log("efter Newscoreboard emit i sockets")
     io.to(d.gameId).emit('dataUpdate', data.getAnswers(d.gameId));
   });
 

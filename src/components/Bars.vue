@@ -1,7 +1,8 @@
 <template>
+  <h1>Leaderboard:</h1>
   <div class="wrapper">
-    <div class="bar" v-for="(item, key) in data" v-bind:key="key">
-      <div v-bind:style="{ height: item + 'px' }">
+    <div class="bar" v-for="(item, key) in scoreBoard.scores" v-bind:key="key">
+      <div v-bind:style="{ height: 50 * item + 'px' }">
         <span> {{ item }} </span>
       </div>
       <div>
@@ -9,25 +10,33 @@
       </div>
     </div>
   </div>
+  <!-- <h2> You are ranked as the {{rank}} </h2> -->
 </template>
 
 <script>
 export default {
   name: "Bars",
   props: {
-    data: Object,
+    scoreBoard: Object,
+    userName: String,
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.wrapper {
+  display: grid;
+  width: flex;
+  flex-direction: row;
+  height: 50vh;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  align-items: flex-end;
+}
 .bar {
   display: inline-block;
-  width: 50px;
-  vertical-align: bottom;
+  width: 15vw;
 }
-
 .bar span {
   position: relative;
   top: -1.2em;
@@ -47,8 +56,7 @@ export default {
 .bar:nth-child(5) div:nth-child(1) {
   background-color: yellow;
 }
-
-.wrapper {
-  padding: 3em;
+.bar:nth-child(6) div:nth-child(1) {
+  background-color: indigo;
 }
 </style>
