@@ -81,8 +81,6 @@ export default {
   font-family: 'Baloo Bhaijaan 2', cursive;
   color: white;
   padding-bottom:50px;
-
-
 }
 
 

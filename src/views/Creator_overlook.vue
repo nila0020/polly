@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class ="page">
     <section class="box titleBox">
       <!--Title box-->
 
@@ -20,7 +20,7 @@
           v-model="gameId"
           v-bind:placeholder="this.uiLabels.enterGameID"
         /><br />
-        <button class="createButton" v-on:click="createGame">
+        <button class="Button" v-on:click="createGame">
           {{ uiLabels.CreateGame }}
         </button>
       </div>
@@ -49,17 +49,15 @@
           <p>
             <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
             <button
-              class="overlookBtn"
+                class="Button"
+              id="overlookBtn"
               v-on:click="[addNewQuestion(), closeExpand()]"
             >
               {{ uiLabels.Addquestion }}
             </button>
-            <button class="overlookBtn">{{ uiLabels.Deletequestion }}</button>
+            <button class="Button" id="overlookBtn">{{ uiLabels.Deletequestion }}</button>
           </p>
         </div>
-        <!--        <button class = "createButton" v-on:click="addQuestion">
-          Start Game
-        </button>-->
       </div>
       <!--Center box-->
       <div class="box centerBox">
@@ -133,10 +131,21 @@
                 v-bind:key="'answer' + i"
                 v-bind:placeholder="this.uiLabels.addanswer"
               />
-              <button v-on:click="addAnswer">
+              <button class="Button" v-on:click="addAnswer">
                 {{ uiLabels.AddAnswerAlternative }}
               </button>
+              <button class="Button" v-on:click="removeAnswer">
+                {{ uiLabels.removeAnswerAlternative }}
+              </button>
               <br />
+              <h1>{{this.uiLabels.chooseCorrect}}</h1>
+              <ul id="example-1">
+                <li v-for="(_, i) in answers" v-bind:key="'answer' + i">
+                  <input type="radio" id={{i}} v-model="correctAnswer" v-bind:value="i">
+                  <label for={{i}}>{{i+1}}</label>
+                </li>
+              </ul>
+
             </div>
             <div v-else-if="checked === 'slider'">
               <input type="number" v-model="sliderMinVal" />
@@ -163,12 +172,6 @@
                 {{ this.sliderUnit }}
               </div>
             </div>
-
-            <!--            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">-->
-            <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
-                      <button v-on:click="runQuestion">
-                        Run question
-                      </button> -->
           </div>
         </div>
 
@@ -177,12 +180,21 @@
           class="box map"
           v-on:click="mapExpand"
           v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"
+<<<<<<< HEAD
+          >
+          <div class = 'mapTitle'>
+          <h4>Choose a place on the map for your question to appear at</h4>
+          <!-- Our map  -->
+             <div id="myMap"></div>
+           
+=======
         >
-          <div class="mapTitle">
+          <div class="mapTitle" >
             <h4>Choose a place on the map for your question to appear at</h4>
             <!-- Our map  -->
             <div id="myMap"></div>
           </div>
+>>>>>>> 234135ae18ad3209d73175ffc0af8a9ca7fc7c3a
         </div>
       </div>
 
@@ -201,39 +213,171 @@
         <br />
         <br />
         <br />
-        <button v-on:click="[saveQuestion()]">
+        <button class="Button" v-on:click="[saveQuestion()]">
           {{ uiLabels.Savequestion }}
         </button>
       </div>
 
-      <div class="blockerAll" v-if="hideAll">
-        <!-- blocks overlook, center and tool-->
-        <h1>Start by creating a Game</h1>
+      <div class="blocker3" v-if="hideCenter">
+        <!-- blocks center-->
+        <h1>Choose a type of question and you´re good to go</h1>
+        <br>
+        <h1>Don´t forget to save your question</h1>
       </div>
       <div class="blocker2" v-if="hideCenterAndTool">
         <!-- blocks center and tool-->
         <h1> Now add a question</h1>
       </div>
-<!--      <div class="blocker3" v-if="hideCenter">
-        &lt;!&ndash; blocks center&ndash;&gt;
-        <h1>Choose a type of question and you´re good to go</h1>
-        <br>
-        <h1>Don´t forget to save your question</h1>
-      </div>-->
+      <div class="blockerAll" v-if="hideAll">
+        <!-- blocks overlook, center and tool-->
+        <h1>Start by creating a Game</h1>
+      </div>
+
+
     </section>
   </section>
 </template>
 
 <script>
+
 import io from "socket.io-client";
 import Slider from "@/components/Slider.vue";
+<<<<<<< HEAD
+import leaflet from 'leaflet';
+import { onMounted} from 'vue';
+// import { useGeolocation } from '@/components/useGeolocation.js'
+
+=======
 import leaflet from "leaflet";
 import { onMounted } from "vue";
+>>>>>>> 234135ae18ad3209d73175ffc0af8a9ca7fc7c3a
 const socket = io();
 export default {
   components: {
     Slider,
   },
+<<<<<<< HEAD
+ 
+    setup() {
+     
+    //   const {coords} = useGeolocation()
+    // const currPos = computed(() => ({
+    //   lat: coords.value.latitude,
+    //   lng: coords.value.longitude
+    // }))
+    
+      let myMap;
+      onMounted(()=>{
+        myMap = leaflet.map('myMap').setView([59.855727, 17.633445], 13);
+       
+        leaflet.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ',
+        
+}).addTo(myMap);
+
+function checkDistance(a,b) {
+          if ( myMap.distance(a,b) < 30) {
+            alert('Within range')}
+            console.log('avstånd i meter',myMap.distance(a,b))
+    
+}
+
+
+setInterval(() => {
+  
+  navigator.geolocation.getCurrentPosition(getPosition)
+  
+},5000
+); 
+
+var lat,lng, marker, latLng
+function getPosition(position) {
+   
+  if (marker) {
+    myMap.removeLayer(marker)
+  }
+  // if (circle) {
+  //   myMap.removeLayer(circle)
+  //   }
+  
+   
+  lat = position.coords.latitude
+  lng = position.coords.longitude
+  latLng = [lat, lng]
+marker = leaflet.marker([lat, lng]).addTo(myMap)
+// circle = leaflet.circle([lat, lng], {radius: accuracy}).addTo(myMap)
+return latLng;
+}
+
+setTimeout(() => console.log(checkDistance(latLng,[59.855727, 17.633445])), 6000);
+
+
+setTimeout(() => console.log('Marker din position utanför',latLng), 6000);
+// console.log('Marker din position utanför',lat, lng)
+
+
+
+
+
+//Att göra - Om myPos är inom 20m från aktuell pin => Generera fråga
+
+
+myMap.on("click", function(e){
+      var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng]).addTo(myMap);  
+ console.log('onClick marker',marker)
+          
+    
+    }
+    );
+//  if ( myMap.distance([getPosition.myLat, getPosition.myLng],[e.latlng.lat, e.latlng.lng] )) {}
+     }) 
+},
+    data: function () {
+      return {
+        
+        questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
+        questions: [],
+        info: "",
+        lang: "",
+        gameId: "",
+        question: "",
+        answers: ["", ""],
+        questionNumber: 0,
+        editingNumber: 0,
+        sliderMinVal: 10,
+        sliderMaxVal: 20,
+        sliderUnit: "",
+        sliderValue: [],
+        sliderAnswer: [this.sliderUnit,
+          this.sliderMinVal,
+          this.sliderMaxVal,
+          this.sliderValue],
+        pic: null,
+        gameName: "",
+        data: {},
+        uiLabels: {},
+        hideAll: true,
+        hideCenterAndTool: false,
+        checked: "MCQ",
+        infoBig: false,
+        questionBig: false,
+        mapBig: false,
+        infoSmall: false,
+        questionSmall: false,
+        mapSmall: false,
+        questionSmallCond: false,
+        // lat: Number,
+        // lng: Number
+      };
+    }
+  ,
+
+=======
   setup() {
     let myMap;
     onMounted(() => {
@@ -288,9 +432,8 @@ export default {
       data: {},
       uiLabels: {},
       hideAll: true,
-      hideCenterAndTool: false,
-      hideCenter: false,
-      hideCond: 0,
+      hideCenterAndTool: true,
+      hideCenter: true,
       checked: "MCQ",
       infoBig: false,
       questionBig: false,
@@ -329,6 +472,7 @@ export default {
       //var image = new Image();
       var reader = new FileReader();
       var vm = this;
+>>>>>>> 234135ae18ad3209d73175ffc0af8a9ca7fc7c3a
 
       reader.onload = (e) => {
         vm.pic = e.target.result;
@@ -346,6 +490,138 @@ export default {
         lang: this.lang,
         gameName: this.gameName,
       });
+<<<<<<< HEAD
+      socket.on("dataUpdate", (data) => (this.data = data));
+      socket.on("gameCreated", (data) => (this.data = data));
+    }
+  ,
+
+    methods: {
+
+
+      
+      getSliderValue(sliderValue)
+      {
+        this.sliderValue = sliderValue;
+        this.sliderAnswer = [this.sliderUnit,
+          this.sliderMinVal,
+          this.sliderMaxVal,
+          this.sliderValue];
+        console.log(this.sliderValue)
+      }
+    ,
+
+      Preview_image(e)
+      {
+        var files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+          return;
+        this.createImage(files[0]);
+        //console.log(e.target.files[0]);
+      }
+    ,
+      createImage(file)
+      {
+        //var image = new Image();
+        var reader = new FileReader();
+        var vm = this;
+
+        reader.onload = (e) => {
+          vm.pic = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+      }
+    ,
+      removeImage: function () {
+        this.pic = null;
+
+      }
+    ,
+
+      createGame: function () {
+        this.hideAll = false;
+        socket.emit("createGame", {
+          gameId: this.gameId,
+          lang: this.lang,
+          gameName: this.gameName,
+        });
+      }
+    ,
+
+      addNewQuestion: function () {
+        this.questionNumber++;
+        this.questionText = "";
+        this.answers = ["", ""];
+        this.info = "";
+        this.pic = null;
+        this.editingNumber = this.questionNumber;
+        socket.emit("addQuestion", {
+          gameId: this.gameId,
+          type: this.checked,
+          pos: this.pos,
+          info: this.info,
+          q: this.questionText,
+          a: this.answers,
+          aS: this.sliderAnswer,
+          questionNumber: this.questionNumber,
+          pic: this.pic,
+        });
+        this.questions.push({
+          gameId: this.gameId,
+          type: this.checked,
+          pos: this.pos,
+          info: this.info,
+          q: this.questionText,
+          a: this.answers,
+          aS: this.sliderAnswer,
+          questionNumber: this.questionNumber,
+          pic: this.pic,
+        });
+        console.log(this.questions);
+      }
+    ,
+
+      saveQuestion: function () {
+        this.questions.find(
+            (obj) => obj.questionNumber == this.editingNumber
+        ).type = this.checked;
+        this.questions.find(
+            (obj) => obj.questionNumber == this.editingNumber
+        ).pos = this.pos;
+        this.questions.find(
+            (obj) => obj.questionNumber == this.editingNumber
+        ).info = this.info;
+        this.questions.find((obj) => obj.questionNumber == this.editingNumber).q =
+            this.questionText;
+        this.questions.find((obj) => obj.questionNumber == this.editingNumber).a =
+            this.answer;
+        this.questions.find((obj) => obj.questionNumber == this.editingNumber).aS =
+            this.sliderAnswer;
+        this.questions.find(
+            (obj) => obj.questionNumber == this.editingNumber
+        ).pic = this.pic;
+
+        socket.emit("addQuestion", {
+          gameId: this.gameId,
+          type: this.checked,
+          pos: this.pos,
+          info: this.info,
+          q: this.questionText,
+          a: this.answers,
+          aS: this.sliderAnswer,
+          questionNumber: this.editingNumber,
+          pic: this.pic,
+        });
+        console.log(this.questions);
+        console.log(this.sliderAnswer)
+        //$("#myElem").show().delay(5000).fadeOut();
+      }
+    ,
+
+
+      /*   addQuestion: function() {
+=======
     },
     addNewQuestion: function () {
       this.questionNumber++;
@@ -356,9 +632,6 @@ export default {
       this.editingNumber = this.questionNumber;
       this.hideCenterAndTool = false;
       this.correctAnswer = 0;
-      if (this.hideCond == 0){
-        this.hideCenter = true;
-      }
       this.answersAlt = [this.answers, this.correctAnswer]
       console.log(this.hideCenter)
       this.hideCond ++
@@ -425,6 +698,7 @@ export default {
       //$("#myElem").show().delay(5000).fadeOut();
     },
     /*   addQuestion: function() {
+>>>>>>> 234135ae18ad3209d73175ffc0af8a9ca7fc7c3a
       //Ska inte skickas förrän alla frågor lagts till
       var newQuestion = this.questionText.trim();
       if (!newQuestion) {return;}
@@ -475,6 +749,9 @@ export default {
     addAnswer: function () {
       this.answers.push("");
     },
+    removeAnswer: function() {
+      this.answers.pop()
+    },
     infoExpand: function () {
       this.infoBig = true;
       this.questionBig = false;
@@ -523,6 +800,9 @@ export default {
 </script>
 
 <style>
+.page {
+  background-color: #b6d7a8ff;
+}
 #header h1 {
   font-family: "Times New Roman", Times, serif;
 }
@@ -537,7 +817,7 @@ export default {
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-  opacity: 80%;
+  opacity: 95%;
 }
 .blocker2 {
   color: white;
@@ -545,19 +825,19 @@ export default {
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-  opacity: 80%;
+  opacity: 95%;
 }
-blocker3{
+.blocker3{
   color: white;
   grid-column: 2;
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-  opacity: 80%;
+  opacity: 95%;
 }
 
 .box {
-  background-color: #444;
+  background-color: #1d7658;
   color: #fff;
   border-radius: 5px;
   margin: 5px;
@@ -581,12 +861,15 @@ blocker3{
   font: black;
 }
 .centerBox {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
   grid-column: 2;
   grid-row: 1 / span 2;
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: 25% 25% 25% 25%;
-  background-color: lightslategray;
+  background-color: #b6d7a8ff;
 }
 .toolBox {
   grid-column: 3;
@@ -656,7 +939,7 @@ blocker3{
   grid-column: 1 / span 4;
   grid-row: 3 / span 2;
 }
-.createButton {
+.Button {
   float: right;
   align-items: center;
   background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
@@ -680,11 +963,11 @@ blocker3{
   white-space: nowrap;
   cursor: pointer;
 }
-.createButton:active,
-.createButton:hover {
+.Button:active,
+.Button:hover {
   outline: 0;
 }
-.createButton span {
+.Button span {
   background-color: rgb(5, 6, 45);
   padding: 16px 24px;
   border-radius: 6px;
@@ -692,7 +975,7 @@ blocker3{
   height: 45%;
   transition: 300ms;
 }
-.createButton:hover span {
+.Button:hover span {
   background: none;
 }
 @media (min-width: 768px) {
@@ -757,7 +1040,12 @@ blocker3{
 .mapTitle {
   font-size: 20px;
 }
+<<<<<<< HEAD
+#myMap { 
+  height: 500px; }
+=======
 #myMap {
   height: 320px;
 }
+>>>>>>> 234135ae18ad3209d73175ffc0af8a9ca7fc7c3a
 </style>
