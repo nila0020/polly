@@ -26,6 +26,7 @@
 	"questionInfo": "Write your question here",
 	"chooseImage": "Choose image",
 	"removeimage": "Remove image",
-	"createQuestion": "Create your question here"
-
+	"createQuestion": "Create your question here",
+	"chooseCorrect": "Choose the correct answer",
+	"removeAnswerAlternative": "Remove answer"
 }

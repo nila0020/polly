@@ -9,10 +9,16 @@
     <br />
     {{ question.info }}
   </div>
-  <div class="outerGrid" v-if="!questionHidden">
+  <div class="outerGrid" v-if="!questionHidden || !question.info">
     <div class="picture">
       <img
+        v-if="question.pic"
         :src="question.pic"
+        style="width: 100%; height: 100%; object-fit: cover"
+      />
+      <img
+        v-if="!question.pic"
+        :src="'https://picsum.photos/400/600'"
         style="width: 100%; height: 100%; object-fit: cover"
       />
     </div>
@@ -21,7 +27,7 @@
     </div>
     <div class="MCQ_answerGrid" v-if="this.question.type == 'MCQ'">
       <button
-        v-for="a in question.a"
+        v-for="a in question.a[0]"
         v-on:click="answer(a)"
         v-bind:key="a"
         class="start_buttons"
@@ -32,19 +38,26 @@
         </p>
       </button>
     </div>
-    <div class="slider_answerGrid" v-if="this.question.type == 'Slider'">
-      <SliderPoll
-        v-model="value"
+    <div class="slider_answerGrid" v-if="this.question.type == 'slider'">
+      <Slider
+        class="sliderStyle"
+        :poll="true"
         :min="minVal"
         :max="maxVal"
         :unit="unit"
         v-on:sliderValue="getSliderValue"
       />
+      <button
+        v-on:click="answer(sliderValue)"
+        class="sliderButton start_buttons"
+      >
+        {{ sliderValue }} {{ unit }}
+      </button>
     </div>
   </div>
 </template>
 <script>
-import SliderPoll from "@/components/SliderPoll.vue";
+import Slider from "@/components/Slider.vue";
 
 export default {
   name: "Bars",
@@ -52,21 +65,20 @@ export default {
     return {
       infoHidden: false,
       questionHidden: true,
-      minVal: this.question.minVal,
-      maxVal: this.question.maxVal,
-      sliderValue: this.question.sliderValue,
-      unit: this.question.unit,
+      minVal: this.question.aS[1],
+      maxVal: this.question.aS[2],
+      unit: this.question.aS[0],
+      sliderValue: 0,
     };
   },
   components: {
-    SliderPoll,
+    Slider,
   },
   props: {
     question: Object,
   },
   methods: {
     hideInfo: function () {
-      console.log(this.question.pic);
       this.infoHidden = true;
       this.questionHidden = false;
     },
@@ -74,7 +86,6 @@ export default {
     answer: function (answer) {
       this.infoHidden = false;
       this.questionHidden = true;
-      console.log("i questions emit: " + answer);
       this.$emit("answer", answer);
     },
     getSliderValue(sliderValue) {
@@ -117,9 +128,20 @@ export default {
 }
 .slider_answerGrid {
   display: flex;
-  width: 100%;
-  height: 100%;
+  flex-direction: column;
+  grid-row: 1fr 1fr;
   border-radius: 0.5em;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: green;
+}
+.sliderStyle {
+  width: 80%;
+  height: 1%;
+}
+.sliderButton {
+  height: 20%;
+  width: 40%;
 }
 .MCQ_answerGrid {
   display: grid;
@@ -131,6 +153,7 @@ export default {
   color: black;
   overflow: hide;
 }
+
 #answerButtons {
   background-image: linear-gradient(144deg, rgb(1, 65, 12), #116d37, #95ffca);
   border: 0px;

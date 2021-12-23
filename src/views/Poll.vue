@@ -1,51 +1,64 @@
 <template>
-  {{question}}
-  <div v-show="!confirmedUser" class="entryId">
-    <h1>Lets GO!</h1>
-    <div class="boxA">
-      <label for="gameId" class="start_buttons1">Poll-ID</label><br />
-      <input
-        type="text"
-        id="gameId"
-        v-model="gameId"
-        required="required"
-        placeholder="Input the game-Id"
-      />
-    </div>
-    <br /><br /><br /><br />
-    <div class="boxB">
-      <label for="" class="start_buttons1">Username</label><br />
-      <input
-        type="text"
-        style="font-size: 1.4em"
-        id="userName"
-        v-model="userName"
-        required="required"
-        placeholder="Input your username"
-      />
-    </div>
-    <br /><br /><br /><br />
-    <div class="boxC">
-      <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
-        >Join GeoQuiz!</v-btn
-      >
-    </div>
-  </div>
-  <div v-show="confirmedUser" class="fullFrame">
-    <div v-show="!activeQuestion" class="overview">
-      <v-btn class="showquestion box b" v-on:click="activateQuestion"
-        >question!</v-btn
-      >
-      <div class="wrapper">
-        <div class="box a">{{ gameId }}</div>
-
-        <div class="box b">
-          <div id="map"></div>
-        </div>
+  {{this.question[0]}}
+  <div class="fullFrame">
+    <div v-show="!confirmedUser" class="entryId">
+      <h1>Lets GO!</h1>
+      <div class="boxA">
+        <label for="gameId" class="start_buttons1">Poll-ID</label><br />
+        <input
+          type="text"
+          id="gameId"
+          v-model="gameId"
+          required="required"
+          placeholder="Input the game-Id"
+        />
+      </div>
+      <div class="boxB">
+        <label for="" class="start_buttons1">Username</label><br />
+        <input
+          type="text"
+          style="font-size: 1.4em"
+          id="userName"
+          v-model="userName"
+          required="required"
+          placeholder="Input your username"
+        />
+      </div>
+      <div class="boxC">
+        <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
+          >Join GeoQuiz!</v-btn
+        >
       </div>
     </div>
-    <div v-show="activeQuestion" class="questionDisplayed">
-      <Question v-bind:question="question" v-on:answer="submitAnswer" />
+    <div v-if="confirmedUser && activeGame">
+      <div v-show="!activeQuestion">
+        <div v-show="activeGame">
+          <button v-on:click="activateQuestion">question!</button>
+        </div>
+        <div class="centrera">
+          <div class="wrapper">
+            <div class="navBar">{{ gameId }}</div>
+            <div class="mapWrap">
+              <div class="map">
+                <Maps />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="activeQuestion"
+        v-show="activeQuestion"
+        class="questionDisplayed"
+      >
+        <Question v-bind:question="question[0]" v-on:answer="submitAnswer" />
+      </div>
+      <div class="blockerAll" v-if="this.question == -1">
+        <!-- blocks overlook, center and tool-->
+      </div>
+    </div>
+    <div v-show="!activeGame && confirmedUser" class="scoreBoards">
+      här kommer det dyka upp scoreboards och skoj
     </div>
   </div>
 </template>
@@ -53,12 +66,14 @@
 <script>
 // @ is an alias to /src
 import Question from "@/components/Question.vue";
+import Maps from "@/components/Maps.vue";
 import io from "socket.io-client";
 const socket = io();
 export default {
   name: "Game",
   components: {
     Question,
+    Maps,
   },
   data: function () {
     return {
@@ -74,30 +89,35 @@ export default {
       confirmedUser: false,
       userName: "",
       activeQuestion: false,
+      activeGame: true,
+      amountOfQuestions: 0,
       qId: 0,
     };
   },
   created: function () {
-    console.log("created has been triggered in poll");
     this.gameId = this.$route.params.id;
     socket.on("newQuestion", (q) => (this.question = q));
   },
   methods: {
     submitAnswer: function (answer) {
-      console.log("submitanswer: " + answer);
       socket.emit("submitAnswer", {
         gameId: this.gameId,
         answer: answer,
         userName: this.userName,
       });
-      this.qId += 1;
-      this.activeQuestion = false;
+      if (this.qId + 1 < this.question[1]) {
+        console.log("detta är frågeId " + this.qId);
+        this.qId += 1;
+        /*nedan uppdaterar vi frågeobjektet via sockets via data*/
+        socket.emit("runQuestion", {
+          gameId: this.gameId,
+          questionNumber: this.qId,
+        });
+      } else {
+        this.activeGame = false;
+      }
 
-      /*nedan uppdaterar vi frågeobjektet via sockets via data*/
-      socket.emit("runQuestion", {
-        gameId: this.gameId,
-        questionNumber: this.qId,
-      });
+      this.activeQuestion = false;
     },
     confirmUser: function () {
       this.confirmedUser = true;
@@ -110,7 +130,36 @@ export default {
 };
 </script>
 <style scoped>
-.fullFrame {
+.centrera {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.wrapper {
+  display: grid;
+  width: 100%;
+  max-width: 65vh;
+  height: 98vh;
+  grid-template-rows: 1fr 9fr;
+  grid-gap: 2%;
+  background-color: white;
+  color: black;
+  overflow: hidden;
+}
+
+.navBar {
+  grid-column: 1;
+  grid-row: 1;
+  color: white;
+  width: 100%;
+  background-color: rgb(0, 128, 17);
+  border-radius: 12px;
+}
+.mapWrap {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.questionDisplayed {
   width: 100%;
   height: 100%;
   display: flex;
@@ -119,53 +168,13 @@ export default {
   justify-items: center;
   align-items: center;
 }
-.wrapper {
-  display: grid;
-  width: 100vw;
-  height: 96vh;
-  grid-template-rows: 1fr 9fr;
-  grid-gap: 2%;
-  background-color: white;
-  color: black;
-}
-.box {
-  border-radius: 12px;
-}
-.a {
-  grid-column: 1;
-  grid-row: 1;
-  color: white;
-  width: 100%;
-  background-color: rgb(0, 128, 17);
-}
-.b {
-  grid-column: 1;
-  grid-row: 2;
-  width: 100%;
-  height: 100%;
-  overflow: scroll;
-  position: relative;
-  border: 0px;
-  border-radius: 12px;
-}
-#map {
-  width: 1920px;
-  height: 1080px;
-  background: url("/img/polacks.jpg");
-  border: 0px;
-  border-radius: 8px;
-}
-.questionDisplayed {
-  justify-content: center;
-}
 .entryId {
   display: grid;
   width: 100%;
-  height: 100%;
-  background-color: #1d7658;
+  height: 65vh;
+  grid-template-rows: 20% 20% 23%;
+  background-color: white;
   justify-content: center;
-  padding-bottom:10vw;
-  padding-top:5vw;
 }
 input {
   border-radius: 2em;
@@ -176,5 +185,14 @@ input {
 }
 #joinknapp {
   max-width: 79vw;
+}
+.blockerAll {
+  grid-column: 1;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: black;
+  opacity: 80%;
 }
 </style> 

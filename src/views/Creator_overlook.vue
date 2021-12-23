@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class ="page">
     <section class="box titleBox">
       <!--Title box-->
 
@@ -20,7 +20,7 @@
           v-model="gameId"
           v-bind:placeholder="this.uiLabels.enterGameID"
         /><br />
-        <button class="createButton" v-on:click="createGame">
+        <button class="Button" v-on:click="createGame">
           {{ uiLabels.CreateGame }}
         </button>
       </div>
@@ -49,17 +49,15 @@
           <p>
             <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
             <button
-              class="overlookBtn"
+                class="Button"
+              id="overlookBtn"
               v-on:click="[addNewQuestion(), closeExpand()]"
             >
               {{ uiLabels.Addquestion }}
             </button>
-            <button class="overlookBtn">{{ uiLabels.Deletequestion }}</button>
+            <button class="Button" id="overlookBtn">{{ uiLabels.Deletequestion }}</button>
           </p>
         </div>
-        <!--        <button class = "createButton" v-on:click="addQuestion">
-          Start Game
-        </button>-->
       </div>
       <!--Center box-->
       <div class="box centerBox">
@@ -67,10 +65,14 @@
         <div
           class="box info"
           v-on:click="infoExpand"
-          v-bind:class="{ infoBig: infoBig,
-                          infoSmall: infoSmall }"
+          v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"
         >
-          <a v-if="{ infoBig: infoBig}" class="closeExpand" v-on:click="closeExpand" >X</a>
+          <a
+            v-if="{ infoBig: infoBig }"
+            class="closeExpand"
+            v-on:click="closeExpand"
+            >X</a
+          >
           <h1>Info</h1>
           <textarea
             class="infoArea"
@@ -83,32 +85,40 @@
         <div
           class="box questionBox"
           v-on:click="questionExpand"
-          v-bind:class="{ questionBig: questionBig,
-                          questionSmall: questionSmall,
-                          questionSmallCond: questionSmallCond,
+          v-bind:class="{
+            questionBig: questionBig,
+            questionSmall: questionSmall,
+            questionSmallCond: questionSmallCond,
           }"
         >
           <h1>{{ this.uiLabels.createQuestion }}</h1>
-          <div id="picBox" >
-            <img :src="pic"
-                v-if="pic !== null"
-                style="width: 90%; height: 75%; object-fit: cover" ref=""
+          <div id="picBox">
+            <img
+              :src="pic"
+              v-if="pic !== null"
+              style="width: 90%; height: 75%; object-fit: cover"
+              ref=""
             />
-            <br>
-            <input type="file"
-                   @change="Preview_image"
-                   style="display: none"
-                   ref="fileInput"
+            <br />
+            <input
+              type="file"
+              @change="Preview_image"
+              style="display: none"
+              ref="fileInput"
             />
-            <button v-on:click="$refs.fileInput.click()">{{ this.uiLabels.chooseImage }}</button>
-            <button v-on:click="removeImage" >{{ this.uiLabels.removeimage }}</button>
+            <button v-on:click="$refs.fileInput.click()">
+              {{ this.uiLabels.chooseImage }}
+            </button>
+            <button v-on:click="removeImage">
+              {{ this.uiLabels.removeimage }}
+            </button>
           </div>
 
           <div id="qBox">
             <textarea
-                class="questionArea"
-                v-model="questionText"
-                v-bind:placeholder= "this.uiLabels.questionInfo"
+              class="questionArea"
+              v-model="questionText"
+              v-bind:placeholder="this.uiLabels.questionInfo"
             />
           </div>
 
@@ -119,30 +129,49 @@
                 v-for="(_, i) in answers"
                 v-model="answers[i]"
                 v-bind:key="'answer' + i"
-                v-bind:placeholder=this.uiLabels.addanswer
+                v-bind:placeholder="this.uiLabels.addanswer"
               />
-              <button v-on:click="addAnswer">
+              <button class="Button" v-on:click="addAnswer">
                 {{ uiLabels.AddAnswerAlternative }}
               </button>
+              <button class="Button" v-on:click="removeAnswer">
+                {{ uiLabels.removeAnswerAlternative }}
+              </button>
               <br />
+              <h1>{{this.uiLabels.chooseCorrect}}</h1>
+              <ul id="example-1">
+                <li v-for="(_, i) in answers" v-bind:key="'answer' + i">
+                  <input type="radio" id={{i}} v-model="correctAnswer" v-bind:value="i">
+                  <label for={{i}}>{{i+1}}</label>
+                </li>
+              </ul>
+
             </div>
             <div v-else-if="checked === 'slider'">
-              <input type="number" v-model="sliderMinVal">
-              <input type="number" v-model="sliderMaxVal">
-              <input type="text" v-model="sliderUnit" placeholder="unit">
-              <Slider :min="sliderMinVal" :max="sliderMaxVal" :unit="sliderUnit" v-on:sliderValue="getSliderValue"/>
+              <input type="number" v-model="sliderMinVal" />
+              <input type="number" v-model="sliderMaxVal" />
+              <input type="text" v-model="sliderUnit" placeholder="unit" />
+              <Slider
+                :poll="false"
+                :min="sliderMinVal"
+                :max="sliderMaxVal"
+                :unit="sliderUnit"
+                v-on:sliderValue="getSliderValue"
+              />
 
-              <div class="output">The lowest acceptable answer is: {{ this.sliderValue[0] }} {{ this.sliderUnit }}</div>
-              <div class="output">The actual answer is: {{ this.sliderValue[1] }} {{ this.sliderUnit }}</div>
-              <div class="output">The highest acceptable answer is: {{ this.sliderValue[2] }} {{ this.sliderUnit }}</div>
+              <div class="output">
+                The lowest acceptable answer is: {{ this.sliderValue[0] }}
+                {{ this.sliderUnit }}
+              </div>
+              <div class="output">
+                The actual answer is: {{ this.sliderValue[1] }}
+                {{ this.sliderUnit }}
+              </div>
+              <div class="output">
+                The highest acceptable answer is: {{ this.sliderValue[2] }}
+                {{ this.sliderUnit }}
+              </div>
             </div>
-
-
-            <!--            <input type="number" v-model.number = "questionNumber" placeholder="Choose a question nr">-->
-                      <!-- <input type="number" v-model="questionNumber"> // Denna funktionalitet ska in i en Start Game-knapp då det skickar frågan till Poll
-                      <button v-on:click="runQuestion">
-                        Run question
-                      </button> -->
           </div>
         </div>
 
@@ -151,18 +180,26 @@
           class="box map"
           v-on:click="mapExpand"
           v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"
+<<<<<<< HEAD
           >
           <div class = 'mapTitle'>
           <h4>Choose a place on the map for your question to appear at</h4>
           <!-- Our map  -->
              <div id="myMap"></div>
            
+=======
+        >
+          <div class="mapTitle" >
+            <h4>Choose a place on the map for your question to appear at</h4>
+            <!-- Our map  -->
+            <div id="myMap"></div>
+          </div>
+>>>>>>> 234135ae18ad3209d73175ffc0af8a9ca7fc7c3a
         </div>
-      </div>
       </div>
 
       <!--Tool box-->
-      <div class="box toolBox">
+      <div class="box toolBox" v-on:click="hideCenter=false">
         <h1>toolBox</h1>
         <div id="app">
           <input type="radio" id="MCQ" value="MCQ" v-model="checked" checked />
@@ -173,20 +210,30 @@
           <input type="radio" id="slider" value="slider" v-model="checked" />
           <label for="slider">{{ uiLabels.slider }}</label>
         </div>
-        <br>
-        <br>
-        <br>
-        <button v-on:click="[saveQuestion()]">
+        <br />
+        <br />
+        <br />
+        <button class="Button" v-on:click="[saveQuestion()]">
           {{ uiLabels.Savequestion }}
         </button>
       </div>
 
+      <div class="blocker3" v-if="hideCenter">
+        <!-- blocks center-->
+        <h1>Choose a type of question and you´re good to go</h1>
+        <br>
+        <h1>Don´t forget to save your question</h1>
+      </div>
+      <div class="blocker2" v-if="hideCenterAndTool">
+        <!-- blocks center and tool-->
+        <h1> Now add a question</h1>
+      </div>
       <div class="blockerAll" v-if="hideAll">
         <!-- blocks overlook, center and tool-->
+        <h1>Start by creating a Game</h1>
       </div>
-      <div class="blocker2" v-if="hideCenterandTool">
-        <!-- blocks center and tool-->
-      </div>
+
+
     </section>
   </section>
 </template>
@@ -195,16 +242,21 @@
 
 import io from "socket.io-client";
 import Slider from "@/components/Slider.vue";
+<<<<<<< HEAD
 import leaflet from 'leaflet';
 import { onMounted} from 'vue';
 // import { useGeolocation } from '@/components/useGeolocation.js'
 
+=======
+import leaflet from "leaflet";
+import { onMounted } from "vue";
+>>>>>>> 234135ae18ad3209d73175ffc0af8a9ca7fc7c3a
 const socket = io();
 export default {
   components: {
-    Slider
-    
+    Slider,
   },
+<<<<<<< HEAD
  
     setup() {
      
@@ -325,13 +377,120 @@ myMap.on("click", function(e){
     }
   ,
 
+=======
+  setup() {
+    let myMap;
+    onMounted(() => {
+      myMap = leaflet.map("myMap").setView([59.855727, 17.633445], 13);
 
-    created: function () {
-      this.lang = this.$route.params.lang;
-      socket.emit("pageLoaded", this.lang);
-      socket.on("init", (labels) => {
-        this.uiLabels = labels;
+      leaflet
+        .tileLayer(
+          "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ",
+          {
+            attribution:
+              'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: "mapbox/streets-v11",
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken:
+              "pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ",
+          }
+        )
+        .addTo(myMap);
+
+      myMap.on("click", function (e) {
+        new leaflet.Marker([e.latlng.lat, e.latlng.lng]).addTo(myMap);
       });
+    });
+  },
+  data: function () {
+    return {
+      questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
+      questions: [],
+      info: "",
+      lang: "",
+      gameId: "",
+      question: "",
+      answers: ["", ""],
+      correctAnswer: 0,
+      answersAlt: [this.answers, this.correctAnswer],
+      questionNumber: 0,
+      editingNumber: 0,
+      sliderMinVal: 10,
+      sliderMaxVal: 20,
+      sliderUnit: "",
+      sliderValue: [],
+      sliderAnswer: [
+        this.sliderUnit,
+        this.sliderMinVal,
+        this.sliderMaxVal,
+        this.sliderValue,
+      ],
+      pic: null,
+      gameName: "",
+      data: {},
+      uiLabels: {},
+      hideAll: true,
+      hideCenterAndTool: true,
+      hideCenter: true,
+      checked: "MCQ",
+      infoBig: false,
+      questionBig: false,
+      mapBig: false,
+      infoSmall: false,
+      questionSmall: false,
+      mapSmall: false,
+      questionSmallCond: false,
+    };
+  },
+  created: function () {
+    this.lang = this.$route.params.lang;
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      this.uiLabels = labels;
+    });
+    socket.on("dataUpdate", (data) => (this.data = data));
+    socket.on("gameCreated", (data) => (this.data = data));
+  },
+  methods: {
+    getSliderValue(sliderValue) {
+      this.sliderValue = sliderValue;
+      this.sliderAnswer = [
+        this.sliderUnit,
+        this.sliderMinVal,
+        this.sliderMaxVal,
+        this.sliderValue,
+      ];
+    },
+    Preview_image(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.createImage(files[0]);
+    },
+    createImage(file) {
+      //var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+>>>>>>> 234135ae18ad3209d73175ffc0af8a9ca7fc7c3a
+
+      reader.onload = (e) => {
+        vm.pic = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    removeImage: function () {
+      this.pic = null;
+    },
+    createGame: function () {
+      this.hideAll = false;
+      this.hideCenterAndTool = true;
+      socket.emit("createGame", {
+        gameId: this.gameId,
+        lang: this.lang,
+        gameName: this.gameName,
+      });
+<<<<<<< HEAD
       socket.on("dataUpdate", (data) => (this.data = data));
       socket.on("gameCreated", (data) => (this.data = data));
     }
@@ -462,6 +621,84 @@ myMap.on("click", function(e){
 
 
       /*   addQuestion: function() {
+=======
+    },
+    addNewQuestion: function () {
+      this.questionNumber++;
+      this.questionText = "";
+      this.answers = ["", ""];
+      this.info = "";
+      this.pic = null;
+      this.editingNumber = this.questionNumber;
+      this.hideCenterAndTool = false;
+      this.correctAnswer = 0;
+      this.answersAlt = [this.answers, this.correctAnswer]
+      console.log(this.hideCenter)
+      this.hideCond ++
+      socket.emit("addQuestion", {
+        gameId: this.gameId,
+        type: this.checked,
+        pos: this.pos,
+        info: this.info,
+        q: this.questionText,
+        a: this.answersAlt,
+        aS: this.sliderAnswer,
+        questionNumber: this.questionNumber,
+        pic: this.pic,
+      });
+      this.questions.push({
+        gameId: this.gameId,
+        type: this.checked,
+        pos: this.pos,
+        info: this.info,
+        q: this.questionText,
+        a: this.answersAlt,
+        aS: this.sliderAnswer,
+        questionNumber: this.questionNumber,
+        pic: this.pic,
+      });
+      console.log(this.questions);
+    },
+    saveQuestion: function () {
+      this.questions.find(
+        (obj) => obj.questionNumber == this.editingNumber
+      ).type = this.checked;
+      this.questions.find(
+        (obj) => obj.questionNumber == this.editingNumber
+      ).pos = this.pos;
+      this.questions.find(
+        (obj) => obj.questionNumber == this.editingNumber
+      ).info = this.info;
+      this.questions.find((obj) => obj.questionNumber == this.editingNumber).q =
+        this.questionText;
+      this.questions.find((obj) => obj.questionNumber == this.editingNumber).a[0] =
+        this.answers;
+      this.questions.find((obj) => obj.questionNumber == this.editingNumber).a[1] =
+          this.correctAnswer;
+      this.questions.find(
+        (obj) => obj.questionNumber == this.editingNumber
+      ).aS = this.sliderAnswer;
+      this.questions.find(
+        (obj) => obj.questionNumber == this.editingNumber
+      ).pic = this.pic;
+
+      socket.emit("addQuestion", {
+        gameId: this.gameId,
+        type: this.checked,
+        pos: this.pos,
+        info: this.info,
+        q: this.questionText,
+        a: this.answersAlt,
+        aS: this.sliderAnswer,
+        questionNumber: this.editingNumber,
+        pic: this.pic,
+      });
+      console.log(this.answers);
+      //console.log(this.sliderAnswer);
+      //$("#myElem").show().delay(5000).fadeOut();
+    },
+    /*   addQuestion: function() {
+>>>>>>> 234135ae18ad3209d73175ffc0af8a9ca7fc7c3a
       //Ska inte skickas förrän alla frågor lagts till
       var newQuestion = this.questionText.trim();
       if (!newQuestion) {return;}
@@ -487,88 +724,85 @@ myMap.on("click", function(e){
       this.info = "";
     },*/
 
-      currentData: function (questionNumber) {
-        this.editingNumber = questionNumber;
-        console.log(this.editingNumber);
-        this.checked = this.questions.find(
-            (obj) => obj.questionNumber == questionNumber
-        ).type;
-        this.pos = this.questions.find(
-            (obj) => obj.questionNumber == questionNumber
-        ).pos;
-        this.info = this.questions.find(
-            (obj) => obj.questionNumber == questionNumber
-        ).info;
-        this.questionText = this.questions.find(
-            (obj) => obj.questionNumber == questionNumber
-        ).q;
-        this.answer = this.questions.find(
-            (obj) => obj.questionNumber == questionNumber
-        ).a;
-        this.pic = this.questions.find(
-            (obj) => obj.questionNumber == questionNumber
-        ).pic;
-      }
-    ,
-      addAnswer: function () {
-        this.answers.push("");
-      }
-    ,
+    currentData: function (questionNumber) {
+      this.editingNumber = questionNumber;
+      console.log(this.editingNumber);
+      this.checked = this.questions.find(
+        (obj) => obj.questionNumber == questionNumber
+      ).type;
+      this.pos = this.questions.find(
+        (obj) => obj.questionNumber == questionNumber
+      ).pos;
+      this.info = this.questions.find(
+        (obj) => obj.questionNumber == questionNumber
+      ).info;
+      this.questionText = this.questions.find(
+        (obj) => obj.questionNumber == questionNumber
+      ).q;
+      this.answersAlt = this.questions.find(
+        (obj) => obj.questionNumber == questionNumber
+      ).a;
+      this.pic = this.questions.find(
+        (obj) => obj.questionNumber == questionNumber
+      ).pic;
+    },
+    addAnswer: function () {
+      this.answers.push("");
+    },
+    removeAnswer: function() {
+      this.answers.pop()
+    },
+    infoExpand: function () {
+      this.infoBig = true;
+      this.questionBig = false;
+      this.mapBig = false;
+      this.infoSmall = false;
+      this.questionSmall = true;
+      this.mapSmall = true;
+      this.questionSmallCond = false;
+    },
+    questionExpand: function () {
+      this.infoBig = false;
+      this.questionBig = true;
+      this.mapBig = false;
+      this.infoSmall = true;
+      this.questionSmall = false;
+      this.mapSmall = true;
+      this.questionSmallCond = false;
+    },
+    mapExpand: function () {
+      this.infoBig = false;
+      this.questionBig = false;
+      this.mapBig = true;
+      this.infoSmall = true;
+      this.questionSmall = false;
+      this.mapSmall = false;
+      this.questionSmallCond = true;
+    },
+    closeExpand: function () {
+      this.infoBig = false;
+      this.questionBig = false;
+      this.mapBig = false;
+      this.infoSmall = false;
+      this.questionSmall = false;
+      this.mapSmall = false;
+      this.questionSmallCond = false;
+    },
 
-      infoExpand: function () {
-        this.infoBig = true;
-        this.questionBig = false;
-        this.mapBig = false;
-        this.infoSmall = false;
-        this.questionSmall = true;
-        this.mapSmall = true;
-        this.questionSmallCond = false;
-      }
-    ,
-      questionExpand: function () {
-        this.infoBig = false;
-        this.questionBig = true;
-        this.mapBig = false;
-        this.infoSmall = true;
-        this.questionSmall = false;
-        this.mapSmall = true;
-        this.questionSmallCond = false;
-      }
-    ,
-      mapExpand: function () {
-        this.infoBig = false;
-        this.questionBig = false;
-        this.mapBig = true;
-        this.infoSmall = true;
-        this.questionSmall = false;
-        this.mapSmall = false;
-        this.questionSmallCond = true;
-      }
-    ,
-      closeExpand: function () {
-        this.infoBig = false;
-        this.questionBig = false;
-        this.mapBig = false;
-        this.infoSmall = false;
-        this.questionSmall = false;
-        this.mapSmall = false;
-        this.questionSmallCond = false;
-      }
-    ,
-
-      /*runQuestion: function () {
+    /*runQuestion: function () {
       socket.emit("runQuestion", {
         gameId: this.gameId,
         questionNumber: this.questionNumber,
       });
     },*/
-    }
-  ,
-  };
-
+  },
+};
 </script>
 
 <style>
+.page {
+  background-color: #b6d7a8ff;
+}
 #header h1 {
   font-family: "Times New Roman", Times, serif;
 }
@@ -578,22 +812,32 @@ myMap.on("click", function(e){
   grid-template-rows: 50% 50%;
 }
 .blockerAll {
+  color: white;
   grid-column: 1 / span 3;
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-  opacity: 80%;
+  opacity: 95%;
 }
 .blocker2 {
+  color: white;
   grid-column: 2 / span 2;
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-  opacity: 80%;
+  opacity: 95%;
+}
+.blocker3{
+  color: white;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  overflow: hidden;
+  background-color: black;
+  opacity: 95%;
 }
 
 .box {
-  background-color: #444;
+  background-color: #1d7658;
   color: #fff;
   border-radius: 5px;
   margin: 5px;
@@ -617,12 +861,15 @@ myMap.on("click", function(e){
   font: black;
 }
 .centerBox {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
   grid-column: 2;
   grid-row: 1 / span 2;
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: 25% 25% 25% 25%;
-  background-color: lightslategray;
+  background-color: #b6d7a8ff;
 }
 .toolBox {
   grid-column: 3;
@@ -649,7 +896,7 @@ myMap.on("click", function(e){
   resize: none;
   color: white;
 }
-.questionArea{
+.questionArea {
   width: 100%;
   height: 70%;
   padding: 12px 20px;
@@ -670,7 +917,7 @@ myMap.on("click", function(e){
 }
 .questionBox h1 {
   font-size: 15px;
-  grid-column: 1/span 2;
+  grid-column: 1 / span 2;
   grid-row: 1;
 }
 #picBox {
@@ -685,14 +932,14 @@ myMap.on("click", function(e){
   grid-row: 2;
 }
 #aBox {
-   grid-column: 1/span 2;
-   grid-row: 3;
+  grid-column: 1 / span 2;
+  grid-row: 3;
 }
 .map {
   grid-column: 1 / span 4;
   grid-row: 3 / span 2;
 }
-.createButton {
+.Button {
   float: right;
   align-items: center;
   background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
@@ -716,11 +963,11 @@ myMap.on("click", function(e){
   white-space: nowrap;
   cursor: pointer;
 }
-.createButton:active,
-.createButton:hover {
+.Button:active,
+.Button:hover {
   outline: 0;
 }
-.createButton span {
+.Button span {
   background-color: rgb(5, 6, 45);
   padding: 16px 24px;
   border-radius: 6px;
@@ -728,7 +975,7 @@ myMap.on("click", function(e){
   height: 45%;
   transition: 300ms;
 }
-.createButton:hover span {
+.Button:hover span {
   background: none;
 }
 @media (min-width: 768px) {
@@ -793,6 +1040,12 @@ myMap.on("click", function(e){
 .mapTitle {
   font-size: 20px;
 }
+<<<<<<< HEAD
 #myMap { 
   height: 500px; }
+=======
+#myMap {
+  height: 320px;
+}
+>>>>>>> 234135ae18ad3209d73175ffc0af8a9ca7fc7c3a
 </style>
