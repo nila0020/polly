@@ -85,11 +85,9 @@ export default {
 
 
 #header{
-  background-color: #b6d7a8ff;
-  color:#1d7658;
-  font-size: 4vw;
+  background-color: #b6d7a8ff; 
   justify-content:center;
-  text-shadow: 5px 5px #000000
+
 }
 
 

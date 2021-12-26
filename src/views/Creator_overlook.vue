@@ -719,18 +719,19 @@ export default {
   float: right;
   align-items: center;
   background-image: linear-gradient(144deg, #c4bdbd, #000000 50%, #9a9797);
-  border: 0;
+ 
+  border-color: white;
   border-radius: 8px;
   box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
   box-sizing: border-box;
   color: #ffffff;
   display: flex;
   font-family: 'Baloo Bhaijaan 2', cursive;
-  font-size: 2vh;
+  font-size: 3vh;
   justify-content: center;
   line-height: 2em;
   max-width: 100%;
-  min-width: 140px;
+  min-width: 160px;
   padding: 3px;
   text-decoration: none;
   user-select: none;
