@@ -75,11 +75,11 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
 .page {
-  background-color: #1d7658;
+  background: linear-gradient(#b6d7a8ff,#b6d7a8ff, #1d7658,#4285f4ff);
   text-align:center;
   font-size: 20pt;
   font-family: 'Baloo Bhaijaan 2', cursive;
-  color: white;
+  color: black;
   padding-bottom:50px;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <section class="page">
+  <section class="pagee">
     <section class="box titleBox">
    
       <!--Title box-->
@@ -590,8 +590,13 @@ myMap.on("click", function(e){
 </script>
 
 <style>
-.page {
+.pagee {
    background-color: black; 
+  text-align:center;
+  font-size: 20pt;
+  font-family: 'Baloo Bhaijaan 2', cursive;
+  color: black;
+  padding-bottom:50px;
 
 }
 #header h1 {
@@ -647,7 +652,7 @@ myMap.on("click", function(e){
   grid-template-columns: 33% 33% 33%;
   grid-template-rows: 100%;
   color: black;
-  background: url(https://media.istockphoto.com/vectors/city-game-background-vector-id526716884?k=20&m=526716884&s=170667a&w=0&h=eSrH07Do4iPSAQ3i3iukNADDsfnNLoX1LnlUUuhlTO0=);
+  background-image: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url("https://media.istockphoto.com/vectors/city-game-background-vector-id526716884?k=20&m=526716884&s=170667a&w=0&h=eSrH07Do4iPSAQ3i3iukNADDsfnNLoX1LnlUUuhlTO0=");
 
 
    
@@ -658,13 +663,12 @@ myMap.on("click", function(e){
   grid-column: 1;
   grid-row: 1 / span 2;
   border-style: dotted; 
-  background-color: #4285f4ff; 
+  background: linear-gradient(#4285f4ff, #1d7658,#1d7658 );
   color: white; 
 
 }
 .infoWindow {
   font: black;
-  background-color: #4285f4ff;
 
   border-style: dotted; 
 }
@@ -678,11 +682,11 @@ myMap.on("click", function(e){
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: 25% 25% 25% 25%;
   border-style: dotted; 
-  background-color: #1d7658;
+  background: linear-gradient(#4285f4ff, #1d7658,#1d7658 );
 
 }
 .toolBox {
-  background-color: #4285f4ff;
+  background: linear-gradient(#4285f4ff, #1d7658,#1d7658 );
 
   grid-column: 3;
   grid-row: 1 / span 2;
