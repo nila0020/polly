@@ -112,7 +112,6 @@ export default {
   height: 98vh;
   grid-template-rows: 40% auto auto;
   grid-gap: 1vh;
-  background-color: white;
   color: black;
 }
 .questionBar {
@@ -149,7 +148,6 @@ export default {
   height: 100%;
   grid-template-columns: 1fr 1fr;
   grid-gap: 1vh;
-  background-color: white;
   color: black;
   overflow: hide;
   overflow-wrap: break-word;

@@ -7,14 +7,16 @@
       </div>
       <div>{{ key }}:<br />{{ item.userName }}</div>
     </div>
-    <!--  <div class="bar">
+    <div class="bar">
       <div
         v-bind:style="{ height: 50 * calcBar(this.scoreBoard.score) + 'px' }"
       >
         <span> {{ calcBar(this.scoreBoard.score) }} </span>
       </div>
-      <div class="UserNameText">You:<br />{{ this.scoreBoard.userName }}</div>
-    </div> -->
+      <div style="bold" class="UserNameText">
+        You:<br />{{ this.scoreBoard.userName }}
+      </div>
+    </div>
   </div>
   <!-- <h2> You are ranked as the {{rank}} </h2> -->
 </template>
