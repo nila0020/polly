@@ -1,6 +1,7 @@
 <template>
   <section class="page">
     <section class="box titleBox">
+   
       <!--Title box-->
 
 <!--      <h3>Game Title and GameID</h3>-->
@@ -547,7 +548,8 @@ export default {
 
 <style>
 .page {
-  background-color: #b6d7a8ff;
+   background-color: black; 
+
 }
 #header h1 {
   font-family: "Times New Roman", Times, serif;
@@ -583,12 +585,12 @@ export default {
 }
 
 .box {
-  background-color: #1d7658;
   color: #fff;
   border-radius: 5px;
   margin: 5px;
   padding: 20px;
   font-size: 100%;
+  
 }
 .insertTitle {
   float: right;
@@ -601,13 +603,27 @@ export default {
   height: 15vh;
   grid-template-columns: 33% 33% 33%;
   grid-template-rows: 100%;
+  color: black;
+  background: url(https://media.istockphoto.com/vectors/city-game-background-vector-id526716884?k=20&m=526716884&s=170667a&w=0&h=eSrH07Do4iPSAQ3i3iukNADDsfnNLoX1LnlUUuhlTO0=);
+
+
+   
+   
 }
+
 .Overlook {
   grid-column: 1;
   grid-row: 1 / span 2;
+  border-style: dotted; 
+  background-color: #4285f4ff; 
+  color: white; 
+
 }
 .infoWindow {
   font: black;
+  background-color: #4285f4ff;
+
+  border-style: dotted; 
 }
 .centerBox {
   padding: 0;
@@ -618,11 +634,18 @@ export default {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: 25% 25% 25% 25%;
-  background-color: #b6d7a8ff;
+  border-style: dotted; 
+  background-color: #1d7658;
+
 }
 .toolBox {
+  background-color: #4285f4ff;
+
   grid-column: 3;
   grid-row: 1 / span 2;
+  border-style: dotted; 
+
+  
 }
 .info h1 {
   margin-top: 0;
@@ -641,7 +664,7 @@ export default {
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
-  background-color: #444;
+  background-color: black;
   resize: none;
   color: white;
 }
@@ -652,7 +675,7 @@ export default {
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
-  background-color: #444;
+  background-color: black;
   resize: none;
   color: white;
 }
@@ -695,14 +718,14 @@ export default {
 .Button {
   float: right;
   align-items: center;
-  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  background-image: linear-gradient(144deg, #c4bdbd, #000000 50%, #9a9797);
   border: 0;
   border-radius: 8px;
   box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
   box-sizing: border-box;
   color: #ffffff;
   display: flex;
-  font-family: Phantomsans, sans-serif;
+  font-family: 'Baloo Bhaijaan 2', cursive;
   font-size: 2vh;
   justify-content: center;
   line-height: 2em;
@@ -721,7 +744,7 @@ export default {
   outline: 0;
 }
 .Button span {
-  background-color: rgb(5, 6, 45);
+  background-color: #000000;
   padding: 16px 24px;
   border-radius: 6px;
   width: 100%;
@@ -799,9 +822,13 @@ export default {
 
 #gameNameBox {
   grid-column: 1;
+  
+ 
+  
 }
 #gameIDBox {
   grid-column: 2;
+  
 }
 #gameButtonBox {
   grid-column: 3;

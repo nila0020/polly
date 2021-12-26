@@ -1,5 +1,5 @@
 <template>
-  <!-- <div id="nav">
+  <!-- <div id="nav" >
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
     <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
     <label>
@@ -15,7 +15,7 @@
 <section class = "page" >
   <header id=header>
 
-    <h1>GeoQuiz      <img src="/img/mappe.png" style="width:10vw"> </h1>
+    <img src="img/geo.jpg" >
 
   </header>
 
@@ -87,11 +87,11 @@ export default {
 #header{
   background-color: #b6d7a8ff;
   color:#1d7658;
-  font-family: 'Luckiest Guy', cursive;
   font-size: 4vw;
   justify-content:center;
   text-shadow: 5px 5px #000000
 }
+
 
 
 .container {
@@ -113,7 +113,7 @@ export default {
   box-sizing: border-box;
   color: #FFFFFF;
   display: flex;
-  font-family: Phantomsans, sans-serif;
+  font-family: 'Baloo Bhaijaan 2', cursive;
   font-size: 20px;
   justify-content: center;
   line-height: 2em;

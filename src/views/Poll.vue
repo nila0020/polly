@@ -211,6 +211,7 @@ export default {
   justify-content: center;
   justify-items: center;
   align-items: center;
+  
 }
 .entryId {
   display: grid;
