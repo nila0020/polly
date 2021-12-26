@@ -8,7 +8,7 @@ i scriptet på filen som använder komponenten -->
   <div>
     <div>
       <Slider
-        v-if="!poll"
+        v-if="!poll && this.min>0 &&  this.max>0"
         v-model="value"
         :min="this.min"
         :max="this.max"
