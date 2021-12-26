@@ -242,6 +242,9 @@ input {
   max-width: 79vw;
   font-family: 'Baloo Bhaijaan 2', cursive;
 }
+.fullFrame{
+  background: linear-gradient(#1d7658,#1d7658,#4285f4ff);
+}
 .blockerAll {
   grid-column: 1;
   grid-row: 2;
