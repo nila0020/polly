@@ -33,6 +33,12 @@ Data.prototype.createGame = function (gameId, lang = "en", gameName) {
   return this.games[gameId];
 }
 
+Data.prototype.loadGame = function (gameId) {
+  if (typeof this.games[gameId] !== "undefined"){
+    return this.games[gameId].questions;
+  }
+}
+
 Data.prototype.addQuestion = function (gameId, q) {
   const game = this.games[gameId];
   //console.log("question added to", gameId, q);

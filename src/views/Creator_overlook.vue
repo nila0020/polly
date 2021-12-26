@@ -31,6 +31,10 @@
         <button class="Button" v-on:click="createGame">
           {{ uiLabels.CreateGame }}
         </button>
+        <br>
+        <button class="Button" v-on:click="loadGame">
+          Load Game
+        </button>
       </div>
 <!--      </div>-->
     </section>
@@ -374,6 +378,7 @@ myMap.on("click", function(e){
     });
     socket.on("dataUpdate", (data) => (this.data = data));
     socket.on("gameCreated", (data) => (this.data = data));
+    socket.on("gameLoaded", (data) => (this.questions = data));
   },
   methods: {
     getSliderValue(sliderValue) {
@@ -405,12 +410,19 @@ myMap.on("click", function(e){
     },
     createGame: function () {
       this.hideAll = false;
-      this.hideCenterAndTool = true;
       socket.emit("createGame", {
         gameId: this.gameId,
         lang: this.lang,
         gameName: this.gameName,
       });
+    },
+    loadGame: function() {
+      this.hideAll = false;
+      this.hideCenterAndTool = false;
+      this.hideCenter = false;
+      socket.emit("loadGame", {
+        gameID: this.gameId
+      })
     },
     addNewQuestion: function () {
       this.questionNumber++;
@@ -880,6 +892,6 @@ myMap.on("click", function(e){
 }
 #gameButtonBox {
   grid-column: 3;
-  align-items: center;
+
 }
 </style>
