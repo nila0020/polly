@@ -1,6 +1,7 @@
 <template>
-  <section class="page">
+  <section class="pagee">
     <section class="box titleBox">
+   
       <!--Title box-->
 
 <!--      <h3>Game Title and GameID</h3>-->
@@ -256,34 +257,77 @@ export default {
   components: {
     Slider,
   },
-  setup() {
-    let myMap;
-    onMounted(() => {
-      myMap = leaflet.map("myMap").setView([59.855727, 17.633445], 13);
+     setup() {
+     
+ 
+    //Load map
 
-      leaflet
-        .tileLayer(
-          "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ",
-          {
-            attribution:
-              'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 18,
-            id: "mapbox/streets-v11",
-            tileSize: 512,
-            zoomOffset: -1,
-            accessToken:
-              "pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ",
-          }
-        )
-        .addTo(myMap);
+      let myMap;
+      onMounted(()=>{
+        myMap = leaflet.map('myMap').setView([59.855727, 17.633445], 13);
+       
+        leaflet.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ',
+        
+}).addTo(myMap);
+// Distance function
+function checkDistance(a,b) {
+          if ( myMap.distance(a,b) < 30) {
+            alert('Within range')}
+            console.log('avstånd i meter',myMap.distance(a,b))
+    
+}
 
-      myMap.on("click", function (e) {
-        new leaflet.Marker([e.latlng.lat, e.latlng.lng]).addTo(myMap);
-      });
-    });
-  },
+// Find user location
+setInterval(() => {
+  
+  navigator.geolocation.getCurrentPosition(getPosition)
+  
+},5000
+); 
+var lat,lng, marker, latLng
+
+function getPosition(position) {
+   
+  if (marker) {
+    myMap.removeLayer(marker)
+  }
+  
+  lat = position.coords.latitude
+  lng = position.coords.longitude
+  latLng = [lat, lng]
+marker = leaflet.marker([lat, lng]).addTo(myMap)
+
+return latLng;
+}
+
+// Current distance from user location
+setTimeout(() => console.log(checkDistance(latLng,[59.855727, 17.633445])), 6000);
+setTimeout(() => console.log('Marker din position utanför',latLng), 6000);
+
+// Create marker on map
+myMap.on("click", function(e){
+      var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng]).addTo(myMap);
+      this.pos = [e.latlng.lat, e.latlng.lng];
+      console.log('onClick marker',marker)
+       console.log('Position',this.pos)
+      return this.pos
+ 
+          
+    
+        }
+       
+      );
+   }) 
+},
   data: function () {
     return {
+      pos: [],
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
       questions: [],
       info: "",
@@ -546,8 +590,14 @@ export default {
 </script>
 
 <style>
-.page {
-  background-color: #b6d7a8ff;
+.pagee {
+   background-color: black; 
+  text-align:center;
+  font-size: 20pt;
+  font-family: 'Baloo Bhaijaan 2', cursive;
+  color: black;
+  padding-bottom:50px;
+
 }
 #header h1 {
   font-family: "Times New Roman", Times, serif;
@@ -583,12 +633,12 @@ export default {
 }
 
 .box {
-  background-color: #1d7658;
   color: #fff;
   border-radius: 5px;
   margin: 5px;
   padding: 20px;
   font-size: 100%;
+  
 }
 .insertTitle {
   float: right;
@@ -601,13 +651,26 @@ export default {
   height: 15vh;
   grid-template-columns: 33% 33% 33%;
   grid-template-rows: 100%;
+  color: black;
+  background-image: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url("https://media.istockphoto.com/vectors/city-game-background-vector-id526716884?k=20&m=526716884&s=170667a&w=0&h=eSrH07Do4iPSAQ3i3iukNADDsfnNLoX1LnlUUuhlTO0=");
+
+
+   
+   
 }
+
 .Overlook {
   grid-column: 1;
   grid-row: 1 / span 2;
+  border-style: dotted; 
+  background: linear-gradient(#4285f4ff, #1d7658,#1d7658 );
+  color: white; 
+
 }
 .infoWindow {
   font: black;
+
+  border-style: dotted; 
 }
 .centerBox {
   padding: 0;
@@ -618,11 +681,18 @@ export default {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: 25% 25% 25% 25%;
-  background-color: #b6d7a8ff;
+  border-style: dotted; 
+  background: linear-gradient(#4285f4ff, #1d7658,#1d7658 );
+
 }
 .toolBox {
+  background: linear-gradient(#4285f4ff, #1d7658,#1d7658 );
+
   grid-column: 3;
   grid-row: 1 / span 2;
+  border-style: dotted; 
+
+  
 }
 .info h1 {
   margin-top: 0;
@@ -641,7 +711,7 @@ export default {
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
-  background-color: #444;
+  background-color: black;
   resize: none;
   color: white;
 }
@@ -652,7 +722,7 @@ export default {
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
-  background-color: #444;
+  background-color: black;
   resize: none;
   color: white;
 }
@@ -695,19 +765,20 @@ export default {
 .Button {
   float: right;
   align-items: center;
-  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
-  border: 0;
+  background-image: linear-gradient(144deg, #c4bdbd, #000000 50%, #9a9797);
+ 
+  border-color: white;
   border-radius: 8px;
   box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
   box-sizing: border-box;
   color: #ffffff;
   display: flex;
-  font-family: Phantomsans, sans-serif;
-  font-size: 2vh;
+  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-size: 3vh;
   justify-content: center;
   line-height: 2em;
   max-width: 100%;
-  min-width: 140px;
+  min-width: 160px;
   padding: 3px;
   text-decoration: none;
   user-select: none;
@@ -721,7 +792,7 @@ export default {
   outline: 0;
 }
 .Button span {
-  background-color: rgb(5, 6, 45);
+  background-color: #000000;
   padding: 16px 24px;
   border-radius: 6px;
   width: 100%;
@@ -799,9 +870,13 @@ export default {
 
 #gameNameBox {
   grid-column: 1;
+  
+ 
+  
 }
 #gameIDBox {
   grid-column: 2;
+  
 }
 #gameButtonBox {
   grid-column: 3;

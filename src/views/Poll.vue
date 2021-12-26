@@ -1,4 +1,5 @@
 <template>
+{{this.question[0]}}
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>Lets GO!</h1>
@@ -27,8 +28,17 @@
         <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
           >Join GeoQuiz!</v-btn
         >
+
       </div>
+      
     </div>
+    
+
+  <div class="designn" >
+    <img src="img\sista.jpg" alt="">
+    
+</div>
+
     <div v-if="confirmedUser && activeGame">
       <div v-show="!activeQuestion">
         <div v-show="activeGame">
@@ -180,6 +190,7 @@ export default {
   color: black;
   overflow: hidden;
   border-radius: 12px;
+  
 }
 
 .navBar {
@@ -188,6 +199,7 @@ export default {
   color: white;
   width: 100%;
   background-color: rgb(0, 128, 17);
+  
 }
 .mapWrap {
   overflow: hidden;
@@ -200,24 +212,39 @@ export default {
   justify-content: center;
   justify-items: center;
   align-items: center;
+  
 }
 .entryId {
   display: grid;
   width: 100%;
   height: 65vh;
   grid-template-rows: 20% 20% 23%;
-  background-color: white;
+  background: linear-gradient(#4285f4ff, #1d7658);
+  font-family: 'Baloo Bhaijaan 2', cursive;
+
+
+
   justify-content: center;
 }
+.designn{
+  background-color: #1d7658;
+}
+
 input {
   border-radius: 2em;
   width: 75vw;
   border-width: 3px;
   font-size: 1.4em;
-  border-color: green;
+  border-color: white;
+  background-color: black;
+  font-family: 'Baloo Bhaijaan 2', cursive;
 }
 #joinknapp {
   max-width: 79vw;
+  font-family: 'Baloo Bhaijaan 2', cursive;
+}
+.fullFrame{
+  background: linear-gradient(#1d7658,#1d7658,#4285f4ff);
 }
 .blockerAll {
   grid-column: 1;
