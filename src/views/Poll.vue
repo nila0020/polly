@@ -59,7 +59,7 @@
     <div v-show="!activeGame && confirmedUser" class="scoreBoards">
       <Bars
         :scoreBoard="scoreBoard"
-        :userName="userName"
+        :userName="userId"
         v-if="!activeGame && this.scoreBoard"
       />
     </div>
@@ -99,7 +99,7 @@ export default {
       qId: 0,
       scoreBoard: {
         cA: [],
-        scores: {},
+        scores: [],
       },
     };
   },
@@ -146,7 +146,7 @@ export default {
           gameId: this.gameId,
           userName: this.userName,
         });
-
+        console.log(this.scoreBoard);
         this.activeGame = false;
       }
 

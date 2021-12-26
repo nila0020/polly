@@ -30,7 +30,7 @@
         v-for="a in question.a[0]"
         v-on:click="answer(a)"
         v-bind:key="a"
-        class="start_buttons"
+        class="answerButtons"
         id="answerButtons"
       >
         <p>
@@ -152,6 +152,7 @@ export default {
   background-color: white;
   color: black;
   overflow: hide;
+  overflow-wrap: break-word;
 }
 
 #answerButtons {
@@ -159,6 +160,9 @@ export default {
   border: 0px;
   font-size: 4vh;
   border-radius: 0.5em;
+}
+.answerButtons {
+  color: white;
 }
 .picture {
   width: 100%;
