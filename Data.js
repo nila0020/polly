@@ -122,7 +122,7 @@ Data.prototype.getScoreboard = function (gameId, userName) {
   if (typeof game !== 'undefined') {
     var answers = game.participants.find(obj => obj.userName === userName).answers
     var scored = 0;
-    var scores = {};
+    const scores = {};
     answers.forEach(function (item, index) {
       if (item == true) {
         scored += 1;
@@ -130,11 +130,46 @@ Data.prototype.getScoreboard = function (gameId, userName) {
     });
     console.log(userName + ": " + scored)
     game.participants.find(obj => obj.userName === userName).score = scored
+    /* 
     game.participants.forEach(function (item, index) {
       scores[item.userName] = item.score;
-    });
-    return { cA: answers, scores: scores } //correctedAnswers, score,scores
+    }); */
+    let obj = { score: 0, userName: " ", }
+    const topFive = { "1": obj, "2": obj, "3": obj, "4": obj, "5": obj }
+    for (game.participants.user of game.participants) {
+      console.log("i dataloop innan if " + game.participants.user)
+      if (game.participants.user.score >= topFive["5"].score && game.participants.user.score < topFive["4"].score) {
+        topFive["5"] = game.participants.user
+
+      }
+      if (game.participants.user.score >= topFive["4"].score && game.participants.user.score < topFive["3"].score) {
+        topFive["5"] = topFive["4"]
+        topFive["4"] = game.participants.user
+      }
+      if (game.participants.user.score >= topFive["3"].score && game.participants.user.score < topFive["2"].score) {
+        topFive["5"] = topFive["4"]
+        topFive["4"] = topFive["3"]
+        topFive["3"] = game.participants.user
+      }
+      if (game.participants.user.score >= topFive["2"].score && game.participants.user.score < topFive["1"].score) {
+        topFive["5"] = topFive["4"]
+        topFive["4"] = topFive["3"]
+        topFive["3"] = topFive["2"]
+        topFive["2"] = game.participants.user
+      }
+      if (game.participants.user.score >= topFive["1"].score) {
+        topFive["5"] = topFive["4"]
+        topFive["4"] = topFive["3"]
+        topFive["3"] = topFive["2"]
+        topFive["2"] = topFive["1"]
+        topFive["1"] = game.participants.user
+      }
+
+
+    }
+    return { cA: answers, userName: userName, scores: topFive, score: scored } //correctedAnswers, score,scores
   }
+  else ErrorEvent
 }
 module.exports = Data;
 
