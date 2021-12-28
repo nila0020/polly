@@ -167,9 +167,8 @@ Data.prototype.getScoreboard = function (gameId, userName) {
 
 
     }
-    return { cA: answers, userName: userName, scores: topFive, score: scored } //correctedAnswers, score,scores
+    return { cA: answers, userName: userName, score: scored, scores: topFive } //correctedAnswers, score,scores
   }
-  else ErrorEvent
 }
 module.exports = Data;
 

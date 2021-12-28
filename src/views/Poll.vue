@@ -1,5 +1,4 @@
 <template>
-  {{ this.question[0] }}
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>Lets GO!</h1>
@@ -29,10 +28,6 @@
           >Join GeoQuiz!</v-btn
         >
       </div>
-    </div>
-
-    <div class="designn">
-      <img src="img\sista.jpg" alt="" />
     </div>
 
     <div v-if="confirmedUser && activeGame">
