@@ -15,16 +15,16 @@
 <section class = "page" >
   <header id=header>
 
-    <img src="img/geo.jpg" >
+    <h1>GeoQuiz      <img src="/img/mappe.png" style="width:9vw"> </h1>
 
   </header>
 
 
-  <h1>{{uiLabels.welcomeText}}</h1>
+  <h1 style="font-size:3vw">{{uiLabels.welcomeText}}</h1>
 
 
 
-  <h3>{{uiLabels.Choose}}</h3>
+  <h3 style="font-size:2vw">{{uiLabels.Choose}}</h3>
   <!-- <img src="https://rymdcenter.se/wp-content/uploads/2020/01/m82-hst-karusell.jpg" alt="alt text"/> -->
 <!-- Knappar för startsidan -->
 <div class = "container">
@@ -34,7 +34,18 @@
       <router-link v-bind:to="'/Creator_overlook/'+lang"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.Creator}}</span></v-btn></router-link>
 </div>
   <br>
-  <button id="langButton" class ="langButton" v-on:click="switchLanguage" > <div>{{uiLabels.changeLanguage}} </div> <img v-bind:src="uiLabels.imgLanguage"  height="70" width="140" alt=""></button>
+  <div class="row">
+    <div class="column">
+      <img src="/img/pngwing.png" style="width:600px; opacity:0.7; margin-left:-3pt; margin-bottom: -50pt;">
+    </div>
+    <div class="column">
+      <button id="langButton" class ="langButton" v-on:click="switchLanguage" style="margin-left:-80pt;" > <div>{{uiLabels.changeLanguage}} </div> <img v-bind:src="uiLabels.imgLanguage"  height="70" width="140"  alt=""></button>
+    </div>
+    <div class="column">
+      <img src="/img/road.png" style="width:200px; opacity:0.7; margin-right:-140pt; margin-bottom: -50pt; overflow:hidden; ">
+    </div>
+  </div>
+
 
 
 </section>
@@ -75,9 +86,8 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
 .page {
-  background: linear-gradient(#b6d7a8ff,#b6d7a8ff, #1d7658,#4285f4ff);
+  background: linear-gradient(#b6d7a8ff,#b6d7a8ff, #1d7658, #105646);
   text-align:center;
-  font-size: 20pt;
   font-family: 'Baloo Bhaijaan 2', cursive;
   color: black;
   padding-bottom:50px;
@@ -85,10 +95,25 @@ export default {
 
 
 #header{
-  background-color: #b6d7a8ff; 
+  background-color: #b6d7a8ff;
+  color:#1d7658;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 3.8vw;
   justify-content:center;
+  text-shadow: 5px 5px #000000
 
 }
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 33.33%;
+  padding: 5px;
+}
+
+
 
 
 
@@ -118,7 +143,8 @@ export default {
   max-width: 100%;
   min-width: 140px;
   padding: 3px;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: black;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
