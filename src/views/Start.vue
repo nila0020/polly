@@ -20,11 +20,11 @@
   </header>
 
 
-  <h1 style="font-size:3vw">{{uiLabels.welcomeText}}</h1>
+  <h1 >{{uiLabels.welcomeText}}</h1>
 
 
 
-  <h3 style="font-size:2vw">{{uiLabels.Choose}}</h3>
+  <h3>{{uiLabels.Choose}}</h3>
   <!-- <img src="https://rymdcenter.se/wp-content/uploads/2020/01/m82-hst-karusell.jpg" alt="alt text"/> -->
 <!-- Knappar för startsidan -->
 <div class = "container">
@@ -35,14 +35,15 @@
 </div>
   <br>
   <div class="row">
+
     <div class="column">
-      <img src="/img/pngwing.png" style="width:600px; opacity:0.7; margin-left:-3pt; margin-bottom: -50pt;">
+      <img class="desktop-only"  src="/img/pngwing.png" style="width:600px; opacity:0.7; margin-left:-3pt; margin-bottom: -42pt;display: inline;">
     </div>
     <div class="column">
-      <button id="langButton" class ="langButton" v-on:click="switchLanguage" style="margin-left:-80pt;" > <div>{{uiLabels.changeLanguage}} </div> <img v-bind:src="uiLabels.imgLanguage"  height="70" width="140"  alt=""></button>
+      <button id="langButton" class ="langButton" v-on:click="switchLanguage"  > <div>{{uiLabels.changeLanguage}} </div> <img v-bind:src="uiLabels.imgLanguage"  height="70" width="140"  alt=""></button>
     </div>
     <div class="column">
-      <img src="/img/road.png" style="width:200px; opacity:0.7; margin-right:-140pt; margin-bottom: -50pt; overflow:hidden; ">
+      <img class="desktop-only" src="/img/road.png" style="width:200px; opacity:0.7; margin-right:-140pt; margin-bottom: -42pt; overflow:hidden; display: inline;">
     </div>
   </div>
 
@@ -85,12 +86,19 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@800&family=Lilita+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
+body { min-height: 100vh; }
+
+html { overflow-y:scroll; height: 100% }
+
+
 .page {
   background: linear-gradient(#b6d7a8ff,#b6d7a8ff, #1d7658, #105646);
   text-align:center;
   font-family: 'Baloo Bhaijaan 2', cursive;
+  font-size: 20pt;
   color: black;
   padding-bottom:50px;
+  padding-top:1px;
 }
 
 
@@ -113,8 +121,25 @@ export default {
   padding: 5px;
 }
 
+.desktop-only {
+  display: block !important;
+}
+@media screen and (max-width: 600px) {
 
+  .desktop-only{
+    display: none !important;
+  }
+  #header{
+    font-size:25pt
+  }
+  .page{
+    font-size:18pt;
+  }
 
+  .langButton{
+    text-align:center;
+  }
+}
 
 
 .container {
@@ -186,4 +211,8 @@ export default {
     font-size: 24px;
     min-width: 196px;
   }
-}</style>
+  #langButton{
+    margin-left:-140pt
+  }
+}
+</style>
