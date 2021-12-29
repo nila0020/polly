@@ -352,7 +352,6 @@ export default {
   },
   data: function () {
     return {
-      pos: [],
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
       questions: [],
       info: "",

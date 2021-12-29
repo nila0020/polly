@@ -1,19 +1,35 @@
 <template>
   <h1>Leaderboard:</h1>
-  <div class="wrapper">
-    <div class="bar" v-for="(item, key) in scoreBoard.scores" v-bind:key="key">
-      <div v-bind:style="{ height: 30 * item.score + 'px' }">
-        <span> {{ item.score }} </span>
+  <div class="fullScope">
+    <div class="wrapped">
+      <div
+        class="bar"
+        v-for="(item, key) in scoreBoard.scores"
+        v-bind:key="key"
+      >
+        <div
+          v-bind:style="{
+            height:
+              (100 * item.score) / this.scoreBoard.scores['1'].score + '%',
+          }"
+        >
+          <span> {{ item.score }} </span>
+        </div>
+        <div class="label">{{ key }}:<br />{{ item.userName }}</div>
       </div>
-      <div>{{ key }}:<br />{{ item.userName }}</div>
-    </div>
 
-    <div class="bar" v-if="this.scoreBoard.score">
-      <div v-bind:style="{ height: 30 * this.scoreBoard.score + 'px' }">
-        <span> {{ this.scoreBoard.score }} </span>
-      </div>
-      <div style="bold" class="UserNameText">
-        You:<br />{{ this.scoreBoard.userName }}
+      <div class="bar">
+        <div
+          v-bind:style="{
+            height:
+              (100 * this.scoreBoard.score) /
+                this.scoreBoard.scores['1'].score +
+              '%',
+          }"
+        >
+          <span> {{ this.scoreBoard.score }} </span>
+        </div>
+        <div class="label">You:<br />{{ this.scoreBoard.userName }}</div>
       </div>
     </div>
   </div>
@@ -26,22 +42,9 @@ export default {
   name: "Bars",
   props: {
     scoreBoard: {
-      cA: [],
+      userName: String,
       score: Number,
-      scores: {
-        key: {
-          userName: "",
-          score: Number,
-          barHeight: Number,
-        },
-      },
-    },
-    userId: String,
-  },
-  methods: {
-    calcBar(Item) {
-      this.barHeight = Item / this.scoreBoard.scores["1"].score;
-      return this.barHeight;
+      scores: {},
     },
   },
 };
@@ -49,7 +52,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.wrapper {
+.fullScope {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(#17b27f, #319881, #2ab0b4, #3096c2);
+}
+.wrapped {
   display: grid;
   width: flex;
   flex-direction: row;
@@ -58,13 +66,24 @@ export default {
   align-items: flex-end;
 }
 .bar {
-  display: inline-block;
+  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 15vw;
-  overflow-wrap: break-word;
+  height: 100%;
+}
+.bar div {
+  margin-top: auto;
 }
 .bar span {
   position: relative;
   top: -1.2em;
+}
+.label {
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, -10%);
 }
 .bar:nth-child(1) div:nth-child(1) {
   background-color: red;

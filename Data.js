@@ -39,9 +39,9 @@ Data.prototype.doesGameIdExist = function (gameId, userName) {
 
     return [false, false]
   }
-  if (typeof this.games[gameId] != 'undefined' && this.games[gameId].participants.find(obj => obj.userName === userName) != undefined) {
+  if (typeof this.games[gameId] != 'undefined' && typeof this.games[gameId].participants.find(obj => obj.userName === userName) != 'undefined') {
     console.log("andra data if")
-    return [false, true]
+    return [true, true]
   }
   else {
     console.log("tredje data if")

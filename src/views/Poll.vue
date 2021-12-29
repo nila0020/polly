@@ -65,12 +65,11 @@
         <!-- blocks overlook, center and tool-->
       </div>
     </div>
-    <div v-show="!activeGame && confirmedUser" class="scoreBoards">
-      <Bars
-        :scoreBoard="scoreBoard"
-        :userName="userId"
-        v-if="!activeGame && this.scoreBoard"
-      />
+    <div
+      v-show="!activeGame && confirmedUser && this.scoreBoard"
+      class="scoreBoards"
+    >
+      <Bars :scoreBoard="scoreBoard" v-if="!activeGame && this.scoreBoard" />
     </div>
   </div>
 </template>
@@ -107,10 +106,7 @@ export default {
       activeGame: true,
       amountOfQuestions: 0,
       qId: 0,
-      scoreBoard: {
-        cA: [],
-        scores: [],
-      },
+      scoreBoard: null,
       uiLabels: {},
     };
   },
@@ -121,7 +117,24 @@ export default {
     socket.on("init", (labels) => {
       this.uiLabels = labels;
     });
+    socket.on("GameIdExists", (q) => {
+      this.gameExists = q;
+      if (!this.gameExists[0]) {
+        console.log("1", this.gameExists);
+        alert("Please provide a valid GameId");
+      }
+      if (this.gameExists[0] && this.gameExists[1]) {
+        console.log("2");
+        alert("Username has already been taken");
+      }
+      if (this.gameExists[0] && !this.gameExists[1]) {
+        console.log("3");
+        this.confirmedUser = true;
+        socket.emit("joinGame", this.gameId, this.qId, this.userName);
+      }
+    });
     socket.on("newQuestion", (q) => (this.question = q));
+    socket.on("newScoreboard", (q) => (this.scoreBoard = q));
   },
   methods: {
     submitAnswer: function (answer) {
@@ -156,27 +169,17 @@ export default {
           questionNumber: this.qId,
         });
       } else {
-        socket.on("newScoreboard", (q) => (this.scoreBoard = q));
-
         socket.emit("scoreBoard", {
           gameId: this.gameId,
           userName: this.userName,
         });
-        console.log(this.scoreBoard);
         this.activeGame = false;
       }
 
       this.activeQuestion = false;
     },
     confirmUser: function () {
-      if (
-        this.gameId === undefined ||
-        this.gameId === null ||
-        this.gameId === "" ||
-        this.userName === undefined ||
-        this.userName === null ||
-        this.userName === ""
-      ) {
+      if (!this.gameId || !this.userName) {
         alert("Please enter a gameId and/or a password");
       } else {
         console.log("användarinformation ", this.gameId, this.userName);
@@ -184,20 +187,6 @@ export default {
           gameId: this.gameId,
           userName: this.userName,
         });
-        socket.on("GameIdExists", (q) => (this.gameExists = q));
-        if (this.gameExists[0] == false) {
-          console.log("1");
-          alert("Please provide a valid GameId");
-        }
-        if (this.gameExists[0] == true && this.gameExists[1] == true) {
-          console.log("2");
-          alert("Username has already been taken");
-        }
-        if (this.gameExists[0] == true && this.gameExists[1] == false) {
-          console.log("3");
-          this.confirmedUser = true;
-          socket.emit("joinGame", this.gameId, this.qId, this.userName);
-        }
       }
     },
 
