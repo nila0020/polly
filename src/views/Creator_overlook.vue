@@ -60,7 +60,7 @@
             <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
             <button
               class="Button"
-              id="overlookBtn"
+              id="overlook!Btn"
               v-on:click="[addNewQuestion(), closeExpand()]"
             >
               {{ uiLabels.Addquestion }}
@@ -371,6 +371,7 @@ export default {
       gameId: "",
       question: "",
       answers: ["", ""],
+      pos: [],
       correctAnswer: 0,
       answersAlt: [this.answers, this.correctAnswer],
       questionNumber: 0,
@@ -457,6 +458,7 @@ export default {
       });
     },
     addNewQuestion: function () {
+      this.pos = [];
       this.questionNumber++;
       this.questionText = "";
       this.answers = ["", ""];
@@ -471,7 +473,7 @@ export default {
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.checked,
-        pos: window.polly.position || [],
+        pos:  this.pos,  //window.polly.position || [],
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
@@ -482,7 +484,7 @@ export default {
       this.questions.push({
         gameId: this.gameId,
         type: this.checked,
-        pos: window.polly.position || [],
+        pos: this.pos,  //window.polly.position || [],
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
