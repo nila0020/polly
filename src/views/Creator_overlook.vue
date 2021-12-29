@@ -214,13 +214,15 @@
           v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"
         >
           <div class="mapTitle">
-            <h4>Choose a place on the map for your question to appear at</h4>
+            <h4>Choose a place on the map for your question to appear at
+              {{reactiveProperties.pos}}
+            </h4>
             <!-- Our map  -->
             <div id="myMap"></div>
           </div>
         </div>
       </div>
-
+      
       <!--Tool box-->
       <div class="box toolBox" v-on:click="hideCenter = false">
         <h1>toolBox</h1>
@@ -263,7 +265,7 @@
 import io from "socket.io-client";
 import Slider from "@/components/Slider.vue";
 import leaflet from "leaflet";
-import { onMounted } from "vue";
+import { onMounted, reactive } from "vue";
 const socket = io();
 export default {
   components: {
@@ -273,6 +275,7 @@ export default {
     //Load map
 
     let myMap;
+    const reactiveProperties = reactive({ pos: null })
     onMounted(() => {
       myMap = leaflet.map("myMap").setView([59.855727, 17.633445], 13);
 
@@ -335,7 +338,7 @@ export default {
         iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
       })
 
-      
+     
       myMap.on(
         "click",
         function (e) {
@@ -344,7 +347,7 @@ export default {
             myMap
           );
           var pos = [e.latlng.lat, e.latlng.lng];
-
+          reactiveProperties.pos = pos
           console.log("onClick marker", marker);
           console.log("Position", pos);
           if(!window.polly) {
@@ -361,6 +364,7 @@ export default {
         },
       );
     });
+    return {reactiveProperties}
   },
   data: function () {
     return {
