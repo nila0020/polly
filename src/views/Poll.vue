@@ -29,11 +29,14 @@
           >Join GeoQuiz!</v-btn
         >
       </div>
+      <div class="picture">
+<img src="/img/clouds.PNG" style="width:1200px;display: inline;">
+      </div>
     </div>
 
-    <div class="designn">
+    <!--<div class="designn">
       <img src="img\sista.jpg" alt="" />
-    </div>
+    </div> -->
 
     <div v-if="confirmedUser && activeGame">
       <div v-show="!activeQuestion">
@@ -193,7 +196,7 @@ export default {
   grid-row: 1;
   color: white;
   width: 100%;
-  background-color: rgb(0, 128, 17);
+  background-color: rgb(74, 211, 90);
 }
 .mapWrap {
   overflow: hidden;
@@ -210,22 +213,23 @@ export default {
 .entryId {
   display: grid;
   width: 100%;
-  height: 65vh;
+  height: 100vh;
   grid-template-rows: 20% 20% 23%;
-  background: linear-gradient(#4285f4ff, #1d7658);
+  background: linear-gradient(#17b27f,#319881, #2ab0b4, #3096c2);
   font-family: "Baloo Bhaijaan 2", cursive;
 
   justify-content: center;
 }
-.designn {
+/* .designn {
   background-color: #1d7658;
-}
+} */
 
 input {
   border-radius: 2em;
   width: 75vw;
   border-width: 3px;
   font-size: 1.4em;
+  color:white;
   border-color: white;
   background-color: black;
   font-family: "Baloo Bhaijaan 2", cursive;
@@ -234,8 +238,15 @@ input {
   max-width: 79vw;
   font-family: "Baloo Bhaijaan 2", cursive;
 }
+
+@media screen and (max-width: 600px) {
+
+  .picture {
+    display: none !important;
+  }
+}
 .fullFrame {
-  background: linear-gradient(#1d7658, #1d7658, #4285f4ff);
+  background: linear-gradient(#319881, #1d7658, #105646);
 }
 .blockerAll {
   grid-column: 1;

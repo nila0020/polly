@@ -43,7 +43,7 @@
       <button id="langButton" class ="langButton" v-on:click="switchLanguage"  > <div>{{uiLabels.changeLanguage}} </div> <img v-bind:src="uiLabels.imgLanguage"  height="70" width="140"  alt=""></button>
     </div>
     <div class="column">
-      <img class="desktop-only" src="/img/road.png" style="width:200px; opacity:0.7; margin-right:-140pt; margin-bottom: -42pt; overflow:hidden; display: inline;">
+      <img class="desktop-only" src="/img/road.png" style="width:200px; opacity:0.7; margin-bottom: -42pt; overflow:hidden; display: inline;">
     </div>
   </div>
 
