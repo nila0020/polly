@@ -328,15 +328,29 @@ export default {
         6000
       );
 
-      // Create marker on map
+      //Icon declaration
+      var currentIcon = leaflet.icon({
+        iconUrl: "img/redIcon.png",
+        iconSize: [38, 95], // size of the icon
+        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+      });
+
       myMap.on("click", function (e) {
-        var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng]).addTo(
-          myMap
-        );
-        this.pos = [e.latlng.lat, e.latlng.lng];
+        var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng], {
+          currentIcon,
+        }).addTo(myMap);
+        var pos = [e.latlng.lat, e.latlng.lng];
+
         console.log("onClick marker", marker);
-        console.log("Position", this.pos);
-        return this.pos;
+        console.log("Position", pos);
+        if (!window.polly) {
+          window.polly = {};
+        }
+        if (!window.polly.position) {
+          window.polly.position = [];
+        }
+        window.polly.position = [...window.polly.position, pos];
+        // window.polly.position = pos
       });
     });
   },
@@ -436,6 +450,7 @@ export default {
       });
     },
     addNewQuestion: function () {
+      this.pos = [];
       this.questionNumber++;
       this.questionText = "";
       this.answers = ["", ""];
@@ -450,7 +465,7 @@ export default {
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.checked,
-        pos: window.polly.position || [],
+        pos: this.pos,
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
@@ -461,7 +476,7 @@ export default {
       this.questions.push({
         gameId: this.gameId,
         type: this.checked,
-        pos: window.polly.position || [],
+        pos: this.pos,
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
@@ -477,7 +492,7 @@ export default {
       ).type = this.checked;
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
-      ).pos = this.pos;
+      ).pos = window.polly.position;
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
       ).info = this.info;

@@ -40,7 +40,7 @@ function sockets(io, socket, data) {
     io.to(d.gameId).emit('dataUpdate', data.getAnswers(d.gameId));
   });
   socket.on('doesGameIdExist', function (d) {
-    socket.emit('GameIdExist', data.doesGameIdExist(d.gameId, d.userName))
+    socket.emit('GameIdExists', data.doesGameIdExist(d.gameId, d.userName))
   });
 
   socket.on('scoreBoard', function (d) {

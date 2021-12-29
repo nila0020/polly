@@ -100,7 +100,7 @@ export default {
         pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg",
       },
       gameId: null,
-      gameExists: [],
+      gameExists: [false, true],
       confirmedUser: false,
       userName: "",
       activeQuestion: false,
@@ -169,7 +169,6 @@ export default {
       this.activeQuestion = false;
     },
     confirmUser: function () {
-      /* 
       if (
         this.gameId === undefined ||
         this.gameId === null ||
@@ -180,12 +179,12 @@ export default {
       ) {
         alert("Please enter a gameId and/or a password");
       } else {
-        socket.on("GameIdExists", (q) => (this.gameExists = q));
         console.log("användarinformation ", this.gameId, this.userName);
         socket.emit("doesGameIdExist", {
           gameId: this.gameId,
           userName: this.userName,
         });
+        socket.on("GameIdExists", (q) => (this.gameExists = q));
         if (this.gameExists[0] == false) {
           console.log("1");
           alert("Please provide a valid GameId");
@@ -195,9 +194,11 @@ export default {
           alert("Username has already been taken");
         }
         if (this.gameExists[0] == true && this.gameExists[1] == false) {
-          console.log("3"); */
-      this.confirmedUser = true;
-      socket.emit("joinGame", this.gameId, this.qId, this.userName);
+          console.log("3");
+          this.confirmedUser = true;
+          socket.emit("joinGame", this.gameId, this.qId, this.userName);
+        }
+      }
     },
 
     activateQuestion: function () {

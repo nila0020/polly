@@ -34,7 +34,6 @@ Data.prototype.createGame = function (gameId, lang = "en", gameName) {
 }
 Data.prototype.doesGameIdExist = function (gameId, userName) {
   console.log("inkommande ", gameId, userName)
-  console.log(typeof 'undefined');
   if (typeof this.games[gameId] === 'undefined') {
     console.log("i data första if-statement")
 
