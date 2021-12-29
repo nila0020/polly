@@ -326,18 +326,13 @@ export default {
       setTimeout(
         () => console.log("Marker din position utanför", latLng),
         6000
-<<<<<<< HEAD
       );
 
       //Icon declaration
       var currentIcon = leaflet.icon({
         iconUrl: 'img/redIcon.png',
         iconSize:     [38, 95], // size of the icon
-        // shadowSize:   [50, 64], // size of the shadow
         iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-        // shadowAnchor: [4, 62],  // the same for the shadow
-        // popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-
       })
 
       
@@ -368,22 +363,6 @@ export default {
     });
   },
 
-=======
-      );
-
-      // Create marker on map
-      myMap.on("click", function (e) {
-        var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng]).addTo(
-          myMap
-        );
-        this.pos = [e.latlng.lat, e.latlng.lng];
-        console.log("onClick marker", marker);
-        console.log("Position", this.pos);
-        return this.pos;
-      });
-    });
-  },
->>>>>>> 70f0c1e2d8d5a8419eeb2d2c8e5e1b3eccaec5b7
   data: function () {
     return {
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
@@ -490,7 +469,6 @@ export default {
       this.answersAlt = [this.answers, this.correctAnswer];
       console.log(this.hideCenter);
       this.hideCond++;
-      console.log("HELLO", window.polly.position)
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.checked,
