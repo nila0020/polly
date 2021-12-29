@@ -12,6 +12,9 @@ import leaflet from "leaflet";
 import { onMounted } from "vue";
 
 export default {
+  // props: {
+  //   pos: []
+  // },
   setup() {
     let myMap;
     onMounted(() => {
@@ -32,10 +35,11 @@ export default {
           }
         )
         .addTo(myMap);
-
-      myMap.on("click", function (e) {
-        new leaflet.Marker([e.latlng.lat, e.latlng.lng]).addTo(myMap);
-      });
+        // Markers created in creator overlook
+        // new leaflet.Marker([this.pos[0], this.pos[1]]).addTo(myMap);
+      // myMap.on("click", function (e) {
+      //   new leaflet.Marker([e.latlng.lat, e.latlng.lng]).addTo(myMap);
+      // });
     });
   },
 };

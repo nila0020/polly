@@ -20,6 +20,7 @@ function sockets(io, socket, data) {
   });
 
   socket.on('addQuestion', function (d) {
+    console.log("QUESTION ADDED", d);
     data.addQuestion(d.gameId, { type: d.type, pos: d.pos, q: d.q, a: d.a, aS: d.aS, info: d.info, qId: d.questionNumber, pic: d.pic });
     socket.emit('dataUpdate', data.getAnswers(d.gameId));
   });

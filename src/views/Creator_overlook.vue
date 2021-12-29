@@ -1,42 +1,39 @@
 <template>
   <section class="pagee">
     <section class="box titleBox">
-   
       <!--Title box-->
 
-<!--      <h3>Game Title and GameID</h3>-->
+      <!--      <h3>Game Title and GameID</h3>-->
 
-<!--      <div class="insertTitle">-->
+      <!--      <div class="insertTitle">-->
       <div id="gameNameBox">
         <label for="gameName">{{ uiLabels.gameName }}: </label>
-        <br>
+        <br />
         <input
           type="text"
           id="gameName"
           v-model="gameName"
-          v-bind:placeholder="this.uiLabels.enterGameName">
+          v-bind:placeholder="this.uiLabels.enterGameName"
+        />
       </div>
       <div id="gameIDBox">
         <label for="gameID">{{ uiLabels.gameID }}: </label>
-        <br>
+        <br />
         <input
           type="text"
           id="gameID"
           v-model="gameId"
           v-bind:placeholder="this.uiLabels.enterGameID"
         />
-
       </div>
       <div id="gameButtonBox">
         <button class="Button" v-on:click="createGame">
           {{ uiLabels.CreateGame }}
         </button>
-        <br>
-        <button class="Button" v-on:click="loadGame">
-          Load Game
-        </button>
+        <br />
+        <button class="Button" v-on:click="loadGame">Load Game</button>
       </div>
-<!--      </div>-->
+      <!--      </div>-->
     </section>
 
     <section class="container">
@@ -111,7 +108,13 @@
             <img
               :src="pic"
               v-if="pic !== null"
-              style="width: 90%; height: 75%; object-fit: cover; grid-row: 1; grid-column: 1/span 2"
+              style="
+                width: 90%;
+                height: 75%;
+                object-fit: cover;
+                grid-row: 1;
+                grid-column: 1 / span 2;
+              "
               ref=""
             />
             <input
@@ -120,10 +123,16 @@
               style="display: none"
               ref="fileInput"
             />
-            <button v-on:click="$refs.fileInput.click()" style="grid-column: 1; grid-row: 2">
+            <button
+              v-on:click="$refs.fileInput.click()"
+              style="grid-column: 1; grid-row: 2"
+            >
               {{ this.uiLabels.chooseImage }}
             </button>
-            <button v-on:click="removeImage" style="grid-column: 2; grid-row: 2">
+            <button
+              v-on:click="removeImage"
+              style="grid-column: 2; grid-row: 2"
+            >
               {{ this.uiLabels.removeimage }}
             </button>
           </div>
@@ -139,13 +148,12 @@
           <div id="aBox">
             <div v-if="checked === 'MCQ' || checked === null">
               <h1>Answers:</h1>
-<!--              <input
+              <!--              <input
                 v-for="(_, i) in answers"
                 v-model="answers[i]"
                 v-bind:key="'answer' + i"
                 v-bind:placeholder="this.uiLabels.addanswer"
               />-->
-
 
               <h1>{{ this.uiLabels.chooseCorrect }}</h1>
               <ul id="example-1">
@@ -157,16 +165,16 @@
                     v-bind:value="i"
                   />
                   <input
-                      v-model="answers[i]"
-                      v-bind:key="'answer' + i"
-                      v-bind:placeholder="this.uiLabels.addanswer"
+                    v-model="answers[i]"
+                    v-bind:key="'answer' + i"
+                    v-bind:placeholder="this.uiLabels.addanswer"
                   />
                   <label for="{{i}}"></label>
                 </li>
               </ul>
               <button class="Button" v-on:click="addAnswer">
-              {{ uiLabels.AddAnswerAlternative }}
-            </button>
+                {{ uiLabels.AddAnswerAlternative }}
+              </button>
               <button class="Button" v-on:click="removeAnswer">
                 {{ uiLabels.removeAnswerAlternative }}
               </button>
@@ -261,77 +269,106 @@ export default {
   components: {
     Slider,
   },
-     setup() {
-     
- 
+  setup() {
     //Load map
 
-      let myMap;
-      onMounted(()=>{
-        myMap = leaflet.map('myMap').setView([59.855727, 17.633445], 13);
-       
-        leaflet.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ',
-        
-}).addTo(myMap);
-// Distance function
-function checkDistance(a,b) {
-          if ( myMap.distance(a,b) < 30) {
-            alert('Within range')}
-            console.log('avstånd i meter',myMap.distance(a,b))
-    
-}
+    let myMap;
+    onMounted(() => {
+      myMap = leaflet.map("myMap").setView([59.855727, 17.633445], 13);
 
-// Find user location
-setInterval(() => {
-  
-  navigator.geolocation.getCurrentPosition(getPosition)
-  
-},5000
-); 
-var lat,lng, marker, latLng
-
-function getPosition(position) {
-   
-  if (marker) {
-    myMap.removeLayer(marker)
-  }
-  
-  lat = position.coords.latitude
-  lng = position.coords.longitude
-  latLng = [lat, lng]
-marker = leaflet.marker([lat, lng]).addTo(myMap)
-
-return latLng;
-}
-
-// Current distance from user location
-setTimeout(() => console.log(checkDistance(latLng,[59.855727, 17.633445])), 6000);
-setTimeout(() => console.log('Marker din position utanför',latLng), 6000);
-
-// Create marker on map
-myMap.on("click", function(e){
-      var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng]).addTo(myMap);
-      this.pos = [e.latlng.lat, e.latlng.lng];
-      console.log('onClick marker',marker)
-       console.log('Position',this.pos)
-      return this.pos
- 
-          
-    
+      leaflet
+        .tileLayer(
+          "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ",
+          {
+            attribution:
+              'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: "mapbox/streets-v11",
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken:
+              "pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ",
+          }
+        )
+        .addTo(myMap);
+      // Distance function
+      function checkDistance(a, b) {
+        if (myMap.distance(a, b) < 30) {
+          alert("Within range");
         }
-       
+        console.log("avstånd i meter", myMap.distance(a, b));
+      }
+
+      // Find user location
+      setInterval(() => {
+        navigator.geolocation.getCurrentPosition(getPosition);
+      }, 5000);
+      var lat, lng, marker, latLng;
+
+      function getPosition(position) {
+        if (marker) {
+          myMap.removeLayer(marker);
+        }
+
+        lat = position.coords.latitude;
+        lng = position.coords.longitude;
+        latLng = [lat, lng];
+        marker = leaflet.marker([lat, lng]).addTo(myMap);
+
+        return latLng;
+      }
+
+      // Current distance from user location
+      setTimeout(
+        () => console.log(checkDistance(latLng, [59.855727, 17.633445])),
+        6000
       );
-   }) 
-},
+      setTimeout(
+        () => console.log("Marker din position utanför", latLng),
+        6000
+      );
+
+      //Icon declaration
+      var currentIcon = leaflet.icon({
+        iconUrl: 'img/redIcon.png',
+        iconSize:     [38, 95], // size of the icon
+        // shadowSize:   [50, 64], // size of the shadow
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        // shadowAnchor: [4, 62],  // the same for the shadow
+        // popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+
+      })
+
+      
+      myMap.on(
+        "click",
+        function (e) {
+          
+          var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng],{currentIcon}).addTo(
+            myMap
+          );
+          var pos = [e.latlng.lat, e.latlng.lng];
+
+          console.log("onClick marker", marker);
+          console.log("Position", pos);
+          if(!window.polly) {
+            window.polly = {}
+          }
+          if(!window.polly.position) {
+            window.polly.position = []
+          }
+          window.polly.position = [
+            ...window.polly.position,
+            pos
+          ]
+          // window.polly.position = pos
+        },
+      );
+    });
+  },
+
   data: function () {
     return {
-      pos: [],
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
       questions: [],
       info: "",
@@ -416,13 +453,13 @@ myMap.on("click", function(e){
         gameName: this.gameName,
       });
     },
-    loadGame: function() {
+    loadGame: function () {
       this.hideAll = false;
       this.hideCenterAndTool = false;
       this.hideCenter = false;
       socket.emit("loadGame", {
-        gameID: this.gameId
-      })
+        gameID: this.gameId,
+      });
     },
     addNewQuestion: function () {
       this.questionNumber++;
@@ -436,10 +473,11 @@ myMap.on("click", function(e){
       this.answersAlt = [this.answers, this.correctAnswer];
       console.log(this.hideCenter);
       this.hideCond++;
+      console.log("HELLO", window.polly.position)
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.checked,
-        pos: this.pos,
+        pos: window.polly.position || [],
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
@@ -450,7 +488,7 @@ myMap.on("click", function(e){
       this.questions.push({
         gameId: this.gameId,
         type: this.checked,
-        pos: this.pos,
+        pos: window.polly.position || [],
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
@@ -466,7 +504,7 @@ myMap.on("click", function(e){
       ).type = this.checked;
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
-      ).pos = this.pos;
+      ).pos = window.polly.position;
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
       ).info = this.info;
@@ -488,7 +526,7 @@ myMap.on("click", function(e){
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.checked,
-        pos: this.pos,
+        pos: window.polly.position,
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
@@ -496,7 +534,8 @@ myMap.on("click", function(e){
         questionNumber: this.editingNumber,
         pic: this.pic,
       });
-      console.log(this.answers);
+      console.log("answers", this.answers);
+
       //console.log(this.sliderAnswer);
       //$("#myElem").show().delay(5000).fadeOut();
     },
@@ -603,13 +642,12 @@ myMap.on("click", function(e){
 
 <style>
 .pagee {
-   background-color: black; 
-  text-align:center;
+  background-color: black;
+  text-align: center;
   font-size: 20pt;
-  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-family: "Baloo Bhaijaan 2", cursive;
   color: black;
-  padding-bottom:50px;
-
+  padding-bottom: 50px;
 }
 #header h1 {
   font-family: "Times New Roman", Times, serif;
@@ -650,7 +688,6 @@ myMap.on("click", function(e){
   margin: 5px;
   padding: 20px;
   font-size: 100%;
-  
 }
 .insertTitle {
   float: right;
@@ -664,25 +701,24 @@ myMap.on("click", function(e){
   grid-template-columns: 33% 33% 33%;
   grid-template-rows: 100%;
   color: black;
-  background-image: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url("https://media.istockphoto.com/vectors/city-game-background-vector-id526716884?k=20&m=526716884&s=170667a&w=0&h=eSrH07Do4iPSAQ3i3iukNADDsfnNLoX1LnlUUuhlTO0=");
-
-
-   
-   
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.6),
+      rgba(255, 255, 255, 0.6)
+    ),
+    url("https://media.istockphoto.com/vectors/city-game-background-vector-id526716884?k=20&m=526716884&s=170667a&w=0&h=eSrH07Do4iPSAQ3i3iukNADDsfnNLoX1LnlUUuhlTO0=");
 }
 
 .Overlook {
   grid-column: 1;
   grid-row: 1 / span 2;
-  border-style: dotted; 
-  background: linear-gradient(#4285f4ff, #1d7658,#1d7658 );
-  color: white; 
-
+  border-style: dotted;
+  background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+  color: white;
 }
 .infoWindow {
   font: black;
 
-  border-style: dotted; 
+  border-style: dotted;
 }
 .centerBox {
   padding: 0;
@@ -693,18 +729,15 @@ myMap.on("click", function(e){
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: 25% 25% 25% 25%;
-  border-style: dotted; 
-  background: linear-gradient(#4285f4ff, #1d7658,#1d7658 );
-
+  border-style: dotted;
+  background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
 }
 .toolBox {
-  background: linear-gradient(#4285f4ff, #1d7658,#1d7658 );
+  background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
 
   grid-column: 3;
   grid-row: 1 / span 2;
-  border-style: dotted; 
-
-  
+  border-style: dotted;
 }
 .info h1 {
   margin-top: 0;
@@ -778,14 +811,14 @@ myMap.on("click", function(e){
   float: right;
   align-items: center;
   background-image: linear-gradient(144deg, #c4bdbd, #000000 50%, #9a9797);
- 
+
   border-color: white;
   border-radius: 8px;
   box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
   box-sizing: border-box;
   color: #ffffff;
   display: flex;
-  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-family: "Baloo Bhaijaan 2", cursive;
   font-size: 3vh;
   justify-content: center;
   line-height: 2em;
@@ -882,16 +915,11 @@ myMap.on("click", function(e){
 
 #gameNameBox {
   grid-column: 1;
-  
- 
-  
 }
 #gameIDBox {
   grid-column: 2;
-  
 }
 #gameButtonBox {
   grid-column: 3;
-
 }
 </style>

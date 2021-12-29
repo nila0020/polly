@@ -51,6 +51,7 @@ Data.prototype.addQuestion = function (gameId, q) {
       game.questions[game.questions.findIndex(obj => obj.qId == q.qId)] = q;
     }
     //console.log(game.questions)
+    //console.log('This.pos i Data', this.pos)
 
   }
 }

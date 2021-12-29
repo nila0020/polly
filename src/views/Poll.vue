@@ -1,5 +1,6 @@
 <template>
   {{ this.question[0] }}
+  <!-- {{ this.question[0].pos[0] }} -->
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>Lets GO!</h1>
@@ -46,6 +47,7 @@
             <div class="mapWrap">
               <div class="map">
                 <Maps />
+                <!-- v-bind:pos="this.question.pos" v-if = "this.question.pos" -->
               </div>
             </div>
           </div>
@@ -86,11 +88,12 @@ export default {
     Maps,
     Bars,
   },
+  
   data: function () {
     return {
       question: {
         type: "",
-        pos: "",
+        pos: [],
         q: "",
         a: [],
         info: "",
