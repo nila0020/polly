@@ -28,6 +28,7 @@
 	"removeimage": "Ta bort bild",
 	"createQuestion": "Skapa din fråga här",
 	"chooseCorrect": "Välj det rätta svarsalternativet",
-	"removeAnswerAlternative": "Ta bort svarsalternativ"
+	"removeAnswerAlternative": "Ta bort svarsalternativ",
+	"letsGo": "Nu kör vi!"
 
 }
