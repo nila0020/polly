@@ -1,6 +1,9 @@
 <template>
+<<<<<<< HEAD
   {{ this.question[0] }}
   <!-- {{ this.question[0].pos[0] }} -->
+=======
+>>>>>>> 70f0c1e2d8d5a8419eeb2d2c8e5e1b3eccaec5b7
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>Lets GO!</h1>
@@ -30,12 +33,18 @@
           >Join GeoQuiz!</v-btn
         >
       </div>
+      <div class="picture">
+<img src="/img/clouds.PNG" style="width:1200px;display: inline;">
+      </div>
     </div>
 
-    <div class="designn">
+<<<<<<< HEAD
+=======
+    <!--<div class="designn">
       <img src="img\sista.jpg" alt="" />
-    </div>
+    </div> -->
 
+>>>>>>> f4825fd6fab9113a53eaa8b2d21d17c0a2673068
     <div v-if="confirmedUser && activeGame">
       <div v-show="!activeQuestion">
         <div v-show="activeGame">
@@ -99,7 +108,8 @@ export default {
         info: "",
         pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg",
       },
-      gameId: "inactive game",
+      gameId: null,
+      gameExists: [],
       confirmedUser: false,
       userName: "",
       activeQuestion: false,
@@ -162,6 +172,33 @@ export default {
       this.activeQuestion = false;
     },
     confirmUser: function () {
+      /* 
+      if (
+        this.gameId === undefined ||
+        this.gameId === null ||
+        this.gameId === "" ||
+        this.userName === undefined ||
+        this.userName === null ||
+        this.userName === ""
+      ) {
+        alert("Please enter a gameId and/or a password");
+      } else {
+        socket.on("GameIdExists", (q) => (this.gameExists = q));
+        console.log("användarinformation ", this.gameId, this.userName);
+        socket.emit("doesGameIdExist", {
+          gameId: this.gameId,
+          userName: this.userName,
+        });
+        if (this.gameExists[0] == false) {
+          console.log("1");
+          alert("Please provide a valid GameId");
+        }
+        if (this.gameExists[0] == true && this.gameExists[1] == true) {
+          console.log("2");
+          alert("Username has already been taken");
+        }
+        if (this.gameExists[0] == true && this.gameExists[1] == false) {
+          console.log("3"); */
       this.confirmedUser = true;
       socket.emit("joinGame", this.gameId, this.qId, this.userName);
     },
@@ -184,7 +221,7 @@ export default {
   max-width: 65vh;
   height: 98vh;
   grid-template-rows: 1fr 9fr;
-  grid-gap: 3px;
+
   background-color: white;
   color: black;
   overflow: hidden;
@@ -196,7 +233,7 @@ export default {
   grid-row: 1;
   color: white;
   width: 100%;
-  background-color: rgb(0, 128, 17);
+  background-color: rgb(74, 211, 90);
 }
 .mapWrap {
   overflow: hidden;
@@ -213,22 +250,31 @@ export default {
 .entryId {
   display: grid;
   width: 100%;
-  height: 65vh;
-  grid-template-rows: 20% 20% 23%;
+  height: 100vh;
+<<<<<<< HEAD
+  grid-template-rows: 15% 15% 20%;
   background: linear-gradient(#4285f4ff, #1d7658);
+=======
+  grid-template-rows: 20% 20% 23%;
+  background: linear-gradient(#17b27f,#319881, #2ab0b4, #3096c2);
+>>>>>>> f4825fd6fab9113a53eaa8b2d21d17c0a2673068
   font-family: "Baloo Bhaijaan 2", cursive;
 
   justify-content: center;
 }
-.designn {
+<<<<<<< HEAD
+=======
+/* .designn {
   background-color: #1d7658;
-}
+} */
 
+>>>>>>> f4825fd6fab9113a53eaa8b2d21d17c0a2673068
 input {
   border-radius: 2em;
   width: 75vw;
   border-width: 3px;
   font-size: 1.4em;
+  color:white;
   border-color: white;
   background-color: black;
   font-family: "Baloo Bhaijaan 2", cursive;
@@ -237,9 +283,19 @@ input {
   max-width: 79vw;
   font-family: "Baloo Bhaijaan 2", cursive;
 }
-.fullFrame {
-  background: linear-gradient(#1d7658, #1d7658, #4285f4ff);
+
+<<<<<<< HEAD
+=======
+@media screen and (max-width: 600px) {
+
+  .picture {
+    display: none !important;
+  }
 }
+.fullFrame {
+  background: linear-gradient(#319881, #1d7658, #105646);
+}
+>>>>>>> f4825fd6fab9113a53eaa8b2d21d17c0a2673068
 .blockerAll {
   grid-column: 1;
   grid-row: 2;
