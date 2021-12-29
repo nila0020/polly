@@ -1,7 +1,7 @@
 <template>
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
-      <h1>Lets GO!</h1>
+      <h1>{{ this.uiLabels.letsGo }}</h1>
       <div class="boxA">
         <label for="gameId" class="start_buttons1">Poll-ID</label><br />
         <input
@@ -48,6 +48,7 @@
             <div class="mapWrap">
               <div class="map">
                 <Maps />
+                <!-- v-bind:pos="this.question.pos" v-if = "this.question.pos" -->
               </div>
             </div>
           </div>
@@ -92,7 +93,7 @@ export default {
     return {
       question: {
         type: "",
-        pos: "",
+        pos: [],
         q: "",
         a: [],
         info: "",
@@ -110,10 +111,16 @@ export default {
         cA: [],
         scores: [],
       },
+      uiLabels: {},
     };
   },
   created: function () {
     this.gameId = this.$route.params.id;
+    this.lang = this.$route.params.lang;
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      this.uiLabels = labels;
+    });
     socket.on("newQuestion", (q) => (this.question = q));
   },
   methods: {
@@ -247,10 +254,6 @@ export default {
 
   justify-content: center;
 }
-/* .designn {
-  background-color: #1d7658;
-} */
-
 input {
   border-radius: 2em;
   width: 75vw;

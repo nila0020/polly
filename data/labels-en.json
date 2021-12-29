@@ -28,5 +28,6 @@
 	"removeimage": "Remove image",
 	"createQuestion": "Create your question here",
 	"chooseCorrect": "Choose the correct answer",
-	"removeAnswerAlternative": "Remove answer"
+	"removeAnswerAlternative": "Remove answer",
+	"letsGo": "Lets GO!"
 }
