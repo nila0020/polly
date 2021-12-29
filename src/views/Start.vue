@@ -15,12 +15,12 @@
 <section class = "page" >
   <header id=header>
 
-    <img src="img/geo.jpg" >
+    <h1>GeoQuiz      <img src="/img/mappe.png" style="width:9vw"> </h1>
 
   </header>
 
 
-  <h1>{{uiLabels.welcomeText}}</h1>
+  <h1 >{{uiLabels.welcomeText}}</h1>
 
 
 
@@ -34,7 +34,19 @@
       <router-link v-bind:to="'/Creator_overlook/'+lang"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.Creator}}</span></v-btn></router-link>
 </div>
   <br>
-  <button id="langButton" class ="langButton" v-on:click="switchLanguage" > <div>{{uiLabels.changeLanguage}} </div> <img v-bind:src="uiLabels.imgLanguage"  height="70" width="140" alt=""></button>
+  <div class="row">
+
+    <div class="column">
+      <img class="desktop-only"  src="/img/pngwing.png" style="width:600px; opacity:0.7; margin-left:-3pt; margin-bottom: -42pt;display: inline;">
+    </div>
+    <div class="column">
+      <button id="langButton" class ="langButton" v-on:click="switchLanguage"  > <div>{{uiLabels.changeLanguage}} </div> <img v-bind:src="uiLabels.imgLanguage"  height="70" width="140"  alt=""></button>
+    </div>
+    <div class="column">
+      <img class="desktop-only" src="/img/road.png" style="width:200px; opacity:0.7; margin-right:-140pt; margin-bottom: -42pt; overflow:hidden; display: inline;">
+    </div>
+  </div>
+
 
 
 </section>
@@ -74,22 +86,60 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@800&family=Lilita+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
+body { min-height: 100vh; }
+
+html { overflow-y:scroll; height: 100% }
+
+
 .page {
-  background: linear-gradient(#b6d7a8ff,#b6d7a8ff, #1d7658,#4285f4ff);
+  background: linear-gradient(#b6d7a8ff,#b6d7a8ff, #1d7658, #105646);
   text-align:center;
-  font-size: 20pt;
   font-family: 'Baloo Bhaijaan 2', cursive;
+  font-size: 20pt;
   color: black;
   padding-bottom:50px;
+  padding-top:1px;
 }
 
 
 #header{
-  background-color: #b6d7a8ff; 
+  background-color: #b6d7a8ff;
+  color:#1d7658;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 3.8vw;
   justify-content:center;
+  text-shadow: 5px 5px #000000
 
 }
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.row {
+  display: flex;
+}
 
+.column {
+  flex: 33.33%;
+  padding: 5px;
+}
+
+.desktop-only {
+  display: block !important;
+}
+@media screen and (max-width: 600px) {
+
+  .desktop-only{
+    display: none !important;
+  }
+  #header{
+    font-size:25pt
+  }
+  .page{
+    font-size:18pt;
+  }
+
+  .langButton{
+    text-align:center;
+  }
+}
 
 
 .container {
@@ -118,7 +168,8 @@ export default {
   max-width: 100%;
   min-width: 140px;
   padding: 3px;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: black;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -160,4 +211,8 @@ export default {
     font-size: 24px;
     min-width: 196px;
   }
-}</style>
+  #langButton{
+    margin-left:-140pt
+  }
+}
+</style>

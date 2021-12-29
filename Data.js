@@ -32,6 +32,23 @@ Data.prototype.createGame = function (gameId, lang = "en", gameName) {
   }
   return this.games[gameId];
 }
+Data.prototype.doesGameIdExist = function (gameId, userName) {
+  console.log("inkommande ", gameId, userName)
+  console.log(typeof 'undefined');
+  if (typeof this.games[gameId] === 'undefined') {
+    console.log("i data första if-statement")
+
+    return [false, false]
+  }
+  if (typeof this.games[gameId] != 'undefined' && this.games[gameId].participants.find(obj => obj.userName === userName) != undefined) {
+    console.log("andra data if")
+    return [false, true]
+  }
+  else {
+    console.log("tredje data if")
+    return [true, false]
+  }
+}
 
 Data.prototype.addQuestion = function (gameId, q) {
   const game = this.games[gameId];
@@ -169,6 +186,7 @@ Data.prototype.getScoreboard = function (gameId, userName) {
     }
     return { cA: answers, userName: userName, score: scored, scores: topFive } //correctedAnswers, score,scores
   }
+  else ErrorEvent
 }
 module.exports = Data;
 

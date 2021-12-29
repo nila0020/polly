@@ -12,7 +12,11 @@ function sockets(io, socket, data) {
   socket.on('createGame', function (d) {
     socket.emit('gameCreated', data.createGame(d.gameId, d.lang, d.gameName));
   });
+  socket.on('loadGame', function (d) {
+    console.log(data.loadGame(d.gameID))
+    socket.emit('gameLoaded', data.loadGame(d.gameID))
 
+  });
   socket.on('addQuestion', function (d) {
     data.addQuestion(d.gameId, { type: d.type, pos: d.pos, q: d.q, a: d.a, aS: d.aS, info: d.info, qId: d.questionNumber, pic: d.pic });
     socket.emit('dataUpdate', data.getAnswers(d.gameId));
@@ -33,6 +37,9 @@ function sockets(io, socket, data) {
   socket.on('submitAnswer', function (d) {
     data.submitAnswer(d.gameId, d.answer, d.userName);
     io.to(d.gameId).emit('dataUpdate', data.getAnswers(d.gameId));
+  });
+  socket.on('doesGameIdExist', function (d) {
+    socket.emit('GameIdExist', data.doesGameIdExist(d.gameId, d.userName))
   });
 
   socket.on('scoreBoard', function (d) {

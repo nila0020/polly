@@ -91,7 +91,8 @@ export default {
         info: "",
         pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg",
       },
-      gameId: "inactive game",
+      gameId: null,
+      gameExists: [],
       confirmedUser: false,
       userName: "",
       activeQuestion: false,
@@ -154,6 +155,33 @@ export default {
       this.activeQuestion = false;
     },
     confirmUser: function () {
+      /* 
+      if (
+        this.gameId === undefined ||
+        this.gameId === null ||
+        this.gameId === "" ||
+        this.userName === undefined ||
+        this.userName === null ||
+        this.userName === ""
+      ) {
+        alert("Please enter a gameId and/or a password");
+      } else {
+        socket.on("GameIdExists", (q) => (this.gameExists = q));
+        console.log("användarinformation ", this.gameId, this.userName);
+        socket.emit("doesGameIdExist", {
+          gameId: this.gameId,
+          userName: this.userName,
+        });
+        if (this.gameExists[0] == false) {
+          console.log("1");
+          alert("Please provide a valid GameId");
+        }
+        if (this.gameExists[0] == true && this.gameExists[1] == true) {
+          console.log("2");
+          alert("Username has already been taken");
+        }
+        if (this.gameExists[0] == true && this.gameExists[1] == false) {
+          console.log("3"); */
       this.confirmedUser = true;
       socket.emit("joinGame", this.gameId, this.qId, this.userName);
     },
@@ -176,7 +204,7 @@ export default {
   max-width: 65vh;
   height: 98vh;
   grid-template-rows: 1fr 9fr;
-  grid-gap: 3px;
+
   background-color: white;
   color: black;
   overflow: hidden;
@@ -205,17 +233,13 @@ export default {
 .entryId {
   display: grid;
   width: 100%;
-  height: 65vh;
-  grid-template-rows: 20% 20% 23%;
+  height: 100vh;
+  grid-template-rows: 15% 15% 20%;
   background: linear-gradient(#4285f4ff, #1d7658);
   font-family: "Baloo Bhaijaan 2", cursive;
 
   justify-content: center;
 }
-.designn {
-  background-color: #1d7658;
-}
-
 input {
   border-radius: 2em;
   width: 75vw;
@@ -229,9 +253,7 @@ input {
   max-width: 79vw;
   font-family: "Baloo Bhaijaan 2", cursive;
 }
-.fullFrame {
-  background: linear-gradient(#1d7658, #1d7658, #4285f4ff);
-}
+
 .blockerAll {
   grid-column: 1;
   grid-row: 2;
