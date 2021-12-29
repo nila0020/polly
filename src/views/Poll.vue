@@ -49,6 +49,7 @@
             <div class="mapWrap">
               <div class="map">
                 <Maps />
+                <!-- v-bind:pos="this.question.pos" v-if = "this.question.pos" -->
               </div>
             </div>
           </div>
@@ -93,7 +94,7 @@ export default {
     return {
       question: {
         type: "",
-        pos: "",
+        pos: [],
         q: "",
         a: [],
         info: "",
@@ -279,7 +280,6 @@ input {
 .fullFrame {
   background: linear-gradient(#319881, #1d7658, #105646);
 }
-
 .blockerAll {
   grid-column: 1;
   grid-row: 2;
