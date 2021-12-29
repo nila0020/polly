@@ -1,9 +1,4 @@
 <template>
-<<<<<<< HEAD
-  {{ this.question[0] }}
-  <!-- {{ this.question[0].pos[0] }} -->
-=======
->>>>>>> 70f0c1e2d8d5a8419eeb2d2c8e5e1b3eccaec5b7
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>Lets GO!</h1>
@@ -38,13 +33,10 @@
       </div>
     </div>
 
-<<<<<<< HEAD
-=======
     <!--<div class="designn">
       <img src="img\sista.jpg" alt="" />
     </div> -->
 
->>>>>>> f4825fd6fab9113a53eaa8b2d21d17c0a2673068
     <div v-if="confirmedUser && activeGame">
       <div v-show="!activeQuestion">
         <div v-show="activeGame">
@@ -251,24 +243,16 @@ export default {
   display: grid;
   width: 100%;
   height: 100vh;
-<<<<<<< HEAD
-  grid-template-rows: 15% 15% 20%;
-  background: linear-gradient(#4285f4ff, #1d7658);
-=======
   grid-template-rows: 20% 20% 23%;
   background: linear-gradient(#17b27f,#319881, #2ab0b4, #3096c2);
->>>>>>> f4825fd6fab9113a53eaa8b2d21d17c0a2673068
   font-family: "Baloo Bhaijaan 2", cursive;
 
   justify-content: center;
 }
-<<<<<<< HEAD
-=======
 /* .designn {
   background-color: #1d7658;
 } */
 
->>>>>>> f4825fd6fab9113a53eaa8b2d21d17c0a2673068
 input {
   border-radius: 2em;
   width: 75vw;
@@ -284,8 +268,6 @@ input {
   font-family: "Baloo Bhaijaan 2", cursive;
 }
 
-<<<<<<< HEAD
-=======
 @media screen and (max-width: 600px) {
 
   .picture {
@@ -295,7 +277,6 @@ input {
 .fullFrame {
   background: linear-gradient(#319881, #1d7658, #105646);
 }
->>>>>>> f4825fd6fab9113a53eaa8b2d21d17c0a2673068
 .blockerAll {
   grid-column: 1;
   grid-row: 2;
