@@ -60,7 +60,7 @@
             <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
             <button
               class="Button"
-              id="overlookBtn"
+              id="overlook!Btn"
               v-on:click="[addNewQuestion(), closeExpand()]"
             >
               {{ uiLabels.Addquestion }}
@@ -74,11 +74,10 @@
       <!--Center box-->
       <div class="box centerBox">
         <!--Info box-->
-        <div
-          class="box info"
-          v-on:click="infoExpand"
-          v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"
-        >
+        <div class="box info">
+          <!--        v-on:click="infoExpand"
+          v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"-->
+
           <a
             v-if="{ infoBig: infoBig }"
             class="closeExpand"
@@ -94,15 +93,14 @@
         </div>
 
         <!--Question box-->
-        <div
-          class="box questionBox"
-          v-on:click="questionExpand"
+        <div class="box questionBox">
+          <!--         v-on:click="questionExpand"
           v-bind:class="{
             questionBig: questionBig,
             questionSmall: questionSmall,
             questionSmallCond: questionSmallCond,
-          }"
-        >
+          }"-->
+
           <h1>{{ this.uiLabels.createQuestion }}</h1>
           <div id="picBox">
             <img
@@ -208,11 +206,9 @@
         </div>
 
         <!--Map box-->
-        <div
-          class="box map"
-          v-on:click="mapExpand"
-          v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"
-        >
+        <div class="box map">
+          <!--         v-on:click="mapExpand"
+                  v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"-->
           <div class="mapTitle">
             <h4>Choose a place on the map for your question to appear at</h4>
             <!-- Our map  -->
@@ -364,6 +360,7 @@ export default {
       gameId: "",
       question: "",
       answers: ["", ""],
+      pos: [],
       correctAnswer: 0,
       answersAlt: [this.answers, this.correctAnswer],
       questionNumber: 0,
@@ -465,7 +462,7 @@ export default {
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.checked,
-        pos: this.pos,
+        pos: this.pos, //window.polly.position || [],
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
@@ -476,7 +473,7 @@ export default {
       this.questions.push({
         gameId: this.gameId,
         type: this.checked,
-        pos: this.pos,
+        pos: this.pos, //window.polly.position || [],
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
