@@ -362,10 +362,6 @@ export default {
       );
     });
   },
-<<<<<<< HEAD
-
-=======
->>>>>>> 1f280969d76fe233e811463054ba5077ba7f5557
   data: function () {
     return {
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
