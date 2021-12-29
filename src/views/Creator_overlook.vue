@@ -75,10 +75,10 @@
       <div class="box centerBox">
         <!--Info box-->
         <div
-          class="box info"
-          v-on:click="infoExpand"
-          v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"
-        >
+          class="box info">
+  <!--        v-on:click="infoExpand"
+          v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"-->
+
           <a
             v-if="{ infoBig: infoBig }"
             class="closeExpand"
@@ -95,14 +95,14 @@
 
         <!--Question box-->
         <div
-          class="box questionBox"
-          v-on:click="questionExpand"
+         class="box questionBox">
+  <!--         v-on:click="questionExpand"
           v-bind:class="{
             questionBig: questionBig,
             questionSmall: questionSmall,
             questionSmallCond: questionSmallCond,
-          }"
-        >
+          }"-->
+
           <h1>{{ this.uiLabels.createQuestion }}</h1>
           <div id="picBox">
             <img
@@ -209,10 +209,9 @@
 
         <!--Map box-->
         <div
-          class="box map"
-          v-on:click="mapExpand"
-          v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"
-        >
+         class="box map" >
+          <!--         v-on:click="mapExpand"
+                  v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"-->
           <div class="mapTitle">
             <h4>Choose a place on the map for your question to appear at</h4>
             <!-- Our map  -->
@@ -362,10 +361,6 @@ export default {
       );
     });
   },
-<<<<<<< HEAD
-
-=======
->>>>>>> 1f280969d76fe233e811463054ba5077ba7f5557
   data: function () {
     return {
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
