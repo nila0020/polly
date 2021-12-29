@@ -1,7 +1,7 @@
 <template>
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
-      <h1>Lets GO!</h1>
+      <h1>{{ this.uiLabels.letsGo }}</h1>
       <div class="boxA">
         <label for="gameId" class="start_buttons1">Poll-ID</label><br />
         <input
@@ -29,7 +29,7 @@
         >
       </div>
       <div class="picture">
-<img src="/img/clouds.PNG" style="width:1200px;display: inline;">
+        <img src="/img/clouds.PNG" style="width: 1200px; display: inline" />
       </div>
     </div>
 
@@ -89,7 +89,6 @@ export default {
     Maps,
     Bars,
   },
-  
   data: function () {
     return {
       question: {
@@ -112,10 +111,16 @@ export default {
         cA: [],
         scores: [],
       },
+      uiLabels: {},
     };
   },
   created: function () {
     this.gameId = this.$route.params.id;
+    this.lang = this.$route.params.lang;
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      this.uiLabels = labels;
+    });
     socket.on("newQuestion", (q) => (this.question = q));
   },
   methods: {
@@ -244,21 +249,17 @@ export default {
   width: 100%;
   height: 100vh;
   grid-template-rows: 20% 20% 23%;
-  background: linear-gradient(#17b27f,#319881, #2ab0b4, #3096c2);
+  background: linear-gradient(#17b27f, #319881, #2ab0b4, #3096c2);
   font-family: "Baloo Bhaijaan 2", cursive;
 
   justify-content: center;
 }
-/* .designn {
-  background-color: #1d7658;
-} */
-
 input {
   border-radius: 2em;
   width: 75vw;
   border-width: 3px;
   font-size: 1.4em;
-  color:white;
+  color: white;
   border-color: white;
   background-color: black;
   font-family: "Baloo Bhaijaan 2", cursive;
@@ -269,7 +270,6 @@ input {
 }
 
 @media screen and (max-width: 600px) {
-
   .picture {
     display: none !important;
   }

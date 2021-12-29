@@ -29,7 +29,7 @@
 <!-- Knappar för startsidan -->
 <div class = "container">
       <!-- Knapp till Usersidan -->
-      <router-link v-bind:to="'/poll/'"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.User}}</span></v-btn></router-link>
+      <router-link v-bind:to="'/poll/'+lang"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.User}}</span></v-btn></router-link>
       <!-- Knapp till creators överblick -->
       <router-link v-bind:to="'/Creator_overlook/'+lang"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.Creator}}</span></v-btn></router-link>
 </div>
