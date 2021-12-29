@@ -759,6 +759,7 @@ myMap.on("click", function(e){
   grid-column: 1;
   grid-row: 2;
   margin-right: 1vw;
+  border: white 2px;
 }
 #qBox {
   height: 100%;
