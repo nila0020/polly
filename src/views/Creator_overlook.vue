@@ -47,11 +47,11 @@
               <label>
                 <button
                   v-on:click="
-                    [currentData(question.questionNumber), closeExpand()]
+                    [currentData(question.qId), closeExpand()]
                   "
                   key=""
                 >
-                  {{ question.questionNumber }}.{{ question.q }}
+                  {{ question.qId }}.{{ question.q }}
                 </button>
               </label>
             </li>
@@ -373,7 +373,7 @@ export default {
       pos: [],
       correctAnswer: 0,
       answersAlt: [this.answers, this.correctAnswer],
-      questionNumber: 0,
+      qId: 0,
       editingNumber: 0,
       sliderMinVal: 10,
       sliderMaxVal: 20,
@@ -401,6 +401,11 @@ export default {
       mapSmall: false,
       questionSmallCond: false,
     };
+  },
+  computed: {
+    nextQuestionId: function() {
+      return this.questions.length + 1;
+    }
   },
   created: function () {
     this.lang = this.$route.params.lang;
@@ -463,7 +468,7 @@ export default {
       this.answers = ["", ""];
       this.info = "";
       this.pic = null;
-      this.editingNumber = this.questionNumber;
+      this.editingNumber = this.qId;
       this.hideCenterAndTool = false;
       this.correctAnswer = 0;
       this.answersAlt = [this.answers, this.correctAnswer];
@@ -477,7 +482,7 @@ export default {
         q: this.questionText,
         a: this.answersAlt,
         aS: this.sliderAnswer,
-        questionNumber: this.questionNumber,
+        qId: this.qId,
         pic: this.pic,
       });
       this.questions.push({
@@ -488,34 +493,34 @@ export default {
         q: this.questionText,
         a: this.answersAlt,
         aS: this.sliderAnswer,
-        questionNumber: this.questionNumber,
+        qId: this.qId,
         pic: this.pic,
       });
       console.log(this.questions);
     },
     saveQuestion: function () {
       this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
+        (obj) => obj.qId == this.editingNumber
       ).type = this.checked;
       this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
+        (obj) => obj.qId == this.editingNumber
       ).pos = window.polly.position;
       this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
+        (obj) => obj.qId == this.editingNumber
       ).info = this.info;
-      this.questions.find((obj) => obj.questionNumber == this.editingNumber).q =
+      this.questions.find((obj) => obj.qId == this.editingNumber).q =
         this.questionText;
       this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
+        (obj) => obj.qId == this.editingNumber
       ).a[0] = this.answers;
       this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
+        (obj) => obj.qId == this.editingNumber
       ).a[1] = this.correctAnswer;
       this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
+        (obj) => obj.qId == this.editingNumber
       ).aS = this.sliderAnswer;
       this.questions.find(
-        (obj) => obj.questionNumber == this.editingNumber
+        (obj) => obj.qId == this.editingNumber
       ).pic = this.pic;
 
       socket.emit("addQuestion", {
@@ -526,7 +531,7 @@ export default {
         q: this.questionText,
         a: this.answersAlt,
         aS: this.sliderAnswer,
-        questionNumber: this.editingNumber,
+        qId: this.editingNumber,
         pic: this.pic,
       });
       console.log("answers", this.answers);
@@ -545,7 +550,7 @@ export default {
             info: this.info,
             q: newQuestion,
             a: this.answers,
-            questionNumber: this.questionNumber,
+            qId: this.qId,
             pic: this.pic
           } )
       this.questions.push(
@@ -553,33 +558,35 @@ export default {
             q: this.questions,
             a: this.answers,
             info: this.info,
-            questionNumber: this.questionNumber}
+            qId: this.qId}
       );
       this.question = '';
       this.answers = ["", ""];
       this.info = "";
     },*/
 
-    currentData: function (questionNumber) {
-      this.editingNumber = questionNumber;
+    currentData: function (qId) {
+      this.editingNumber = qId;
       console.log(this.editingNumber);
       this.checked = this.questions.find(
-        (obj) => obj.questionNumber == questionNumber
+        (obj) => obj.qId == qId
       ).type;
       this.pos = this.questions.find(
-        (obj) => obj.questionNumber == questionNumber
+        (obj) => obj.qId == qId
       ).pos;
       this.info = this.questions.find(
-        (obj) => obj.questionNumber == questionNumber
+        (obj) => obj.qId == qId
       ).info;
       this.questionText = this.questions.find(
-        (obj) => obj.questionNumber == questionNumber
+        (obj) => obj.qId == qId
       ).q;
       this.answersAlt = this.questions.find(
-        (obj) => obj.questionNumber == questionNumber
+        (obj) => obj.qId == qId
       ).a;
+      this.answers = this.answersAlt[0];
+      this.sliderAnswer = this.answersAlt[1];
       this.pic = this.questions.find(
-        (obj) => obj.questionNumber == questionNumber
+        (obj) => obj.qId == qId
       ).pic;
     },
     addAnswer: function () {
@@ -628,7 +635,7 @@ export default {
     /*runQuestion: function () {
       socket.emit("runQuestion", {
         gameId: this.gameId,
-        questionNumber: this.questionNumber,
+        qId: this.qId,
       });
     },*/
   },
