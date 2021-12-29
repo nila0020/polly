@@ -328,46 +328,21 @@ export default {
         6000
       );
 
-      //Icon declaration
-      var currentIcon = leaflet.icon({
-        iconUrl: 'img/redIcon.png',
-        iconSize:     [38, 95], // size of the icon
-        // shadowSize:   [50, 64], // size of the shadow
-        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-        // shadowAnchor: [4, 62],  // the same for the shadow
-        // popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-
-      })
-
-      
-      myMap.on(
-        "click",
-        function (e) {
-          
-          var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng],{currentIcon}).addTo(
-            myMap
-          );
-          var pos = [e.latlng.lat, e.latlng.lng];
-
-          console.log("onClick marker", marker);
-          console.log("Position", pos);
-          if(!window.polly) {
-            window.polly = {}
-          }
-          if(!window.polly.position) {
-            window.polly.position = []
-          }
-          window.polly.position = [
-            ...window.polly.position,
-            pos
-          ]
-          // window.polly.position = pos
-        },
-      );
+      // Create marker on map
+      myMap.on("click", function (e) {
+        var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng]).addTo(
+          myMap
+        );
+        this.pos = [e.latlng.lat, e.latlng.lng];
+        console.log("onClick marker", marker);
+        console.log("Position", this.pos);
+        return this.pos;
+      });
     });
   },
   data: function () {
     return {
+      pos: [],
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
       questions: [],
       info: "",
@@ -472,7 +447,6 @@ export default {
       this.answersAlt = [this.answers, this.correctAnswer];
       console.log(this.hideCenter);
       this.hideCond++;
-      console.log("HELLO", window.polly.position)
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.checked,
@@ -503,7 +477,7 @@ export default {
       ).type = this.checked;
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
-      ).pos = window.polly.position;
+      ).pos = this.pos;
       this.questions.find(
         (obj) => obj.questionNumber == this.editingNumber
       ).info = this.info;
@@ -525,7 +499,7 @@ export default {
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.checked,
-        pos: window.polly.position,
+        pos: this.pos,
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
@@ -533,8 +507,7 @@ export default {
         questionNumber: this.editingNumber,
         pic: this.pic,
       });
-      console.log("answers", this.answers);
-
+      console.log(this.answers);
       //console.log(this.sliderAnswer);
       //$("#myElem").show().delay(5000).fadeOut();
     },
@@ -791,7 +764,6 @@ export default {
   grid-column: 1;
   grid-row: 2;
   margin-right: 1vw;
-  border: white 2px;
 }
 #qBox {
   height: 100%;
