@@ -2,22 +2,22 @@
   <h1>Leaderboard:</h1>
   <div class="wrapper">
     <div class="bar" v-for="(item, key) in scoreBoard.scores" v-bind:key="key">
-      <div v-bind:style="{ height: 50 * this.calcBar(item.score) + 'px' }">
-        <span> {{ this.calcBar(item.score) }} </span>
+      <div v-bind:style="{ height: 30 * item.score + 'px' }">
+        <span> {{ item.score }} </span>
       </div>
       <div>{{ key }}:<br />{{ item.userName }}</div>
     </div>
-    <div class="bar">
-      <div
-        v-bind:style="{ height: 50 * calcBar(this.scoreBoard.score) + 'px' }"
-      >
-        <span> {{ calcBar(this.scoreBoard.score) }} </span>
+
+    <div class="bar" v-if="this.scoreBoard.score">
+      <div v-bind:style="{ height: 30 * this.scoreBoard.score + 'px' }">
+        <span> {{ this.scoreBoard.score }} </span>
       </div>
       <div style="bold" class="UserNameText">
         You:<br />{{ this.scoreBoard.userName }}
       </div>
     </div>
   </div>
+
   <!-- <h2> You are ranked as the {{rank}} </h2> -->
 </template>
 
@@ -27,6 +27,7 @@ export default {
   props: {
     scoreBoard: {
       cA: [],
+      score: Number,
       scores: {
         key: {
           userName: "",
