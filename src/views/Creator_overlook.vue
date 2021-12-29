@@ -332,11 +332,7 @@ export default {
       var currentIcon = leaflet.icon({
         iconUrl: 'img/redIcon.png',
         iconSize:     [38, 95], // size of the icon
-        // shadowSize:   [50, 64], // size of the shadow
         iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-        // shadowAnchor: [4, 62],  // the same for the shadow
-        // popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-
       })
 
       
@@ -366,6 +362,10 @@ export default {
       );
     });
   },
+<<<<<<< HEAD
+
+=======
+>>>>>>> 1f280969d76fe233e811463054ba5077ba7f5557
   data: function () {
     return {
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
