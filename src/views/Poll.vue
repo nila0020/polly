@@ -1,4 +1,5 @@
 <template>
+  {{ this.question }}
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>{{ this.uiLabels.letsGo }}</h1>
@@ -47,7 +48,7 @@
             <div class="navBar">{{ gameId }}</div>
             <div class="mapWrap">
               <div class="map">
-                <Maps />
+                <Maps :pos="question.pos" />
                 <!-- v-bind:pos="this.question.pos" v-if = "this.question.pos" -->
               </div>
             </div>

@@ -42,6 +42,11 @@ function sockets(io, socket, data) {
     socket.emit('GameIdExists', data.doesGameIdExist(d.gameId, d.userName))
   });
 
+  socket.on("reactivePosition", function (d) {
+    console.log("i reactivePosition socketes", d)
+    socket.emit('questionPosition', d)
+  });
+
   socket.on('scoreBoard', function (d) {
     socket.emit("newScoreboard", data.getScoreboard(d.gameId, d.userName))
     console.log("efter Newscoreboard emit i sockets")

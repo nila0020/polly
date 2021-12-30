@@ -46,9 +46,7 @@
             <li v-bind:key="question" v-for="question in questions">
               <label>
                 <button
-                  v-on:click="
-                    [currentData(question.qId), closeExpand()]
-                  "
+                  v-on:click="[currentData(question.qId), closeExpand()]"
                   key=""
                 >
                   {{ question.qId }}.{{ question.q }}
@@ -210,15 +208,16 @@
           <!--         v-on:click="mapExpand"
                   v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"-->
           <div class="mapTitle">
-            <h4>Choose a place on the map for your question to appear at
-              {{reactiveProperties.pos}}
+            <h4>
+              Choose a place on the map for your question to appear at
+              {{ reactiveProperties.pos }}
             </h4>
             <!-- Our map  -->
             <div id="myMap"></div>
           </div>
         </div>
       </div>
-      
+
       <!--Tool box-->
       <div class="box toolBox" v-on:click="hideCenter = false">
         <h1>toolBox</h1>
@@ -271,7 +270,7 @@ export default {
     //Load map
 
     let myMap;
-    const reactiveProperties = reactive({ pos: null })
+    const reactiveProperties = reactive({ pos: null });
     onMounted(() => {
       myMap = leaflet.map("myMap").setView([59.855727, 17.633445], 13);
 
@@ -329,7 +328,6 @@ export default {
 
       //Icon declaration
       var currentIcon = leaflet.icon({
-<<<<<<< HEAD
         iconUrl: "img/redIcon.png",
         iconSize: [38, 95], // size of the icon
         iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
@@ -340,52 +338,13 @@ export default {
           currentIcon,
         }).addTo(myMap);
         var pos = [e.latlng.lat, e.latlng.lng];
-
+        reactiveProperties.pos = pos;
         console.log("onClick marker", marker);
-        console.log("Position", pos);
-        if (!window.polly) {
-          window.polly = {};
-        }
-        if (!window.polly.position) {
-          window.polly.position = [];
-        }
-        window.polly.position = [...window.polly.position, pos];
-        // window.polly.position = pos
+        console.log("innan socketemit i myMap.onclick :Position", pos);
+        socket.emit("reactivePosition", reactiveProperties.pos);
       });
-=======
-        iconUrl: 'img/redIcon.png',
-        iconSize:     [38, 95], // size of the icon
-        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-      })
-
-     
-      myMap.on(
-        "click",
-        function (e) {
-          
-          var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng],{currentIcon}).addTo(
-            myMap
-          );
-          var pos = [e.latlng.lat, e.latlng.lng];
-          reactiveProperties.pos = pos
-          console.log("onClick marker", marker);
-          console.log("Position", pos);
-          if(!window.polly) {
-            window.polly = {}
-          }
-          if(!window.polly.position) {
-            window.polly.position = []
-          }
-          window.polly.position = [
-            ...window.polly.position,
-            pos
-          ]
-          // window.polly.position = pos
-        },
-      );
->>>>>>> b0af2adeccc61aab39f599b043d8b40d00c90037
     });
-    return {reactiveProperties}
+    return { reactiveProperties };
   },
   data: function () {
     return {
@@ -429,9 +388,9 @@ export default {
     };
   },
   computed: {
-    nextQuestionId: function() {
+    nextQuestionId: function () {
       return this.questions.length + 1;
-    }
+    },
   },
   created: function () {
     this.lang = this.$route.params.lang;
@@ -442,6 +401,7 @@ export default {
     socket.on("dataUpdate", (data) => (this.data = data));
     socket.on("gameCreated", (data) => (this.data = data));
     socket.on("gameLoaded", (data) => (this.questions = data));
+    socket.on("questionPosition", (data) => (this.pos = data));
   },
   methods: {
     getSliderValue(sliderValue) {
@@ -525,29 +485,22 @@ export default {
       console.log(this.questions);
     },
     saveQuestion: function () {
-      this.questions.find(
-        (obj) => obj.qId == this.editingNumber
-      ).type = this.checked;
-      this.questions.find(
-        (obj) => obj.qId == this.editingNumber
-      ).pos = window.polly.position;
-      this.questions.find(
-        (obj) => obj.qId == this.editingNumber
-      ).info = this.info;
+      this.questions.find((obj) => obj.qId == this.editingNumber).type =
+        this.checked;
+      this.questions.find((obj) => obj.qId == this.editingNumber).pos =
+        this.question.pos; //window.polly.position;
+      this.questions.find((obj) => obj.qId == this.editingNumber).info =
+        this.info;
       this.questions.find((obj) => obj.qId == this.editingNumber).q =
         this.questionText;
-      this.questions.find(
-        (obj) => obj.qId == this.editingNumber
-      ).a[0] = this.answers;
-      this.questions.find(
-        (obj) => obj.qId == this.editingNumber
-      ).a[1] = this.correctAnswer;
-      this.questions.find(
-        (obj) => obj.qId == this.editingNumber
-      ).aS = this.sliderAnswer;
-      this.questions.find(
-        (obj) => obj.qId == this.editingNumber
-      ).pic = this.pic;
+      this.questions.find((obj) => obj.qId == this.editingNumber).a[0] =
+        this.answers;
+      this.questions.find((obj) => obj.qId == this.editingNumber).a[1] =
+        this.correctAnswer;
+      this.questions.find((obj) => obj.qId == this.editingNumber).aS =
+        this.sliderAnswer;
+      this.questions.find((obj) => obj.qId == this.editingNumber).pic =
+        this.pic;
 
       socket.emit("addQuestion", {
         gameId: this.gameId,
@@ -593,26 +546,14 @@ export default {
     currentData: function (qId) {
       this.editingNumber = qId;
       console.log(this.editingNumber);
-      this.checked = this.questions.find(
-        (obj) => obj.qId == qId
-      ).type;
-      this.pos = this.questions.find(
-        (obj) => obj.qId == qId
-      ).pos;
-      this.info = this.questions.find(
-        (obj) => obj.qId == qId
-      ).info;
-      this.questionText = this.questions.find(
-        (obj) => obj.qId == qId
-      ).q;
-      this.answersAlt = this.questions.find(
-        (obj) => obj.qId == qId
-      ).a;
+      this.checked = this.questions.find((obj) => obj.qId == qId).type;
+      this.pos = this.questions.find((obj) => obj.qId == qId).pos;
+      this.info = this.questions.find((obj) => obj.qId == qId).info;
+      this.questionText = this.questions.find((obj) => obj.qId == qId).q;
+      this.answersAlt = this.questions.find((obj) => obj.qId == qId).a;
       this.answers = this.answersAlt[0];
       this.sliderAnswer = this.answersAlt[1];
-      this.pic = this.questions.find(
-        (obj) => obj.qId == qId
-      ).pic;
+      this.pic = this.questions.find((obj) => obj.qId == qId).pic;
     },
     addAnswer: function () {
       this.answers.push("");
