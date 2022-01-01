@@ -9,107 +9,131 @@
     <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
   </div> -->
 
+  <section class="page">
+    <header id="header">
+      <h1>GeoQuiz <img src="/img/mappe.png" style="width: 9vw" /></h1>
+    </header>
 
+    <h1>{{ uiLabels.welcomeText }}</h1>
 
-
-<section class = "page" >
-  <header id=header>
-
-    <h1>GeoQuiz      <img src="/img/mappe.png" style="width:9vw"> </h1>
-
-  </header>
-
-
-  <h1 >{{uiLabels.welcomeText}}</h1>
-
-
-
-  <h3>{{uiLabels.Choose}}</h3>
-  <!-- <img src="https://rymdcenter.se/wp-content/uploads/2020/01/m82-hst-karusell.jpg" alt="alt text"/> -->
-<!-- Knappar för startsidan -->
-<div class = "container">
+    <h3>{{ uiLabels.Choose }}</h3>
+    <!-- <img src="https://rymdcenter.se/wp-content/uploads/2020/01/m82-hst-karusell.jpg" alt="alt text"/> -->
+    <!-- Knappar för startsidan -->
+    <div class="container">
       <!-- Knapp till Usersidan -->
-      <router-link v-bind:to="'/poll/'+lang"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.User}}</span></v-btn></router-link>
+      <router-link v-bind:to="'/poll/' + lang"
+        ><v-btn outline block class="start_buttons"
+          ><span class="text">{{ uiLabels.User }}</span></v-btn
+        ></router-link
+      >
       <!-- Knapp till creators överblick -->
-      <router-link v-bind:to="'/Creator_overlook/'+lang"><v-btn outline block class="start_buttons"><span class="text">{{uiLabels.Creator}}</span></v-btn></router-link>
-</div>
-  <br>
-  <div class="row">
-
-    <div class="column">
-      <img class="desktop-only"  src="/img/pngwing.png" style="width:600px; opacity:0.7; margin-left:-3pt; margin-bottom: -42pt;display: inline;">
+      <router-link v-bind:to="'/Creator_overlook/' + lang"
+        ><v-btn outline block class="start_buttons"
+          ><span class="text">{{ uiLabels.Creator }}</span></v-btn
+        ></router-link
+      >
     </div>
-    <div class="column">
-      <button id="langButton" class ="langButton" v-on:click="switchLanguage"  > <div>{{uiLabels.changeLanguage}} </div> <img v-bind:src="uiLabels.imgLanguage"  height="70" width="140"  alt=""></button>
+    <br />
+    <div class="row">
+      <div class="column">
+        <img
+          class="desktop-only"
+          src="/img/pngwing.png"
+          style="
+            width: 600px;
+            opacity: 0.7;
+            margin-left: -3pt;
+            margin-bottom: -42pt;
+            display: inline;
+          "
+        />
+      </div>
+      <div class="column">
+        <button id="langButton" class="langButton" v-on:click="switchLanguage">
+          <div>{{ uiLabels.changeLanguage }}</div>
+          <img
+            v-bind:src="uiLabels.imgLanguage"
+            height="70"
+            width="140"
+            alt=""
+          />
+        </button>
+      </div>
+      <div class="column">
+        <img
+          class="desktop-only"
+          src="/img/road.png"
+          style="
+            width: 200px;
+            opacity: 0.7;
+            margin-bottom: -42pt;
+            overflow: hidden;
+            display: inline;
+          "
+        />
+      </div>
     </div>
-    <div class="column">
-      <img class="desktop-only" src="/img/road.png" style="width:200px; opacity:0.7; margin-bottom: -42pt; overflow:hidden; display: inline;">
-    </div>
-  </div>
-
-
-
-</section>
+  </section>
 </template>
 
 <script>
-import io from 'socket.io-client';
+import io from "socket.io-client";
 const socket = io();
 
 export default {
-  name: 'Start',
+  name: "Start",
   data: function () {
     return {
       uiLabels: {},
       id: "",
       lang: "en",
-    }
+    };
   },
   created: function () {
     socket.on("init", (labels) => {
-      this.uiLabels = labels
-    })
+      this.uiLabels = labels;
+    });
   },
   methods: {
-    switchLanguage: function() {
-      if (this.lang === "en")
-        this.lang = "sv"
-      else
-        this.lang = "en"
-      socket.emit("switchLanguage", this.lang)
-      console.log(this.uiLabels)
-    }
-  }
-}
+    switchLanguage: function () {
+      if (this.lang === "en") this.lang = "sv";
+      else this.lang = "en";
+      socket.emit("switchLanguage", this.lang);
+      console.log(this.uiLabels);
+    },
+  },
+};
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@800&family=Lilita+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@800&family=Lilita+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap");
 
-body { min-height: 100vh; }
-
-html { overflow-y:scroll; height: 100% }
-
-
-.page {
-  background: linear-gradient(#b6d7a8ff,#b6d7a8ff, #1d7658, #105646);
-  text-align:center;
-  font-family: 'Baloo Bhaijaan 2', cursive;
-  font-size: 20pt;
-  color: black;
-  padding-bottom:50px;
-  padding-top:1px;
+body {
+  min-height: 100vh;
 }
 
+html {
+  overflow-y: scroll;
+  height: 100%;
+}
 
-#header{
+.page {
+  background: linear-gradient(#b6d7a8ff, #b6d7a8ff, #1d7658, #105646);
+  text-align: center;
+  font-family: "Baloo Bhaijaan 2", cursive;
+  font-size: 20pt;
+  color: black;
+  padding-bottom: 50px;
+  padding-top: 1px;
+}
+
+#header {
   background-color: #b6d7a8ff;
-  color:#1d7658;
-  font-family: 'Luckiest Guy', cursive;
+  color: #1d7658;
+  font-family: "Luckiest Guy", cursive;
   font-size: 3.8vw;
-  justify-content:center;
-  text-shadow: 5px 5px #000000
-
+  justify-content: center;
+  text-shadow: 5px 5px #000000;
 }
 /* Three image containers (use 25% for four, and 50% for two, etc) */
 .row {
@@ -125,25 +149,22 @@ html { overflow-y:scroll; height: 100% }
   display: block !important;
 }
 @media screen and (max-width: 600px) {
-
-  .desktop-only{
+  .desktop-only {
     display: none !important;
   }
-  #header{
-    font-size:25pt
+  #header {
+    font-size: 25pt;
   }
-  .page{
-    font-size:18pt;
+  .page {
+    font-size: 18pt;
   }
 
-  .langButton{
-    text-align:center;
+  .langButton {
+    text-align: center;
   }
 }
 
-
 .container {
-  
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -159,9 +180,9 @@ html { overflow-y:scroll; height: 100% }
   border: 0;
   border-radius: 8px;
   box-sizing: border-box;
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
-  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-family: "Baloo Bhaijaan 2", cursive;
   font-size: 20px;
   justify-content: center;
   line-height: 2em;
@@ -183,7 +204,7 @@ html { overflow-y:scroll; height: 100% }
 }
 
 .start_buttons span {
-  background-color:  #000000;
+  background-color: #000000;
   padding: 16px 24px;
   border-radius: 6px;
   width: 100%;
@@ -199,20 +220,18 @@ html { overflow-y:scroll; height: 100% }
   align-items: center;
   padding: 0;
   cursor: pointer;
-
 }
 .langButton:hover {
   filter: brightness(130%);
 }
-
 
 @media (min-width: 768px) {
   .start_buttons {
     font-size: 24px;
     min-width: 196px;
   }
-  #langButton{
-    margin-left:-140pt
+  #langButton {
+    margin-left: -140pt;
   }
 }
 </style>

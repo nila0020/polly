@@ -1,5 +1,4 @@
 <template>
-  {{ this.question }}
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>{{ this.uiLabels.letsGo }}</h1>
@@ -30,7 +29,7 @@
         >
       </div>
       <div class="picture">
-        <img src="/img/clouds.PNG" style="width: 1200px; display: inline" />
+        <img src="/img/clouds.PNG" />
       </div>
     </div>
 
@@ -45,7 +44,11 @@
         </div>
         <div class="centrera">
           <div class="wrapper">
-            <div class="navBar">{{ gameId }}</div>
+            <div class="navBar">
+              <button id="quitButton" on:click="quitGame">Quit</button>
+              <div id="gameName">{{ gameName }}</div>
+              <div id="gameId">Game ID:{{ gameId }}</div>
+            </div>
             <div class="mapWrap">
               <div class="map">
                 <Maps :pos="question.pos" />
@@ -114,6 +117,7 @@ export default {
   created: function () {
     this.gameId = this.$route.params.id;
     this.lang = this.$route.params.lang;
+    this.gameName = this.$route.params.name;
     socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
       this.uiLabels = labels;
@@ -162,7 +166,7 @@ export default {
         answer: answer,
         userName: this.userName,
       }); /*avgör om det finns fler frågor eller om quizzet skall avslutas*/
-      if (this.question[0]["qId"] < this.question[1]) {
+      if (this.question[0]["qId"] + 1 < this.question[1]) {
         this.qId += 1;
         /*nedan uppdaterar vi frågeobjektet via sockets via data*/
         socket.emit("runQuestion", {
@@ -190,7 +194,7 @@ export default {
         });
       }
     },
-
+    quitgame: function () {},
     activateQuestion: function () {
       this.activeQuestion = true;
     },
@@ -198,33 +202,54 @@ export default {
 };
 </script>
 <style scoped>
+label {
+  font-size: 24px;
+
+  font-family: "Baloo Bhaijaan 2", cursive;
+  color: white;
+}
+.picture {
+  width: 100vw;
+  object-fit: contain;
+}
+img {
+  max-width: 100%;
+}
 .centrera {
   display: flex;
-  flex-direction: row;
+  flex-direction: center;
   justify-content: center;
 }
 .wrapper {
+  padding: 0.3em;
+  box-sizing: border-box;
   display: grid;
-  width: 100%;
   max-width: 65vh;
-  height: 98vh;
+  height: 100vh;
   grid-template-rows: 1fr 9fr;
-
   background-color: white;
   color: black;
-  overflow: hidden;
   border-radius: 12px;
 }
 
 .navBar {
+  font-family: "Baloo Bhaijaan 2", cursive;
   grid-column: 1;
   grid-row: 1;
   color: white;
   width: 100%;
-  background-color: rgb(74, 211, 90);
+  justify-items: center;
+  align-items: center;
+  background-color: rgb(5, 177, 25);
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
 }
 .mapWrap {
   overflow: hidden;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
 }
 .questionDisplayed {
   width: 100%;
@@ -242,7 +267,7 @@ export default {
   grid-template-rows: 20% 20% 23%;
   background: linear-gradient(#17b27f, #319881, #2ab0b4, #3096c2);
   font-family: "Baloo Bhaijaan 2", cursive;
-
+  justify-items: center;
   justify-content: center;
 }
 input {
@@ -257,17 +282,15 @@ input {
 }
 #joinknapp {
   max-width: 79vw;
+  width: 75vw;
   font-family: "Baloo Bhaijaan 2", cursive;
 }
 
-@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 600px) {
   .picture {
     display: none !important;
   }
-}
-.fullFrame {
-  background: linear-gradient(#319881, #1d7658, #105646);
-}
+} */
 .blockerAll {
   grid-column: 1;
   grid-row: 2;

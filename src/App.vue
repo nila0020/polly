@@ -1,9 +1,12 @@
 <template>
-  <router-view/>
+  <router-view />
 </template>
 
 
 <style>
+* {
+  margin: 0 !important;
+}
 #app {
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -16,7 +19,7 @@
 }
 
 #nav a {
-  padding:0.4em;
+  padding: 0.4em;
   font-weight: bold;
   color: blue;
 }

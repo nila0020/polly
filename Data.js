@@ -34,7 +34,7 @@ Data.prototype.createGame = function (gameId, lang = "en", gameName) {
 }
 
 Data.prototype.loadGame = function (gameId) {
-  if (typeof this.games[gameId] !== "undefined"){
+  if (typeof this.games[gameId] !== "undefined") {
     console.log(this.games[gameId].questions)
     return [this.games[gameId].questions, this.games[gameId].questions.length];
   }
