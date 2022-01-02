@@ -33,6 +33,10 @@ function sockets(io, socket, data) {
     io.to(d.gameId).emit('newQuestion', data.getQuestion(d.gameId, d.questionNumber));
     io.to(d.gameId).emit('dataUpdate', data.getAnswers(d.gameId));
   });
+  socket.on('withinRangeEmit', function (d) {
+    console.log("withinrange hej");
+    io.to(d.gameId).emit('withinRange', d);
+  });
 
   socket.on('submitAnswer', function (d) {
     data.submitAnswer(d.gameId, d.answer, d.userName);

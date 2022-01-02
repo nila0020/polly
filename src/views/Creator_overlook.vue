@@ -448,7 +448,7 @@ export default {
       });
     },
     addNewQuestion: function () {
-      console.log(this.questions)
+      console.log(this.questions);
       this.pos = [];
       this.qId = this.questions.length + 1;
       this.questionText = "";

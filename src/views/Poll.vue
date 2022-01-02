@@ -60,7 +60,11 @@
             </div>
             <div class="mapWrap">
               <div class="map">
-                <Maps :pos="question.pos" />
+                <Maps
+                  :qLat="this.question[0].pos[0]"
+                  :qLong="this.question[0].pos[1]"
+                  v-if="this.question[0].pos"
+                />
                 <!-- v-bind:pos="this.question.pos" v-if = "this.question.pos" -->
               </div>
             </div>
@@ -111,6 +115,7 @@ export default {
         info: "",
         pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg",
       },
+      withinRange: false,
       gameId: null,
       gameExists: [false, true],
       confirmedUser: false,
@@ -149,6 +154,7 @@ export default {
     });
     socket.on("newQuestion", (q) => (this.question = q));
     socket.on("newScoreboard", (q) => (this.scoreBoard = q));
+    socket.on("withinRange", (data) => (this.withinRange = data));
   },
   methods: {
     submitAnswer: function (answer) {
@@ -191,6 +197,7 @@ export default {
       }
 
       this.activeQuestion = false;
+      this.withinRange = false;
     },
     confirmUser: function () {
       if (!this.gameId || !this.userName) {
