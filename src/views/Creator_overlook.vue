@@ -388,7 +388,7 @@ export default {
     };
   },
   computed: {
-    nextQuestionId: function () {
+    v: function () {
       return this.questions.length + 1;
     },
   },
@@ -400,7 +400,7 @@ export default {
     });
     socket.on("dataUpdate", (data) => (this.data = data));
     socket.on("gameCreated", (data) => (this.data = data));
-    socket.on("gameLoaded", (data) => (this.questions = data));
+    socket.on("gameLoaded", (data) => (this.questions = data[0]));
     socket.on("questionPosition", (data) => (this.pos = data));
   },
   methods: {
@@ -448,8 +448,9 @@ export default {
       });
     },
     addNewQuestion: function () {
+      console.log(this.questions)
       this.pos = [];
-      this.questionNumber++;
+      this.qId = this.questions.length + 1;
       this.questionText = "";
       this.answers = ["", ""];
       this.info = "";
@@ -482,7 +483,6 @@ export default {
         qId: this.qId,
         pic: this.pic,
       });
-      console.log(this.questions);
     },
     saveQuestion: function () {
       this.questions.find((obj) => obj.qId == this.editingNumber).type =
