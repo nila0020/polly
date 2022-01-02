@@ -1,14 +1,14 @@
 <template>
   <section class="pagee">
-    <section class="box titleBox">
+    <section class="titleBox">
       <!--Title box-->
 
       <!--      <h3>Game Title and GameID</h3>-->
 
       <!--      <div class="insertTitle">-->
-      <div id="gameNameBox">
+      <div class="column">
         <label for="gameName">{{ uiLabels.gameName }}: </label>
-        <br />
+        <span class="break"><br /></span>
         <input
           type="text"
           id="gameName"
@@ -16,9 +16,9 @@
           v-bind:placeholder="this.uiLabels.enterGameName"
         />
       </div>
-      <div id="gameIDBox">
+      <div class="column">
         <label for="gameID">{{ uiLabels.gameID }}: </label>
-        <br />
+        <span class="break"><br /></span>
         <input
           type="text"
           id="gameID"
@@ -26,12 +26,15 @@
           v-bind:placeholder="this.uiLabels.enterGameID"
         />
       </div>
-      <div id="gameButtonBox">
-        <button class="Button" v-on:click="createGame">
+      <div class="column">
+        <button class="Button createButton" v-on:click="createGame">
           {{ uiLabels.CreateGame }}
         </button>
-        <br />
-        <button class="Button" v-on:click="loadGame">Load Game</button>
+        <span class="break"><br /></span>
+
+        <button class="Button loadButton" v-on:click="loadGame">
+          Load Game
+        </button>
       </div>
       <!--      </div>-->
     </section>
@@ -616,48 +619,49 @@ export default {
 </script>
 
 <style>
+/*body {
+  margin: 0px;
+  min-height: 100%;
+  min-width: 100%;
+}*/
 .pagee {
   background-color: black;
   text-align: center;
   font-size: 20pt;
   font-family: "Baloo Bhaijaan 2", cursive;
   color: black;
-  padding-bottom: 50px;
 }
 #header h1 {
   font-family: "Times New Roman", Times, serif;
 }
-.markering {
-  transform: translate(500%, 100%);
+.titleBox h3 {
+  float: left;
+}
+.titleBox {
+  position: fixed;
+  width: 100%;
+  height: 15vh;
+  display: table;
+  clear: both;
+  /*  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 100%;*/
+  color: black;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.6),
+      rgba(255, 255, 255, 0.6)
+    ),
+    url("https://media.istockphoto.com/vectors/city-game-background-vector-id526716884?k=20&m=526716884&s=170667a&w=0&h=eSrH07Do4iPSAQ3i3iukNADDsfnNLoX1LnlUUuhlTO0=");
+}
+.column {
+  float: left;
+  width: 30%;
 }
 .container {
+  padding-top: 20vh;
   display: grid;
   grid-template-columns: 20% 60% 20%;
   grid-template-rows: 50% 50%;
-}
-.blockerAll {
-  color: white;
-  grid-column: 1 / span 3;
-  grid-row: 1 / span 2;
-  overflow: hidden;
-  background-color: black;
-  opacity: 95%;
-}
-.blocker2 {
-  color: white;
-  grid-column: 2 / span 2;
-  grid-row: 1 / span 2;
-  overflow: hidden;
-  background-color: black;
-  opacity: 95%;
-}
-.blocker3 {
-  color: white;
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  overflow: hidden;
-  background-color: black;
-  opacity: 95%;
 }
 
 .box {
@@ -669,21 +673,6 @@ export default {
 }
 .insertTitle {
   float: right;
-}
-.titleBox h3 {
-  float: left;
-}
-.titleBox {
-  display: grid;
-  height: 15vh;
-  grid-template-columns: 33% 33% 33%;
-  grid-template-rows: 100%;
-  color: black;
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.6),
-      rgba(255, 255, 255, 0.6)
-    ),
-    url("https://media.istockphoto.com/vectors/city-game-background-vector-id526716884?k=20&m=526716884&s=170667a&w=0&h=eSrH07Do4iPSAQ3i3iukNADDsfnNLoX1LnlUUuhlTO0=");
 }
 
 .Overlook {
@@ -785,12 +774,34 @@ export default {
   grid-column: 1 / span 4;
   grid-row: 3 / span 2;
 }
-
-#myMap {
-  height: 500px;
-  /* width: 500px;
-  position: absolute; */
+.blockerAll {
+  color: white;
+  grid-column: 1 / span 3;
+  grid-row: 1 / span 2;
+  overflow: hidden;
+  background-color: black;
+  opacity: 95%;
+  transition: 300ms;
 }
+.blocker2 {
+  color: white;
+  grid-column: 2 / span 2;
+  grid-row: 1 / span 2;
+  overflow: hidden;
+  background-color: black;
+  opacity: 95%;
+  transition: 300ms;
+}
+.blocker3 {
+  color: white;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  overflow: hidden;
+  background-color: black;
+  opacity: 95%;
+  transition: 300ms;
+}
+
 .Button {
   float: right;
   align-items: center;
@@ -803,11 +814,11 @@ export default {
   color: #ffffff;
   display: flex;
   font-family: "Baloo Bhaijaan 2", cursive;
-  font-size: 3vh;
+  font-size: 2vh;
   justify-content: center;
   line-height: 2em;
   max-width: 100%;
-  min-width: 160px;
+  min-width: 100px;
   padding: 3px;
   text-decoration: none;
   user-select: none;
@@ -831,11 +842,11 @@ export default {
 .Button:hover span {
   background: none;
 }
-@media (min-width: 768px) {
-  .createButton {
-    font-size: 10px;
-    min-width: 90px;
-  }
+.createButton {
+  float: right;
+}
+.loadButton {
+  float: right;
 }
 /* conditionl statments */
 .infoBig {
@@ -894,13 +905,252 @@ export default {
   font-size: 20px;
 }
 
-#gameNameBox {
+.gameNameBox {
   grid-column: 1;
 }
-#gameIDBox {
+.gameIDBox {
   grid-column: 2;
 }
-#gameButtonBox {
+.gameButtonBox {
   grid-column: 3;
+}
+.break {
+  display: inline;
+}
+
+@media screen and (max-width: 660px) {
+  .pagee {
+    font-size: 15pt;
+  }
+  .break {
+    display: none;
+  }
+
+  .titleBox h3 {
+    float: none;
+  }
+
+  .titleBox {
+    position: fixed;
+    height: 15vh;
+    /*    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;*/
+    color: black;
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0.6)
+      ),
+      url("https://media.istockphoto.com/vectors/city-game-background-vector-id526716884?k=20&m=526716884&s=170667a&w=0&h=eSrH07Do4iPSAQ3i3iukNADDsfnNLoX1LnlUUuhlTO0=");
+  }
+  .column {
+    width: 100%;
+  }
+
+  .container {
+    padding-top: 15vh;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 50% 50%;
+  }
+
+  .box {
+    color: #fff;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 20px;
+    font-size: 100%;
+  }
+
+  .insertTitle {
+    float: right;
+  }
+
+  .Overlook {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    border-style: dotted;
+    background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+    color: white;
+  }
+
+  .infoWindow {
+    font: black;
+
+    border-style: dotted;
+  }
+
+  .centerBox {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 25% 25% 25% 25%;
+    border-style: dotted;
+    background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+  }
+
+  .toolBox {
+    background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    border-style: dotted;
+  }
+
+  .info h1 {
+    margin-top: 0;
+    font-size: 25px;
+  }
+
+  .info {
+    padding-top: 0;
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 2;
+    overflow: scroll;
+  }
+
+  .infoArea {
+    width: 100%;
+    height: 20vh;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: black;
+    resize: none;
+    color: white;
+  }
+
+  .questionArea {
+    width: 70%;
+    height: 70%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: black;
+    resize: none;
+    color: white;
+  }
+
+  .questionBox {
+    grid-column: 3 / span 2;
+    grid-row: 1 / span 2;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 10% 45% 45%;
+    overflow: scroll;
+  }
+
+  .questionBox h1 {
+    font-size: 15px;
+    grid-column: 1 / span 2;
+    grid-row: 1;
+  }
+
+  #picBox {
+    display: grid;
+    grid-template-rows: 80% 20%;
+    grid-template-columns: 50% 50%;
+    height: 100%;
+    grid-column: 1;
+    grid-row: 2;
+    margin-right: 1vw;
+  }
+
+  #qBox {
+    height: 100%;
+    padding-top: 2vh;
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  #aBox {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+  }
+
+  .map {
+    grid-column: 1 / span 4;
+    grid-row: 3 / span 2;
+  }
+
+  .blockerAll {
+    color: white;
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 2;
+    overflow: hidden;
+    background-color: black;
+    opacity: 95%;
+    transition: 300ms;
+  }
+
+  .blocker2 {
+    color: white;
+    grid-column: 2 / span 2;
+    grid-row: 1 / span 2;
+    overflow: hidden;
+    background-color: black;
+    opacity: 95%;
+    transition: 300ms;
+  }
+
+  .blocker3 {
+    color: white;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    overflow: hidden;
+    background-color: black;
+    opacity: 95%;
+    transition: 300ms;
+  }
+
+  .Button {
+    float: right;
+    align-items: center;
+    background-image: linear-gradient(144deg, #c4bdbd, #000000 50%, #9a9797);
+
+    border-color: white;
+    border-radius: 8px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    box-sizing: border-box;
+    color: #ffffff;
+    display: flex;
+    font-family: "Baloo Bhaijaan 2", cursive;
+    font-size: 1.5vh;
+    justify-content: center;
+    line-height: 2em;
+    max-width: 100%;
+    min-width: 80px;
+    padding: 3px;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .Button:active,
+  .Button:hover {
+    outline: 0;
+  }
+
+  .Button span {
+    background-color: #000000;
+    padding: 16px 24px;
+    border-radius: 6px;
+    width: 100%;
+    height: 45%;
+    transition: 300ms;
+  }
+
+  .Button:hover span {
+    background: none;
+  }
 }
 </style>
