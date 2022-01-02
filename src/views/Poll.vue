@@ -37,7 +37,10 @@
       <img src="img\sista.jpg" alt="" />
     </div> -->
 
-    <div v-if="confirmedUser && activeGame">
+    <div
+      v-if="confirmedUser && activeGame"
+      v-show="confirmedUser && activeGame"
+    >
       <div v-show="!activeQuestion">
         <div v-show="activeGame">
           <button v-on:click="activateQuestion">question!</button>
@@ -45,7 +48,13 @@
         <div class="centrera">
           <div class="wrapper">
             <div class="navBar">
-              <button id="quitButton" on:click="quitGame">Quit</button>
+              <button
+                id="quitButton"
+                class="start_buttons"
+                v-on:click="quitGame"
+              >
+                Quit
+              </button>
               <div id="gameName">{{ gameName }}</div>
               <div id="gameId">Game ID:{{ gameId }}</div>
             </div>
@@ -194,7 +203,9 @@ export default {
         });
       }
     },
-    quitgame: function () {},
+    quitGame: function () {
+      this.confirmedUser = false;
+    },
     activateQuestion: function () {
       this.activeQuestion = true;
     },
@@ -284,6 +295,26 @@ input {
   max-width: 79vw;
   width: 75vw;
   font-family: "Baloo Bhaijaan 2", cursive;
+}
+#quitButton {
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #ffffff;
+  display: flex;
+  font-family: "Baloo Bhaijaan 2", cursive;
+  font-size: 12px;
+  justify-content: center;
+  line-height: 2em;
+  max-width: 100%;
+  min-width: 60px;
+  padding: 3px;
+  text-decoration: underline;
+  text-decoration-color: black;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
 /* @media screen and (max-width: 600px) {
