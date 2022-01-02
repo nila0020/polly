@@ -281,6 +281,7 @@ export default {
             attribution:
               'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
+            minZoom: 1,
             id: "mapbox/streets-v11",
             tileSize: 512,
             zoomOffset: -1,
@@ -311,7 +312,12 @@ export default {
         lat = position.coords.latitude;
         lng = position.coords.longitude;
         latLng = [lat, lng];
-        marker = leaflet.marker([lat, lng]).addTo(myMap);
+        var meIcon = leaflet.icon({
+          iconUrl: "img/meIcon.png",
+          iconSize: [24, 24], // size of the icon
+          iconAnchor: [12, 12], // point of the icon which will correspond to marker's location
+        });
+        marker = leaflet.marker([lat, lng], { icon: meIcon }).addTo(myMap);
 
         return latLng;
       }
@@ -329,13 +335,14 @@ export default {
       //Icon declaration
       var currentIcon = leaflet.icon({
         iconUrl: "img/redIcon.png",
-        iconSize: [38, 95], // size of the icon
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+        iconSize: [26, 26], // size of the icon
+        iconAnchor: [13, 26], // point of the icon which will correspond to marker's location
+        className: "markering",
       });
 
       myMap.on("click", function (e) {
         var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng], {
-          currentIcon,
+          icon: currentIcon,
         }).addTo(myMap);
         var pos = [e.latlng.lat, e.latlng.lng];
         reactiveProperties.pos = pos;
@@ -620,6 +627,9 @@ export default {
 #header h1 {
   font-family: "Times New Roman", Times, serif;
 }
+.markering {
+  transform: translate(500%, 100%);
+}
 .container {
   display: grid;
   grid-template-columns: 20% 60% 20%;
@@ -775,6 +785,12 @@ export default {
   grid-column: 1 / span 4;
   grid-row: 3 / span 2;
 }
+
+#myMap {
+  height: 500px;
+  /* width: 500px;
+  position: absolute; */
+}
 .Button {
   float: right;
   align-items: center;
@@ -876,9 +892,6 @@ export default {
 }
 .mapTitle {
   font-size: 20px;
-}
-#myMap {
-  height: 320px;
 }
 
 #gameNameBox {

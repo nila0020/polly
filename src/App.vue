@@ -4,9 +4,6 @@
 
 
 <style>
-* {
-  margin: 0 !important;
-}
 #app {
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

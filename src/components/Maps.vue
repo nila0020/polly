@@ -19,14 +19,11 @@ export default {
   },
   setup(props) {
     //Load map
-    console.log("1", props.qLong);
     let myMap;
     //const reactiveProperties = reactive({ pos: null });
     onMounted(() => {
+      //kartSetup
       myMap = leaflet.map("myMap").setView([59.855727, 17.633445], 13);
-
-      console.log("2", props.qLong);
-      new leaflet.marker([props.qLat, props.qLong]).addTo(myMap);
       leaflet
         .tileLayer(
           "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ",
@@ -42,56 +39,64 @@ export default {
           }
         )
         .addTo(myMap);
+
       // Distance function
-      function checkDistance(a, b) {
-        if (myMap.distance(a, b) < 3000) {
-          alert("Within range");
+      function checkDistance(latLng, props) {
+        if (myMap.distance(latLng, [props.qLat, props.qLong]) < 300) {
           socket.emit("withinRangeEmit", true);
         }
-        console.log("avstånd i meter", myMap.distance(a, b));
+        console.log(
+          "avstånd i meter",
+          myMap.distance(latLng, [props.qLat, props.qLong])
+        );
       }
 
+      var lat, lng, marker, latLng;
+      function getPosition(position) {
+        if (marker && marker.title == "") {
+          myMap.removeLayer(marker);
+        }
+        var meIcon = leaflet.icon({
+          iconUrl: "img/meIcon.png",
+          iconSize: [24, 24], // size of the icon
+          iconAnchor: [12, 12], // point of the icon which will correspond to marker's location
+        });
+        lat = position.coords.latitude;
+        lng = position.coords.longitude;
+        latLng = [lat, lng];
+        marker = leaflet.marker([lat, lng], { icon: meIcon }).addTo(myMap);
+        return latLng;
+      }
+
+      function drawQuestion(props) {
+        var qIcon = leaflet.icon({
+          iconUrl: "img/redIcon.png",
+          iconSize: [36, 36], // size of the icon
+          iconAnchor: [18, 36], // point of the icon which will correspond to marker's location
+        });
+        marker = new leaflet.marker([props.qLat, props.qLong], {
+          icon: qIcon,
+          title: "qPin",
+        }).addTo(myMap);
+      }
       // Find user location
       setInterval(() => {
         navigator.geolocation.getCurrentPosition(getPosition);
       }, 5000);
-      var lat, lng, marker, latLng;
 
-      function getPosition(position) {
-        if (marker) {
-          myMap.removeLayer(marker);
-        }
+      setInterval(() => {
+        checkDistance(latLng, props);
+      }, 5500);
 
-        lat = position.coords.latitude;
-        lng = position.coords.longitude;
-        latLng = [lat, lng];
-        marker = leaflet.marker([lat, lng]).addTo(myMap);
-
-        return latLng;
-      }
-
-      // Current distance from user location
-      setTimeout(
-        () => console.log(checkDistance(latLng, [59.855727, 17.633445])),
-        6000
-      );
-      setTimeout(
-        () => console.log("Marker din position utanför", latLng),
-        6000
-      );
-
-      //Icon declaration
-      /* var currentIcon = leaflet.icon({
-        iconUrl: "img/redIcon.png",
-        iconSize: [38, 95], // size of the icon
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-      }); */
+      setInterval(() => {
+        drawQuestion(props);
+      }, 5500);
     });
   },
 };
 </script>
 <style scoped>
 #myMap {
-  height: 1200px;
+  height: 800px;
 }
 </style>

@@ -1,4 +1,5 @@
 <template>
+  {{ this.activeQuestion }}
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>{{ this.uiLabels.letsGo }}</h1>
@@ -115,7 +116,6 @@ export default {
         info: "",
         pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg",
       },
-      withinRange: false,
       gameId: null,
       gameExists: [false, true],
       confirmedUser: false,
@@ -154,7 +154,7 @@ export default {
     });
     socket.on("newQuestion", (q) => (this.question = q));
     socket.on("newScoreboard", (q) => (this.scoreBoard = q));
-    socket.on("withinRange", (data) => (this.withinRange = data));
+    socket.on("withinRange", (d) => (this.activeQuestion = d));
   },
   methods: {
     submitAnswer: function (answer) {
@@ -197,7 +197,6 @@ export default {
       }
 
       this.activeQuestion = false;
-      this.withinRange = false;
     },
     confirmUser: function () {
       if (!this.gameId || !this.userName) {
