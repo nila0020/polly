@@ -45,8 +45,9 @@ export default {
       function checkDistance(latLng, props) {
         if (myMap.distance(latLng, [props.qLat, props.qLong]) < 300) {
           console.log("props i checkdistance", props.gameId);
+          const d = {};
           d.gameId = props.gameId;
-          d.withinRange = true;
+          d.activeQuestion = true;
           socket.emit("withinRangeEmit", d);
         }
         console.log(

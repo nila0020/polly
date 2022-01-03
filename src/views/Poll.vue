@@ -154,7 +154,7 @@ export default {
     });
     socket.on("newQuestion", (q) => (this.question = q));
     socket.on("newScoreboard", (q) => (this.scoreBoard = q));
-    socket.on("withinRange", (d) => (this.activateQuestion = d.withinRange));
+    socket.on("withinRange", (d) => (this.activeQuestion = d.activeQuestion));
   },
   methods: {
     submitAnswer: function (answer) {
@@ -203,7 +203,7 @@ export default {
         alert("Please enter a gameId and/or a password");
       } else {
         console.log("användarinformation ", this.gameId, this.userName);
-        console.log(this.question)
+        console.log(this.question);
         socket.emit("doesGameIdExist", {
           gameId: this.gameId,
           userName: this.userName,
@@ -213,23 +213,8 @@ export default {
     quitGame: function () {
       this.confirmedUser = false;
     },
-<<<<<<< HEAD
     activateQuestion: function () {
       this.activeQuestion = true;
-=======
-    activateQuestion: function (d) {
-      if (!d) {
-        console.log("!d");
-        this.activeQuestion = true;
-      }
-      if (d === true) {
-        this.activeQuestion = true;
-        console.log("d===true");
-      } else {
-        this.activeQuestion = true;
-        console.log("else");
-      }
->>>>>>> aff62a1efdce21e5a9d5a66a5edaa71a3e09440e
     },
   },
 };
