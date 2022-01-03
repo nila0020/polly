@@ -181,7 +181,7 @@ export default {
         answer: answer,
         userName: this.userName,
       }); /*avgör om det finns fler frågor eller om quizzet skall avslutas*/
-      if (this.question[0]["qId"] + 1 < this.question[1]) {
+      if (this.question[0]["qId"] < this.question[1]) {
         this.qId += 1;
         /*nedan uppdaterar vi frågeobjektet via sockets via data*/
         socket.emit("runQuestion", {
@@ -203,6 +203,7 @@ export default {
         alert("Please enter a gameId and/or a password");
       } else {
         console.log("användarinformation ", this.gameId, this.userName);
+        console.log(this.question)
         socket.emit("doesGameIdExist", {
           gameId: this.gameId,
           userName: this.userName,
@@ -221,7 +222,7 @@ export default {
         this.activeQuestion = true;
         console.log("d===true");
       } else {
-        this.activeQuestion = false;
+        this.activeQuestion = true;
         console.log("else");
       }
     },
