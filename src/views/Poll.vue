@@ -1,5 +1,4 @@
 <template>
-  {{ this.activeQuestion }}
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>{{ this.uiLabels.letsGo }}</h1>
@@ -43,9 +42,6 @@
       v-show="confirmedUser && activeGame"
     >
       <div v-show="!activeQuestion">
-        <div v-show="activeGame">
-          <button v-on:click="activateQuestion">question!</button>
-        </div>
         <div class="centrera">
           <div class="wrapper">
             <div class="navBar">

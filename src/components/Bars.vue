@@ -121,7 +121,7 @@ export default {
   transform: translate(-50%, -10%);
 }
 .bar:nth-child(1) div:nth-child(1) {
-  background-color: lavender;
+  background-color: rgb(172, 118, 172);
   border-top-right-radius: 30px;
   border-top-left-radius: 30px;
 }
