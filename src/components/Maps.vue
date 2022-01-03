@@ -16,6 +16,7 @@ export default {
   props: {
     qLat: Number,
     qLong: Number,
+    gameId: Number,
   },
   setup(props) {
     //Load map
@@ -43,7 +44,10 @@ export default {
       // Distance function
       function checkDistance(latLng, props) {
         if (myMap.distance(latLng, [props.qLat, props.qLong]) < 300) {
-          socket.emit("withinRangeEmit", true);
+          console.log("props i checkdistance", props.gameId);
+          d.gameId = props.gameId;
+          d.withinRange = true;
+          socket.emit("withinRangeEmit", d);
         }
         console.log(
           "avstånd i meter",

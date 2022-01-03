@@ -60,11 +60,11 @@
               <div id="gameId">Game ID:{{ gameId }}</div>
             </div>
             <div class="mapWrap">
-              <div class="map">
+              <div class="map" v-if="this.question[0].pos">
                 <Maps
                   :qLat="this.question[0].pos[0]"
                   :qLong="this.question[0].pos[1]"
-                  v-if="this.question[0].pos"
+                  :gameId="this.gameId"
                 />
                 <!-- v-bind:pos="this.question.pos" v-if = "this.question.pos" -->
               </div>
@@ -154,7 +154,7 @@ export default {
     });
     socket.on("newQuestion", (q) => (this.question = q));
     socket.on("newScoreboard", (q) => (this.scoreBoard = q));
-    socket.on("withinRange", (d) => this.activateQuestion(d));
+    socket.on("withinRange", (d) => (this.activateQuestion = d.withinRange));
   },
   methods: {
     submitAnswer: function (answer) {
@@ -212,18 +212,8 @@ export default {
     quitGame: function () {
       this.confirmedUser = false;
     },
-    activateQuestion: function (d) {
-      if (!d) {
-        console.log("!d");
-        this.activeQuestion = true;
-      }
-      if (d === true) {
-        this.activeQuestion = true;
-        console.log("d===true");
-      } else {
-        this.activeQuestion = false;
-        console.log("else");
-      }
+    activateQuestion: function () {
+      this.activeQuestion = true;
     },
   },
 };
