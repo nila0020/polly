@@ -154,7 +154,7 @@ export default {
     });
     socket.on("newQuestion", (q) => (this.question = q));
     socket.on("newScoreboard", (q) => (this.scoreBoard = q));
-    socket.on("withinRange", (d) => (this.activeQuestion = d));
+    socket.on("withinRange", (d) => this.activateQuestion(d));
   },
   methods: {
     submitAnswer: function (answer) {
@@ -212,8 +212,18 @@ export default {
     quitGame: function () {
       this.confirmedUser = false;
     },
-    activateQuestion: function () {
-      this.activeQuestion = true;
+    activateQuestion: function (d) {
+      if (!d) {
+        console.log("!d");
+        this.activeQuestion = true;
+      }
+      if (d === true) {
+        this.activeQuestion = true;
+        console.log("d===true");
+      } else {
+        this.activeQuestion = false;
+        console.log("else");
+      }
     },
   },
 };
@@ -290,6 +300,7 @@ img {
 input {
   border-radius: 2em;
   width: 75vw;
+  max-width: 75vh;
   border-width: 3px;
   font-size: 1.4em;
   color: white;
@@ -298,7 +309,7 @@ input {
   font-family: "Baloo Bhaijaan 2", cursive;
 }
 #joinknapp {
-  max-width: 79vw;
+  max-width: 77vh;
   width: 75vw;
   font-family: "Baloo Bhaijaan 2", cursive;
 }

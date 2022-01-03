@@ -774,6 +774,12 @@ export default {
   grid-column: 1 / span 4;
   grid-row: 3 / span 2;
 }
+
+#myMap {
+  height: 500px;
+  /* width: 500px;
+  position: absolute; */
+}
 .blockerAll {
   color: white;
   grid-column: 1 / span 3;

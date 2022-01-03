@@ -34,7 +34,7 @@ function sockets(io, socket, data) {
     io.to(d.gameId).emit('dataUpdate', data.getAnswers(d.gameId));
   });
   socket.on('withinRangeEmit', function (d) {
-    console.log("withinrange hej", d);
+    console.log("withinrange hej");
     io.to(d.gameId).emit('withinRange', d);
   });
 
