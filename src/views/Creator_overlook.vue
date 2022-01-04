@@ -42,7 +42,6 @@
     <section class="container">
       <!--Overlook box-->
       <div class="box Overlook">
-        <h1>Overlook</h1>
         <!--Add new questions and list them-->
         <div id="overlookList">
           <ul>
@@ -60,13 +59,12 @@
           <p>
             <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
             <button
-              class="Button"
-              id="overlook!Btn"
+              class="Button addQuestion"
               v-on:click="[addNewQuestion(), closeExpand()]"
             >
               {{ uiLabels.Addquestion }}
             </button>
-            <button class="Button" id="overlookBtn">
+            <button class="Button removeQuestion">
               {{ uiLabels.Deletequestion }}
             </button>
           </p>
@@ -178,13 +176,13 @@
                     v-bind:key="'answer' + i"
                     v-bind:placeholder="this.uiLabels.addanswer"
                   />
-                  <label for="{{i}}"></label>
+                  <label for="{{i}}" v-if="i === correctAnswer">✓</label>
                 </li>
               </ul>
-              <button class="Button" v-on:click="removeAnswer">
+              <button class="Button addButton" v-on:click="removeAnswer">
                 {{ uiLabels.removeAnswerAlternative }}
               </button>
-              <button class="Button" v-on:click="addAnswer">
+              <button class="Button removeButton" v-on:click="addAnswer">
                 {{ uiLabels.AddAnswerAlternative }}
               </button>
 
@@ -227,14 +225,16 @@
 <!--              {{ reactiveProperties.pos }}-->
             </h4>
             <!-- Our map  -->
-            <div id="myMap"></div>
+            <div id="myMap" >
+<!--                 v-bind:style="[hideCenter ? 'display:none' : '']">-->
+
+            </div>
           </div>
         </div>
       </div>
 
       <!--Tool box-->
       <div class="box toolBox" v-on:click="hideCenter = false">
-        <h1>toolBox</h1>
         <div id="app">
           <input type="radio" id="MCQ" value="MCQ" v-model="checked" checked />
           <label for="MCQ">{{ uiLabels.MCQ }}</label>
@@ -423,7 +423,12 @@ export default {
       mapSmall: false,
       questionSmallCond: false,
       activeQuestion:false,
-      i:0
+      i:0,
+      styleObject: {
+        color: 'red',
+        fontSize: '13px',
+        height: '1px'
+      },
     };
   },
   computed: {
@@ -717,6 +722,7 @@ export default {
 }
 
 .Overlook {
+  padding-top: 5vh;
   grid-column: 1;
   grid-row: 1 / span 2;
   border-style: dotted;
@@ -730,7 +736,7 @@ export default {
 }
 .centerBox {
   padding: 0;
-  margin-top: 0;
+  margin-top: 5px;
   margin-bottom: 0;
   grid-column: 2;
   grid-row: 1 / span 2;
@@ -742,7 +748,7 @@ export default {
 }
 .toolBox {
   background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
-
+  padding-top: 15vh;
   grid-column: 3;
   grid-row: 1 / span 2;
   border-style: dotted;
@@ -815,6 +821,9 @@ export default {
   grid-row: 1 /span 2;
 }
 #answerList{
+  list-style-type: none;
+}
+#overlookList{
   list-style-type: none;
 }
 .map {
@@ -909,6 +918,19 @@ export default {
 }
 .loadButton {
   float: right;
+}
+.addButton{
+  transform: translate(-20%);
+}
+.removeButton{
+  transform: translate(-30%);
+}
+.addQuestion{
+  transform: translateX(-50%);
+}
+.removeQuestion{
+  transform: translateX(-40%);
+  margin-top: 5px;
 }
 
 ::-webkit-scrollbar {
