@@ -75,9 +75,9 @@
       <!--Center box-->
       <div class="box centerBox">
         <!--Info box-->
-        <div class="box info">
-          <!--        v-on:click="infoExpand"
-          v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"-->
+<!--        <div class="box info">
+          &lt;!&ndash;        v-on:click="infoExpand"
+          v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"&ndash;&gt;
 
           <a
             v-if="{ infoBig: infoBig }"
@@ -91,10 +91,10 @@
             v-model="info"
             v-bind:placeholder="this.uiLabels.Questiondiscription"
           />
-        </div>
+        </div>-->
 
         <!--Question box-->
-        <div class="box questionBox">
+<!--        <div class="box questionBox">-->
           <!--         v-on:click="questionExpand"
           v-bind:class="{
             questionBig: questionBig,
@@ -102,16 +102,23 @@
             questionSmallCond: questionSmallCond,
           }"-->
 
-          <h1>{{ this.uiLabels.createQuestion }}</h1>
+<!--          <h1>{{ this.uiLabels.createQuestion }}</h1>-->
           <div id="picBox">
+<!--            <h4 style="
+                  grid-row: 1;
+                  grid-column: 1/ span 2;
+                  padding-top: 0">-->
+              Lägg till bild
+<!--            </h4>-->
             <img
               :src="pic"
               v-if="pic !== null"
               style="
+                padding: 12px 20px;
                 width: 90%;
                 height: 75%;
                 object-fit: cover;
-                grid-row: 1;
+                grid-row: 2;
                 grid-column: 1 / span 2;
               "
               ref=""
@@ -124,19 +131,21 @@
             />
             <button
               v-on:click="$refs.fileInput.click()"
-              style="grid-column: 1; grid-row: 2"
+              style="grid-column: 1; grid-row: 3"
             >
               {{ this.uiLabels.chooseImage }}
             </button>
             <button
               v-on:click="removeImage"
-              style="grid-column: 2; grid-row: 2"
+              style="grid-column: 2; grid-row: 3"
             >
               {{ this.uiLabels.removeimage }}
             </button>
           </div>
 
           <div id="qBox">
+            Question <br>
+            Write your question here:
             <textarea
               class="questionArea"
               v-model="questionText"
@@ -145,8 +154,9 @@
           </div>
 
           <div id="aBox">
+            Answer <br>
             <div v-if="checked === 'MCQ' || checked === null">
-              <h1>Answers:</h1>
+
               <!--              <input
                 v-for="(_, i) in answers"
                 v-model="answers[i]"
@@ -154,8 +164,8 @@
                 v-bind:placeholder="this.uiLabels.addanswer"
               />-->
 
-              <h1>{{ this.uiLabels.chooseCorrect }}</h1>
-              <ul id="example-1">
+              {{ this.uiLabels.chooseCorrect }}
+              <ul id="answerList">
                 <li v-for="(_, i) in answers" v-bind:key="'answer' + i">
                   <input
                     type="radio"
@@ -171,12 +181,13 @@
                   <label for="{{i}}"></label>
                 </li>
               </ul>
-              <button class="Button" v-on:click="addAnswer">
-                {{ uiLabels.AddAnswerAlternative }}
-              </button>
               <button class="Button" v-on:click="removeAnswer">
                 {{ uiLabels.removeAnswerAlternative }}
               </button>
+              <button class="Button" v-on:click="addAnswer">
+                {{ uiLabels.AddAnswerAlternative }}
+              </button>
+
             </div>
             <div v-else-if="checked === 'slider'">
               <input type="number" v-model="sliderMinVal" />
@@ -204,7 +215,7 @@
               </div>
             </div>
           </div>
-        </div>
+<!--        </div>-->
 
         <!--Map box-->
         <div class="box map">
@@ -213,7 +224,7 @@
           <div class="mapTitle">
             <h4>
               Choose a place on the map for your question to appear at
-              {{ reactiveProperties.pos }}
+<!--              {{ reactiveProperties.pos }}-->
             </h4>
             <!-- Our map  -->
             <div id="myMap"></div>
@@ -548,8 +559,7 @@ export default {
       console.log(this.activeQuestion)
       console.log(this.questions[this.i]["a"])
     },
-    nextQuestion: function(){
-      console.log("next")
+    nextQuestion: function(){      console.log("next")
       if (this.i <= this.questions.length){
         this.i++;
         console.log("if")
@@ -670,9 +680,8 @@ export default {
   float: left;
 }
 .titleBox {
-  position: fixed;
   width: 100%;
-  height: 15vh;
+  height: 13vh;
   display: table;
   clear: both;
   /*  display: grid;
@@ -690,9 +699,9 @@ export default {
   width: 30%;
 }
 .container {
-  padding-top: 20vh;
+/*  padding-top: 15vh;*/
   display: grid;
-  grid-template-columns: 20% 60% 20%;
+  grid-template-columns: 15% 70% 15%;
   grid-template-rows: 50% 50%;
 }
 
@@ -700,7 +709,7 @@ export default {
   color: #fff;
   border-radius: 5px;
   margin: 5px;
-  padding: 20px;
+  padding: 0;
   font-size: 100%;
 }
 .insertTitle {
@@ -726,8 +735,8 @@ export default {
   grid-column: 2;
   grid-row: 1 / span 2;
   display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 25% 25% 25% 25%;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 20% 15% 20% 35%;
   border-style: dotted;
   background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
 }
@@ -771,7 +780,7 @@ export default {
   color: white;
 }
 .questionBox {
-  grid-column: 3 / span 2;
+  grid-column: 1 / span 2;
   grid-row: 1 / span 2;
   display: grid;
   grid-template-columns: 50% 50%;
@@ -784,31 +793,38 @@ export default {
   grid-row: 1;
 }
 #picBox {
+  text-align: center;
   display: grid;
-  grid-template-rows: 80% 20%;
+  grid-template-rows: 10% 70% 20%;
   grid-template-columns: 50% 50%;
   height: 100%;
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 1/ span 2;
   margin-right: 1vw;
 }
 #qBox {
   height: 100%;
   padding-top: 2vh;
-  grid-column: 2;
-  grid-row: 2;
+  grid-column: 2 ;
+  grid-row: 1/span 2;
 }
 #aBox {
-  grid-column: 1 / span 2;
-  grid-row: 3;
+  height: 100%;
+  padding-top: 2vh;
+  grid-column: 3;
+  grid-row: 1 /span 2;
+}
+#answerList{
+  list-style-type: none;
 }
 .map {
-  grid-column: 1 / span 4;
+  margin-top: 5vh;
+  grid-column: 1 / span 3;
   grid-row: 3 / span 2;
 }
 
 #myMap {
-  height: 500px;
+  height: 400px;
   /* width: 500px;
   position: absolute; */
 }
@@ -894,59 +910,11 @@ export default {
 .loadButton {
   float: right;
 }
-/* conditionl statments */
-.infoBig {
-  grid-column: 1 / span 4;
-  grid-row: 1 / span 3;
-  overflow: scroll;
-}
-.questionBig {
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 10% 45% 45%;
-  grid-column: 1 / span 4;
-  grid-row: 1 / span 3;
-  overflow: scroll;
-}
-.mapBig {
-  grid-column: 1 / span 4;
-  grid-row: 1 / span 3;
-  overflow: scroll;
-}
-.infoSmall {
-  grid-column: 1 / span 2;
-  grid-row: 4;
-  overflow: scroll;
-}
-.questionSmall {
-  grid-column: 1 / span 2;
-  grid-row: 4;
-  overflow: scroll;
-}
-.mapSmall {
-  grid-column: 3 / span 2;
-  grid-row: 4;
-  overflow: scroll;
-}
-.questionSmallCond {
-  grid-column: 3 / span 2;
-  grid-row: 4;
-  overflow: scroll;
-}
+
 ::-webkit-scrollbar {
   width: 0;
 }
 
-.closeExpand {
-  position: relative;
-  right: 25vw;
-  top: 1vh;
-  width: 5vw;
-  height: 5vh;
-  opacity: 0.3;
-}
-.closeExpand:hover {
-  opacity: 1;
-}
 .mapTitle {
   font-size: 20px;
 }
@@ -1033,8 +1001,8 @@ export default {
     grid-column: 2;
     grid-row: 1 / span 2;
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 20% 15% 20% 35%;
     border-style: dotted;
     background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
   }
@@ -1116,12 +1084,14 @@ export default {
   }
 
   #aBox {
-    grid-column: 1 / span 2;
+    height: 100%;
+    padding-top: 2vh;
+    grid-column: 1;
     grid-row: 3;
   }
 
   .map {
-    grid-column: 1 / span 4;
+    grid-column: 1 / span 3;
     grid-row: 3 / span 2;
   }
 
