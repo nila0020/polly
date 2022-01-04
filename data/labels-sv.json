@@ -29,6 +29,11 @@
 	"createQuestion": "Skapa din fråga här",
 	"chooseCorrect": "Välj det rätta svarsalternativet",
 	"removeAnswerAlternative": "Ta bort svarsalternativ",
-	"letsGo": "Nu kör vi!"
-
+	"letsGo": "Nu kör vi!",
+	"blocker1Part1":"Välkommen till GeoQuizs skaparläge",
+	"blocker1Part2": "Börja med att skriva in ett Spel namn och Spel ID. Tryck sedan på 'Skapa Spel'",
+	"blocker1Part3": "Om du vill uppdatera ett tidigare spel, skriv in Spel ID:et och tryck sedan på 'Ladda Spel'",
+	"blocker2": "Super! Lägg nu till din första fråga!",
+	"blocker3Part1": "Välj vilken typ av fråga du vill ha, sen är det bara att börja Skapa!",
+	"blocker3Part2": "Glöm inte att Spara varje fråga innan du skapar en ny"
 }

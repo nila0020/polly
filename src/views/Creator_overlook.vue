@@ -239,27 +239,42 @@
         <button class="Button" v-on:click="[saveQuestion()]">
           {{ uiLabels.Savequestion }}
         </button>
+        <button class="Button" v-on:click="viewQuestions">
+          View Quiz
+        </button>
       </div>
 
       <div class="blocker3" v-if="hideCenter">
         <!-- blocks center-->
-        <h1>Choose a type of question and you´re good to go</h1>
+        <h1>{{ uiLabels.blocker3Part1 }}</h1>
         <br />
-        <h1>Don´t forget to save your question</h1>
+        <h1>{{ uiLabels.blocker3Part2 }}</h1>
       </div>
       <div class="blocker2" v-if="hideCenterAndTool">
         <!-- blocks center and tool-->
-        <h1>Now add a question</h1>
+        <h1>{{ uiLabels.blocker2 }}</h1>
       </div>
       <div class="blockerAll" v-if="hideAll">
         <!-- blocks overlook, center and tool-->
-        <h1>Start by creating a Game</h1>
+        <h1>{{uiLabels.blocker1Part1}}</h1>
+        <br>
+        <h1>{{uiLabels.blocker1Part2}}</h1>
+        <br>
+        <h1>{{uiLabels.blocker1Part3}}</h1>
       </div>
     </section>
+    <div
+        v-if="this.activeQuestion"
+        v-show="this.activeQuestion"
+        class="questionDisplayed"
+    >
+      <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
+    </div>
   </section>
 </template>
 
 <script>
+import Question from "@/components/Question.vue";
 import io from "socket.io-client";
 import Slider from "@/components/Slider.vue";
 import leaflet from "leaflet";
@@ -268,6 +283,7 @@ const socket = io();
 export default {
   components: {
     Slider,
+    Question
   },
   setup() {
     //Load map
@@ -395,6 +411,8 @@ export default {
       questionSmall: false,
       mapSmall: false,
       questionSmallCond: false,
+      activeQuestion:false,
+      i:0
     };
   },
   computed: {
@@ -523,9 +541,23 @@ export default {
         qId: this.editingNumber,
         pic: this.pic,
       });
-      console.log(this.answers);
-      //console.log(this.sliderAnswer);
-      //$("#myElem").show().delay(5000).fadeOut();
+    },
+    viewQuestions:function(){
+      console.log(this.questions.length)
+      this.activeQuestion = true;
+      console.log(this.activeQuestion)
+      console.log(this.questions[this.i]["a"])
+    },
+    nextQuestion: function(){
+      console.log("next")
+      if (this.i <= this.questions.length){
+        this.i++;
+        console.log("if")
+      }
+      else{
+        this.i = 0;
+        this.activeQuestion = false;
+      }
     },
     /*   addQuestion: function() {
       //Ska inte skickas förrän alla frågor lagts till
@@ -807,7 +839,15 @@ export default {
   opacity: 95%;
   transition: 300ms;
 }
-
+.questionDisplayed {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+}
 .Button {
   float: right;
   align-items: center;
