@@ -35,5 +35,6 @@
 	"blocker1Part3": "If you want to update a previous game, enter the Game ID and click on 'Load Game'",
 	"blocker2": "Great! Now add your first Question",
 	"blocker3Part1": "Choose which type of question you want, and start Creating!",
-	"blocker3Part2": "Don´t forget to Save each question, before creating a new one"
+	"blocker3Part2": "Don´t forget to Save each question, before creating a new one",
+	"goToGame": "Go to Game"
 }

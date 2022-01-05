@@ -14,7 +14,6 @@ function sockets(io, socket, data) {
   });
   socket.on('loadGame', function (d) {
     socket.emit('gameLoaded', data.loadGame(d.gameID))
-
   });
   socket.on('addQuestion', function (d) {
     console.log("QUESTION ADDED", d);

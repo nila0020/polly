@@ -70,8 +70,18 @@
           </p>
         </div>
       </div>
+      <div
+          v-if="this.activeQuestion"
+          v-show="this.activeQuestion"
+          class="questionDisplayed"
+      >
+        <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
+      </div>
       <!--Center box-->
-      <div class="box centerBox">
+      <div
+          v-if="!this.activeQuestion"
+          v-show="!this.activeQuestion"
+          class="box centerBox">
         <!--Info box-->
 <!--        <div class="box info">
           &lt;!&ndash;        v-on:click="infoExpand"
@@ -250,9 +260,15 @@
         <button class="Button" v-on:click="[saveQuestion()]">
           {{ uiLabels.Savequestion }}
         </button>
+        <br>
         <button class="Button" v-on:click="viewQuestions">
           View Quiz
         </button>
+        <br>
+        <router-link v-bind:to="'/poll/' + lang"
+          ><v-btn outline block class="Button" v-on:click="sendGameId"
+          ><span class="text">{{ uiLabels.goToGame }}</span></v-btn
+        ></router-link>
       </div>
 
       <div class="blocker3" v-if="hideCenter">
@@ -274,13 +290,7 @@
         <h1>{{uiLabels.blocker1Part3}}</h1>
       </div>
     </section>
-    <div
-        v-if="this.activeQuestion"
-        v-show="this.activeQuestion"
-        class="questionDisplayed"
-    >
-      <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
-    </div>
+
   </section>
 </template>
 
@@ -387,7 +397,7 @@ export default {
     return {
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
       questions: [],
-      info: "",
+      /*info: "",*/
       lang: "",
       gameId: "",
       question: "",
@@ -448,6 +458,11 @@ export default {
     socket.on("questionPosition", (data) => (this.pos = data));
   },
   methods: {
+    sendGameId: function(){
+      socket.emit("sendGameId", {
+        gameID: this.gameId,
+      });
+    },
     getSliderValue(sliderValue) {
       this.sliderValue = sliderValue;
       this.sliderAnswer = [
@@ -564,10 +579,9 @@ export default {
       console.log(this.activeQuestion)
       console.log(this.questions[this.i]["a"])
     },
-    nextQuestion: function(){      console.log("next")
-      if (this.i <= this.questions.length){
+    nextQuestion: function(){
+      if ((this.i +1) < this.questions.length){
         this.i++;
-        console.log("if")
       }
       else{
         this.i = 0;
@@ -867,6 +881,8 @@ export default {
 .questionDisplayed {
   width: 100%;
   height: 100%;
+  grid-column: 2;
+  grid-row: 1 / span 2;
   display: flex;
   flex-direction: row;
   justify-content: center;
