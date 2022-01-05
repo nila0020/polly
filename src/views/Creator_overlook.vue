@@ -350,7 +350,7 @@ export default {
         () => console.log("Marker din position utanför", latLng),
         6000
       );
-
+       
       //Icon declaration
       var currentIcon = leaflet.icon({
         iconUrl: "img/redIcon.png",
@@ -360,9 +360,12 @@ export default {
       });
 
       myMap.on("click", function (e) {
+         
         var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng], {
           icon: currentIcon,
-        }).addTo(myMap);
+         
+        }
+        ).addTo(myMap);
         var pos = [e.latlng.lat, e.latlng.lng];
         reactiveProperties.pos = pos;
         console.log("onClick marker", marker);
