@@ -239,9 +239,7 @@
         <button class="Button" v-on:click="[saveQuestion()]">
           {{ uiLabels.Savequestion }}
         </button>
-        <button class="Button" v-on:click="viewQuestions">
-          View Quiz
-        </button>
+        <button class="Button" v-on:click="viewQuestions">View Quiz</button>
       </div>
 
       <div class="blocker3" v-if="hideCenter">
@@ -256,17 +254,17 @@
       </div>
       <div class="blockerAll" v-if="hideAll">
         <!-- blocks overlook, center and tool-->
-        <h1>{{uiLabels.blocker1Part1}}</h1>
-        <br>
-        <h1>{{uiLabels.blocker1Part2}}</h1>
-        <br>
-        <h1>{{uiLabels.blocker1Part3}}</h1>
+        <h1>{{ uiLabels.blocker1Part1 }}</h1>
+        <br />
+        <h1>{{ uiLabels.blocker1Part2 }}</h1>
+        <br />
+        <h1>{{ uiLabels.blocker1Part3 }}</h1>
       </div>
     </section>
     <div
-        v-if="this.activeQuestion"
-        v-show="this.activeQuestion"
-        class="questionDisplayed"
+      v-if="this.activeQuestion"
+      v-show="this.activeQuestion"
+      class="questionDisplayed"
     >
       <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
     </div>
@@ -283,13 +281,13 @@ const socket = io();
 export default {
   components: {
     Slider,
-    Question
+    Question,
   },
   setup() {
     //Load map
 
     let myMap;
-    const reactiveProperties = reactive({ pos: null });
+    const reactiveProperties = reactive({ pos: null, clearMap: null });
     onMounted(() => {
       myMap = leaflet.map("myMap").setView([59.855727, 17.633445], 13);
 
@@ -302,7 +300,7 @@ export default {
             maxZoom: 18,
             minZoom: 1,
             id: "mapbox/streets-v11",
-            tileSize: 512,
+            tileSize: 512,//window.polly.position;,
             zoomOffset: -1,
             accessToken:
               "pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ",
@@ -350,7 +348,7 @@ export default {
         () => console.log("Marker din position utanför", latLng),
         6000
       );
-       
+
       //Icon declaration
       var currentIcon = leaflet.icon({
         iconUrl: "img/redIcon.png",
@@ -359,22 +357,37 @@ export default {
         className: "markering",
       });
 
-      myMap.on("click", function (e) {
-         
-        var marker = new leaflet.marker([e.latlng.lat, e.latlng.lng], {
+      //LayerGroup
+      var markerGroup = leaflet.layerGroup();
+      myMap.addLayer(markerGroup);
+      markerGroup.addTo(myMap);
+
+      myMap.on("dblclick", function (e) {
+        var marker2 = new leaflet.marker([e.latlng.lat, e.latlng.lng], {
           icon: currentIcon,
-         
-        }
-        ).addTo(myMap);
+        });
+
+        marker2.on("click", function (e) {
+          console.log(e)
+          markerGroup.removeLayer(marker2)
+        })
+
         var pos = [e.latlng.lat, e.latlng.lng];
         reactiveProperties.pos = pos;
         console.log("onClick marker", marker);
         console.log("innan socketemit i myMap.onclick :Position", pos);
         socket.emit("reactivePosition", reactiveProperties.pos);
+        markerGroup.addLayer(marker2);
       });
+
+      reactiveProperties.clearMap = function() {
+        markerGroup.clearLayers()
+      }
     });
+
     return { reactiveProperties };
   },
+
   data: function () {
     return {
       questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
@@ -385,6 +398,7 @@ export default {
       question: "",
       answers: ["", ""],
       pos: [],
+      clearMap: null,
       correctAnswer: 0,
       answersAlt: [this.answers, this.correctAnswer],
       qId: 0,
@@ -414,8 +428,8 @@ export default {
       questionSmall: false,
       mapSmall: false,
       questionSmallCond: false,
-      activeQuestion:false,
-      i:0
+      activeQuestion: false,
+      i: 0,
     };
   },
   computed: {
@@ -544,20 +558,21 @@ export default {
         qId: this.editingNumber,
         pic: this.pic,
       });
+
+      this.clearMap()
     },
-    viewQuestions:function(){
-      console.log(this.questions.length)
+    viewQuestions: function () {
+      console.log(this.questions.length);
       this.activeQuestion = true;
-      console.log(this.activeQuestion)
-      console.log(this.questions[this.i]["a"])
+      console.log(this.activeQuestion);
+      console.log(this.questions[this.i]["a"]);
     },
-    nextQuestion: function(){
-      console.log("next")
-      if (this.i <= this.questions.length){
+    nextQuestion: function () {
+      console.log("next");
+      if (this.i <= this.questions.length) {
         this.i++;
-        console.log("if")
-      }
-      else{
+        console.log("if");
+      } else {
         this.i = 0;
         this.activeQuestion = false;
       }
