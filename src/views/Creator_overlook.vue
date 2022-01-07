@@ -33,7 +33,7 @@
         <span class="break"><br /></span>
 
         <button class="Button loadButton" v-on:click="loadGame">
-          Load Game
+          {{ this.uiLabels.loadGame }}
         </button>
       </div>
       <!--      </div>-->
@@ -236,7 +236,7 @@
                   v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"-->
           <div class="mapTitle">
             <h4>
-              Choose a place on the map for your question to appear at
+              {{ this.uiLabels.mapPosition }}
 <!--              {{ reactiveProperties.pos }}-->
             </h4>
             <!-- Our map  -->
@@ -269,7 +269,7 @@
         <br>
         <button class="Button redButton" v-on:click="viewQuestions">
 
-          View Quiz
+          {{ this.uiLabels.viewQuiz }}
         </button>
         <br>
         <router-link v-bind:to="'/poll/' + lang"

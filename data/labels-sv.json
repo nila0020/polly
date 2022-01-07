@@ -4,7 +4,7 @@
 	"createPoll": "Skapa röstning",
 	"participatePoll": "Delta i röstning",
 	"question": "Fråga",
-	"answer": "Answer",
+	"answer": "Svar",
 	"changeLanguage": "Change to English",
 	"imgLanguage": "img/britishFlag.jpg",
 	"User": "Användare",
@@ -39,5 +39,8 @@
 	"blocker3Part1": "Välj vilken typ av fråga du vill ha, sen är det bara att börja Skapa!",
 	"blocker3Part2": "Glöm inte att Spara varje fråga innan du skapar en ny",
 	"goToGame": "Gå till Spelet",
-	"writeQuestion": "Skriv din fråga här:"
+	"writeQuestion": "Skriv din fråga här:",
+	"mapPosition": "Välj en plats på kartan där din fråga ska dyka upp",
+	"viewQuiz": "Visa Quiz",
+	"loadGame": "Ladda Spel"
 }
