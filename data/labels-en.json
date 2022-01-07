@@ -4,6 +4,7 @@
 	"createPoll": "Create poll",
 	"participatePoll": "Participate in poll",
 	"question": "Question",
+	"answer": "Answer",
 	"changeLanguage": "Byt till svenska",
 	"imgLanguage": "img/Flag_of_Sweden_ml.png",
 	"User": "Join game",
@@ -24,6 +25,7 @@
 	"enterGameID": "Enter Game ID",
 	"addanswer": "Add answer alternative",
 	"questionInfo": "Write your question here",
+	"addImage": "Add image",
 	"chooseImage": "Choose image",
 	"removeimage": "Remove image",
 	"createQuestion": "Create your question here",
@@ -36,5 +38,10 @@
 	"blocker2": "Great! Now add your first Question",
 	"blocker3Part1": "Choose which type of question you want, and start Creating!",
 	"blocker3Part2": "Don´t forget to Save each question, before creating a new one",
-	"goToGame": "Go to Game"
+	"goToGame": "Go to Game",
+	"writeQuestion": "Write your question here:",
+	"mapPosition": "Choose a place on the map for your question to appear at",
+	"viewQuiz": "View Quiz",
+	"loadGame": "Load Game"
+
 }

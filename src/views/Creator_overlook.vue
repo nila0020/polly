@@ -33,8 +33,9 @@
 <!--        <span class="break"><br /></span>-->
 
         <v-btn class="Button loadButton redButton" v-on:click="loadGame">
-          Load Game
+          {{ this.uiLabels.loadGame }}
         </v-btn>
+
       </div>
       <!--      </div>-->
     </section>
@@ -118,7 +119,7 @@
                   grid-row: 1;
                   grid-column: 1/ span 2;
                   padding-top: 0">-->
-              Lägg till bild
+            {{ this.uiLabels.addImage }}
 <!--            </h4>-->
             <img
               :src="pic"
@@ -154,8 +155,8 @@
           </div>
 
           <div id="qBox">
-            Question <br>
-            Write your question here:
+            {{ this.uiLabels.question }} <br>
+            {{ this.uiLabels.writeQuestion }}
             <textarea
               class="questionArea"
               v-model="questionText"
@@ -164,7 +165,7 @@
           </div>
 
           <div id="aBox">
-            Answer <br>
+            {{ this.uiLabels.answer }} <br>
             <div v-if="checked === 'MCQ' || checked === null">
 
               <!--              <input
@@ -232,7 +233,7 @@
                   v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"-->
           <div class="mapTitle">
             <h4>
-              Choose a place on the map for your question to appear at
+              {{ this.uiLabels.mapPosition }}
 <!--              {{ reactiveProperties.pos }}-->
             </h4>
             <!-- Our map  -->
@@ -264,8 +265,7 @@
 
         <br>
         <v-btn class="Button redButton viewQuestion" v-on:click="viewQuestions">
-
-          View Quiz
+          {{ this.uiLabels.viewQuiz }}
         </v-btn>
         <br>
         <router-link v-bind:to="'/poll/' + lang"
