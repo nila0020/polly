@@ -66,8 +66,7 @@
               {{ uiLabels.Addquestion }}
             </v-btn>
 
-            <v-btn class="Button removeQuestion redButton">
-
+            <v-btn class="Button removeQuestion redButton" v-on:click="removeQuestion">
               {{ uiLabels.Deletequestion }}
             </v-btn>
           </p>
@@ -589,6 +588,11 @@ export default {
         qId: this.editingNumber,
         pic: this.pic,
       });
+    },
+    removeQuestion:function(){
+      this.questions.pop()
+      socket.emit("removeQuestion", {gameId: this.gameId})
+      console.log(this.questions)
     },
     viewQuestions:function(){
       console.log(this.questions.length)

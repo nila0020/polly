@@ -20,6 +20,9 @@ function sockets(io, socket, data) {
     data.addQuestion(d.gameId, { type: d.type, pos: d.pos, q: d.q, a: d.a, aS: d.aS, info: d.info, qId: d.qId, pic: d.pic });
     socket.emit('dataUpdate', data.getAnswers(d.gameId));
   });
+  socket.on('removeQuestion', function(d) {
+    data.removeQuestion(d.gameId)
+  });
 
   socket.on('joinGame', function (gameId, qId, userName) {
     socket.join(gameId);
