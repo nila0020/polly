@@ -257,17 +257,17 @@
         <br />
         <br />
         <br />
-        <button class="Button" v-on:click="[saveQuestion()]">
+        <button class="Button saveQuestion" v-on:click="[saveQuestion()]">
           {{ uiLabels.Savequestion }}
         </button>
         <br>
-        <button class="Button" v-on:click="viewQuestions">
+        <button class="Button viewQuestion" v-on:click="viewQuestions">
           View Quiz
         </button>
         <br>
         <router-link v-bind:to="'/poll/' + lang"
-          ><v-btn outline block class="Button" v-on:click="sendGameId"
-          ><span class="text">{{ uiLabels.goToGame }}</span></v-btn
+          ><button outline class="Button goToGame" v-on:click="sendGameId"
+          ><span class="text">{{ uiLabels.goToGame }}</span></button
         ></router-link>
       </div>
 
@@ -890,7 +890,7 @@ export default {
   align-items: center;
 }
 .Button {
-  float: right;
+  /*float: right;*/
   align-items: center;
   background-image: linear-gradient(144deg, #c4bdbd, #000000 50%, #9a9797);
 
@@ -920,10 +920,10 @@ export default {
 }
 .Button span {
   background-color: #000000;
-  padding: 16px 24px;
+  padding: 14px 20px;
   border-radius: 6px;
   width: 100%;
-  height: 45%;
+  height: 30%;
   transition: 300ms;
 }
 .Button:hover span {
@@ -942,11 +942,25 @@ export default {
   transform: translate(-30%);
 }
 .addQuestion{
-  transform: translateX(-50%);
+  margin: 0 auto;
+  display: block;
 }
 .removeQuestion{
-  transform: translateX(-40%);
+  margin: 0 auto;
+  display: block;
   margin-top: 5px;
+}
+.saveQuestion{
+  margin: 0 auto;
+  display: block;
+}
+.viewQuestion{
+  margin: 0 auto;
+  display: block;
+}
+.goToGame{
+  margin: 0 auto;
+  display: block;
 }
 
 ::-webkit-scrollbar {
@@ -970,7 +984,7 @@ export default {
   display: inline;
 }
 
-@media screen and (max-width: 660px) {
+/*@media screen and (max-width: 660px) {
   .pagee {
     font-size: 15pt;
   }
@@ -985,9 +999,9 @@ export default {
   .titleBox {
     position: fixed;
     height: 15vh;
-    /*    display: grid;
+    !*    display: grid;
     grid-template-columns: 50% 50%;
-    grid-template-rows: 50% 50%;*/
+    grid-template-rows: 50% 50%;*!
     color: black;
     background-image: linear-gradient(
         rgba(255, 255, 255, 0.6),
@@ -1206,5 +1220,5 @@ export default {
   .Button:hover span {
     background: none;
   }
-}
+}*/
 </style>
