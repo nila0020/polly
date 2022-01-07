@@ -58,13 +58,15 @@
           </ul>
           <p>
             <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
-            <button
-              class="Button addQuestion"
+            <button class="Button addQuestion" id="overlook!Btn"
+
               v-on:click="[addNewQuestion(), closeExpand()]"
             >
               {{ uiLabels.Addquestion }}
             </button>
+
             <button class="Button removeQuestion">
+
               {{ uiLabels.Deletequestion }}
             </button>
           </p>
@@ -137,13 +139,13 @@
               style="display: none"
               ref="fileInput"
             />
-            <button
+            <button class="Button greenButton"
               v-on:click="$refs.fileInput.click()"
               style="grid-column: 1; grid-row: 3"
             >
               {{ this.uiLabels.chooseImage }}
             </button>
-            <button
+            <button class="Button redButton"
               v-on:click="removeImage"
               style="grid-column: 2; grid-row: 3"
             >
@@ -189,10 +191,13 @@
                   <label for="{{i}}" v-if="i === correctAnswer">✓</label>
                 </li>
               </ul>
+
               <button class="Button addButton" v-on:click="removeAnswer">
                 {{ uiLabels.removeAnswerAlternative }}
               </button>
               <button class="Button removeButton" v-on:click="addAnswer">
+
+
                 {{ uiLabels.AddAnswerAlternative }}
               </button>
 
@@ -257,16 +262,18 @@
         <br />
         <br />
         <br />
-        <button class="Button" v-on:click="[saveQuestion()]">
+        <button class="Button greenButton" v-on:click="[saveQuestion()]">
           {{ uiLabels.Savequestion }}
         </button>
+
         <br>
-        <button class="Button" v-on:click="viewQuestions">
+        <button class="Button redButton" v-on:click="viewQuestions">
+
           View Quiz
         </button>
         <br>
         <router-link v-bind:to="'/poll/' + lang"
-          ><v-btn outline block class="Button" v-on:click="sendGameId"
+          ><v-btn outline block class="Button goGameButton" v-on:click="sendGameId"
           ><span class="text">{{ uiLabels.goToGame }}</span></v-btn
         ></router-link>
       </div>
@@ -740,7 +747,7 @@ export default {
   grid-column: 1;
   grid-row: 1 / span 2;
   border-style: dotted;
-  background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+  background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
   color: white;
 }
 .infoWindow {
@@ -758,11 +765,11 @@ export default {
   grid-template-columns: 33% 33% 33%;
   grid-template-rows: 20% 15% 20% 35%;
   border-style: dotted;
-  background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+  background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
 }
 .toolBox {
-  background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
   padding-top: 15vh;
+  background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
   grid-column: 3;
   grid-row: 1 / span 2;
   border-style: dotted;
@@ -892,7 +899,7 @@ export default {
 .Button {
   float: right;
   align-items: center;
-  background-image: linear-gradient(144deg, #c4bdbd, #000000 50%, #9a9797);
+
 
   border-color: white;
   border-radius: 8px;
@@ -929,24 +936,38 @@ export default {
 .Button:hover span {
   background: none;
 }
+
 .createButton {
   float: right;
+  background-image: linear-gradient(144deg, #65be51, #126514 50%, #65be51);
 }
 .loadButton {
   float: right;
+  background-image: linear-gradient(144deg, #fa628d, #881d33 50%, #fa628d);
+}
+.greenButton {
+  background-image: linear-gradient(144deg, #65be51, #126514 50%, #65be51);
+}
+.redButton{
+  background-image: linear-gradient(144deg, #fa628d, #881d33 50%, #fa628d);
 }
 .addButton{
   transform: translate(-20%);
+  background-image: linear-gradient(144deg, #65be51, #126514 50%, #65be51);
 }
 .removeButton{
   transform: translate(-30%);
+  background-image: linear-gradient(144deg, #fa628d, #881d33 50%, #fa628d);
 }
 .addQuestion{
   transform: translateX(-50%);
+  background-image: linear-gradient(144deg, #65be51, #126514 50%, #65be51)
+
 }
 .removeQuestion{
   transform: translateX(-40%);
   margin-top: 5px;
+  background-image: linear-gradient(144deg, #fa628d, #881d33 50%, #fa628d);
 }
 
 ::-webkit-scrollbar {
@@ -1022,7 +1043,7 @@ export default {
     grid-column: 1;
     grid-row: 1 / span 2;
     border-style: dotted;
-    background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+    background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
     color: white;
   }
 
@@ -1042,11 +1063,11 @@ export default {
     grid-template-columns: 33% 33% 33%;
     grid-template-rows: 20% 15% 20% 35%;
     border-style: dotted;
-    background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+    background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
   }
 
   .toolBox {
-    background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+    background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
 
     grid-column: 3;
     grid-row: 1 / span 2;
