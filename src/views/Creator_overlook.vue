@@ -260,10 +260,6 @@
         <br />
         <v-btn class="Button greenButton saveQuestion" v-on:click="[saveQuestion(), setVisible=true, showSaveBlocker()]">
           {{ uiLabels.Savequestion }}
-<<<<<<< HEAD
-        </button>
-        <button class="Button" v-on:click="viewQuestions">View Quiz</button>
-=======
         </v-btn>
 
         <br>
@@ -278,7 +274,6 @@
 <!--        </span>-->
         </v-btn
         ></router-link>
->>>>>>> b39eef3b5255ec2327289357a4c74020d66ac6b8
       </div>
 
       <div class="blocker3" v-if="hideCenter">
@@ -303,17 +298,6 @@
         <h1>question saved</h1>
       </div>
     </section>
-<<<<<<< HEAD
-    <div
-      v-if="this.activeQuestion"
-      v-show="this.activeQuestion"
-      class="questionDisplayed"
-    >
-      <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
-    </div>
-=======
-
->>>>>>> b39eef3b5255ec2327289357a4c74020d66ac6b8
   </section>
 </template>
 
@@ -474,10 +458,6 @@ export default {
       questionSmall: false,
       mapSmall: false,
       questionSmallCond: false,
-<<<<<<< HEAD
-      activeQuestion: false,
-      i: 0,
-=======
       activeQuestion:false,
       i:0,
       styleObject: {
@@ -486,7 +466,6 @@ export default {
         height: '1px'
       },
       saveVisible: false,
->>>>>>> b39eef3b5255ec2327289357a4c74020d66ac6b8
     };
   },
   computed: {
@@ -630,10 +609,6 @@ export default {
 
       this.clearMap()
     },
-<<<<<<< HEAD
-    viewQuestions: function () {
-      console.log(this.questions.length);
-=======
     removeQuestion:function(){
       this.questions.pop()
       socket.emit("removeQuestion", {gameId: this.gameId})
@@ -641,25 +616,15 @@ export default {
     },
     viewQuestions:function(){
       console.log(this.questions.length)
->>>>>>> b39eef3b5255ec2327289357a4c74020d66ac6b8
       this.activeQuestion = true;
       console.log(this.activeQuestion);
       console.log(this.questions[this.i]["a"]);
     },
-<<<<<<< HEAD
-    nextQuestion: function () {
-      console.log("next");
-      if (this.i <= this.questions.length) {
-        this.i++;
-        console.log("if");
-      } else {
-=======
     nextQuestion: function(){
       if ((this.i +1) < this.questions.length){
         this.i++;
       }
       else{
->>>>>>> b39eef3b5255ec2327289357a4c74020d66ac6b8
         this.i = 0;
         this.activeQuestion = false;
       }
