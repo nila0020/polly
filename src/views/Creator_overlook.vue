@@ -189,12 +189,14 @@
                   <label for="{{i}}" v-if="i === correctAnswer">✓</label>
                 </li>
               </ul>
-              <button class="Button addButton" v-on:click="removeAnswer">
-                {{ uiLabels.removeAnswerAlternative }}
+              <button class="Button removeButton" v-on:click="removeAnswer">
+              {{ uiLabels.removeAnswerAlternative }}
               </button>
-              <button class="Button removeButton" v-on:click="addAnswer">
-                {{ uiLabels.AddAnswerAlternative }}
+              <button class="Button addButton" v-on:click="addAnswer">
+              {{ uiLabels.AddAnswerAlternative }}
               </button>
+
+
 
             </div>
             <div v-else-if="checked === 'slider'">
@@ -767,6 +769,7 @@ export default {
   grid-row: 1 / span 2;
   border-style: dotted;
 }
+
 .info h1 {
   margin-top: 0;
   font-size: 25px;
@@ -936,10 +939,15 @@ export default {
   float: right;
 }
 .addButton{
-  transform: translate(-20%);
+  float: right;
+  display: block;
+  margin: 0 auto;
 }
 .removeButton{
-  transform: translate(-30%);
+  float: right;
+  display: block;
+  margin: 0 auto;
+  margin-left: 0.5vw;
 }
 .addQuestion{
   margin: 0 auto;
