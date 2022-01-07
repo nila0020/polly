@@ -118,7 +118,7 @@
                   grid-row: 1;
                   grid-column: 1/ span 2;
                   padding-top: 0">-->
-            {{ this.uiLabels.addImage }}
+            <p style="grid-column: 1/span2; grid-row: 1">{{ this.uiLabels.addImage }}</p>
 <!--            </h4>-->
             <img
               :src="pic"
@@ -192,7 +192,7 @@
                 </li>
               </ul>
               <v-btn class="Button removeButton redButton" v-on:click="removeAnswer">
-              {{ uiLabels.removeAnswerAlternative }}
+              <span class="redSpan">{{ uiLabels.removeAnswerAlternative }}</span>
               </v-btn>
               <v-btn class="Button addButton greenButton" v-on:click="addAnswer">
               {{ uiLabels.AddAnswerAlternative }}
@@ -260,10 +260,7 @@
         <br />
         <v-btn class="Button greenButton saveQuestion" v-on:click="[saveQuestion(), setVisible=true, showSaveBlocker()]">
           {{ uiLabels.Savequestion }}
-<<<<<<< HEAD
-        </button>
-        <button class="Button" v-on:click="viewQuestions">View Quiz</button>
-=======
+
         </v-btn>
 
         <br>
@@ -278,7 +275,6 @@
 <!--        </span>-->
         </v-btn
         ></router-link>
->>>>>>> b39eef3b5255ec2327289357a4c74020d66ac6b8
       </div>
 
       <div class="blocker3" v-if="hideCenter">
@@ -303,7 +299,7 @@
         <h1>question saved</h1>
       </div>
     </section>
-<<<<<<< HEAD
+
     <div
       v-if="this.activeQuestion"
       v-show="this.activeQuestion"
@@ -311,9 +307,7 @@
     >
       <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
     </div>
-=======
 
->>>>>>> b39eef3b5255ec2327289357a4c74020d66ac6b8
   </section>
 </template>
 
@@ -474,10 +468,6 @@ export default {
       questionSmall: false,
       mapSmall: false,
       questionSmallCond: false,
-<<<<<<< HEAD
-      activeQuestion: false,
-      i: 0,
-=======
       activeQuestion:false,
       i:0,
       styleObject: {
@@ -486,7 +476,7 @@ export default {
         height: '1px'
       },
       saveVisible: false,
->>>>>>> b39eef3b5255ec2327289357a4c74020d66ac6b8
+
     };
   },
   computed: {
@@ -630,10 +620,7 @@ export default {
 
       this.clearMap()
     },
-<<<<<<< HEAD
-    viewQuestions: function () {
-      console.log(this.questions.length);
-=======
+
     removeQuestion:function(){
       this.questions.pop()
       socket.emit("removeQuestion", {gameId: this.gameId})
@@ -641,25 +628,16 @@ export default {
     },
     viewQuestions:function(){
       console.log(this.questions.length)
->>>>>>> b39eef3b5255ec2327289357a4c74020d66ac6b8
       this.activeQuestion = true;
       console.log(this.activeQuestion);
       console.log(this.questions[this.i]["a"]);
     },
-<<<<<<< HEAD
-    nextQuestion: function () {
-      console.log("next");
-      if (this.i <= this.questions.length) {
-        this.i++;
-        console.log("if");
-      } else {
-=======
+
     nextQuestion: function(){
       if ((this.i +1) < this.questions.length){
         this.i++;
       }
       else{
->>>>>>> b39eef3b5255ec2327289357a4c74020d66ac6b8
         this.i = 0;
         this.activeQuestion = false;
       }
@@ -894,6 +872,7 @@ export default {
   grid-row: 1;
 }
 #picBox {
+  margin-top: 8%;
   text-align: center;
   display: grid;
   grid-template-rows: 10% 70% 20%;
@@ -1045,7 +1024,7 @@ export default {
   float: right;
   display: block;
   margin: 0 auto;
-  margin-left: 0.5vw;
+  margin-left: 2vw;
 }
 .addQuestion{
   margin: 0 auto;
@@ -1075,6 +1054,22 @@ export default {
 }
 .chooseImage{
   justify-self: center;
+}
+.redButton span {
+  background-color: #c92553;
+  padding: 16px 24px;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
+}
+.greenButton span {
+  background-color: #65be51;
+  padding: 16px 24px;
+  border-radius: 6px;
+  width: 100%;
+  height: 45%;
+  transition: 300ms;
 }
 
 ::-webkit-scrollbar {
