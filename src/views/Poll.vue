@@ -47,7 +47,7 @@
             <div class="navBar">
               <button
                 id="quitButton"
-                class="start_buttons"
+                class="create_buttons"
                 v-on:click="quitGame"
               >
                 Quit
@@ -300,6 +300,10 @@ input {
   width: 75vw;
   font-family: "Baloo Bhaijaan 2", cursive;
 }
+
+
+
+
 #quitButton {
   border-radius: 8px;
   box-sizing: border-box;
@@ -320,6 +324,8 @@ input {
   white-space: nowrap;
   cursor: pointer;
 }
+
+
 
 /* @media screen and (max-width: 600px) {
   .picture {

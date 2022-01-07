@@ -26,15 +26,15 @@
           v-bind:placeholder="this.uiLabels.enterGameID"
         />
       </div>
-      <div class="column">
-        <button class="Button createButton" v-on:click="createGame">
+      <div class="column buttonBox">
+        <v-btn class="Button createButton greenButton" v-on:click="createGame">
           {{ uiLabels.CreateGame }}
-        </button>
-        <span class="break"><br /></span>
+        </v-btn>
+<!--        <span class="break"><br /></span>-->
 
-        <button class="Button loadButton" v-on:click="loadGame">
+        <v-btn class="Button loadButton redButton" v-on:click="loadGame">
           Load Game
-        </button>
+        </v-btn>
       </div>
       <!--      </div>-->
     </section>
@@ -47,26 +47,28 @@
           <ul>
             <li v-bind:key="question" v-for="question in questions">
               <label>
-                <button
+                <v-btn class="Button questionButton"
                   v-on:click="[currentData(question.qId), closeExpand()]"
                   key=""
                 >
                   {{ question.qId }}.{{ question.q }}
-                </button>
+                </v-btn>
               </label>
             </li>
           </ul>
           <p>
             <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
-            <button
-              class="Button addQuestion"
+            <v-btn class="Button addQuestion greenButton" id="overlook!Btn"
+
               v-on:click="[addNewQuestion(), closeExpand()]"
             >
               {{ uiLabels.Addquestion }}
-            </button>
-            <button class="Button removeQuestion">
+            </v-btn>
+
+            <v-btn class="Button removeQuestion redButton">
+
               {{ uiLabels.Deletequestion }}
-            </button>
+            </v-btn>
           </p>
         </div>
       </div>
@@ -137,18 +139,18 @@
               style="display: none"
               ref="fileInput"
             />
-            <button
+            <v-btn class="Button chooseImage greenButton"
               v-on:click="$refs.fileInput.click()"
               style="grid-column: 1; grid-row: 3"
             >
               {{ this.uiLabels.chooseImage }}
-            </button>
-            <button
+            </v-btn>
+            <v-btn class="Button removeImage redButton"
               v-on:click="removeImage"
               style="grid-column: 2; grid-row: 3"
             >
               {{ this.uiLabels.removeimage }}
-            </button>
+            </v-btn>
           </div>
 
           <div id="qBox">
@@ -189,15 +191,12 @@
                   <label for="{{i}}" v-if="i === correctAnswer">✓</label>
                 </li>
               </ul>
-              <button class="Button removeButton" v-on:click="removeAnswer">
+              <v-btn class="Button removeButton redButton" v-on:click="removeAnswer">
               {{ uiLabels.removeAnswerAlternative }}
-              </button>
-              <button class="Button addButton" v-on:click="addAnswer">
+              </v-btn>
+              <v-btn class="Button addButton greenButton" v-on:click="addAnswer">
               {{ uiLabels.AddAnswerAlternative }}
-              </button>
-
-
-
+              </v-btn>
             </div>
             <div v-else-if="checked === 'slider'">
               <input type="number" v-model="sliderMinVal" />
@@ -259,17 +258,22 @@
         <br />
         <br />
         <br />
-        <button class="Button saveQuestion" v-on:click="[saveQuestion()]">
+        <v-btn class="Button greenButton saveQuestion" v-on:click="[saveQuestion(), setVisible=true, showSaveBlocker()]">
           {{ uiLabels.Savequestion }}
-        </button>
+        </v-btn>
+
         <br>
-        <button class="Button viewQuestion" v-on:click="viewQuestions">
+        <v-btn class="Button redButton viewQuestion" v-on:click="viewQuestions">
+
           View Quiz
-        </button>
+        </v-btn>
         <br>
         <router-link v-bind:to="'/poll/' + lang"
-          ><button outline class="Button goToGame" v-on:click="sendGameId"
-          ><span class="text">{{ uiLabels.goToGame }}</span></button
+          ><v-btn outline block class="Button goToGame redButton" v-on:click="sendGameId">
+<!--          <span class="text">-->
+          {{ uiLabels.goToGame }}
+<!--        </span>-->
+        </v-btn
         ></router-link>
       </div>
 
@@ -290,6 +294,9 @@
         <h1>{{uiLabels.blocker1Part2}}</h1>
         <br>
         <h1>{{uiLabels.blocker1Part3}}</h1>
+      </div>
+      <div v-show="saveVisible" class="saveBlocker">
+        <h1>question saved</h1>
       </div>
     </section>
 
@@ -441,6 +448,7 @@ export default {
         fontSize: '13px',
         height: '1px'
       },
+      saveVisible: false,
     };
   },
   computed: {
@@ -460,6 +468,13 @@ export default {
     socket.on("questionPosition", (data) => (this.pos = data));
   },
   methods: {
+    showSaveBlocker: function() {
+
+      this.saveVisible = true;
+      console.log(this.saveVisible)
+      setTimeout(() => this.saveVisible = false, 1000)
+
+    },
     sendGameId: function(){
       socket.emit("sendGameId", {
         gameID: this.gameId,
@@ -719,11 +734,15 @@ export default {
   float: left;
   width: 30%;
 }
+.buttonBox{
+  float: right;
+}
 .container {
 /*  padding-top: 15vh;*/
   display: grid;
   grid-template-columns: 15% 70% 15%;
   grid-template-rows: 50% 50%;
+
 }
 
 .box {
@@ -742,7 +761,7 @@ export default {
   grid-column: 1;
   grid-row: 1 / span 2;
   border-style: dotted;
-  background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+  background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
   color: white;
 }
 .infoWindow {
@@ -760,11 +779,11 @@ export default {
   grid-template-columns: 33% 33% 33%;
   grid-template-rows: 20% 15% 20% 35%;
   border-style: dotted;
-  background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+  background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
 }
 .toolBox {
-  background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
   padding-top: 15vh;
+  background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
   grid-column: 3;
   grid-row: 1 / span 2;
   border-style: dotted;
@@ -824,6 +843,7 @@ export default {
   grid-column: 1;
   grid-row: 1/ span 2;
   margin-right: 1vw;
+  align-items: center;
 }
 #qBox {
   height: 100%;
@@ -881,6 +901,15 @@ export default {
   opacity: 95%;
   transition: 300ms;
 }
+.saveBlocker{
+  color: #126514;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  overflow: hidden;
+  background-color: black;
+  opacity: 95%;
+  transition: 300ms;
+}
 .questionDisplayed {
   width: 100%;
   height: 100%;
@@ -895,8 +924,6 @@ export default {
 .Button {
   /*float: right;*/
   align-items: center;
-  background-image: linear-gradient(144deg, #c4bdbd, #000000 50%, #9a9797);
-
   border-color: white;
   border-radius: 8px;
   box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
@@ -907,8 +934,9 @@ export default {
   font-size: 2vh;
   justify-content: center;
   line-height: 2em;
-  max-width: 100%;
-  min-width: 100px;
+  max-width: 65%;
+  min-width: 120px;
+  height: 4.5vh;
   padding: 3px;
   text-decoration: none;
   user-select: none;
@@ -932,11 +960,22 @@ export default {
 .Button:hover span {
   background: none;
 }
-.createButton {
-  float: right;
+.greenButton {
+  background-image: linear-gradient(144deg, #65be51, #126514 50%, #65be51);
 }
+.redButton{
+  background-image: linear-gradient(144deg, #fa628d, #881d33 50%, #fa628d);
+}
+.createButton {
+   /*float: right;*/
+   display: block;
+  max-width: 30%;
+ }
 .loadButton {
-  float: right;
+  /*float: right;*/
+  margin-top: 0.5vh;
+  display: block;
+  max-width: 30%;
 }
 .addButton{
   float: right;
@@ -969,6 +1008,14 @@ export default {
 .goToGame{
   margin: 0 auto;
   display: block;
+}
+.questionButton{
+  display:block;
+  background-image: linear-gradient(#105646,#1d7658, #b6d7a8ff, #b6d7a8ff);
+  max-width: 95%;
+}
+.chooseImage{
+  justify-self: center;
 }
 
 ::-webkit-scrollbar {
@@ -1044,7 +1091,7 @@ export default {
     grid-column: 1;
     grid-row: 1 / span 2;
     border-style: dotted;
-    background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+    background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
     color: white;
   }
 
@@ -1064,11 +1111,11 @@ export default {
     grid-template-columns: 33% 33% 33%;
     grid-template-rows: 20% 15% 20% 35%;
     border-style: dotted;
-    background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+    background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
   }
 
   .toolBox {
-    background: linear-gradient(#4285f4ff, #1d7658, #1d7658);
+    background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
 
     grid-column: 3;
     grid-row: 1 / span 2;
