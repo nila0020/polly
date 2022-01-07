@@ -118,7 +118,7 @@
                   grid-row: 1;
                   grid-column: 1/ span 2;
                   padding-top: 0">-->
-              Lägg till bild
+            {{ this.uiLabels.addImage }}
 <!--            </h4>-->
             <img
               :src="pic"
@@ -154,8 +154,8 @@
           </div>
 
           <div id="qBox">
-            Question <br>
-            Write your question here:
+            {{ this.uiLabels.question }} <br>
+            {{ this.uiLabels.writeQuestion }}
             <textarea
               class="questionArea"
               v-model="questionText"
@@ -164,7 +164,7 @@
           </div>
 
           <div id="aBox">
-            Answer <br>
+            {{ this.uiLabels.answer }} <br>
             <div v-if="checked === 'MCQ' || checked === null">
 
               <!--              <input
