@@ -73,6 +73,13 @@ Data.prototype.addQuestion = function (gameId, q) {
 
   }
 }
+Data.prototype.removeQuestion = function(gameId){
+  const game = this.games[gameId];
+  if (typeof game !== 'undefined') {
+    game.questions.pop()
+  }
+  console.log(game)
+}
 
 Data.prototype.joinQuiz = function (gameId, userName) {
   const game = this.games[gameId];
