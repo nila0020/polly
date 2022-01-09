@@ -41,7 +41,7 @@ function sockets(io, socket, data) {
   });
 
   socket.on('submitAnswer', function (d) {
-    data.submitAnswer(d.gameId, d.answer, d.userName);
+    data.submitAnswer(d.gameId, d.answer, d.corAnswer, d.userName);
     io.to(d.gameId).emit('dataUpdate', data.getAnswers(d.gameId));
   });
   socket.on('doesGameIdExist', function (d) {
