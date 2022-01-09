@@ -28,12 +28,12 @@
       </div>
       <div class="column buttonBox">
         <v-btn class="Button createButton greenButton" v-on:click="createGame">
-          {{ uiLabels.CreateGame }}
+          <span>{{ uiLabels.CreateGame }}</span>
         </v-btn>
 <!--        <span class="break"><br /></span>-->
 
         <v-btn class="Button loadButton redButton" v-on:click="loadGame">
-          {{ this.uiLabels.loadGame }}
+          <span style="padding: 3px 22%;">{{ this.uiLabels.loadGame }}</span>
         </v-btn>
 
       </div>
@@ -63,11 +63,11 @@
 
               v-on:click="[addNewQuestion(), closeExpand()]"
             >
-              {{ uiLabels.Addquestion }}
+              <span>{{ uiLabels.Addquestion }}</span>
             </v-btn>
 
             <v-btn class="Button removeQuestion redButton" v-on:click="removeQuestion">
-              {{ uiLabels.Deletequestion }}
+              <span>{{ uiLabels.Deletequestion }}</span>
             </v-btn>
           </p>
         </div>
@@ -143,13 +143,13 @@
               v-on:click="$refs.fileInput.click()"
               style="grid-column: 1; grid-row: 3"
             >
-              {{ this.uiLabels.chooseImage }}
+              <span>{{ this.uiLabels.chooseImage }}</span>
             </v-btn>
             <v-btn class="Button removeImage redButton"
               v-on:click="removeImage"
               style="grid-column: 2; grid-row: 3"
             >
-              {{ this.uiLabels.removeimage }}
+              <span>{{ this.uiLabels.removeimage }}</span>
             </v-btn>
           </div>
 
@@ -192,10 +192,10 @@
                 </li>
               </ul>
               <v-btn class="Button removeButton redButton" v-on:click="removeAnswer">
-              <span class="redSpan">{{ uiLabels.removeAnswerAlternative }}</span>
+              <span>{{ uiLabels.removeAnswerAlternative }}</span>
               </v-btn>
               <v-btn class="Button addButton greenButton" v-on:click="addAnswer">
-              {{ uiLabels.AddAnswerAlternative }}
+              <span>{{ uiLabels.AddAnswerAlternative }}</span>
               </v-btn>
             </div>
             <div v-else-if="checked === 'slider'">
@@ -259,19 +259,19 @@
         <br />
         <br />
         <v-btn class="Button greenButton saveQuestion" v-on:click="[saveQuestion(), setVisible=true, showSaveBlocker()]">
-          {{ uiLabels.Savequestion }}
+          <span>{{ uiLabels.Savequestion }}</span>
 
         </v-btn>
 
         <br>
         <v-btn class="Button redButton viewQuestion" v-on:click="viewQuestions">
-          {{ this.uiLabels.viewQuiz }}
+          <span style="padding: 3px 43px;">{{ this.uiLabels.viewQuiz }}</span>
         </v-btn>
         <br>
         <router-link v-bind:to="'/poll/' + lang"
           ><v-btn outline block class="Button goToGame redButton" v-on:click="sendGameId">
 <!--          <span class="text">-->
-          {{ uiLabels.goToGame }}
+          <span style="padding: 3px 36px;">{{ uiLabels.goToGame }}</span>
 <!--        </span>-->
         </v-btn
         ></router-link>
@@ -740,7 +740,8 @@ export default {
   min-width: 100%;
 }*/
 .pagee {
-  background-color: black;
+  background:#2674b0;
+  /*background: linear-gradient(#3bc1d9, #2674b0, #27a27a);*/
   text-align: center;
   font-size: 20pt;
   font-family: "Baloo Bhaijaan 2", cursive;
@@ -1050,14 +1051,16 @@ export default {
 .questionButton{
   display:block;
   background-image: linear-gradient(#105646,#1d7658, #b6d7a8ff, #b6d7a8ff);
-  max-width: 95%;
+  max-width: 90%;
+  margin-left:5%;
+  margin-top: 5px
 }
 .chooseImage{
   justify-self: center;
 }
 .redButton span {
   background-color: #c92553;
-  padding: 16px 24px;
+  padding: 2px 24px;
   border-radius: 6px;
   width: 100%;
   height: 100%;
@@ -1065,7 +1068,7 @@ export default {
 }
 .greenButton span {
   background-color: #65be51;
-  padding: 16px 24px;
+  padding: 2px 24px;
   border-radius: 6px;
   width: 100%;
   height: 45%;
@@ -1079,15 +1082,9 @@ export default {
 .mapTitle {
   font-size: 20px;
 }
-
-.gameNameBox {
-  grid-column: 1;
-}
-.gameIDBox {
-  grid-column: 2;
-}
-.gameButtonBox {
-  grid-column: 3;
+ul{
+  list-style-type: none;
+  padding: 0px;
 }
 .break {
   display: inline;

@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   {{ this.scoreBoard }}
+=======
+  {{scoreBoard}}
+>>>>>>> 6a2bc5feb0ef8fb3c28b7dfd14e146d8389e0098
   <div class="fullScope">
     <h1 style="color: white">Leaderboard:</h1>
     <div class="wrapped">
