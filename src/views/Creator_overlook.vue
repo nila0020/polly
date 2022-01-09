@@ -33,7 +33,7 @@
 <!--        <span class="break"><br /></span>-->
 
         <v-btn class="Button loadButton redButton" v-on:click="loadGame">
-          <span style="padding: 3px 22%;">{{ this.uiLabels.loadGame }}</span>
+          <span>{{ this.uiLabels.loadGame }}</span>
         </v-btn>
 
       </div>
@@ -52,7 +52,7 @@
                   v-on:click="[currentData(question.qId), closeExpand()]"
                   key=""
                 >
-                  {{ question.qId }}.{{ question.q }}
+                  <span>{{ question.qId }}.{{ question.q }}</span>
                 </v-btn>
               </label>
             </li>
@@ -192,10 +192,13 @@
                 </li>
               </ul>
               <v-btn class="Button removeButton redButton" v-on:click="removeAnswer">
-              <span>{{ uiLabels.removeAnswerAlternative }}</span>
+              <span>
+                {{ uiLabels.removeAnswerAlternative }}
+              </span>
               </v-btn>
               <v-btn class="Button addButton greenButton" v-on:click="addAnswer">
-              <span>{{ uiLabels.AddAnswerAlternative }}</span>
+              <span>
+                {{ uiLabels.AddAnswerAlternative }}</span>
               </v-btn>
             </div>
             <div v-else-if="checked === 'slider'">
@@ -265,13 +268,13 @@
 
         <br>
         <v-btn class="Button redButton viewQuestion" v-on:click="viewQuestions">
-          <span style="padding: 3px 43px;">{{ this.uiLabels.viewQuiz }}</span>
+          <span>{{ this.uiLabels.viewQuiz }}</span>
         </v-btn>
         <br>
         <router-link v-bind:to="'/poll/' + lang"
           ><v-btn outline block class="Button goToGame redButton" v-on:click="sendGameId">
 <!--          <span class="text">-->
-          <span style="padding: 3px 36px;">{{ uiLabels.goToGame }}</span>
+          <span>{{ uiLabels.goToGame }}</span>
 <!--        </span>-->
         </v-btn
         ></router-link>
@@ -961,8 +964,7 @@ export default {
   align-items: center;
 }
 .Button {
-  /*float: right;*/
-  align-items: center;
+  justify-content: center;
   border-color: white;
   border-radius: 8px;
   box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
@@ -973,8 +975,7 @@ export default {
   font-size: 2vh;
   justify-content: center;
   line-height: 2em;
-  max-width: 65%;
-  min-width: 120px;
+  width: 150px;
   height: 4.5vh;
   padding: 3px;
   text-decoration: none;
@@ -989,8 +990,8 @@ export default {
   outline: 0;
 }
 .Button span {
-  background-color: #000000;
-  padding: 14px 20px;
+  /*background-color: #000000;*/
+  /*padding: 14px 20px;*/
   border-radius: 6px;
   width: 100%;
   height: 30%;
@@ -1006,20 +1007,28 @@ export default {
   background-image: linear-gradient(144deg, #fa628d, #881d33 50%, #fa628d);
 }
 .createButton {
-   /*float: right;*/
    display: block;
   max-width: 30%;
  }
+.createButton span{
+  padding: 3px 18px
+}
 .loadButton {
   /*float: right;*/
   margin-top: 0.5vh;
   display: block;
   max-width: 30%;
 }
+.loadButton span {
+  padding: 3px 25px;
+}
 .addButton{
   float: right;
   display: block;
   margin: 0 auto;
+}
+.addButton span {
+  padding: 3px 21px;
 }
 .removeButton{
   float: right;
@@ -1027,26 +1036,52 @@ export default {
   margin: 0 auto;
   margin-left: 2vw;
 }
+.removeButton span {
+  padding: 3px 5px;
+}
 .addQuestion{
   margin: 0 auto;
   display: block;
 }
+.addQuestion span {
+  padding: 4px 16px;
+}
+
 .removeQuestion{
   margin: 0 auto;
   display: block;
   margin-top: 5px;
 }
+.removeQuestion span {
+  padding: 4px 6px;
+}
 .saveQuestion{
   margin: 0 auto;
   display: block;
+}
+.saveQuestion span {
+  padding: 4px 12px;
 }
 .viewQuestion{
   margin: 0 auto;
   display: block;
 }
+.viewQuestion span {
+  padding: 4px 31px;
+}
 .goToGame{
   margin: 0 auto;
   display: block;
+}
+.goToGame span {
+  padding: 4px 24px;
+}
+.chooseImage{
+  justify-self: center;
+  align-self: center;
+}
+.chooseImage span{
+  padding: 4px 24px;
 }
 .questionButton{
   display:block;
@@ -1055,20 +1090,23 @@ export default {
   margin-left:5%;
   margin-top: 5px
 }
-.chooseImage{
-  justify-self: center;
+.questionButton span{
+  background-color: #1d7658;
+  padding: 5px 67px;
+
 }
+
 .redButton span {
-  background-color: #c92553;
-  padding: 2px 24px;
+  background-image: linear-gradient(144deg, #881d33, #fa628d 50%, #881d33);
+  /*padding: 2px 24px;*/
   border-radius: 6px;
   width: 100%;
   height: 100%;
   transition: 300ms;
 }
 .greenButton span {
-  background-color: #65be51;
-  padding: 2px 24px;
+  background-image: linear-gradient(144deg, #126514, #65be51 50%, #126514);
+  /*padding: 2px 20px;*/
   border-radius: 6px;
   width: 100%;
   height: 45%;
