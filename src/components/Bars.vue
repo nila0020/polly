@@ -1,4 +1,5 @@
 <template>
+  {{ this.scoreBoard }}
   <div class="fullScope">
     <h1 style="color: white">Leaderboard:</h1>
     <div class="wrapped">
