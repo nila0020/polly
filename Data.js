@@ -73,7 +73,7 @@ Data.prototype.addQuestion = function (gameId, q) {
 
   }
 }
-Data.prototype.removeQuestion = function(gameId){
+Data.prototype.removeQuestion = function (gameId) {
   const game = this.games[gameId];
   if (typeof game !== 'undefined') {
     game.questions.pop()
@@ -168,16 +168,19 @@ Data.prototype.getScoreboard = function (gameId, userName) {
     for (let i = 0; i < game.questions.length; i++) {
       console.log(game.questions[i].a[1])
       console.log(game.questions[i].a[0])
-      gameAnswers.push(game.questions[i].a[0][game.questions[i].a[1]]);
+      if (game.questions[i].type == "MCQ") {
+        gameAnswers.push(game.questions[i].a[0][game.questions[i].a[1]]);
+      }
+      else { gameAnswers.push(game.questions[i].aS) }
     }
 
-/*    for (game.questions.q of game.questions){
-      gameQuestions.push(game.questions.q)
-      console.log(game.questions.q)
-    }
-    for (game.questions of game){
-      gameAnswers.push(game.questions.a)
-    }*/
+    /*    for (game.questions.q of game.questions){
+          gameQuestions.push(game.questions.q)
+          console.log(game.questions.q)
+        }
+        for (game.questions of game){
+          gameAnswers.push(game.questions.a)
+        }*/
     corAnswers.forEach(function (item, index) {
       if (item == true) {
         scored += 1;
