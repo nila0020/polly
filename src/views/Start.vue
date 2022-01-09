@@ -190,7 +190,7 @@ html {
   min-width: 140px;
   padding: 3px;
   text-decoration: underline;
-  text-decoration-color: #65be51;;
+  text-decoration-color: #65be51;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
