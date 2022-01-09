@@ -164,7 +164,6 @@
 
         <div id="qBox">
           {{ this.uiLabels.question }} <br />
-          {{ this.uiLabels.writeQuestion }}
           <textarea
             class="questionArea"
             v-model="questionText"
@@ -1142,6 +1141,9 @@ ul {
 }
 .break {
   display: inline;
+}
+.output {
+  font-size: 14px;
 }
 
 /*@media screen and (max-width: 660px) {
