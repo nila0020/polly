@@ -28,12 +28,12 @@
       </div>
       <div class="column buttonBox">
         <v-btn class="Button createButton greenButton" v-on:click="createGame">
-          {{ uiLabels.CreateGame }}
+          <span>{{ uiLabels.CreateGame }}</span>
         </v-btn>
 <!--        <span class="break"><br /></span>-->
 
         <v-btn class="Button loadButton redButton" v-on:click="loadGame">
-          {{ this.uiLabels.loadGame }}
+          <span>{{ this.uiLabels.loadGame }}</span>
         </v-btn>
 
       </div>
@@ -52,7 +52,7 @@
                   v-on:click="[currentData(question.qId), closeExpand()]"
                   key=""
                 >
-                  {{ question.qId }}.{{ question.q }}
+                  <span>{{ question.qId }}.{{ question.q }}</span>
                 </v-btn>
               </label>
             </li>
@@ -63,11 +63,11 @@
 
               v-on:click="[addNewQuestion(), closeExpand()]"
             >
-              {{ uiLabels.Addquestion }}
+              <span>{{ uiLabels.Addquestion }}</span>
             </v-btn>
 
             <v-btn class="Button removeQuestion redButton" v-on:click="removeQuestion">
-              {{ uiLabels.Deletequestion }}
+              <span>{{ uiLabels.Deletequestion }}</span>
             </v-btn>
           </p>
         </div>
@@ -118,7 +118,7 @@
                   grid-row: 1;
                   grid-column: 1/ span 2;
                   padding-top: 0">-->
-            {{ this.uiLabels.addImage }}
+            <p style="grid-column: 1/span2; grid-row: 1">{{ this.uiLabels.addImage }}</p>
 <!--            </h4>-->
             <img
               :src="pic"
@@ -143,13 +143,13 @@
               v-on:click="$refs.fileInput.click()"
               style="grid-column: 1; grid-row: 3"
             >
-              {{ this.uiLabels.chooseImage }}
+              <span>{{ this.uiLabels.chooseImage }}</span>
             </v-btn>
             <v-btn class="Button removeImage redButton"
               v-on:click="removeImage"
               style="grid-column: 2; grid-row: 3"
             >
-              {{ this.uiLabels.removeimage }}
+              <span>{{ this.uiLabels.removeimage }}</span>
             </v-btn>
           </div>
 
@@ -192,10 +192,13 @@
                 </li>
               </ul>
               <v-btn class="Button removeButton redButton" v-on:click="removeAnswer">
-              {{ uiLabels.removeAnswerAlternative }}
+              <span>
+                {{ uiLabels.removeAnswerAlternative }}
+              </span>
               </v-btn>
               <v-btn class="Button addButton greenButton" v-on:click="addAnswer">
-              {{ uiLabels.AddAnswerAlternative }}
+              <span>
+                {{ uiLabels.AddAnswerAlternative }}</span>
               </v-btn>
             </div>
             <div v-else-if="checked === 'slider'">
@@ -259,18 +262,23 @@
         <br />
         <br />
         <v-btn class="Button greenButton saveQuestion" v-on:click="[saveQuestion(), setVisible=true, showSaveBlocker()]">
+<<<<<<< HEAD
           {{ uiLabels.Savequestion }}
+=======
+          <span>{{ uiLabels.Savequestion }}</span>
+
+>>>>>>> bd21cffaf8c659537911c30a7c4e727485b4d3c9
         </v-btn>
 
         <br>
         <v-btn class="Button redButton viewQuestion" v-on:click="viewQuestions">
-          {{ this.uiLabels.viewQuiz }}
+          <span>{{ this.uiLabels.viewQuiz }}</span>
         </v-btn>
         <br>
         <router-link v-bind:to="'/poll/' + lang"
           ><v-btn outline block class="Button goToGame redButton" v-on:click="sendGameId">
 <!--          <span class="text">-->
-          {{ uiLabels.goToGame }}
+          <span>{{ uiLabels.goToGame }}</span>
 <!--        </span>-->
         </v-btn
         ></router-link>
@@ -298,6 +306,18 @@
         <h1>question saved</h1>
       </div>
     </section>
+<<<<<<< HEAD
+=======
+
+    <div
+      v-if="this.activeQuestion"
+      v-show="this.activeQuestion"
+      class="questionDisplayed"
+    >
+      <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
+    </div>
+
+>>>>>>> bd21cffaf8c659537911c30a7c4e727485b4d3c9
   </section>
 </template>
 
@@ -466,6 +486,10 @@ export default {
         height: '1px'
       },
       saveVisible: false,
+<<<<<<< HEAD
+=======
+
+>>>>>>> bd21cffaf8c659537911c30a7c4e727485b4d3c9
     };
   },
   computed: {
@@ -609,6 +633,10 @@ export default {
 
       this.clearMap()
     },
+<<<<<<< HEAD
+=======
+
+>>>>>>> bd21cffaf8c659537911c30a7c4e727485b4d3c9
     removeQuestion:function(){
       this.questions.pop()
       socket.emit("removeQuestion", {gameId: this.gameId})
@@ -620,6 +648,10 @@ export default {
       console.log(this.activeQuestion);
       console.log(this.questions[this.i]["a"]);
     },
+<<<<<<< HEAD
+=======
+
+>>>>>>> bd21cffaf8c659537911c30a7c4e727485b4d3c9
     nextQuestion: function(){
       if ((this.i +1) < this.questions.length){
         this.i++;
@@ -727,7 +759,8 @@ export default {
   min-width: 100%;
 }*/
 .pagee {
-  background-color: black;
+  background:#2674b0;
+  /*background: linear-gradient(#3bc1d9, #2674b0, #27a27a);*/
   text-align: center;
   font-size: 20pt;
   font-family: "Baloo Bhaijaan 2", cursive;
@@ -859,6 +892,7 @@ export default {
   grid-row: 1;
 }
 #picBox {
+  margin-top: 8%;
   text-align: center;
   display: grid;
   grid-template-rows: 10% 70% 20%;
@@ -946,8 +980,7 @@ export default {
   align-items: center;
 }
 .Button {
-  /*float: right;*/
-  align-items: center;
+  justify-content: center;
   border-color: white;
   border-radius: 8px;
   box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
@@ -958,8 +991,7 @@ export default {
   font-size: 2vh;
   justify-content: center;
   line-height: 2em;
-  max-width: 65%;
-  min-width: 120px;
+  width: 150px;
   height: 4.5vh;
   padding: 3px;
   text-decoration: none;
@@ -974,8 +1006,8 @@ export default {
   outline: 0;
 }
 .Button span {
-  background-color: #000000;
-  padding: 14px 20px;
+  /*background-color: #000000;*/
+  /*padding: 14px 20px;*/
   border-radius: 6px;
   width: 100%;
   height: 30%;
@@ -991,55 +1023,110 @@ export default {
   background-image: linear-gradient(144deg, #fa628d, #881d33 50%, #fa628d);
 }
 .createButton {
-   /*float: right;*/
    display: block;
   max-width: 30%;
  }
+.createButton span{
+  padding: 3px 18px
+}
 .loadButton {
   /*float: right;*/
   margin-top: 0.5vh;
   display: block;
   max-width: 30%;
 }
+.loadButton span {
+  padding: 3px 25px;
+}
 .addButton{
   float: right;
   display: block;
   margin: 0 auto;
 }
+.addButton span {
+  padding: 3px 21px;
+}
 .removeButton{
   float: right;
   display: block;
   margin: 0 auto;
-  margin-left: 0.5vw;
+  margin-left: 2vw;
+}
+.removeButton span {
+  padding: 3px 5px;
 }
 .addQuestion{
   margin: 0 auto;
   display: block;
 }
+.addQuestion span {
+  padding: 4px 16px;
+}
+
 .removeQuestion{
   margin: 0 auto;
   display: block;
   margin-top: 5px;
 }
+.removeQuestion span {
+  padding: 4px 6px;
+}
 .saveQuestion{
   margin: 0 auto;
   display: block;
+}
+.saveQuestion span {
+  padding: 4px 12px;
 }
 .viewQuestion{
   margin: 0 auto;
   display: block;
 }
+.viewQuestion span {
+  padding: 4px 31px;
+}
 .goToGame{
   margin: 0 auto;
   display: block;
 }
-.questionButton{
-  display:block;
-  background-image: linear-gradient(#105646,#1d7658, #b6d7a8ff, #b6d7a8ff);
-  max-width: 95%;
+.goToGame span {
+  padding: 4px 24px;
 }
 .chooseImage{
   justify-self: center;
+  align-self: center;
+}
+.chooseImage span{
+  padding: 4px 24px;
+}
+.questionButton{
+  display:block;
+  background-image: linear-gradient(#105646,#1d7658, #b6d7a8ff, #b6d7a8ff);
+  max-width: 90%;
+  margin-left:5%;
+  margin-top: 5px
+}
+.questionButton span{
+  background-color: #1d7658;
+  padding: 5px 67px;
+
+}
+
+.redButton span {
+  background-image: linear-gradient(144deg, #881d33, #fa628d 50%, #881d33);
+  /*padding: 2px 24px;*/
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
+}
+.greenButton span {
+  background-image: linear-gradient(144deg, #126514, #65be51 50%, #126514);
+  /*padding: 2px 20px;*/
+  border-radius: 6px;
+  width: 100%;
+  height: 45%;
+  transition: 300ms;
 }
 
 ::-webkit-scrollbar {
@@ -1049,15 +1136,9 @@ export default {
 .mapTitle {
   font-size: 20px;
 }
-
-.gameNameBox {
-  grid-column: 1;
-}
-.gameIDBox {
-  grid-column: 2;
-}
-.gameButtonBox {
-  grid-column: 3;
+ul{
+  list-style-type: none;
+  padding: 0px;
 }
 .break {
   display: inline;

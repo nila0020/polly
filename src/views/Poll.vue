@@ -154,27 +154,29 @@ export default {
   },
   methods: {
     submitAnswer: function (answer) {
+      let corAnswer = null;
       if ("MCQ" == this.question[0]["type"]) {
         if (answer == this.question[0]["a"][0][this.question[0]["a"][1]]) {
           console.log("sann");
-          answer = true;
+          corAnswer = true;
         } else {
           console.log("faslk");
-          answer = false;
+          corAnswer = false;
         }
       } else {
         if (
           answer < this.question[0]["aS"][3][2] &&
           answer > this.question[0]["aS"][3][0]
         ) {
-          answer = true;
+          corAnswer = true;
         } else {
-          answer = false;
+          corAnswer = false;
         }
       }
       socket.emit("submitAnswer", {
         gameId: this.gameId,
         answer: answer,
+        corAnswer: corAnswer,
         userName: this.userName,
       }); /*avgör om det finns fler frågor eller om quizzet skall avslutas*/
       if (this.question[0]["qId"] < this.question[1]) {

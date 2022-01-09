@@ -73,7 +73,7 @@ Data.prototype.addQuestion = function (gameId, q) {
 
   }
 }
-Data.prototype.removeQuestion = function(gameId){
+Data.prototype.removeQuestion = function (gameId) {
   const game = this.games[gameId];
   if (typeof game !== 'undefined') {
     game.questions.pop()
@@ -88,6 +88,7 @@ Data.prototype.joinQuiz = function (gameId, userName) {
     //console.log(game.questions.findIndex(obj => obj.qId == q.qId))
     user.userName = userName
     user.answers = []
+    user.corAnswers = []
     user.score = Number
     game.participants.push(user);
   }
@@ -113,10 +114,11 @@ Data.prototype.getQuestion = function (gameId, qId = null) {
   return []
 }
 
-Data.prototype.submitAnswer = function (gameId, answer, userName) {
+Data.prototype.submitAnswer = function (gameId, answer, corAnswer, userName) {
   const game = this.games[gameId];
   if (typeof game !== 'undefined') {
     game.participants.find(obj => obj.userName === userName).answers.push(answer)
+    game.participants.find(obj => obj.userName === userName).corAnswers.push(corAnswer)
   }
 }
 
@@ -153,9 +155,33 @@ Data.prototype.getScoreboard = function (gameId, userName) {
   const game = this.games[gameId];
   if (typeof game !== 'undefined') {
     var answers = game.participants.find(obj => obj.userName === userName).answers
+    var corAnswers = game.participants.find(obj => obj.userName === userName).corAnswers
+    var gameQuestions = []
+    var gameAnswers = []
+    console.log(gameQuestions)
     var scored = 0;
     const scores = {};
-    answers.forEach(function (item, index) {
+
+    for (let i = 0; i < game.questions.length; i++) {
+      gameQuestions.push(game.questions[i].q);
+    }
+    for (let i = 0; i < game.questions.length; i++) {
+      console.log(game.questions[i].a[1])
+      console.log(game.questions[i].a[0])
+      if (game.questions[i].type == "MCQ") {
+        gameAnswers.push(game.questions[i].a[0][game.questions[i].a[1]]);
+      }
+      else { gameAnswers.push(game.questions[i].aS) }
+    }
+
+    /*    for (game.questions.q of game.questions){
+          gameQuestions.push(game.questions.q)
+          console.log(game.questions.q)
+        }
+        for (game.questions of game){
+          gameAnswers.push(game.questions.a)
+        }*/
+    corAnswers.forEach(function (item, index) {
       if (item == true) {
         scored += 1;
       }
@@ -199,7 +225,7 @@ Data.prototype.getScoreboard = function (gameId, userName) {
 
 
     }
-    return { cA: answers, userName: userName, score: scored, scores: topFive } //correctedAnswers, score,scores
+    return { gQ: gameQuestions, gA: gameAnswers, cA: corAnswers, userAnswers: answers, userName: userName, score: scored, scores: topFive } //correctedAnswers, score,scores
   }
   else ErrorEvent
 }
