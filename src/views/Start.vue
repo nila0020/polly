@@ -28,7 +28,7 @@
       >
       <!-- Knapp till creators överblick -->
       <router-link v-bind:to="'/Creator_overlook/' + lang"
-        ><v-btn outline block class="start_buttons"
+        ><v-btn outline block class="create_buttons"
           ><span class="text">{{ uiLabels.Creator }}</span></v-btn
         ></router-link
       >
@@ -176,7 +176,7 @@ html {
 
 .start_buttons {
   align-items: center;
-  background-image: linear-gradient(144deg, #c4bdbd, #000000 50%, #9a9797);
+  background-image: linear-gradient(144deg, #65be51, #126514 50%, #65be51);
   border: 0;
   border-radius: 8px;
   box-sizing: border-box;
@@ -190,7 +190,7 @@ html {
   min-width: 140px;
   padding: 3px;
   text-decoration: underline;
-  text-decoration-color: black;
+  text-decoration-color: #65be51;;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -204,7 +204,7 @@ html {
 }
 
 .start_buttons span {
-  background-color: #000000;
+  background-color: #65be51;
   padding: 16px 24px;
   border-radius: 6px;
   width: 100%;
@@ -224,9 +224,54 @@ html {
 .langButton:hover {
   filter: brightness(130%);
 }
+.create_buttons {
+  align-items: center;
+  background-image: linear-gradient(144deg, #fa628d, #881d33 50%, #fa628d);
+  border: 0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #ffffff;
+  display: flex;
+  font-family: "Baloo Bhaijaan 2", cursive;
+  font-size: 20px;
+  justify-content: center;
+  line-height: 2em;
+  max-width: 100%;
+  min-width: 140px;
+  padding: 3px;
+  text-decoration: underline;
+  text-decoration-color: #c92553;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.create_buttons:active,
+.create_buttons:hover {
+  outline: 0;
+}
+
+.create_buttons span {
+  background-color: #c92553;
+  padding: 16px 24px;
+  border-radius: 6px;
+  width: 100%;
+  height: 45%;
+  transition: 300ms;
+}
+
+.create_buttons:hover span {
+  background: none;
+}
 
 @media (min-width: 768px) {
   .start_buttons {
+    font-size: 24px;
+    min-width: 196px;
+  }
+  .create_buttons {
     font-size: 24px;
     min-width: 196px;
   }
