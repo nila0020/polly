@@ -106,6 +106,7 @@ export default {
   margin-top: auto;
 }
 .bar span {
+  font-size: 4vw;
   position: relative;
   top: -1.2em;
   color: white;
