@@ -1,9 +1,4 @@
 <template>
-<<<<<<< HEAD
-  {{ this.scoreBoard }}
-=======
-  {{scoreBoard}}
->>>>>>> 6a2bc5feb0ef8fb3c28b7dfd14e146d8389e0098
   <div class="fullScope">
     <h1 style="color: white">Leaderboard:</h1>
     <div class="wrapped">
@@ -48,6 +43,33 @@
         </div>
       </div>
     </div>
+    <div class="questionsAndAnswers">
+      <div
+        class="gameQuestionText"
+        v-for="(item, key) in scoreBoard.gQ"
+        v-bind:key="key"
+      >
+        <div
+          v-if="scoreBoard.gA[key] === String"
+          class="oneQuestion"
+          v-bind:style="boxColor(scoreBoard.cA[key])"
+        >
+          {{ key + 1 }}: {{ item }} <br />
+          Correct Answer: {{ scoreBoard.gA[key] }}<br />
+          Your answer: {{ scoreBoard.userAnswers[key] }}
+        </div>
+        <div
+          v-if="scoreBoard.gA[key] != String"
+          class="oneQuestion"
+          v-bind:style="boxColor(scoreBoard.cA[key])"
+        >
+          {{ key + 1 }}: {{ item }} <br />
+          Correct Answer: {{ scoreBoard.gA[key][3][0] }} -
+          {{ scoreBoard.gA[key][3][2] }}<br />
+          Your answer: {{ scoreBoard.userAnswers[key] }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -76,6 +98,13 @@ export default {
         return null;
       }
     },
+    boxColor: function (item) {
+      if (item === true) {
+        return "background-color: #17b27f;";
+      } else {
+        return "background-color: #ff4f4b";
+      }
+    },
   },
 };
 </script>
@@ -83,15 +112,25 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .fullScope {
-  height: 100vh;
+  /* height: 100vh; */
   width: 100vw;
   font-family: "Baloo Bhaijaan 2", cursive;
-  background: linear-gradient(#17b27f, #319881, #2ab0b4, #3096c2);
+  background: linear-gradient(#17b27f, #319881, #21bec4, #069edf);
+  min-height: 100vh;
 }
 .boldText {
   font-weight: bold;
 }
-
+.questionsAndAnswers {
+  display: grid;
+  grid-gap: 0.7em;
+  width: 100%;
+}
+.oneQuestion {
+  border-radius: 30em;
+  color: white;
+  width: 100%;
+}
 .wrapped {
   display: grid;
   box-sizing: border-box;
