@@ -30,12 +30,11 @@
         <v-btn class="Button createButton greenButton" v-on:click="createGame">
           <span>{{ uiLabels.CreateGame }}</span>
         </v-btn>
-<!--        <span class="break"><br /></span>-->
+        <!--        <span class="break"><br /></span>-->
 
         <v-btn class="Button loadButton redButton" v-on:click="loadGame">
           <span>{{ this.uiLabels.loadGame }}</span>
         </v-btn>
-
       </div>
       <!--      </div>-->
     </section>
@@ -48,7 +47,8 @@
           <ul>
             <li v-bind:key="question" v-for="question in questions">
               <label>
-                <v-btn class="Button questionButton"
+                <v-btn
+                  class="Button questionButton"
                   v-on:click="[currentData(question.qId), closeExpand()]"
                   key=""
                 >
@@ -59,33 +59,38 @@
           </ul>
           <p>
             <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
-            <v-btn class="Button addQuestion greenButton" id="overlook!Btn"
-
+            <v-btn
+              class="Button addQuestion greenButton"
+              id="overlook!Btn"
               v-on:click="[addNewQuestion(), closeExpand()]"
             >
               <span>{{ uiLabels.Addquestion }}</span>
             </v-btn>
 
-            <v-btn class="Button removeQuestion redButton" v-on:click="removeQuestion">
+            <v-btn
+              class="Button removeQuestion redButton"
+              v-on:click="removeQuestion"
+            >
               <span>{{ uiLabels.Deletequestion }}</span>
             </v-btn>
           </p>
         </div>
       </div>
       <div
-          v-if="this.activeQuestion"
-          v-show="this.activeQuestion"
-          class="questionDisplayed"
+        v-if="this.activeQuestion"
+        v-show="this.activeQuestion"
+        class="questionDisplayed"
       >
         <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
       </div>
       <!--Center box-->
       <div
-          v-if="!this.activeQuestion"
-          v-show="!this.activeQuestion"
-          class="box centerBox">
+        v-if="!this.activeQuestion"
+        v-show="!this.activeQuestion"
+        class="box centerBox"
+      >
         <!--Info box-->
-<!--        <div class="box info">
+        <!--        <div class="box info">
           &lt;!&ndash;        v-on:click="infoExpand"
           v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"&ndash;&gt;
 
@@ -104,130 +109,135 @@
         </div>-->
 
         <!--Question box-->
-<!--        <div class="box questionBox">-->
-          <!--         v-on:click="questionExpand"
+        <!--        <div class="box questionBox">-->
+        <!--         v-on:click="questionExpand"
           v-bind:class="{
             questionBig: questionBig,
             questionSmall: questionSmall,
             questionSmallCond: questionSmallCond,
           }"-->
 
-<!--          <h1>{{ this.uiLabels.createQuestion }}</h1>-->
-          <div id="picBox">
-<!--            <h4 style="
+        <!--          <h1>{{ this.uiLabels.createQuestion }}</h1>-->
+        <div id="picBox">
+          <!--            <h4 style="
                   grid-row: 1;
                   grid-column: 1/ span 2;
                   padding-top: 0">-->
-            <p style="grid-column: 1/span2; grid-row: 1">{{ this.uiLabels.addImage }}</p>
-<!--            </h4>-->
-            <img
-              :src="pic"
-              v-if="pic !== null"
-              style="
-                padding: 12px 20px;
-                width: 90%;
-                height: 75%;
-                object-fit: cover;
-                grid-row: 2;
-                grid-column: 1 / span 2;
-              "
-              ref=""
-            />
-            <input
-              type="file"
-              @change="Preview_image"
-              style="display: none"
-              ref="fileInput"
-            />
-            <v-btn class="Button chooseImage greenButton"
-              v-on:click="$refs.fileInput.click()"
-              style="grid-column: 1; grid-row: 3"
-            >
-              <span>{{ this.uiLabels.chooseImage }}</span>
-            </v-btn>
-            <v-btn class="Button removeImage redButton"
-              v-on:click="removeImage"
-              style="grid-column: 2; grid-row: 3"
-            >
-              <span>{{ this.uiLabels.removeimage }}</span>
-            </v-btn>
-          </div>
+          <p style="grid-column: 1 / span2; grid-row: 1">
+            {{ this.uiLabels.addImage }}
+          </p>
+          <!--            </h4>-->
+          <img
+            :src="pic"
+            v-if="pic !== null"
+            style="
+              padding: 12px 20px;
+              width: 90%;
+              height: 75%;
+              object-fit: cover;
+              grid-row: 2;
+              grid-column: 1 / span 2;
+            "
+            ref=""
+          />
+          <input
+            type="file"
+            @change="Preview_image"
+            style="display: none"
+            ref="fileInput"
+          />
+          <v-btn
+            class="Button chooseImage greenButton"
+            v-on:click="$refs.fileInput.click()"
+            style="grid-column: 1; grid-row: 3"
+          >
+            <span>{{ this.uiLabels.chooseImage }}</span>
+          </v-btn>
+          <v-btn
+            class="Button removeImage redButton"
+            v-on:click="removeImage"
+            style="grid-column: 2; grid-row: 3"
+          >
+            <span>{{ this.uiLabels.removeimage }}</span>
+          </v-btn>
+        </div>
 
-          <div id="qBox">
-            {{ this.uiLabels.question }} <br>
-            {{ this.uiLabels.writeQuestion }}
-            <textarea
-              class="questionArea"
-              v-model="questionText"
-              v-bind:placeholder="this.uiLabels.questionInfo"
-            />
-          </div>
+        <div id="qBox">
+          {{ this.uiLabels.question }} <br />
+          {{ this.uiLabels.writeQuestion }}
+          <textarea
+            class="questionArea"
+            v-model="questionText"
+            v-bind:placeholder="this.uiLabels.questionInfo"
+          />
+        </div>
 
-          <div id="aBox">
-            {{ this.uiLabels.answer }} <br>
-            <div v-if="checked === 'MCQ' || checked === null">
-
-              <!--              <input
+        <div id="aBox">
+          {{ this.uiLabels.answer }} <br />
+          <div v-if="checked === 'MCQ' || checked === null">
+            <!--              <input
                 v-for="(_, i) in answers"
                 v-model="answers[i]"
                 v-bind:key="'answer' + i"
                 v-bind:placeholder="this.uiLabels.addanswer"
               />-->
 
-              {{ this.uiLabels.chooseCorrect }}
-              <ul id="answerList">
-                <li v-for="(_, i) in answers" v-bind:key="'answer' + i">
-                  <input
-                    type="radio"
-                    id="{{i}}"
-                    v-model="correctAnswer"
-                    v-bind:value="i"
-                  />
-                  <input
-                    v-model="answers[i]"
-                    v-bind:key="'answer' + i"
-                    v-bind:placeholder="this.uiLabels.addanswer"
-                  />
-                  <label for="{{i}}" v-if="i === correctAnswer">✓</label>
-                </li>
-              </ul>
-              <v-btn class="Button removeButton redButton" v-on:click="removeAnswer">
+            {{ this.uiLabels.chooseCorrect }}
+            <ul id="answerList">
+              <li v-for="(_, i) in answers" v-bind:key="'answer' + i">
+                <input
+                  type="radio"
+                  id="{{i}}"
+                  v-model="correctAnswer"
+                  v-bind:value="i"
+                />
+                <input
+                  v-model="answers[i]"
+                  v-bind:key="'answer' + i"
+                  v-bind:placeholder="this.uiLabels.addanswer"
+                />
+                <label for="{{i}}" v-if="i === correctAnswer">✓</label>
+              </li>
+            </ul>
+            <v-btn
+              class="Button removeButton redButton"
+              v-on:click="removeAnswer"
+            >
               <span>
                 {{ uiLabels.removeAnswerAlternative }}
               </span>
-              </v-btn>
-              <v-btn class="Button addButton greenButton" v-on:click="addAnswer">
-              <span>
-                {{ uiLabels.AddAnswerAlternative }}</span>
-              </v-btn>
-            </div>
-            <div v-else-if="checked === 'slider'">
-              <input type="number" v-model="sliderMinVal" />
-              <input type="number" v-model="sliderMaxVal" />
-              <input type="text" v-model="sliderUnit" placeholder="unit" />
-              <Slider
-                :poll="false"
-                :min="sliderMinVal"
-                :max="sliderMaxVal"
-                :unit="sliderUnit"
-                v-on:sliderValue="getSliderValue"
-              />
+            </v-btn>
+            <v-btn class="Button addButton greenButton" v-on:click="addAnswer">
+              <span> {{ uiLabels.AddAnswerAlternative }}</span>
+            </v-btn>
+          </div>
+          <div v-else-if="checked === 'slider'">
+            <input type="number" v-model="sliderMinVal" />
+            <input type="number" v-model="sliderMaxVal" />
+            <input type="text" v-model="sliderUnit" placeholder="unit" />
+            <Slider
+              :poll="false"
+              :min="sliderMinVal"
+              :max="sliderMaxVal"
+              :unit="sliderUnit"
+              v-on:sliderValue="getSliderValue"
+            />
 
-              <div class="output">
-                The lowest acceptable answer is: {{ this.sliderValue[0] }}
-                {{ this.sliderUnit }}
-              </div>
-              <div class="output">
-                The actual answer is: {{ this.sliderValue[1] }}
-                {{ this.sliderUnit }}
-              </div>
-              <div class="output">
-                The highest acceptable answer is: {{ this.sliderValue[2] }}
-                {{ this.sliderUnit }}
-              </div>
+            <div class="output">
+              The lowest acceptable answer is: {{ this.sliderValue[0] }}
+              {{ this.sliderUnit }}
+            </div>
+            <div class="output">
+              The actual answer is: {{ this.sliderValue[1] }}
+              {{ this.sliderUnit }}
+            </div>
+            <div class="output">
+              The highest acceptable answer is: {{ this.sliderValue[2] }}
+              {{ this.sliderUnit }}
             </div>
           </div>
-<!--        </div>-->
+        </div>
+        <!--        </div>-->
 
         <!--Map box-->
         <div class="box map">
@@ -236,12 +246,11 @@
           <div class="mapTitle">
             <h4>
               {{ this.uiLabels.mapPosition }}
-<!--              {{ reactiveProperties.pos }}-->
+              <!--              {{ reactiveProperties.pos }}-->
             </h4>
             <!-- Our map  -->
-            <div id="myMap" >
-<!--                 v-bind:style="[hideCenter ? 'display:none' : '']">-->
-
+            <div id="myMap">
+              <!--                 v-bind:style="[hideCenter ? 'display:none' : '']">-->
             </div>
           </div>
         </div>
@@ -261,23 +270,30 @@
         <br />
         <br />
         <br />
-        <v-btn class="Button greenButton saveQuestion" v-on:click="[saveQuestion(), setVisible=true, showSaveBlocker()]">
+        <v-btn
+          class="Button greenButton saveQuestion"
+          v-on:click="[saveQuestion(), (setVisible = true), showSaveBlocker()]"
+        >
           <span>{{ uiLabels.Savequestion }}</span>
-
         </v-btn>
 
-        <br>
+        <br />
         <v-btn class="Button redButton viewQuestion" v-on:click="viewQuestions">
           <span>{{ this.uiLabels.viewQuiz }}</span>
         </v-btn>
-        <br>
+        <br />
         <router-link v-bind:to="'/poll/' + lang"
-          ><v-btn outline block class="Button goToGame redButton" v-on:click="sendGameId">
-<!--          <span class="text">-->
-          <span>{{ uiLabels.goToGame }}</span>
-<!--        </span>-->
-        </v-btn
-        ></router-link>
+          ><v-btn
+            outline
+            block
+            class="Button goToGame redButton"
+            v-on:click="sendGameId"
+          >
+            <!--          <span class="text">-->
+            <span>{{ uiLabels.goToGame }}</span>
+            <!--        </span>-->
+          </v-btn></router-link
+        >
       </div>
 
       <div class="blocker3" v-if="hideCenter">
@@ -310,7 +326,6 @@
     >
       <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
     </div>
-
   </section>
 </template>
 
@@ -343,7 +358,7 @@ export default {
             maxZoom: 18,
             minZoom: 1,
             id: "mapbox/streets-v11",
-            tileSize: 512,//window.polly.position;,
+            tileSize: 512, //window.polly.position;,
             zoomOffset: -1,
             accessToken:
               "pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ",
@@ -411,9 +426,9 @@ export default {
         });
 
         marker2.on("click", function (e) {
-          console.log(e)
-          markerGroup.removeLayer(marker2)
-        })
+          console.log(e);
+          markerGroup.removeLayer(marker2);
+        });
 
         var pos = [e.latlng.lat, e.latlng.lng];
         reactiveProperties.pos = pos;
@@ -423,9 +438,9 @@ export default {
         markerGroup.addLayer(marker2);
       });
 
-      reactiveProperties.clearMap = function() {
-        markerGroup.clearLayers()
-      }
+      reactiveProperties.clearMap = function () {
+        markerGroup.clearLayers();
+      };
     });
 
     return { reactiveProperties };
@@ -471,15 +486,14 @@ export default {
       questionSmall: false,
       mapSmall: false,
       questionSmallCond: false,
-      activeQuestion:false,
-      i:0,
+      activeQuestion: false,
+      i: 0,
       styleObject: {
-        color: 'red',
-        fontSize: '13px',
-        height: '1px'
+        color: "red",
+        fontSize: "13px",
+        height: "1px",
       },
       saveVisible: false,
-
     };
   },
   computed: {
@@ -499,14 +513,12 @@ export default {
     socket.on("questionPosition", (data) => (this.pos = data));
   },
   methods: {
-    showSaveBlocker: function() {
-
+    showSaveBlocker: function () {
       this.saveVisible = true;
-      console.log(this.saveVisible)
-      setTimeout(() => this.saveVisible = false, 1000)
-
+      console.log(this.saveVisible);
+      setTimeout(() => (this.saveVisible = false), 1000);
     },
-    sendGameId: function(){
+    sendGameId: function () {
       socket.emit("sendGameId", {
         gameID: this.gameId,
       });
@@ -621,26 +633,25 @@ export default {
         pic: this.pic,
       });
 
-      this.clearMap()
+      this.clearMap();
     },
 
-    removeQuestion:function(){
-      this.questions.pop()
-      socket.emit("removeQuestion", {gameId: this.gameId})
-      console.log(this.questions)
+    removeQuestion: function () {
+      this.questions.pop();
+      socket.emit("removeQuestion", { gameId: this.gameId });
+      console.log(this.questions);
     },
-    viewQuestions:function(){
-      console.log(this.questions.length)
+    viewQuestions: function () {
+      console.log(this.questions.length);
       this.activeQuestion = true;
       console.log(this.activeQuestion);
       console.log(this.questions[this.i]["a"]);
     },
 
-    nextQuestion: function(){
-      if ((this.i +1) < this.questions.length){
+    nextQuestion: function () {
+      if (this.i + 1 < this.questions.length) {
         this.i++;
-      }
-      else{
+      } else {
         this.i = 0;
         this.activeQuestion = false;
       }
@@ -743,7 +754,7 @@ export default {
   min-width: 100%;
 }*/
 .pagee {
-  background:#2674b0;
+  background: #2674b0;
   /*background: linear-gradient(#3bc1d9, #2674b0, #27a27a);*/
   text-align: center;
   font-size: 20pt;
@@ -775,15 +786,15 @@ export default {
   float: left;
   width: 30%;
 }
-.buttonBox{
+.buttonBox {
   float: right;
 }
 .container {
-/*  padding-top: 15vh;*/
+  /*  padding-top: 15vh;*/
   display: grid;
+  width: 100%;
   grid-template-columns: 15% 70% 15%;
   grid-template-rows: 50% 50%;
-
 }
 
 .box {
@@ -883,26 +894,26 @@ export default {
   grid-template-columns: 50% 50%;
   height: 100%;
   grid-column: 1;
-  grid-row: 1/ span 2;
+  grid-row: 1 / span 2;
   margin-right: 1vw;
   align-items: center;
 }
 #qBox {
   height: 100%;
   padding-top: 2vh;
-  grid-column: 2 ;
-  grid-row: 1/span 2;
+  grid-column: 2;
+  grid-row: 1 / span 2;
 }
 #aBox {
   height: 100%;
   padding-top: 2vh;
   grid-column: 3;
-  grid-row: 1 /span 2;
+  grid-row: 1 / span 2;
 }
-#answerList{
+#answerList {
   list-style-type: none;
 }
-#overlookList{
+#overlookList {
   list-style-type: none;
 }
 .map {
@@ -943,7 +954,7 @@ export default {
   opacity: 95%;
   transition: 300ms;
 }
-.saveBlocker{
+.saveBlocker {
   color: #126514;
   grid-column: 2;
   grid-row: 1 / span 2;
@@ -1003,97 +1014,102 @@ export default {
 .greenButton {
   background-image: linear-gradient(144deg, #65be51, #126514 50%, #65be51);
 }
-.redButton{
+.redButton {
   background-image: linear-gradient(144deg, #fa628d, #881d33 50%, #fa628d);
 }
 .createButton {
-   display: block;
-  max-width: 30%;
- }
-.createButton span{
-  padding: 3px 18px
+  display: grid;
+  width: 60%;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
+}
+.createButton span {
 }
 .loadButton {
-  /*float: right;*/
-  margin-top: 0.5vh;
-  display: block;
-  max-width: 30%;
+  display: grid;
+  width: 60%;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
 }
 .loadButton span {
-  padding: 3px 25px;
 }
-.addButton{
-  float: right;
-  display: block;
-  margin: 0 auto;
+.addButton {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
 }
 .addButton span {
-  padding: 3px 21px;
 }
-.removeButton{
-  float: right;
-  display: block;
-  margin: 0 auto;
-  margin-left: 2vw;
+.removeButton {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
 }
 .removeButton span {
-  padding: 3px 5px;
 }
-.addQuestion{
-  margin: 0 auto;
-  display: block;
-}
-.addQuestion span {
-  padding: 4px 16px;
+.addQuestion {
+  margin: 0 0;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
 }
 
-.removeQuestion{
-  margin: 0 auto;
-  display: block;
-  margin-top: 5px;
+.removeQuestion {
+  margin: 0 0;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
 }
-.removeQuestion span {
-  padding: 4px 6px;
+.saveQuestion {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
 }
-.saveQuestion{
-  margin: 0 auto;
-  display: block;
+
+.viewQuestion {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
 }
-.saveQuestion span {
-  padding: 4px 12px;
+.goToGame {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
 }
-.viewQuestion{
-  margin: 0 auto;
-  display: block;
-}
-.viewQuestion span {
-  padding: 4px 31px;
-}
-.goToGame{
-  margin: 0 auto;
-  display: block;
-}
-.goToGame span {
-  padding: 4px 24px;
-}
-.chooseImage{
+.removeImage {
   justify-self: center;
   align-self: center;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
 }
-.chooseImage span{
-  padding: 4px 24px;
+.chooseImage {
+  justify-self: center;
+  align-self: center;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
 }
-.questionButton{
-  display:block;
-  background-image: linear-gradient(#105646,#1d7658, #b6d7a8ff, #b6d7a8ff);
-  max-width: 90%;
-  margin-left:5%;
-  margin-top: 5px
+.chooseImage span {
 }
-.questionButton span{
+.questionButton {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
+  background-image: linear-gradient(#105646, #1d7658, #b6d7a8ff, #b6d7a8ff);
+}
+.questionButton span {
   background-color: #1d7658;
-  padding: 5px 67px;
-
 }
 
 .redButton span {
@@ -1109,7 +1125,7 @@ export default {
   /*padding: 2px 20px;*/
   border-radius: 6px;
   width: 100%;
-  height: 45%;
+  height: 100%;
   transition: 300ms;
 }
 
@@ -1120,7 +1136,7 @@ export default {
 .mapTitle {
   font-size: 20px;
 }
-ul{
+ul {
   list-style-type: none;
   padding: 0px;
 }
