@@ -202,9 +202,17 @@
               </v-btn>
             </div>
             <div v-else-if="checked === 'slider'">
-              <input type="number" v-model="sliderMinVal" />
-              <input type="number" v-model="sliderMaxVal" />
-              <input type="text" v-model="sliderUnit" placeholder="unit" />
+              <label for="minVal"><span style="font-size: 2.5vh">{{ uiLabels.minVal}}</span> </label>
+              <input id="minVal" type="number" v-model="sliderMinVal" />
+              <br>
+              <label for="maxVal"><span style="font-size: 2.5vh">{{ uiLabels.maxVal }}</span> </label>
+              <input id="maxVal" type="number" v-model="sliderMaxVal" />
+              <br>
+              <label for="unit"><span style="font-size: 2.5vh">{{ uiLabels.unit }}</span> </label>
+              <input id="unit" type="text" v-model="sliderUnit" placeholder="unit" />
+              <br>
+              <span style="font-size: 2.5vh">{{uiLabels.chooseValues}}</span>
+              <br>
               <Slider
                 :poll="false"
                 :min="sliderMinVal"
@@ -214,16 +222,16 @@
               />
 
               <div class="output">
-                The lowest acceptable answer is: {{ this.sliderValue[0] }}
-                {{ this.sliderUnit }}
+                <span style="font-size: 2.5vh">The lowest acceptable answer is: {{ this.sliderValue[0] }}
+                  {{ this.sliderUnit }}</span>
               </div>
               <div class="output">
-                The actual answer is: {{ this.sliderValue[1] }}
-                {{ this.sliderUnit }}
+                <span style="font-size: 2.5vh">The actual answer is: {{ this.sliderValue[1] }}
+                  {{ this.sliderUnit }}</span>
               </div>
               <div class="output">
-                The highest acceptable answer is: {{ this.sliderValue[2] }}
-                {{ this.sliderUnit }}
+                <span style="font-size: 2.5vh">The highest acceptable answer is: {{ this.sliderValue[2] }}
+                  {{ this.sliderUnit }}</span>
               </div>
             </div>
           </div>
@@ -262,12 +270,7 @@
         <br />
         <br />
         <v-btn class="Button greenButton saveQuestion" v-on:click="[saveQuestion(), setVisible=true, showSaveBlocker()]">
-<<<<<<< HEAD
-          {{ uiLabels.Savequestion }}
-=======
           <span>{{ uiLabels.Savequestion }}</span>
-
->>>>>>> bd21cffaf8c659537911c30a7c4e727485b4d3c9
         </v-btn>
 
         <br>
@@ -306,8 +309,6 @@
         <h1>question saved</h1>
       </div>
     </section>
-<<<<<<< HEAD
-=======
 
     <div
       v-if="this.activeQuestion"
@@ -317,7 +318,6 @@
       <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
     </div>
 
->>>>>>> bd21cffaf8c659537911c30a7c4e727485b4d3c9
   </section>
 </template>
 
@@ -486,10 +486,7 @@ export default {
         height: '1px'
       },
       saveVisible: false,
-<<<<<<< HEAD
-=======
 
->>>>>>> bd21cffaf8c659537911c30a7c4e727485b4d3c9
     };
   },
   computed: {
@@ -633,10 +630,6 @@ export default {
 
       this.clearMap()
     },
-<<<<<<< HEAD
-=======
-
->>>>>>> bd21cffaf8c659537911c30a7c4e727485b4d3c9
     removeQuestion:function(){
       this.questions.pop()
       socket.emit("removeQuestion", {gameId: this.gameId})
@@ -648,10 +641,6 @@ export default {
       console.log(this.activeQuestion);
       console.log(this.questions[this.i]["a"]);
     },
-<<<<<<< HEAD
-=======
-
->>>>>>> bd21cffaf8c659537911c30a7c4e727485b4d3c9
     nextQuestion: function(){
       if ((this.i +1) < this.questions.length){
         this.i++;

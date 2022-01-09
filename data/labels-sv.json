@@ -42,5 +42,9 @@
 	"writeQuestion": "Skriv din fråga här:",
 	"mapPosition": "Välj en plats på kartan där din fråga ska dyka upp",
 	"viewQuiz": "Visa Quiz",
-	"loadGame": "Ladda Spel"
+	"loadGame": "Ladda Spel",
+	"minVal": "Lägsta värde: ",
+	"maxVal": "Högsta värde: ",
+	"unit": "Enhet: ",
+	"chooseValues": "Välj det riktiga svaret, samt högsta och lägsta acceptabla svaren"
 }

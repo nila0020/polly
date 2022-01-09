@@ -42,6 +42,10 @@
 	"writeQuestion": "Write your question here:",
 	"mapPosition": "Choose a place on the map for your question to appear at",
 	"viewQuiz": "View Quiz",
-	"loadGame": "Load Game"
+	"loadGame": "Load Game",
+	"minVal": "Lowest value: ",
+	"maxVal": "Highest value: ",
+	"unit": "Unit: ",
+	"chooseValues": "Choose the correct answer, along with highest and lowest acceptable answer"
 
 }
