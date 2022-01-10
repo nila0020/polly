@@ -35,7 +35,7 @@
         >
           <span> {{ this.scoreBoard.score }} </span>
         </div>
-        <div class="label">
+<!--        <div class="label" v-if="poll">
           You:<br />
           <div v-if="this.scoreBoard.userName">
             {{ this.scoreBoard.userName }}
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <div class="questionsAndAnswers">
+    <div class="questionsAndAnswers" v-if="poll">
       <div
         class="gameQuestionText"
         v-for="(item, key) in scoreBoard.gQ"
@@ -67,7 +67,7 @@
           Correct Answer: {{ scoreBoard.gA[key][3][0] }} -
           {{ scoreBoard.gA[key][3][2] }}<br />
           Your answer: {{ scoreBoard.userAnswers[key] }}
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
@@ -77,6 +77,8 @@
 export default {
   name: "Bars",
   props: {
+    poll: Boolean,
+    lang: String,
     scoreBoard: {
       userName: String,
       score: Number,
@@ -92,6 +94,7 @@ export default {
       }
     },
     stapleColor: function (item) {
+      console.log("in bars")
       if (item.userName == this.scoreBoard.userName) {
         return "coral";
       } else {

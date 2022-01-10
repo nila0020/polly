@@ -153,7 +153,7 @@ Data.prototype.getAnswers = function (gameId) {
 Data.prototype.getScoreboard = function (gameId, userName) {
 
   const game = this.games[gameId];
-  if (typeof game !== 'undefined') {
+  if (typeof game !== 'undefined' && userName !== "") {
     var answers = game.participants.find(obj => obj.userName === userName).answers
     var corAnswers = game.participants.find(obj => obj.userName === userName).corAnswers
     var gameQuestions = []
@@ -226,6 +226,40 @@ Data.prototype.getScoreboard = function (gameId, userName) {
 
     }
     return { gQ: gameQuestions, gA: gameAnswers, cA: corAnswers, userAnswers: answers, userName: userName, score: scored, scores: topFive } //correctedAnswers, score,scores
+  }
+  else if(typeof game !== 'undefined' && userName == "") {
+    let obj = { score: 0, userName: " ", }
+    const topFive = { "1": obj, "2": obj, "3": obj, "4": obj, "5": obj }
+    for (game.participants.user of game.participants) {
+      console.log("i dataloop innan if " + game.participants.user)
+      if (game.participants.user.score >= topFive["5"].score && game.participants.user.score < topFive["4"].score) {
+        topFive["5"] = game.participants.user
+
+      }
+      if (game.participants.user.score >= topFive["4"].score && game.participants.user.score < topFive["3"].score) {
+        topFive["5"] = topFive["4"]
+        topFive["4"] = game.participants.user
+      }
+      if (game.participants.user.score >= topFive["3"].score && game.participants.user.score < topFive["2"].score) {
+        topFive["5"] = topFive["4"]
+        topFive["4"] = topFive["3"]
+        topFive["3"] = game.participants.user
+      }
+      if (game.participants.user.score >= topFive["2"].score && game.participants.user.score < topFive["1"].score) {
+        topFive["5"] = topFive["4"]
+        topFive["4"] = topFive["3"]
+        topFive["3"] = topFive["2"]
+        topFive["2"] = game.participants.user
+      }
+      if (game.participants.user.score >= topFive["1"].score) {
+        topFive["5"] = topFive["4"]
+        topFive["4"] = topFive["3"]
+        topFive["3"] = topFive["2"]
+        topFive["2"] = topFive["1"]
+        topFive["1"] = game.participants.user
+      }
+      return {userName: userName, scores: topFive}
+    }
   }
   else ErrorEvent
 }

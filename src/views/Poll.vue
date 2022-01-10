@@ -27,6 +27,9 @@
         <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
           >Join GeoQuiz!</v-btn
         >
+        <v-btn class="start_buttons" id="viewResults" v-on:click="showResult"
+        >Check results</v-btn
+        >
       </div>
       <div class="picture">
         <img src="/img/clouds.PNG" />
@@ -83,7 +86,13 @@
       v-show="!activeGame && confirmedUser && this.scoreBoard"
       class="scoreBoards"
     >
-      <Bars :scoreBoard="scoreBoard" v-if="!activeGame && this.scoreBoard" />
+      <Bars :scoreBoard="scoreBoard" :poll="poll" v-if="!activeGame && this.scoreBoard" />
+    </div>
+    <div
+        v-show="!activeGame && this.scoreBoard && viewResult"
+        class="scoreBoards"
+    >
+      <Bars :scoreBoard="scoreBoard" :poll="poll" v-if="!activeGame && this.scoreBoard" />
     </div>
   </div>
 </template>
@@ -122,6 +131,8 @@ export default {
       qId: 0,
       scoreBoard: null,
       uiLabels: {},
+      poll: true,
+      viewResult: false
     };
   },
   created: function () {
@@ -207,6 +218,24 @@ export default {
           userName: this.userName,
         });
       }
+    },
+    showResult: function() {
+      if (!this.gameId) {
+        alert("Please enter a gameId");
+      } else {
+        this.poll = false
+        this.viewResult = true
+        console.log("viewResult:", this.viewResult )
+        console.log("scoreboard:", this.scoreBoard)
+        console.log("poll:", this.poll)
+        socket.emit("scoreBoard", {
+          gameId: this.gameId,
+          userName: this.userName,
+        });
+        this.activeGame = false
+        console.log("activeGame" , this.activeGame)
+      }
+
     },
     quitGame: function () {
       this.confirmedUser = false;
@@ -301,7 +330,15 @@ input {
   max-width: 77vh;
   width: 75vw;
   font-family: "Baloo Bhaijaan 2", cursive;
+  margin-bottom: 5px;
 }
+
+#viewResults {
+   max-width: 77vh;
+   width: 75vw;
+   font-family: "Baloo Bhaijaan 2", cursive;
+   margin-bottom: 5px;
+ }
 
 
 
