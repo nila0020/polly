@@ -9,7 +9,7 @@
           id="gameId"
           v-model="gameId"
           required="required"
-          placeholder="Input the game-Id"
+          v-bind:placeholder="this.uiLabels.enterGameID"
         />
       </div>
       <div class="boxB">
@@ -20,15 +20,15 @@
           id="userName"
           v-model="userName"
           required="required"
-          placeholder="Input your username"
+          v-bind:placeholder="this.uiLabels.enterUsername"
         />
       </div>
       <div class="boxC">
         <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
-          >Join GeoQuiz!</v-btn
+          >{{ this.uiLabels.join }}</v-btn
         >
         <v-btn class="start_buttons" id="viewResults" v-on:click="showResult"
-        >Check results</v-btn
+        >{{ this.uiLabels.result}}</v-btn
         >
       </div>
       <div class="picture">

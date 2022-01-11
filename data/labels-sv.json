@@ -23,6 +23,7 @@
 	"AddAnswerAlternative": "Lägg till svars",
 	"enterGameName": "Skriv in Spelets namn",
 	"enterGameID": "Skriv in Spelets ID",
+	"enterUsername": "Skriv in ditt användarnamn",
 	"addanswer": "Svarsalternativ",
 	"questionInfo": "Skriv din fråga här",
 	"addImage": "Lägg till bild",
@@ -46,5 +47,7 @@
 	"minVal": "Lägsta värde: ",
 	"maxVal": "Högsta värde: ",
 	"unit": "Enhet: ",
-	"chooseValues": "Välj det riktiga svaret, samt högsta och lägsta acceptabla svaren"
+	"chooseValues": "Välj det riktiga svaret, samt högsta och lägsta acceptabla svaren",
+	"join": "Delta i Geoquiz!",
+	"result": "Visa resultat"
 }
