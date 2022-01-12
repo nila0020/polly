@@ -69,6 +69,10 @@
           Your answer: {{ scoreBoard.userAnswers[key] }}
         </div>
       </div>
+      <router-link v-bind:to="'/'"
+      ><v-btn outline block class="start_buttons"
+      ><span class="text">Avsluta</span></v-btn
+      ></router-link>
     </div>
   </div>
 </template>

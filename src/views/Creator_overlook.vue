@@ -85,7 +85,6 @@
       </div>
       <!--Center box-->
       <div
-        v-if="!this.activeQuestion"
         v-show="!this.activeQuestion"
         class="box centerBox"
       >
