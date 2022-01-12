@@ -84,10 +84,7 @@
         <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
       </div>
       <!--Center box-->
-      <div
-        v-show="!this.activeQuestion"
-        class="box centerBox"
-      >
+      <div v-show="!this.activeQuestion" class="box centerBox">
         <!--Info box-->
         <!--        <div class="box info">
           &lt;!&ndash;        v-on:click="infoExpand"
@@ -216,27 +213,25 @@
           </div>
           <div v-else-if="checked === 'slider'">
             <label for="minVal"
-              ><span style="font-size: 2.5vh">{{ uiLabels.minVal }}</span>
+              ><span style="font-size: 2.2vh">{{ uiLabels.minVal }}</span>
             </label>
             <input id="minVal" type="number" v-model="sliderMinVal" />
             <br />
             <label for="maxVal"
-              ><span style="font-size: 2.5vh">{{ uiLabels.maxVal }}</span>
+              ><span style="font-size: 2.2vh">{{ uiLabels.maxVal }}</span>
             </label>
             <input id="maxVal" type="number" v-model="sliderMaxVal" />
             <br />
             <label for="unit"
-              ><span style="font-size: 2.5vh">{{ uiLabels.unit }}</span>
+              ><span style="font-size: 2.2vh">{{ uiLabels.unit }}</span>
             </label>
+            <br />
             <input
               id="unit"
               type="text"
               v-model="sliderUnit"
               placeholder="unit"
             />
-            <br />
-            <span style="font-size: 2.5vh">{{ uiLabels.chooseValues }}</span>
-            <br />
             <Slider
               :poll="false"
               :min="sliderMinVal"
@@ -246,20 +241,20 @@
             />
 
             <div class="output">
-              <span style="font-size: 2.5vh"
-                >The lowest acceptable answer is: {{ this.sliderValue[0] }}
+              <span style="font-size: 2vh"
+                >Lowest correct answer: {{ this.sliderValue[0] }}
                 {{ this.sliderUnit }}</span
               >
             </div>
             <div class="output">
-              <span style="font-size: 2.5vh"
-                >The actual answer is: {{ this.sliderValue[1] }}
+              <span style="font-size: 2vh"
+                >The actual answer: {{ this.sliderValue[1] }}
                 {{ this.sliderUnit }}</span
               >
             </div>
             <div class="output">
-              <span style="font-size: 2.5vh"
-                >The highest acceptable answer is: {{ this.sliderValue[2] }}
+              <span style="font-size: 2vh"
+                >Highest correct answer: {{ this.sliderValue[2] }}
                 {{ this.sliderUnit }}</span
               >
             </div>
@@ -899,14 +894,14 @@ export default {
 }
 .questionArea {
   width: 70%;
-  height: 70%;
+  height: 40%;
   padding: 12px 20px;
   box-sizing: border-box;
-  border: 2px solid #ccc;
+  border: 2px solid black;
   border-radius: 4px;
-  background-color: black;
+  background-color: white;
   resize: none;
-  color: white;
+  color: black;
 }
 .questionBox {
   grid-column: 1 / span 2;
@@ -945,6 +940,12 @@ export default {
   grid-column: 3;
   grid-row: 1 / span 2;
 }
+#aBox input {
+  border: solid black 2px;
+  border-radius: 4px;
+  width: 60%;
+}
+
 #answerList {
   list-style-type: none;
 }
