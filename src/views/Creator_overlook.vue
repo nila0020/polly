@@ -340,12 +340,12 @@ export default {
         )
         .addTo(myMap);
       // Distance function
-      function checkDistance(a, b) {
+/*      function checkDistance(a, b) {
         if (myMap.distance(a, b) < 30) {
           alert("Within range");
         }
         console.log("avstånd i meter", myMap.distance(a, b));
-      }
+      }*/
 
       // Find user location
       setInterval(() => {
