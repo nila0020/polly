@@ -165,11 +165,13 @@
         <div id="qBox">
           {{ this.uiLabels.question }} <br />
           {{ this.uiLabels.writeQuestion }}
-          <textarea
-            class="questionArea"
-            v-model="questionText"
-            v-bind:placeholder="this.uiLabels.questionInfo"
-          />
+          <div class="questionTextAreablock">
+            <textarea
+              class="questionArea"
+              v-model="questionText"
+              v-bind:placeholder="this.uiLabels.questionInfo"
+            />
+          </div>
         </div>
 
         <div id="aBox">
@@ -891,6 +893,10 @@ export default {
   background-color: black;
   resize: none;
   color: white;
+}
+.questionTextAreablock {
+  width: 100%;
+  height: 100%;
 }
 .questionArea {
   width: 70%;
