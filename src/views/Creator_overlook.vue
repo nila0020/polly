@@ -164,6 +164,7 @@
 
         <div id="qBox">
           {{ this.uiLabels.question }} <br />
+          {{ this.uiLabels.writeQuestion }}
           <textarea
             class="questionArea"
             v-model="questionText"
@@ -230,18 +231,29 @@
               The actual answer is: {{ this.sliderValue[1] }}
               {{ this.sliderUnit }}
             </div>
-            <div v-else-if="checked === 'slider'">
-              <label for="minVal"><span style="font-size: 2.5vh">{{ uiLabels.minVal}}</span> </label>
+            <div v-if="checked === 'slider'">
+              <label for="minVal"
+                ><span style="font-size: 2.5vh">{{ uiLabels.minVal }}</span>
+              </label>
               <input id="minVal" type="number" v-model="sliderMinVal" />
-              <br>
-              <label for="maxVal"><span style="font-size: 2.5vh">{{ uiLabels.maxVal }}</span> </label>
+              <br />
+              <label for="maxVal"
+                ><span style="font-size: 2.5vh">{{ uiLabels.maxVal }}</span>
+              </label>
               <input id="maxVal" type="number" v-model="sliderMaxVal" />
-              <br>
-              <label for="unit"><span style="font-size: 2.5vh">{{ uiLabels.unit }}</span> </label>
-              <input id="unit" type="text" v-model="sliderUnit" placeholder="unit" />
-              <br>
-              <span style="font-size: 2.5vh">{{uiLabels.chooseValues}}</span>
-              <br>
+              <br />
+              <label for="unit"
+                ><span style="font-size: 2.5vh">{{ uiLabels.unit }}</span>
+              </label>
+              <input
+                id="unit"
+                type="text"
+                v-model="sliderUnit"
+                placeholder="unit"
+              />
+              <br />
+              <span style="font-size: 2.5vh">{{ uiLabels.chooseValues }}</span>
+              <br />
               <Slider
                 :poll="false"
                 :min="sliderMinVal"
@@ -251,16 +263,22 @@
               />
 
               <div class="output">
-                <span style="font-size: 2.5vh">The lowest acceptable answer is: {{ this.sliderValue[0] }}
-                  {{ this.sliderUnit }}</span>
+                <span style="font-size: 2.5vh"
+                  >The lowest acceptable answer is: {{ this.sliderValue[0] }}
+                  {{ this.sliderUnit }}</span
+                >
               </div>
               <div class="output">
-                <span style="font-size: 2.5vh">The actual answer is: {{ this.sliderValue[1] }}
-                  {{ this.sliderUnit }}</span>
+                <span style="font-size: 2.5vh"
+                  >The actual answer is: {{ this.sliderValue[1] }}
+                  {{ this.sliderUnit }}</span
+                >
               </div>
               <div class="output">
-                <span style="font-size: 2.5vh">The highest acceptable answer is: {{ this.sliderValue[2] }}
-                  {{ this.sliderUnit }}</span>
+                <span style="font-size: 2.5vh"
+                  >The highest acceptable answer is: {{ this.sliderValue[2] }}
+                  {{ this.sliderUnit }}</span
+                >
               </div>
             </div>
           </div>
@@ -354,7 +372,6 @@
     >
       <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
     </div>
-
   </section>
 </template>
 
@@ -677,8 +694,8 @@ export default {
       console.log(this.questions[this.i]["a"]);
     },
 
-    nextQuestion: function(){
-      if ((this.i +1) < this.questions.length){
+    nextQuestion: function () {
+      if (this.i + 1 < this.questions.length) {
         this.i++;
       } else {
         this.i = 0;
@@ -1171,9 +1188,6 @@ ul {
 }
 .break {
   display: inline;
-}
-.output {
-  font-size: 14px;
 }
 
 /*@media screen and (max-width: 660px) {
