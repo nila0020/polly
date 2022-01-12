@@ -96,7 +96,7 @@ Data.prototype.joinQuiz = function (gameId, userName) {
 
 }
 
-Data.prototype.getGameName = function(gameId) {
+Data.prototype.getGameName = function (gameId) {
   const game = this.games[gameId];
   if (typeof game !== 'undefined') {
     return game.name
@@ -158,7 +158,7 @@ Data.prototype.getAnswers = function (gameId) {
 }
 
 Data.prototype.getScoreboard = function (gameId, userName) {
-
+  console.log(userName)
   const game = this.games[gameId];
   if (typeof game !== 'undefined' && userName !== "") {
     var answers = game.participants.find(obj => obj.userName === userName).answers
@@ -234,7 +234,7 @@ Data.prototype.getScoreboard = function (gameId, userName) {
     }
     return { gQ: gameQuestions, gA: gameAnswers, cA: corAnswers, userAnswers: answers, userName: userName, score: scored, scores: topFive } //correctedAnswers, score,scores
   }
-  else if(typeof game !== 'undefined' && userName == "") {
+  else if (typeof game !== 'undefined' && userName == "") {
     let obj = { score: 0, userName: " ", }
     const topFive = { "1": obj, "2": obj, "3": obj, "4": obj, "5": obj }
     for (game.participants.user of game.participants) {
@@ -265,7 +265,7 @@ Data.prototype.getScoreboard = function (gameId, userName) {
         topFive["2"] = topFive["1"]
         topFive["1"] = game.participants.user
       }
-      return {userName: userName, scores: topFive}
+      return { userName: userName, scores: topFive }
     }
   }
   else ErrorEvent
