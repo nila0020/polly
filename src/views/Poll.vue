@@ -14,7 +14,7 @@
         />
       </div>
       <div class="boxB">
-        <label for="" class="start_buttons1">Username</label><br />
+        <label for="" class="start_buttons1">{{uiLabels.username}}</label><br />
         <input
           type="text"
           style="font-size: 1.4em"
@@ -26,10 +26,10 @@
       </div>
       <div class="boxC">
         <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
-          >{{ this.uiLabels.join }}</v-btn
+          ><span>{{ this.uiLabels.join }}</span></v-btn
         >
         <v-btn class="start_buttons" id="viewResults" v-on:click="showResult"
-        >{{ this.uiLabels.result}}</v-btn
+        ><span>{{ this.uiLabels.result}}</span></v-btn
         >
       </div>
       <div class="picture">
@@ -85,7 +85,12 @@
     </div>
     <div  v-if="confirmedUser && activeGame"
       v-show="confirmedUser && activeGame && tutorialBox" v-on:click="tutorialMethod" class="tutorialBox">
-      {{ uiLabels.tutorial }}
+      <h4>{{ uiLabels.tutorial1 }}</h4>
+      {{ uiLabels.tutorial2 }}<br>
+      {{ uiLabels.tutorial3 }}<br>
+      {{ uiLabels.tutorial4 }}<br>
+      {{ uiLabels.tutorial5 }}<br>
+      {{ uiLabels.tutorial6 }}
     </div>
     <div
       v-show="!activeGame && confirmedUser && this.scoreBoard"
@@ -270,7 +275,7 @@ export default {
   align-self: center;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
+  font-size: 16pt;
   font-family: "Baloo Bhaijaan 2", cursive;
   
 }
