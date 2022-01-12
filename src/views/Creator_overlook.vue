@@ -172,7 +172,7 @@
           />
         </div>
 
-        <div id="aBox">
+        <div id="aBox" >
           {{ this.uiLabels.answer }} <br />
           <div v-if="checked === 'MCQ' || checked === null">
             <!--              <input
@@ -1168,10 +1168,24 @@ ul {
   display: inline;
 }
 
-/*@media screen and (max-width: 660px) {
+@media screen and (max-width: 1400px) {
   .pagee {
     font-size: 15pt;
   }
+  #myMap {
+    height: 300px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .pagee {
+    font-size: 12pt;
+  }
+  #myMap {
+    height: 250px;
+  }
+}
+
+/*
   .break {
     display: none;
   }
