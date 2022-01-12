@@ -9,7 +9,7 @@
           id="gameId"
           v-model="gameId"
           required="required"
-          placeholder="Input the game-Id"
+          v-bind:placeholder="this.uiLabels.enterGameID"
         />
       </div>
       <div class="boxB">
@@ -20,12 +20,15 @@
           id="userName"
           v-model="userName"
           required="required"
-          placeholder="Input your username"
+          v-bind:placeholder="this.uiLabels.enterUsername"
         />
       </div>
       <div class="boxC">
         <v-btn class="start_buttons" id="joinknapp" v-on:click="confirmUser"
-          >Join GeoQuiz!</v-btn
+          >{{ this.uiLabels.join }}</v-btn
+        >
+        <v-btn class="start_buttons" id="viewResults" v-on:click="showResult"
+        >{{ this.uiLabels.result}}</v-btn
         >
       </div>
       <div class="picture">
@@ -50,7 +53,7 @@
                 class="create_buttons"
                 v-on:click="quitGame"
               >
-                Quit
+                {{ uiLabels.quit }}
               </button>
               <div id="gameName">{{ gameName }}</div>
               <div id="gameId">Game ID:{{ gameId }}</div>
@@ -83,7 +86,13 @@
       v-show="!activeGame && confirmedUser && this.scoreBoard"
       class="scoreBoards"
     >
-      <Bars :scoreBoard="scoreBoard" v-if="!activeGame && this.scoreBoard" />
+      <Bars :scoreBoard="scoreBoard" :poll="poll" v-if="!activeGame && this.scoreBoard" />
+    </div>
+    <div
+        v-show="!activeGame && this.scoreBoard && viewResult"
+        class="scoreBoards"
+    >
+      <Bars :scoreBoard="scoreBoard" :poll="poll" v-if="!activeGame && this.scoreBoard" />
     </div>
   </div>
 </template>
@@ -113,6 +122,7 @@ export default {
         pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg",
       },
       gameId: null,
+      gameName: null,
       gameExists: [false, true],
       confirmedUser: false,
       userName: "",
@@ -122,6 +132,8 @@ export default {
       qId: 0,
       scoreBoard: null,
       uiLabels: {},
+      poll: true,
+      viewResult: false
     };
   },
   created: function () {
@@ -148,6 +160,7 @@ export default {
         socket.emit("joinGame", this.gameId, this.qId, this.userName);
       }
     });
+    socket.on('gameName', (q) => (this.gameName = q))
     socket.on("newQuestion", (q) => (this.question = q));
     socket.on("newScoreboard", (q) => (this.scoreBoard = q));
     socket.on("withinRange", (d) => (this.activeQuestion = d.activeQuestion));
@@ -207,6 +220,24 @@ export default {
           userName: this.userName,
         });
       }
+    },
+    showResult: function() {
+      if (!this.gameId) {
+        alert("Please enter a gameId");
+      } else {
+        this.poll = false
+        this.viewResult = true
+        console.log("viewResult:", this.viewResult )
+        console.log("scoreboard:", this.scoreBoard)
+        console.log("poll:", this.poll)
+        socket.emit("scoreBoard", {
+          gameId: this.gameId,
+          userName: this.userName,
+        });
+        this.activeGame = false
+        console.log("activeGame" , this.activeGame)
+      }
+
     },
     quitGame: function () {
       this.confirmedUser = false;
@@ -301,7 +332,15 @@ input {
   max-width: 77vh;
   width: 75vw;
   font-family: "Baloo Bhaijaan 2", cursive;
+  margin-bottom: 5px;
 }
+
+#viewResults {
+   max-width: 77vh;
+   width: 75vw;
+   font-family: "Baloo Bhaijaan 2", cursive;
+   margin-bottom: 5px;
+ }
 
 
 

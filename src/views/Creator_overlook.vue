@@ -199,6 +199,11 @@
                 <label for="{{i}}" v-if="i === correctAnswer">✓</label>
               </li>
             </ul>
+            <v-btn class="Button addButton greenButton" v-on:click="addAnswer">
+              <span>
+                {{ uiLabels.AddAnswerAlternative }}
+              </span>
+            </v-btn>
             <v-btn
               class="Button removeButton redButton"
               v-on:click="removeAnswer"
@@ -207,14 +212,30 @@
                 {{ uiLabels.removeAnswerAlternative }}
               </span>
             </v-btn>
-            <v-btn class="Button addButton greenButton" v-on:click="addAnswer">
-              <span> {{ uiLabels.AddAnswerAlternative }}</span>
-            </v-btn>
           </div>
           <div v-else-if="checked === 'slider'">
-            <input type="number" v-model="sliderMinVal" />
-            <input type="number" v-model="sliderMaxVal" />
-            <input type="text" v-model="sliderUnit" placeholder="unit" />
+            <label for="minVal"
+              ><span style="font-size: 2.5vh">{{ uiLabels.minVal }}</span>
+            </label>
+            <input id="minVal" type="number" v-model="sliderMinVal" />
+            <br />
+            <label for="maxVal"
+              ><span style="font-size: 2.5vh">{{ uiLabels.maxVal }}</span>
+            </label>
+            <input id="maxVal" type="number" v-model="sliderMaxVal" />
+            <br />
+            <label for="unit"
+              ><span style="font-size: 2.5vh">{{ uiLabels.unit }}</span>
+            </label>
+            <input
+              id="unit"
+              type="text"
+              v-model="sliderUnit"
+              placeholder="unit"
+            />
+            <br />
+            <span style="font-size: 2.5vh">{{ uiLabels.chooseValues }}</span>
+            <br />
             <Slider
               :poll="false"
               :min="sliderMinVal"
@@ -224,62 +245,22 @@
             />
 
             <div class="output">
-              The lowest acceptable answer is: {{ this.sliderValue[0] }}
-              {{ this.sliderUnit }}
+              <span style="font-size: 2.5vh"
+                >The lowest acceptable answer is: {{ this.sliderValue[0] }}
+                {{ this.sliderUnit }}</span
+              >
             </div>
             <div class="output">
-              The actual answer is: {{ this.sliderValue[1] }}
-              {{ this.sliderUnit }}
+              <span style="font-size: 2.5vh"
+                >The actual answer is: {{ this.sliderValue[1] }}
+                {{ this.sliderUnit }}</span
+              >
             </div>
-            <div v-if="checked === 'slider'">
-              <label for="minVal"
-                ><span style="font-size: 2.5vh">{{ uiLabels.minVal }}</span>
-              </label>
-              <input id="minVal" type="number" v-model="sliderMinVal" />
-              <br />
-              <label for="maxVal"
-                ><span style="font-size: 2.5vh">{{ uiLabels.maxVal }}</span>
-              </label>
-              <input id="maxVal" type="number" v-model="sliderMaxVal" />
-              <br />
-              <label for="unit"
-                ><span style="font-size: 2.5vh">{{ uiLabels.unit }}</span>
-              </label>
-              <input
-                id="unit"
-                type="text"
-                v-model="sliderUnit"
-                placeholder="unit"
-              />
-              <br />
-              <span style="font-size: 2.5vh">{{ uiLabels.chooseValues }}</span>
-              <br />
-              <Slider
-                :poll="false"
-                :min="sliderMinVal"
-                :max="sliderMaxVal"
-                :unit="sliderUnit"
-                v-on:sliderValue="getSliderValue"
-              />
-
-              <div class="output">
-                <span style="font-size: 2.5vh"
-                  >The lowest acceptable answer is: {{ this.sliderValue[0] }}
-                  {{ this.sliderUnit }}</span
-                >
-              </div>
-              <div class="output">
-                <span style="font-size: 2.5vh"
-                  >The actual answer is: {{ this.sliderValue[1] }}
-                  {{ this.sliderUnit }}</span
-                >
-              </div>
-              <div class="output">
-                <span style="font-size: 2.5vh"
-                  >The highest acceptable answer is: {{ this.sliderValue[2] }}
-                  {{ this.sliderUnit }}</span
-                >
-              </div>
+            <div class="output">
+              <span style="font-size: 2.5vh"
+                >The highest acceptable answer is: {{ this.sliderValue[2] }}
+                {{ this.sliderUnit }}</span
+              >
             </div>
           </div>
         </div>
@@ -365,6 +346,7 @@
       </div>
     </section>
 
+    <!--
     <div
       v-if="this.activeQuestion"
       v-show="this.activeQuestion"
@@ -372,6 +354,7 @@
     >
       <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
     </div>
+-->
   </section>
 </template>
 
@@ -500,6 +483,7 @@ export default {
       lang: "",
       gameId: "",
       question: "",
+      type: this.checked,
       answers: ["", ""],
       pos: [],
       clearMap: null,
@@ -679,7 +663,7 @@ export default {
         pic: this.pic,
       });
 
-      this.clearMap();
+      /*this.clearMap();*/
     },
 
     removeQuestion: function () {
@@ -1149,13 +1133,21 @@ export default {
 }
 .questionButton {
   display: grid;
+  margin-bottom: 4px;
   width: 100%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
-  background-image: linear-gradient(#105646, #1d7658, #b6d7a8ff, #b6d7a8ff);
+  background-image: linear-gradient(144deg, #105646, #b6d7a8ff 50%, #105646);
+  /*background-image: linear-gradient(#105646, #1d7658, #b6d7a8ff, #b6d7a8ff);*/
 }
 .questionButton span {
-  background-color: #1d7658;
+  background-image: linear-gradient(144deg, #b6d7a8ff, #105646 50%, #b6d7a8ff);
+  /*background-image: linear-gradient(#b6d7a8ff, #b6d7a8ff, #1d7658, #105646);*/
+  /* padding: 2px 20px; */
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
 }
 
 .redButton span {
@@ -1190,10 +1182,24 @@ ul {
   display: inline;
 }
 
-/*@media screen and (max-width: 660px) {
+@media screen and (max-width: 1400px) {
   .pagee {
     font-size: 15pt;
   }
+  #myMap {
+    height: 300px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .pagee {
+    font-size: 12pt;
+  }
+  #myMap {
+    height: 250px;
+  }
+}
+
+/*
   .break {
     display: none;
   }

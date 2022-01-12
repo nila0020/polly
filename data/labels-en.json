@@ -23,6 +23,7 @@
 	"AddAnswerAlternative": "Add answer",
 	"enterGameName": "Enter Game name",
 	"enterGameID": "Enter Game ID",
+	"enterUsername": "Enter Username",
 	"addanswer": "Add answer alternative",
 	"questionInfo": "Write your question here",
 	"addImage": "Add image",
@@ -46,6 +47,8 @@
 	"minVal": "Lowest value: ",
 	"maxVal": "Highest value: ",
 	"unit": "Unit: ",
-	"chooseValues": "Choose the correct answer, along with highest and lowest acceptable answer"
-
+	"chooseValues": "Choose the correct answer, along with highest and lowest acceptable answer",
+	"join": "Join Geoquiz!",
+	"result": "Show results",
+	"quit": "Quit"
 }
