@@ -268,8 +268,7 @@
               {{ this.uiLabels.mapPosition }}
             </h4>
             <!-- Our map  -->
-            <div id="myMap" >
-            </div>
+            <div id="myMap"></div>
           </div>
         </div>
       </div>
@@ -290,21 +289,37 @@
         <br />
         <div class="toolBoxButtons">
           <router-link v-bind:to="'/poll/' + lang"
-          ><v-btn
+            ><v-btn
               outline
               block
               class="Button goToGame redButton"
-              v-on:click="sendGameId">
-            <span>{{ uiLabels.goToGame }}</span>
-          </v-btn>
+              v-on:click="sendGameId"
+            >
+              <span>{{ uiLabels.goToGame }}</span>
+            </v-btn>
           </router-link>
-          <v-btn class="Button redButton viewQuestion" v-on:click="viewQuestions">
+          <v-btn
+            class="Button redButton viewQuestion"
+            v-on:click="viewQuestions"
+          >
             <span>{{ this.uiLabels.viewQuiz }}</span>
           </v-btn>
           <v-btn
             class="Button greenButton saveQuestion"
-            v-on:click="[saveQuestion(), (setVisible = true), showSaveBlocker()]">
-              <span>{{ uiLabels.Savequestion }}</span>
+            v-on:click="
+              [saveQuestion(), (setVisible = true), showSaveBlocker()]
+            "
+          >
+            <span
+              style="
+                display: flex;
+                flex-direction: column;
+
+                justify-content: center;
+              "
+            >
+              <div>{{ uiLabels.Savequestion }}</div></span
+            >
           </v-btn>
         </div>
       </div>
@@ -712,10 +727,9 @@ export default {
       this.pic = this.questions.find((obj) => obj.qId == qId).pic;
     },
     addAnswer: function () {
-      if(this.answers.length < 4){
+      if (this.answers.length < 4) {
         this.answers.push("");
       }
-
     },
     removeAnswer: function () {
       this.answers.pop();
@@ -816,7 +830,7 @@ export default {
   background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
 }
 .toolBox {
-  display:grid;
+  display: grid;
   grid-template-rows: 10% 25% 30% 25%;
   background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
   grid-column: 3;
@@ -925,7 +939,7 @@ export default {
   /* width: 500px;
   position: absolute; */
 }
-.blockerAll{
+.blockerAll {
   z-index: 4;
   color: white;
   grid-column: 1 / span 3;
@@ -1062,6 +1076,7 @@ export default {
 }
 .saveQuestion {
   display: grid;
+  align-content: center;
   width: 100%;
   height: 30%;
   grid-template-columns: 100%;
