@@ -96,6 +96,13 @@ Data.prototype.joinQuiz = function (gameId, userName) {
 
 }
 
+Data.prototype.getGameName = function(gameId) {
+  const game = this.games[gameId];
+  if (typeof game !== 'undefined') {
+    return game.name
+  }
+}
+
 Data.prototype.getQuestion = function (gameId, qId = null) {
   const game = this.games[gameId];
   console.log("question requested for ", gameId, qId);

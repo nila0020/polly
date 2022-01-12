@@ -49,5 +49,6 @@
 	"unit": "Enhet: ",
 	"chooseValues": "Välj det riktiga svaret, samt högsta och lägsta acceptabla svaren",
 	"join": "Delta i Geoquiz!",
-	"result": "Visa resultat"
+	"result": "Visa resultat",
+	"quit": "Avsluta"
 }

@@ -53,7 +53,7 @@
                 class="create_buttons"
                 v-on:click="quitGame"
               >
-                Quit
+                {{ uiLabels.quit }}
               </button>
               <div id="gameName">{{ gameName }}</div>
               <div id="gameId">Game ID:{{ gameId }}</div>
@@ -122,6 +122,7 @@ export default {
         pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Uppsala_Cathedral_in_February.jpg/1920px-Uppsala_Cathedral_in_February.jpg",
       },
       gameId: null,
+      gameName: null,
       gameExists: [false, true],
       confirmedUser: false,
       userName: "",
@@ -159,6 +160,7 @@ export default {
         socket.emit("joinGame", this.gameId, this.qId, this.userName);
       }
     });
+    socket.on('gameName', (q) => (this.gameName = q))
     socket.on("newQuestion", (q) => (this.question = q));
     socket.on("newScoreboard", (q) => (this.scoreBoard = q));
     socket.on("withinRange", (d) => (this.activeQuestion = d.activeQuestion));

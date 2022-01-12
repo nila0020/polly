@@ -35,7 +35,7 @@
         >
           <span> {{ this.scoreBoard.score }} </span>
         </div>
-<!--        <div class="label" v-if="poll">
+        <div class="label" v-if="poll">
           You:<br />
           <div v-if="this.scoreBoard.userName">
             {{ this.scoreBoard.userName }}
@@ -67,7 +67,7 @@
           Correct Answer: {{ scoreBoard.gA[key][3][0] }} -
           {{ scoreBoard.gA[key][3][2] }}<br />
           Your answer: {{ scoreBoard.userAnswers[key] }}
-        </div>-->
+        </div>
       </div>
     </div>
   </div>

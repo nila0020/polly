@@ -26,8 +26,9 @@ function sockets(io, socket, data) {
 
   socket.on('joinGame', function (gameId, qId, userName) {
     socket.join(gameId);
-    data.joinQuiz(gameId, userName)
-    socket.emit('newQuestion', data.getQuestion(gameId, qId))
+    data.joinQuiz(gameId, userName);
+    socket.emit('newQuestion', data.getQuestion(gameId, qId));
+    socket.emit('gameName', data.getGameName(gameId));
     socket.emit('dataUpdate', data.getAnswers(gameId));
   });
 
