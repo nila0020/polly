@@ -788,6 +788,7 @@ export default {
   /*  padding-top: 15vh;*/
   display: grid;
   width: 100%;
+  min-height: 800px;
   grid-template-columns: 15% 70% 15%;
   grid-template-rows: 50% 50%;
 }
@@ -825,7 +826,7 @@ export default {
   grid-row: 1 / span 2;
   display: grid;
   grid-template-columns: 33% 33% 33%;
-  grid-template-rows: 15% 15% 7% 60%;
+  grid-template-rows: 15% 15% 7% 63%;
   border-style: dotted;
   background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
 }
@@ -952,6 +953,7 @@ export default {
 .blocker2 {
   z-index: 3;
   color: white;
+  height: 100%;
   grid-column: 2 / span 2;
   grid-row: 1 / span 2;
   overflow: hidden;
@@ -962,6 +964,7 @@ export default {
 .blocker3 {
   z-index: 2;
   color: white;
+  height: 100%;
   grid-column: 2;
   grid-row: 1 / span 2;
   overflow: hidden;
@@ -970,6 +973,9 @@ export default {
   transition: 300ms;
 }
 .saveBlocker {
+  align-content: center;
+  z-index: 2;
+  height: 100%;
   color: #126514;
   grid-column: 2;
   grid-row: 1 / span 2;
