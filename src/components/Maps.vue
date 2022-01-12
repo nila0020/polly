@@ -55,10 +55,10 @@ export default {
         );
       }
 
-      var lat, lng, marker, latLng;
+      var lat, lng, markerMe, latLng;
       function getPosition(position) {
-        if (marker && marker.title == "") {
-          myMap.removeLayer(marker);
+        if (markerMe) {
+          myMap.removeLayer(markerMe);
         }
         var meIcon = leaflet.icon({
           iconUrl: "img/meIcon.png",
@@ -68,7 +68,7 @@ export default {
         lat = position.coords.latitude;
         lng = position.coords.longitude;
         latLng = [lat, lng];
-        marker = leaflet.marker([lat, lng], { icon: meIcon }).addTo(myMap);
+        markerMe = leaflet.marker([lat, lng], { icon: meIcon }).addTo(myMap);
         return latLng;
       }
 
@@ -78,23 +78,24 @@ export default {
           iconSize: [36, 36], // size of the icon
           iconAnchor: [18, 36], // point of the icon which will correspond to marker's location
         });
-        marker = new leaflet.marker([props.qLat, props.qLong], {
+        var markerQ = new leaflet.marker([props.qLat, props.qLong], {
           icon: qIcon,
           title: "qPin",
         }).addTo(myMap);
+        console.log(markerQ)
       }
       // Find user location
       setInterval(() => {
         navigator.geolocation.getCurrentPosition(getPosition);
-      }, 5000);
+      }, 1000);
 
       setInterval(() => {
         checkDistance(latLng, props);
-      }, 5500);
+      }, 1000);
 
       setInterval(() => {
         drawQuestion(props);
-      }, 5500);
+      }, 1000);
     });
   },
 };
