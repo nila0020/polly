@@ -1,7 +1,6 @@
 <template>
   <section class="pagee">
     <section class="titleBox">
-     
       <div class="column">
         <label for="gameName">{{ uiLabels.gameName }}: </label>
         <span class="break"><br /></span>
@@ -55,7 +54,7 @@
             <v-btn
               class="Button addQuestion greenButton"
               id="overlook!Btn"
-              v-on:click="[addNewQuestion(), closeExpand()]"
+              v-on:click="[saveQuestion(), addNewQuestion(), closeExpand()]"
             >
               <span>{{ uiLabels.Addquestion }}</span>
             </v-btn>
@@ -78,7 +77,6 @@
       </div>
       <!--Center box-->
       <div v-show="!this.activeQuestion" class="box centerBox">
-        
         <div id="picBox">
           <p style="grid-column: 1 / span2; grid-row: 1">
             {{ this.uiLabels.addImage }}
@@ -133,7 +131,6 @@
         <div id="aBox">
           {{ this.uiLabels.answer }} <br />
           <div v-if="checked === 'MCQ' || checked === null">
-            
             {{ this.uiLabels.chooseCorrect }}
             <ul id="answerList">
               <li v-for="(_, i) in answers" v-bind:key="'answer' + i">
@@ -332,7 +329,7 @@ export default {
             maxZoom: 18,
             minZoom: 1,
             id: "mapbox/streets-v11",
-            tileSize: 512, 
+            tileSize: 512,
             zoomOffset: -1,
             accessToken:
               "pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ",
@@ -340,12 +337,12 @@ export default {
         )
         .addTo(myMap);
       // Distance function
-/*      function checkDistance(a, b) {
+      /*    function checkDistance(a, b) {
         if (myMap.distance(a, b) < 30) {
           alert("Within range");
         }
         console.log("avstånd i meter", myMap.distance(a, b));
-      }*/
+      } */
 
       // Find user location
       setInterval(() => {
@@ -412,7 +409,7 @@ export default {
 
   data: function () {
     return {
-      questionText: "", 
+      questionText: "",
       questions: [],
       lang: "",
       gameId: "",
@@ -531,7 +528,6 @@ export default {
       });
     },
     addNewQuestion: function () {
-      console.log(this.questions);
       this.pos = [];
       this.qId = this.questions.length + 1;
       this.questionText = "";
@@ -547,7 +543,7 @@ export default {
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.checked,
-        pos: this.pos, 
+        pos: this.pos,
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
@@ -558,7 +554,7 @@ export default {
       this.questions.push({
         gameId: this.gameId,
         type: this.checked,
-        pos: this.pos, 
+        pos: this.pos,
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
@@ -568,34 +564,36 @@ export default {
       });
     },
     saveQuestion: function () {
-      this.questions.find((obj) => obj.qId == this.editingNumber).type =
-        this.checked;
-      this.questions.find((obj) => obj.qId == this.editingNumber).pos =
-        this.question.pos; 
-      this.questions.find((obj) => obj.qId == this.editingNumber).info =
-        this.info;
-      this.questions.find((obj) => obj.qId == this.editingNumber).q =
-        this.questionText;
-      this.questions.find((obj) => obj.qId == this.editingNumber).a[0] =
-        this.answers;
-      this.questions.find((obj) => obj.qId == this.editingNumber).a[1] =
-        this.correctAnswer;
-      this.questions.find((obj) => obj.qId == this.editingNumber).aS =
-        this.sliderAnswer;
-      this.questions.find((obj) => obj.qId == this.editingNumber).pic =
-        this.pic;
+      if (!this.hideCenterAndTool) {
+        this.questions.find((obj) => obj.qId == this.editingNumber).type =
+          this.checked;
+        this.questions.find((obj) => obj.qId == this.editingNumber).pos =
+          this.question.pos;
+        this.questions.find((obj) => obj.qId == this.editingNumber).info =
+          this.info;
+        this.questions.find((obj) => obj.qId == this.editingNumber).q =
+          this.questionText;
+        this.questions.find((obj) => obj.qId == this.editingNumber).a[0] =
+          this.answers;
+        this.questions.find((obj) => obj.qId == this.editingNumber).a[1] =
+          this.correctAnswer;
+        this.questions.find((obj) => obj.qId == this.editingNumber).aS =
+          this.sliderAnswer;
+        this.questions.find((obj) => obj.qId == this.editingNumber).pic =
+          this.pic;
 
-      socket.emit("addQuestion", {
-        gameId: this.gameId,
-        type: this.checked,
-        pos: this.pos,
-        info: this.info,
-        q: this.questionText,
-        a: this.answersAlt,
-        aS: this.sliderAnswer,
-        qId: this.editingNumber,
-        pic: this.pic,
-      });
+        socket.emit("addQuestion", {
+          gameId: this.gameId,
+          type: this.checked,
+          pos: this.pos,
+          info: this.info,
+          q: this.questionText,
+          a: this.answersAlt,
+          aS: this.sliderAnswer,
+          qId: this.editingNumber,
+          pic: this.pic,
+        });
+      }
     },
 
     removeQuestion: function () {
@@ -618,7 +616,7 @@ export default {
         this.activeQuestion = false;
       }
     },
-    
+
     currentData: function (qId) {
       this.editingNumber = qId;
       console.log(this.editingNumber);
@@ -845,7 +843,7 @@ export default {
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-/*  opacity: 95%;*/
+  opacity: 95%;
   transition: 300ms;
 }
 .blocker2 {
@@ -856,7 +854,7 @@ export default {
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-/*  opacity: 95%;*/
+  opacity: 95%;
   transition: 300ms;
 }
 .blocker3 {
@@ -867,7 +865,7 @@ export default {
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-/*  opacity: 95%;*/
+  opacity: 95%;
   transition: 300ms;
 }
 .saveBlocker {
@@ -879,7 +877,7 @@ export default {
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-/*  opacity: 95%;*/
+  opacity: 95%;
   transition: 300ms;
 }
 .questionDisplayed {

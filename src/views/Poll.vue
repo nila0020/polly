@@ -13,7 +13,8 @@
         />
       </div>
       <div class="boxB">
-        <label for="" class="start_buttons1">{{uiLabels.username}}</label><br />
+        <label for="" class="start_buttons1">{{ uiLabels.username }}</label
+        ><br />
         <input
           type="text"
           style="font-size: 1.4em"
@@ -28,7 +29,7 @@
           ><span>{{ this.uiLabels.join }}</span></v-btn
         >
         <v-btn class="start_buttons" id="viewResults" v-on:click="showResult"
-        ><span>{{ this.uiLabels.result}}</span></v-btn
+          ><span>{{ this.uiLabels.result }}</span></v-btn
         >
       </div>
       <div class="picture">
@@ -61,7 +62,6 @@
                   :qLong="this.question[0].pos[1]"
                   :gameId="this.gameId"
                 />
-                
               </div>
             </div>
           </div>
@@ -78,13 +78,17 @@
         <!-- blocks overlook, center and tool-->
       </div>
     </div>
-    <div  v-if="confirmedUser && activeGame"
-      v-show="confirmedUser && activeGame && tutorialBox" v-on:click="tutorialMethod" class="tutorialBox">
+    <div
+      v-if="confirmedUser && activeGame"
+      v-show="confirmedUser && activeGame && tutorialBox"
+      v-on:click="tutorialMethod"
+      class="tutorialBox"
+    >
       <h4>{{ uiLabels.tutorial1 }}</h4>
-      {{ uiLabels.tutorial2 }}<br>
-      {{ uiLabels.tutorial3 }}<br>
-      {{ uiLabels.tutorial4 }}<br>
-      {{ uiLabels.tutorial5 }}<br>
+      {{ uiLabels.tutorial2 }}<br />
+      {{ uiLabels.tutorial3 }}<br />
+      {{ uiLabels.tutorial4 }}<br />
+      {{ uiLabels.tutorial5 }}<br />
       {{ uiLabels.tutorial6 }}
     </div>
     <div
@@ -269,18 +273,16 @@ export default {
 .tutorialBox {
   display: grid;
   color: black;
-  background-color: rgb(5, 177, 25);
+  background: linear-gradient(#17b27f, #319881, #2ab0b4, #3096c2);
   border: 10px;
   border-radius: 1em;
   width: 55vh;
   height: 98vh;
-  align-self: center;
   justify-content: center;
-  justify-self: center;
-  align-items: center;
-  font-size: 16pt;
+  font-size: 1.3em;
   font-family: "Baloo Bhaijaan 2", cursive;
 }
+
 .fullFrame {
   display: flex;
   flex-direction: row;
