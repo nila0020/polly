@@ -929,13 +929,12 @@ export default {
   align-items: center;
 }
 #qBox {
-  height: 100%;
+  height: 80%;
   padding-top: 2vh;
   grid-column: 2;
   grid-row: 1 / span 2;
 }
 #aBox {
-  height: 100%;
   padding-top: 2vh;
   grid-column: 3;
   grid-row: 1 / span 2;
