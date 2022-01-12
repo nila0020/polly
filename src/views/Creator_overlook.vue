@@ -1,11 +1,7 @@
 <template>
   <section class="pagee">
     <section class="titleBox">
-      <!--Title box-->
-
-      <!--      <h3>Game Title and GameID</h3>-->
-
-      <!--      <div class="insertTitle">-->
+     
       <div class="column">
         <label for="gameName">{{ uiLabels.gameName }}: </label>
         <span class="break"><br /></span>
@@ -30,13 +26,11 @@
         <v-btn class="Button createButton greenButton" v-on:click="createGame">
           <span>{{ uiLabels.CreateGame }}</span>
         </v-btn>
-        <!--        <span class="break"><br /></span>-->
 
         <v-btn class="Button loadButton redButton" v-on:click="loadGame">
           <span>{{ this.uiLabels.loadGame }}</span>
         </v-btn>
       </div>
-      <!--      </div>-->
     </section>
 
     <section class="container">
@@ -58,7 +52,6 @@
             </li>
           </ul>
           <p>
-            <!--            <input type="text" v-model="questionText" placeholder="add new question here" /> Detta är inputrutan i overlook -->
             <v-btn
               class="Button addQuestion greenButton"
               id="overlook!Btn"
@@ -85,44 +78,11 @@
       </div>
       <!--Center box-->
       <div v-show="!this.activeQuestion" class="box centerBox">
-        <!--Info box-->
-        <!--        <div class="box info">
-          &lt;!&ndash;        v-on:click="infoExpand"
-          v-bind:class="{ infoBig: infoBig, infoSmall: infoSmall }"&ndash;&gt;
-
-          <a
-            v-if="{ infoBig: infoBig }"
-            class="closeExpand"
-            v-on:click="closeExpand"
-            >X</a
-          >
-          <h1>Info</h1>
-          <textarea
-            class="infoArea"
-            v-model="info"
-            v-bind:placeholder="this.uiLabels.Questiondiscription"
-          />
-        </div>-->
-
-        <!--Question box-->
-        <!--        <div class="box questionBox">-->
-        <!--         v-on:click="questionExpand"
-          v-bind:class="{
-            questionBig: questionBig,
-            questionSmall: questionSmall,
-            questionSmallCond: questionSmallCond,
-          }"-->
-
-        <!--          <h1>{{ this.uiLabels.createQuestion }}</h1>-->
+        
         <div id="picBox">
-          <!--            <h4 style="
-                  grid-row: 1;
-                  grid-column: 1/ span 2;
-                  padding-top: 0">-->
           <p style="grid-column: 1 / span2; grid-row: 1">
             {{ this.uiLabels.addImage }}
           </p>
-          <!--            </h4>-->
           <img
             :src="pic"
             v-if="pic !== null"
@@ -173,13 +133,7 @@
         <div id="aBox">
           {{ this.uiLabels.answer }} <br />
           <div v-if="checked === 'MCQ' || checked === null">
-            <!--              <input
-                v-for="(_, i) in answers"
-                v-model="answers[i]"
-                v-bind:key="'answer' + i"
-                v-bind:placeholder="this.uiLabels.addanswer"
-              />-->
-
+            
             {{ this.uiLabels.chooseCorrect }}
             <ul id="answerList">
               <li v-for="(_, i) in answers" v-bind:key="'answer' + i">
@@ -346,16 +300,6 @@
         <h1>question saved</h1>
       </div>
     </section>
-
-    <!--
-    <div
-      v-if="this.activeQuestion"
-      v-show="this.activeQuestion"
-      class="questionDisplayed"
-    >
-      <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
-    </div>
--->
   </section>
 </template>
 
@@ -388,7 +332,7 @@ export default {
             maxZoom: 18,
             minZoom: 1,
             id: "mapbox/streets-v11",
-            tileSize: 512, //window.polly.position;,
+            tileSize: 512, 
             zoomOffset: -1,
             accessToken:
               "pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ",
@@ -426,16 +370,6 @@ export default {
 
         return latLng;
       }
-
-      // Current distance from user location
-      setTimeout(
-        () => console.log(checkDistance(latLng, [59.855727, 17.633445])),
-        6000
-      );
-      setTimeout(
-        () => console.log("Marker din position utanför", latLng),
-        6000
-      );
 
       //Icon declaration
       var currentIcon = leaflet.icon({
@@ -478,9 +412,8 @@ export default {
 
   data: function () {
     return {
-      questionText: "", // detta är textrutan i overlook - Den funktionen ska vara i questionbox
+      questionText: "", 
       questions: [],
-      /*info: "",*/
       lang: "",
       gameId: "",
       question: "",
@@ -569,7 +502,6 @@ export default {
       this.createImage(files[0]);
     },
     createImage(file) {
-      //var image = new Image();
       var reader = new FileReader();
       var vm = this;
 
@@ -615,7 +547,7 @@ export default {
       socket.emit("addQuestion", {
         gameId: this.gameId,
         type: this.checked,
-        pos: this.pos, //window.polly.position || [],
+        pos: this.pos, 
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
@@ -626,7 +558,7 @@ export default {
       this.questions.push({
         gameId: this.gameId,
         type: this.checked,
-        pos: this.pos, //window.polly.position || [],
+        pos: this.pos, 
         info: this.info,
         q: this.questionText,
         a: this.answersAlt,
@@ -639,7 +571,7 @@ export default {
       this.questions.find((obj) => obj.qId == this.editingNumber).type =
         this.checked;
       this.questions.find((obj) => obj.qId == this.editingNumber).pos =
-        this.question.pos; //window.polly.position;
+        this.question.pos; 
       this.questions.find((obj) => obj.qId == this.editingNumber).info =
         this.info;
       this.questions.find((obj) => obj.qId == this.editingNumber).q =
@@ -664,8 +596,6 @@ export default {
         qId: this.editingNumber,
         pic: this.pic,
       });
-
-      /*this.clearMap();*/
     },
 
     removeQuestion: function () {
@@ -688,32 +618,7 @@ export default {
         this.activeQuestion = false;
       }
     },
-    /*   addQuestion: function() {
-      //Ska inte skickas förrän alla frågor lagts till
-      var newQuestion = this.questionText.trim();
-      if (!newQuestion) {return;}
-      socket.emit("addQuestion",
-          {gameId: this.gameId,
-            type: this.type,
-            pos: this.pos,
-            info: this.info,
-            q: newQuestion,
-            a: this.answers,
-            qId: this.qId,
-            pic: this.pic
-          } )
-      this.questions.push(
-          {gameId: this.gameId,
-            q: this.questions,
-            a: this.answers,
-            info: this.info,
-            qId: this.qId}
-      );
-      this.question = '';
-      this.answers = ["", ""];
-      this.info = "";
-    },*/
-
+    
     currentData: function (qId) {
       this.editingNumber = qId;
       console.log(this.editingNumber);
@@ -750,7 +655,6 @@ export default {
 <style>
 .pagee {
   background: #2674b0;
-  /*background: linear-gradient(#3bc1d9, #2674b0, #27a27a);*/
   text-align: center;
   font-size: 20pt;
   font-family: "Baloo Bhaijaan 2", cursive;
@@ -767,9 +671,6 @@ export default {
   height: 13vh;
   display: table;
   clear: both;
-  /*  display: grid;
-  grid-template-columns: 33% 33% 33%;
-  grid-template-rows: 100%;*/
   color: black;
   background-image: linear-gradient(
       rgba(255, 255, 255, 0.6),
@@ -785,7 +686,6 @@ export default {
   float: right;
 }
 .container {
-  /*  padding-top: 15vh;*/
   display: grid;
   width: 100%;
   min-height: 800px;
@@ -937,8 +837,6 @@ export default {
 
 #myMap {
   height: 400px;
-  /* width: 500px;
-  position: absolute; */
 }
 .blockerAll {
   z-index: 4;
@@ -1023,8 +921,6 @@ export default {
   outline: 0;
 }
 .Button span {
-  /*background-color: #000000;*/
-  /*padding: 14px 20px;*/
   border-radius: 6px;
   width: 100%;
   height: 30%;
@@ -1128,12 +1024,9 @@ export default {
   grid-template-columns: 100%;
   grid-template-rows: 100%;
   background-image: linear-gradient(144deg, #105646, #b6d7a8ff 50%, #105646);
-  /*background-image: linear-gradient(#105646, #1d7658, #b6d7a8ff, #b6d7a8ff);*/
 }
 .questionButton span {
   background-image: linear-gradient(144deg, #b6d7a8ff, #105646 50%, #b6d7a8ff);
-  /*background-image: linear-gradient(#b6d7a8ff, #b6d7a8ff, #1d7658, #105646);*/
-  /* padding: 2px 20px; */
   border-radius: 6px;
   width: 100%;
   height: 100%;
@@ -1142,7 +1035,6 @@ export default {
 
 .redButton span {
   background-image: linear-gradient(144deg, #881d33, #fa628d 50%, #881d33);
-  /*padding: 2px 24px;*/
   border-radius: 6px;
   width: 100%;
   height: 100%;
@@ -1150,7 +1042,6 @@ export default {
 }
 .greenButton span {
   background-image: linear-gradient(144deg, #126514, #65be51 50%, #126514);
-  /*padding: 2px 20px;*/
   border-radius: 6px;
   width: 100%;
   height: 100%;
@@ -1188,239 +1079,4 @@ ul {
     height: 250px;
   }
 }
-
-/*
-  .break {
-    display: none;
-  }
-
-  .titleBox h3 {
-    float: none;
-  }
-
-  .titleBox {
-    position: fixed;
-    height: 15vh;
-    !*    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 50% 50%;*!
-    color: black;
-    background-image: linear-gradient(
-        rgba(255, 255, 255, 0.6),
-        rgba(255, 255, 255, 0.6)
-      ),
-      url("https://media.istockphoto.com/vectors/city-game-background-vector-id526716884?k=20&m=526716884&s=170667a&w=0&h=eSrH07Do4iPSAQ3i3iukNADDsfnNLoX1LnlUUuhlTO0=");
-  }
-  .column {
-    width: 100%;
-  }
-
-  .container {
-    padding-top: 15vh;
-    display: grid;
-    grid-template-columns: 20% 60% 20%;
-    grid-template-rows: 50% 50%;
-  }
-
-  .box {
-    color: #fff;
-    border-radius: 5px;
-    margin: 5px;
-    padding: 20px;
-    font-size: 100%;
-  }
-
-  .insertTitle {
-    float: right;
-  }
-
-  .Overlook {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    border-style: dotted;
-    background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
-    color: white;
-  }
-
-  .infoWindow {
-    font: black;
-
-    border-style: dotted;
-  }
-
-  .centerBox {
-    padding: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    display: grid;
-    grid-template-columns: 33% 33% 33%;
-    grid-template-rows: 20% 15% 20% 35%;
-    border-style: dotted;
-    background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
-  }
-
-  .toolBox {
-    background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
-
-    grid-column: 3;
-    grid-row: 1 / span 2;
-    border-style: dotted;
-  }
-
-  .info h1 {
-    margin-top: 0;
-    font-size: 25px;
-  }
-
-  .info {
-    padding-top: 0;
-    grid-column: 1 / span 2;
-    grid-row: 1 / span 2;
-    overflow: scroll;
-  }
-
-  .infoArea {
-    width: 100%;
-    height: 20vh;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: black;
-    resize: none;
-    color: white;
-  }
-
-  .questionArea {
-    width: 70%;
-    height: 70%;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: black;
-    resize: none;
-    color: white;
-  }
-
-  .questionBox {
-    grid-column: 3 / span 2;
-    grid-row: 1 / span 2;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 10% 45% 45%;
-    overflow: scroll;
-  }
-
-  .questionBox h1 {
-    font-size: 15px;
-    grid-column: 1 / span 2;
-    grid-row: 1;
-  }
-
-  #picBox {
-    display: grid;
-    grid-template-rows: 80% 20%;
-    grid-template-columns: 50% 50%;
-    height: 100%;
-    grid-column: 1;
-    grid-row: 2;
-    margin-right: 1vw;
-  }
-
-  #qBox {
-    height: 100%;
-    padding-top: 2vh;
-    grid-column: 2;
-    grid-row: 2;
-  }
-
-  #aBox {
-    height: 100%;
-    padding-top: 2vh;
-    grid-column: 1;
-    grid-row: 3;
-  }
-
-  .map {
-    grid-column: 1 / span 3;
-    grid-row: 3 / span 2;
-  }
-
-  .blockerAll {
-    color: white;
-    grid-column: 1 / span 3;
-    grid-row: 1 / span 2;
-    overflow: hidden;
-    background-color: black;
-    opacity: 95%;
-    transition: 300ms;
-  }
-
-  .blocker2 {
-    color: white;
-    grid-column: 2 / span 2;
-    grid-row: 1 / span 2;
-    overflow: hidden;
-    background-color: black;
-    opacity: 95%;
-    transition: 300ms;
-  }
-
-  .blocker3 {
-    color: white;
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    overflow: hidden;
-    background-color: black;
-    opacity: 95%;
-    transition: 300ms;
-  }
-
-  .Button {
-    float: right;
-    align-items: center;
-    background-image: linear-gradient(144deg, #c4bdbd, #000000 50%, #9a9797);
-
-    border-color: white;
-    border-radius: 8px;
-    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
-    box-sizing: border-box;
-    color: #ffffff;
-    display: flex;
-    font-family: "Baloo Bhaijaan 2", cursive;
-    font-size: 1.5vh;
-    justify-content: center;
-    line-height: 2em;
-    max-width: 100%;
-    min-width: 80px;
-    padding: 3px;
-    text-decoration: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    white-space: nowrap;
-    cursor: pointer;
-  }
-
-  .Button:active,
-  .Button:hover {
-    outline: 0;
-  }
-
-  .Button span {
-    background-color: #000000;
-    padding: 16px 24px;
-    border-radius: 6px;
-    width: 100%;
-    height: 45%;
-    transition: 300ms;
-  }
-
-  .Button:hover span {
-    background: none;
-  }
-}*/
 </style>

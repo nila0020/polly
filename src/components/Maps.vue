@@ -21,9 +21,8 @@ export default {
   setup(props) {
     //Load map
     let myMap;
-    //const reactiveProperties = reactive({ pos: null });
     onMounted(() => {
-      //kartSetup
+      //Map Setup
       myMap = leaflet.map("myMap").setView([59.855727, 17.633445], 13);
       leaflet
         .tileLayer(

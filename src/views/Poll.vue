@@ -36,10 +36,6 @@
       </div>
     </div>
 
-    <!--<div class="designn">
-      <img src="img\sista.jpg" alt="" />
-    </div> -->
-
     <div
       v-if="confirmedUser && activeGame && !tutorialBox"
       v-show="confirmedUser && activeGame && !tutorialBox"
@@ -65,7 +61,7 @@
                   :qLong="this.question[0].pos[1]"
                   :gameId="this.gameId"
                 />
-                <!-- v-bind:pos="this.question.pos" v-if = "this.question.pos" -->
+                
               </div>
             </div>
           </div>
@@ -210,10 +206,10 @@ export default {
         answer: answer,
         corAnswer: corAnswer,
         userName: this.userName,
-      }); /*avgör om det finns fler frågor eller om quizzet skall avslutas*/
+      }); //Determine if questions left or end
       if (this.question[0]["qId"] < this.question[1]) {
         this.qId += 1;
-        /*nedan uppdaterar vi frågeobjektet via sockets via data*/
+        // Below: update question object via sockets and data
         socket.emit("runQuestion", {
           gameId: this.gameId,
           questionNumber: this.qId,
@@ -404,11 +400,6 @@ input {
   cursor: pointer;
 }
 
-/* @media screen and (max-width: 600px) {
-  .picture {
-    display: none !important;
-  }
-} */
 .blockerAll {
   grid-column: 1;
   grid-row: 2;
