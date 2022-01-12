@@ -42,6 +42,8 @@
       v-show="confirmedUser && activeGame && !tutorialBox"
     >
       <div v-show="!activeQuestion">
+        <button v-on:click="activateQuestion">fråga</button>
+
         <div class="centrera">
           <div class="wrapper">
             <div class="navBar">
