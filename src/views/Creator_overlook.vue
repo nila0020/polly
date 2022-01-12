@@ -775,7 +775,7 @@ export default {
       rgba(255, 255, 255, 0.6),
       rgba(255, 255, 255, 0.6)
     ),
-    url("https://media.istockphoto.com/vectors/city-game-background-vector-id526716884?k=20&m=526716884&s=170667a&w=0&h=eSrH07Do4iPSAQ3i3iukNADDsfnNLoX1LnlUUuhlTO0=");
+    url(../../public/img/Backgraound-creat.jpg);
 }
 .column {
   float: left;
