@@ -50,5 +50,7 @@
 	"chooseValues": "Välj det riktiga svaret, samt högsta och lägsta acceptabla svaren",
 	"join": "Delta i Geoquiz!",
 	"result": "Visa resultat",
-	"quit": "Avsluta"
+	"quit": "Avsluta",
+	"tutorial": "Välkommen till Geoquiz! För att komma vidare i spelet behöver du svara på varje enskild fråga som dyker upp. Din aktuella fråga dyker upp som en nål på kartan som syns på nästa sida. För att kunna svara på frågan behöver du vara nära den. Din egen position är också synlig på kartan som en ikon i form av en liten gubbe. När frågan dyker upp på din skärm svarar du på den och går vidare till nästa fråga. När du är klar kan du se ditt resultat (och även de andra spelarnas resultat om de är klara med quizet)"
+
 }

@@ -50,5 +50,6 @@
 	"chooseValues": "Choose the correct answer, along with highest and lowest acceptable answer",
 	"join": "Join Geoquiz!",
 	"result": "Show results",
-	"quit": "Quit"
+	"quit": "Quit",
+	"tutorial": "Welcome to Geoquiz! In order to proceed in the game, you need to answer each question before moving on. The location of your question can be found on the map showing on the next page. Move close to the pin in order to get access to your current question. Your own position is visible on the map as a person icon. When the question pops up, answer it and move on to the next pin showing on the map to see the next question. When you are done, you will be able to see your results (and the other players results if they are done)"
 }

@@ -1,4 +1,5 @@
 <template>
+
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>{{ this.uiLabels.letsGo }}</h1>
@@ -41,8 +42,8 @@
     </div> -->
 
     <div
-      v-if="confirmedUser && activeGame"
-      v-show="confirmedUser && activeGame"
+      v-if="confirmedUser && activeGame && !tutorialBox"
+      v-show="confirmedUser && activeGame && !tutorialBox"
     >
       <div v-show="!activeQuestion">
         <div class="centrera">
@@ -81,6 +82,10 @@
       <div class="blockerAll" v-if="this.question == -1">
         <!-- blocks overlook, center and tool-->
       </div>
+    </div>
+    <div  v-if="confirmedUser && activeGame"
+      v-show="confirmedUser && activeGame && tutorialBox" v-on:click="tutorialMethod" class="tutorialBox">
+      {{ uiLabels.tutorial }}
     </div>
     <div
       v-show="!activeGame && confirmedUser && this.scoreBoard"
@@ -133,9 +138,11 @@ export default {
       scoreBoard: null,
       uiLabels: {},
       poll: true,
-      viewResult: false
+      viewResult: false,
+      tutorialBox: true,
     };
   },
+
   created: function () {
     this.gameId = this.$route.params.id;
     this.lang = this.$route.params.lang;
@@ -209,6 +216,9 @@ export default {
 
       this.activeQuestion = false;
     },
+    tutorialMethod: function () {
+      this.tutorialBox=false;
+    },
     confirmUser: function () {
       if (!this.gameId || !this.userName) {
         alert("Please enter a gameId and/or a password");
@@ -249,6 +259,22 @@ export default {
 };
 </script>
 <style scoped>
+.tutorialBox {
+  display: grid;
+  color: black;
+  background-color: rgb(5, 177, 25);;
+  border: 10px;
+  border-radius: 1em;
+  width: 55vh;
+  height: 98vh;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-family: "Baloo Bhaijaan 2", cursive;
+  
+}
+
 label {
   font-size: 24px;
 
