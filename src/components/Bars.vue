@@ -35,7 +35,7 @@
         >
           <span> {{ this.scoreBoard.score }} </span>
         </div>
-        <div class="label" v-if="poll">
+        <div class="label">
           You:<br />
           <div v-if="this.scoreBoard.userName">
             {{ this.scoreBoard.userName }}
@@ -43,14 +43,14 @@
         </div>
       </div>
     </div>
-    <div class="questionsAndAnswers" v-if="poll">
+    <div class="questionsAndAnswers">
       <div
         class="gameQuestionText"
         v-for="(item, key) in scoreBoard.gQ"
         v-bind:key="key"
       >
         <div
-          v-if="scoreBoard.gA[key] === String"
+          v-if="typeof scoreBoard.gA[key] === 'string'"
           class="oneQuestion"
           v-bind:style="boxColor(scoreBoard.cA[key])"
         >
@@ -59,7 +59,7 @@
           Your answer: {{ scoreBoard.userAnswers[key] }}
         </div>
         <div
-          v-if="scoreBoard.gA[key] != String"
+          v-if="typeof scoreBoard.gA[key] !== 'string'"
           class="oneQuestion"
           v-bind:style="boxColor(scoreBoard.cA[key])"
         >
@@ -81,7 +81,6 @@
 export default {
   name: "Bars",
   props: {
-    poll: Boolean,
     lang: String,
     scoreBoard: {
       userName: String,
@@ -98,7 +97,7 @@ export default {
       }
     },
     stapleColor: function (item) {
-      console.log("in bars")
+      console.log(this.scoreBoard.gA[0])
       if (item.userName == this.scoreBoard.userName) {
         return "coral";
       } else {

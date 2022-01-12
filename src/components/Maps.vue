@@ -23,7 +23,7 @@ export default {
     let myMap;
     onMounted(() => {
       //Map Setup
-      myMap = leaflet.map("myMap").setView([59.855727, 17.633445], 13);
+      myMap = leaflet.map("myMap").setView([props.qLat, props.qLong], 13);
       leaflet
         .tileLayer(
           "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGljdG9ydmlrdG9yIiwiYSI6ImNreGM4aW43ZjRkNzUydXFvYnB5eDZ3d3MifQ.gSVvXd28nfGeuWEnHdIEhQ",

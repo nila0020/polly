@@ -99,17 +99,6 @@
     >
       <Bars
         :scoreBoard="scoreBoard"
-        :poll="poll"
-        v-if="!activeGame && this.scoreBoard"
-      />
-    </div>
-    <div
-      v-show="!activeGame && this.scoreBoard && viewResult"
-      class="scoreBoards"
-    >
-      <Bars
-        :scoreBoard="scoreBoard"
-        :poll="poll"
         v-if="!activeGame && this.scoreBoard"
       />
     </div>
@@ -191,10 +180,8 @@ export default {
       let corAnswer = null;
       if ("MCQ" == this.question[0]["type"]) {
         if (answer == this.question[0]["a"][0][this.question[0]["a"][1]]) {
-          console.log("sann");
           corAnswer = true;
         } else {
-          console.log("faslk");
           corAnswer = false;
         }
       } else {
