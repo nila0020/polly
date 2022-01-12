@@ -266,13 +266,13 @@
         <div class="box map">
           <!--         v-on:click="mapExpand"
                   v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"-->
-          <div class="mapTitle">
+          <div class="mapTitle" v-show="!hideCenter && !saveVisible">
             <h4>
               {{ this.uiLabels.mapPosition }}
               <!--              {{ reactiveProperties.pos }}-->
             </h4>
             <!-- Our map  -->
-            <div id="myMap">
+            <div id="myMap" >
               <!--                 v-bind:style="[hideCenter ? 'display:none' : '']">-->
             </div>
           </div>
@@ -293,30 +293,25 @@
         <br />
         <br />
         <br />
-        <v-btn
-          class="Button greenButton saveQuestion"
-          v-on:click="[saveQuestion(), (setVisible = true), showSaveBlocker()]"
-        >
-          <span>{{ uiLabels.Savequestion }}</span>
-        </v-btn>
-
-        <br />
-        <v-btn class="Button redButton viewQuestion" v-on:click="viewQuestions">
-          <span>{{ this.uiLabels.viewQuiz }}</span>
-        </v-btn>
-        <br />
-        <router-link v-bind:to="'/poll/' + lang"
+        <div class="toolBoxButtons">
+          <router-link v-bind:to="'/poll/' + lang"
           ><v-btn
-            outline
-            block
-            class="Button goToGame redButton"
-            v-on:click="sendGameId"
-          >
-            <!--          <span class="text">-->
+              outline
+              block
+              class="Button goToGame redButton"
+              v-on:click="sendGameId">
             <span>{{ uiLabels.goToGame }}</span>
-            <!--        </span>-->
-          </v-btn></router-link
-        >
+          </v-btn>
+          </router-link>
+          <v-btn class="Button redButton viewQuestion" v-on:click="viewQuestions">
+            <span>{{ this.uiLabels.viewQuiz }}</span>
+          </v-btn>
+          <v-btn
+            class="Button greenButton saveQuestion"
+            v-on:click="[saveQuestion(), (setVisible = true), showSaveBlocker()]">
+              <span>{{ uiLabels.Savequestion }}</span>
+          </v-btn>
+        </div>
       </div>
 
       <div class="blocker3" v-if="hideCenter">
@@ -503,7 +498,7 @@ export default {
       uiLabels: {},
       hideAll: true,
       hideCenterAndTool: true,
-      hideCenter: true,
+      hideCenter: false,
       checked: "MCQ",
       infoBig: false,
       questionBig: false,
@@ -578,6 +573,7 @@ export default {
     },
     createGame: function () {
       this.hideAll = false;
+      this.hideCenter = true;
       socket.emit("createGame", {
         gameId: this.gameId,
         lang: this.lang,
@@ -726,15 +722,6 @@ export default {
     removeAnswer: function () {
       this.answers.pop();
     },
-    infoExpand: function () {
-      this.infoBig = true;
-      this.questionBig = false;
-      this.mapBig = false;
-      this.infoSmall = false;
-      this.questionSmall = true;
-      this.mapSmall = true;
-      this.questionSmallCond = false;
-    },
     questionExpand: function () {
       this.infoBig = false;
       this.questionBig = true;
@@ -744,41 +731,11 @@ export default {
       this.mapSmall = true;
       this.questionSmallCond = false;
     },
-    mapExpand: function () {
-      this.infoBig = false;
-      this.questionBig = false;
-      this.mapBig = true;
-      this.infoSmall = true;
-      this.questionSmall = false;
-      this.mapSmall = false;
-      this.questionSmallCond = true;
-    },
-    closeExpand: function () {
-      this.infoBig = false;
-      this.questionBig = false;
-      this.mapBig = false;
-      this.infoSmall = false;
-      this.questionSmall = false;
-      this.mapSmall = false;
-      this.questionSmallCond = false;
-    },
-
-    /*runQuestion: function () {
-      socket.emit("runQuestion", {
-        gameId: this.gameId,
-        qId: this.qId,
-      });
-    },*/
   },
 };
 </script>
 
 <style>
-/*body {
-  margin: 0px;
-  min-height: 100%;
-  min-width: 100%;
-}*/
 .pagee {
   background: #2674b0;
   /*background: linear-gradient(#3bc1d9, #2674b0, #27a27a);*/
@@ -860,11 +817,19 @@ export default {
   background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
 }
 .toolBox {
-  padding-top: 15vh;
+  display:grid;
+  grid-template-rows: 10% 25% 40% 25%;
+  /*padding-top: 15vh;*/
   background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
   grid-column: 3;
   grid-row: 1 / span 2;
   border-style: dotted;
+}
+#app {
+  grid-row: 2;
+}
+.toolBoxButtons {
+  grid-row: 4;
 }
 
 .info h1 {
@@ -1010,6 +975,7 @@ export default {
   align-items: center;
 }
 .Button {
+  margin-bottom: 3px;
   justify-content: center;
   border-color: white;
   border-radius: 8px;
@@ -1058,34 +1024,29 @@ export default {
   grid-template-columns: 100%;
   grid-template-rows: 100%;
 }
-.createButton span {
-}
+
 .loadButton {
   display: grid;
   width: 60%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
 }
-.loadButton span {
-}
+
 .addButton {
   display: grid;
   width: 100%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
 }
-.addButton span {
-}
+
 .removeButton {
   display: grid;
   width: 100%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
 }
-.removeButton span {
-}
+
 .addQuestion {
-  margin: 0 0;
   display: grid;
   width: 100%;
   grid-template-columns: 100%;
@@ -1093,7 +1054,6 @@ export default {
 }
 
 .removeQuestion {
-  margin: 0 0;
   display: grid;
   width: 100%;
   grid-template-columns: 100%;
@@ -1107,12 +1067,16 @@ export default {
 }
 
 .viewQuestion {
+  margin-bottom: 20px;
   display: grid;
   width: 100%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
 }
 .goToGame {
+  justify-self: end;
+  margin-top: 40%;
+  margin-bottom: 20px;
   display: grid;
   width: 100%;
   grid-template-columns: 100%;
@@ -1133,8 +1097,6 @@ export default {
   width: 100%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
-}
-.chooseImage span {
 }
 .questionButton {
   display: grid;
