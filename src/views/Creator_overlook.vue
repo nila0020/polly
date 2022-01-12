@@ -260,20 +260,15 @@
             </div>
           </div>
         </div>
-        <!--        </div>-->
 
         <!--Map box-->
         <div class="box map">
-          <!--         v-on:click="mapExpand"
-                  v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"-->
           <div class="mapTitle" v-show="!hideCenter && !saveVisible">
             <h4>
               {{ this.uiLabels.mapPosition }}
-              <!--              {{ reactiveProperties.pos }}-->
             </h4>
             <!-- Our map  -->
             <div id="myMap" >
-              <!--                 v-bind:style="[hideCenter ? 'display:none' : '']">-->
             </div>
           </div>
         </div>
@@ -717,7 +712,10 @@ export default {
       this.pic = this.questions.find((obj) => obj.qId == qId).pic;
     },
     addAnswer: function () {
-      this.answers.push("");
+      if(this.answers.length < 4){
+        this.answers.push("");
+      }
+
     },
     removeAnswer: function () {
       this.answers.pop();
@@ -805,6 +803,7 @@ export default {
   border-style: dotted;
 }
 .centerBox {
+  position: relative;
   padding: 0;
   margin-top: 5px;
   margin-bottom: 0;
@@ -812,14 +811,13 @@ export default {
   grid-row: 1 / span 2;
   display: grid;
   grid-template-columns: 33% 33% 33%;
-  grid-template-rows: 20% 15% 20% 35%;
+  grid-template-rows: 15% 15% 7% 60%;
   border-style: dotted;
   background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
 }
 .toolBox {
   display:grid;
-  grid-template-rows: 10% 25% 40% 25%;
-  /*padding-top: 15vh;*/
+  grid-template-rows: 10% 25% 30% 25%;
   background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
   grid-column: 3;
   grid-row: 1 / span 2;
@@ -900,6 +898,7 @@ export default {
   grid-row: 1 / span 2;
 }
 #aBox {
+  z-index: 1;
   padding-top: 2vh;
   grid-column: 3;
   grid-row: 1 / span 2;
@@ -907,7 +906,6 @@ export default {
 #aBox input {
   border: solid black 2px;
   border-radius: 4px;
-  width: 60%;
 }
 
 #answerList {
@@ -919,7 +917,7 @@ export default {
 .map {
   margin-top: 5vh;
   grid-column: 1 / span 3;
-  grid-row: 3 / span 2;
+  grid-row: 4;
 }
 
 #myMap {
@@ -927,7 +925,8 @@ export default {
   /* width: 500px;
   position: absolute; */
 }
-.blockerAll {
+.blockerAll{
+  z-index: 4;
   color: white;
   grid-column: 1 / span 3;
   grid-row: 1 / span 2;
@@ -937,6 +936,7 @@ export default {
   transition: 300ms;
 }
 .blocker2 {
+  z-index: 3;
   color: white;
   grid-column: 2 / span 2;
   grid-row: 1 / span 2;
@@ -946,6 +946,7 @@ export default {
   transition: 300ms;
 }
 .blocker3 {
+  z-index: 2;
   color: white;
   grid-column: 2;
   grid-row: 1 / span 2;
@@ -1062,6 +1063,7 @@ export default {
 .saveQuestion {
   display: grid;
   width: 100%;
+  height: 30%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
 }
