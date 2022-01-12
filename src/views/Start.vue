@@ -1,13 +1,4 @@
 <template>
-  <!-- <div id="nav" >
-    <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
-    <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
-    <label>
-      Write poll id: 
-      <input type="text" v-model="id">
-    </label>
-    <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
-  </div> -->
 
   <section class="page">
     <header id="header">
@@ -17,16 +8,16 @@
     <h1>{{ uiLabels.welcomeText }}</h1>
 
     <h3>{{ uiLabels.Choose }}</h3>
-    <!-- <img src="https://rymdcenter.se/wp-content/uploads/2020/01/m82-hst-karusell.jpg" alt="alt text"/> -->
-    <!-- Knappar för startsidan -->
+
+    <!-- Start page buttons -->
     <div class="container">
-      <!-- Knapp till Usersidan -->
+      <!-- User page button -->
       <router-link v-bind:to="'/poll/' + lang"
         ><v-btn outline block class="start_buttons"
           ><span class="text">{{ uiLabels.User }}</span></v-btn
         ></router-link
       >
-      <!-- Knapp till creators överblick -->
+      <!-- Creator overlook button-->
       <router-link v-bind:to="'/Creator_overlook/' + lang"
         ><v-btn outline block class="create_buttons"
           ><span class="text">{{ uiLabels.Creator }}</span></v-btn
@@ -135,7 +126,6 @@ html {
   justify-content: center;
   text-shadow: 5px 5px #000000;
 }
-/* Three image containers (use 25% for four, and 50% for two, etc) */
 .row {
   display: flex;
 }
@@ -171,7 +161,6 @@ html {
   justify-content: center;
   width: 100%;
   justify-content: space-around;
-  /* align-content: space-between; */
 }
 
 .start_buttons {

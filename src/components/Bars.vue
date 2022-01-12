@@ -119,7 +119,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .fullScope {
-  /* height: 100vh; */
   width: 100vw;
   font-family: "Baloo Bhaijaan 2", cursive;
   background: linear-gradient(#17b27f, #319881, #21bec4, #069edf);
