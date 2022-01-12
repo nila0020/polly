@@ -845,7 +845,7 @@ export default {
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-  opacity: 95%;
+/*  opacity: 95%;*/
   transition: 300ms;
 }
 .blocker2 {
@@ -856,7 +856,7 @@ export default {
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-  opacity: 95%;
+/*  opacity: 95%;*/
   transition: 300ms;
 }
 .blocker3 {
@@ -867,7 +867,7 @@ export default {
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-  opacity: 95%;
+/*  opacity: 95%;*/
   transition: 300ms;
 }
 .saveBlocker {
@@ -879,7 +879,7 @@ export default {
   grid-row: 1 / span 2;
   overflow: hidden;
   background-color: black;
-  opacity: 95%;
+/*  opacity: 95%;*/
   transition: 300ms;
 }
 .questionDisplayed {
