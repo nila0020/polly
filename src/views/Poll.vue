@@ -1,5 +1,4 @@
 <template>
-
   <div class="fullFrame">
     <div v-show="!confirmedUser" class="entryId">
       <h1>{{ this.uiLabels.letsGo }}</h1>
@@ -96,13 +95,21 @@
       v-show="!activeGame && confirmedUser && this.scoreBoard"
       class="scoreBoards"
     >
-      <Bars :scoreBoard="scoreBoard" :poll="poll" v-if="!activeGame && this.scoreBoard" />
+      <Bars
+        :scoreBoard="scoreBoard"
+        :poll="poll"
+        v-if="!activeGame && this.scoreBoard"
+      />
     </div>
     <div
-        v-show="!activeGame && this.scoreBoard && viewResult"
-        class="scoreBoards"
+      v-show="!activeGame && this.scoreBoard && viewResult"
+      class="scoreBoards"
     >
-      <Bars :scoreBoard="scoreBoard" :poll="poll" v-if="!activeGame && this.scoreBoard" />
+      <Bars
+        :scoreBoard="scoreBoard"
+        :poll="poll"
+        v-if="!activeGame && this.scoreBoard"
+      />
     </div>
   </div>
 </template>
@@ -172,7 +179,7 @@ export default {
         socket.emit("joinGame", this.gameId, this.qId, this.userName);
       }
     });
-    socket.on('gameName', (q) => (this.gameName = q))
+    socket.on("gameName", (q) => (this.gameName = q));
     socket.on("newQuestion", (q) => (this.question = q));
     socket.on("newScoreboard", (q) => (this.scoreBoard = q));
     socket.on("withinRange", (d) => (this.activeQuestion = d.activeQuestion));
@@ -222,7 +229,7 @@ export default {
       this.activeQuestion = false;
     },
     tutorialMethod: function () {
-      this.tutorialBox=false;
+      this.tutorialBox = false;
     },
     confirmUser: function () {
       if (!this.gameId || !this.userName) {
@@ -236,23 +243,22 @@ export default {
         });
       }
     },
-    showResult: function() {
+    showResult: function () {
       if (!this.gameId) {
         alert("Please enter a gameId");
       } else {
-        this.poll = false
-        this.viewResult = true
-        console.log("viewResult:", this.viewResult )
-        console.log("scoreboard:", this.scoreBoard)
-        console.log("poll:", this.poll)
+        this.poll = false;
+        this.viewResult = true;
+        console.log("viewResult:", this.viewResult);
+        console.log("scoreboard:", this.scoreBoard);
+        console.log("poll:", this.poll);
         socket.emit("scoreBoard", {
           gameId: this.gameId,
           userName: this.userName,
         });
-        this.activeGame = false
-        console.log("activeGame" , this.activeGame)
+        this.activeGame = false;
+        console.log("activeGame", this.activeGame);
       }
-
     },
     quitGame: function () {
       this.confirmedUser = false;
@@ -267,19 +273,23 @@ export default {
 .tutorialBox {
   display: grid;
   color: black;
-  background-color: rgb(5, 177, 25);;
+  background-color: rgb(5, 177, 25);
   border: 10px;
   border-radius: 1em;
   width: 55vh;
   height: 98vh;
   align-self: center;
   justify-content: center;
+  justify-self: center;
   align-items: center;
   font-size: 16pt;
   font-family: "Baloo Bhaijaan 2", cursive;
-  
 }
-
+.fullFrame {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 label {
   font-size: 24px;
 
@@ -367,14 +377,11 @@ input {
 }
 
 #viewResults {
-   max-width: 77vh;
-   width: 75vw;
-   font-family: "Baloo Bhaijaan 2", cursive;
-   margin-bottom: 5px;
- }
-
-
-
+  max-width: 77vh;
+  width: 75vw;
+  font-family: "Baloo Bhaijaan 2", cursive;
+  margin-bottom: 5px;
+}
 
 #quitButton {
   border-radius: 8px;
@@ -396,8 +403,6 @@ input {
   white-space: nowrap;
   cursor: pointer;
 }
-
-
 
 /* @media screen and (max-width: 600px) {
   .picture {
