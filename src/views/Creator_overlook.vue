@@ -84,10 +84,7 @@
         <Question v-bind:question="questions[i]" v-on:answer="nextQuestion" />
       </div>
       <!--Center box-->
-      <div
-        v-show="!this.activeQuestion"
-        class="box centerBox"
-      >
+      <div v-show="!this.activeQuestion" class="box centerBox">
         <!--Info box-->
         <!--        <div class="box info">
           &lt;!&ndash;        v-on:click="infoExpand"
@@ -216,27 +213,25 @@
           </div>
           <div v-else-if="checked === 'slider'">
             <label for="minVal"
-              ><span style="font-size: 2.5vh">{{ uiLabels.minVal }}</span>
+              ><span style="font-size: 2.2vh">{{ uiLabels.minVal }}</span>
             </label>
             <input id="minVal" type="number" v-model="sliderMinVal" />
             <br />
             <label for="maxVal"
-              ><span style="font-size: 2.5vh">{{ uiLabels.maxVal }}</span>
+              ><span style="font-size: 2.2vh">{{ uiLabels.maxVal }}</span>
             </label>
             <input id="maxVal" type="number" v-model="sliderMaxVal" />
             <br />
             <label for="unit"
-              ><span style="font-size: 2.5vh">{{ uiLabels.unit }}</span>
+              ><span style="font-size: 2.2vh">{{ uiLabels.unit }}</span>
             </label>
+            <br />
             <input
               id="unit"
               type="text"
               v-model="sliderUnit"
               placeholder="unit"
             />
-            <br />
-            <span style="font-size: 2.5vh">{{ uiLabels.chooseValues }}</span>
-            <br />
             <Slider
               :poll="false"
               :min="sliderMinVal"
@@ -246,39 +241,34 @@
             />
 
             <div class="output">
-              <span style="font-size: 2.5vh"
-                >The lowest acceptable answer is: {{ this.sliderValue[0] }}
+              <span style="font-size: 2vh"
+                >Lowest correct answer: {{ this.sliderValue[0] }}
                 {{ this.sliderUnit }}</span
               >
             </div>
             <div class="output">
-              <span style="font-size: 2.5vh"
-                >The actual answer is: {{ this.sliderValue[1] }}
+              <span style="font-size: 2vh"
+                >The actual answer: {{ this.sliderValue[1] }}
                 {{ this.sliderUnit }}</span
               >
             </div>
             <div class="output">
-              <span style="font-size: 2.5vh"
-                >The highest acceptable answer is: {{ this.sliderValue[2] }}
+              <span style="font-size: 2vh"
+                >Highest correct answer: {{ this.sliderValue[2] }}
                 {{ this.sliderUnit }}</span
               >
             </div>
           </div>
         </div>
-        <!--        </div>-->
 
         <!--Map box-->
         <div class="box map">
-          <!--         v-on:click="mapExpand"
-                  v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"-->
-          <div class="mapTitle" v-show="!hideCenter">
+          <div class="mapTitle" v-show="!hideCenter && !saveVisible">
             <h4>
               {{ this.uiLabels.mapPosition }}
-              <!--              {{ reactiveProperties.pos }}-->
             </h4>
             <!-- Our map  -->
             <div id="myMap" >
-              <!--                 v-bind:style="[hideCenter ? 'display:none' : '']">-->
             </div>
           </div>
         </div>
@@ -298,30 +288,25 @@
         <br />
         <br />
         <br />
-        <v-btn
-          class="Button greenButton saveQuestion"
-          v-on:click="[saveQuestion(), (setVisible = true), showSaveBlocker()]"
-        >
-          <span>{{ uiLabels.Savequestion }}</span>
-        </v-btn>
-
-        <br />
-        <v-btn class="Button redButton viewQuestion" v-on:click="viewQuestions">
-          <span>{{ this.uiLabels.viewQuiz }}</span>
-        </v-btn>
-        <br />
-        <router-link v-bind:to="'/poll/' + lang"
+        <div class="toolBoxButtons">
+          <router-link v-bind:to="'/poll/' + lang"
           ><v-btn
-            outline
-            block
-            class="Button goToGame redButton"
-            v-on:click="sendGameId"
-          >
-            <!--          <span class="text">-->
+              outline
+              block
+              class="Button goToGame redButton"
+              v-on:click="sendGameId">
             <span>{{ uiLabels.goToGame }}</span>
-            <!--        </span>-->
-          </v-btn></router-link
-        >
+          </v-btn>
+          </router-link>
+          <v-btn class="Button redButton viewQuestion" v-on:click="viewQuestions">
+            <span>{{ this.uiLabels.viewQuiz }}</span>
+          </v-btn>
+          <v-btn
+            class="Button greenButton saveQuestion"
+            v-on:click="[saveQuestion(), (setVisible = true), showSaveBlocker()]">
+              <span>{{ uiLabels.Savequestion }}</span>
+          </v-btn>
+        </div>
       </div>
 
       <div class="blocker3" v-if="hideCenter">
@@ -727,19 +712,13 @@ export default {
       this.pic = this.questions.find((obj) => obj.qId == qId).pic;
     },
     addAnswer: function () {
-      this.answers.push("");
+      if(this.answers.length < 4){
+        this.answers.push("");
+      }
+
     },
     removeAnswer: function () {
       this.answers.pop();
-    },
-    infoExpand: function () {
-      this.infoBig = true;
-      this.questionBig = false;
-      this.mapBig = false;
-      this.infoSmall = false;
-      this.questionSmall = true;
-      this.mapSmall = true;
-      this.questionSmallCond = false;
     },
     questionExpand: function () {
       this.infoBig = false;
@@ -750,41 +729,11 @@ export default {
       this.mapSmall = true;
       this.questionSmallCond = false;
     },
-    mapExpand: function () {
-      this.infoBig = false;
-      this.questionBig = false;
-      this.mapBig = true;
-      this.infoSmall = true;
-      this.questionSmall = false;
-      this.mapSmall = false;
-      this.questionSmallCond = true;
-    },
-    closeExpand: function () {
-      this.infoBig = false;
-      this.questionBig = false;
-      this.mapBig = false;
-      this.infoSmall = false;
-      this.questionSmall = false;
-      this.mapSmall = false;
-      this.questionSmallCond = false;
-    },
-
-    /*runQuestion: function () {
-      socket.emit("runQuestion", {
-        gameId: this.gameId,
-        qId: this.qId,
-      });
-    },*/
   },
 };
 </script>
 
 <style>
-/*body {
-  margin: 0px;
-  min-height: 100%;
-  min-width: 100%;
-}*/
 .pagee {
   background: #2674b0;
   /*background: linear-gradient(#3bc1d9, #2674b0, #27a27a);*/
@@ -854,6 +803,7 @@ export default {
   border-style: dotted;
 }
 .centerBox {
+  position: relative;
   padding: 0;
   margin-top: 5px;
   margin-bottom: 0;
@@ -861,16 +811,23 @@ export default {
   grid-row: 1 / span 2;
   display: grid;
   grid-template-columns: 33% 33% 33%;
-  grid-template-rows: 20% 15% 20% 35%;
+  grid-template-rows: 15% 15% 7% 60%;
   border-style: dotted;
   background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
 }
 .toolBox {
-  padding-top: 15vh;
+  display:grid;
+  grid-template-rows: 10% 25% 30% 25%;
   background: linear-gradient(#3bc1d9, #2674b0, #27a27a);
   grid-column: 3;
   grid-row: 1 / span 2;
   border-style: dotted;
+}
+#app {
+  grid-row: 2;
+}
+.toolBoxButtons {
+  grid-row: 4;
 }
 
 .info h1 {
@@ -900,14 +857,14 @@ export default {
 }
 .questionArea {
   width: 70%;
-  height: 70%;
+  height: 40%;
   padding: 12px 20px;
   box-sizing: border-box;
-  border: 2px solid #ccc;
+  border: 2px solid black;
   border-radius: 4px;
-  background-color: black;
+  background-color: white;
   resize: none;
-  color: white;
+  color: black;
 }
 .questionBox {
   grid-column: 1 / span 2;
@@ -935,17 +892,22 @@ export default {
   align-items: center;
 }
 #qBox {
-  height: 100%;
+  height: 80%;
   padding-top: 2vh;
   grid-column: 2;
   grid-row: 1 / span 2;
 }
 #aBox {
-  height: 100%;
+  z-index: 1;
   padding-top: 2vh;
   grid-column: 3;
   grid-row: 1 / span 2;
 }
+#aBox input {
+  border: solid black 2px;
+  border-radius: 4px;
+}
+
 #answerList {
   list-style-type: none;
 }
@@ -955,7 +917,7 @@ export default {
 .map {
   margin-top: 5vh;
   grid-column: 1 / span 3;
-  grid-row: 3 / span 2;
+  grid-row: 4;
 }
 
 #myMap {
@@ -963,7 +925,8 @@ export default {
   /* width: 500px;
   position: absolute; */
 }
-.blockerAll {
+.blockerAll{
+  z-index: 4;
   color: white;
   grid-column: 1 / span 3;
   grid-row: 1 / span 2;
@@ -973,6 +936,7 @@ export default {
   transition: 300ms;
 }
 .blocker2 {
+  z-index: 3;
   color: white;
   grid-column: 2 / span 2;
   grid-row: 1 / span 2;
@@ -982,6 +946,7 @@ export default {
   transition: 300ms;
 }
 .blocker3 {
+  z-index: 2;
   color: white;
   grid-column: 2;
   grid-row: 1 / span 2;
@@ -1011,6 +976,7 @@ export default {
   align-items: center;
 }
 .Button {
+  margin-bottom: 3px;
   justify-content: center;
   border-color: white;
   border-radius: 8px;
@@ -1059,34 +1025,29 @@ export default {
   grid-template-columns: 100%;
   grid-template-rows: 100%;
 }
-.createButton span {
-}
+
 .loadButton {
   display: grid;
   width: 60%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
 }
-.loadButton span {
-}
+
 .addButton {
   display: grid;
   width: 100%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
 }
-.addButton span {
-}
+
 .removeButton {
   display: grid;
   width: 100%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
 }
-.removeButton span {
-}
+
 .addQuestion {
-  margin: 0 0;
   display: grid;
   width: 100%;
   grid-template-columns: 100%;
@@ -1094,7 +1055,6 @@ export default {
 }
 
 .removeQuestion {
-  margin: 0 0;
   display: grid;
   width: 100%;
   grid-template-columns: 100%;
@@ -1103,17 +1063,22 @@ export default {
 .saveQuestion {
   display: grid;
   width: 100%;
+  height: 30%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
 }
 
 .viewQuestion {
+  margin-bottom: 20px;
   display: grid;
   width: 100%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
 }
 .goToGame {
+  justify-self: end;
+  margin-top: 40%;
+  margin-bottom: 20px;
   display: grid;
   width: 100%;
   grid-template-columns: 100%;
@@ -1134,8 +1099,6 @@ export default {
   width: 100%;
   grid-template-columns: 100%;
   grid-template-rows: 100%;
-}
-.chooseImage span {
 }
 .questionButton {
   display: grid;
