@@ -271,13 +271,13 @@
         <div class="box map">
           <!--         v-on:click="mapExpand"
                   v-bind:class="{ mapBig: mapBig, mapSmall: mapSmall }"-->
-          <div class="mapTitle">
+          <div class="mapTitle" v-show="!hideCenter">
             <h4>
               {{ this.uiLabels.mapPosition }}
               <!--              {{ reactiveProperties.pos }}-->
             </h4>
             <!-- Our map  -->
-            <div id="myMap">
+            <div id="myMap" >
               <!--                 v-bind:style="[hideCenter ? 'display:none' : '']">-->
             </div>
           </div>
@@ -508,7 +508,7 @@ export default {
       uiLabels: {},
       hideAll: true,
       hideCenterAndTool: true,
-      hideCenter: true,
+      hideCenter: false,
       checked: "MCQ",
       infoBig: false,
       questionBig: false,
@@ -583,6 +583,7 @@ export default {
     },
     createGame: function () {
       this.hideAll = false;
+      this.hideCenter = true;
       socket.emit("createGame", {
         gameId: this.gameId,
         lang: this.lang,
